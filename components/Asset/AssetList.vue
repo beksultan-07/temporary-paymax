@@ -1,0 +1,166 @@
+<template>
+  <v-card class="ma-1" elevation="0">
+    <v-component-fullscreen @v-height="getHeight">
+
+      <!-- Start: search asset element -->
+      <v-card-title class="pa-2">
+        <v-text-field v-model="search" :label="$vuetify.lang.t('$vuetify.lang_84')" color="yellow darken-3" dense height="40" hide-details outlined prepend-inner-icon="mdi-layers-search-outline" />
+      </v-card-title>
+      <!-- Start: search asset element -->
+
+      <v-divider />
+
+      <!-- Start: list assets element -->
+      <template v-if="assets.length">
+        <template v-if="items.length">
+          <v-hover v-slot="{ hover }">
+            <v-virtual-scroll :class="(hover ? '' : 'overflow-y-hidden')" :height="height" :items="items" bench="0" item-height="50">
+              <template v-slot:default="{ item }">
+                <v-list-item :key="item.id" :class="active(item.symbol) ? 'v-list-item--active activator' : 'activator'" :to="'/assets/' + item.symbol + '/deposit'" dense>
+                  <v-list-item-avatar size="30">
+                    <v-img :src="$storages(['icon'], item.symbol)"/>
+                  </v-list-item-avatar>
+                  <v-list-item-content>
+                    <v-list-item-title><span :class="($vuetify.theme.dark ? 'white' : 'black') + '--text'">{{ item.symbol.toUpperCase() }}</span></v-list-item-title>
+                    <v-list-item-subtitle>{{ item.name }}</v-list-item-subtitle>
+                  </v-list-item-content>
+                  <v-list-item-action>
+                    <small class="teal--text">{{ item.balance ? $decimal.truncate(item.balance, $decimal.decimal(item.balance)) : '' }}</small>
+                  </v-list-item-action>
+                </v-list-item>
+              </template>
+            </v-virtual-scroll>
+          </v-hover>
+        </template>
+        <template v-else>
+          <v-layout :style="'height: '+ (height) +'px'" wrap>
+            <v-flex/>
+            <v-flex align-self-center class="text-center mx-5">
+              <div>
+                <v-icon color="yellow darken-3" size="50">
+                  mdi-layers-outline
+                </v-icon>
+              </div>
+              <h4 class="text-overline">{{ $vuetify.lang.t('$vuetify.lang_49') }}</h4>
+            </v-flex>
+            <v-flex/>
+          </v-layout>
+        </template>
+      </template>
+      <template v-else-if="!overlay">
+        <v-layout wrap>
+          <v-flex/>
+          <v-flex align-self-center class="text-center mx-5">
+            <div>
+              <v-icon color="yellow darken-3" size="50">
+                mdi-layers-outline
+              </v-icon>
+            </div>
+            <h4 class="text-overline">{{ $vuetify.lang.t('$vuetify.lang_78') }}</h4>
+          </v-flex>
+          <v-flex/>
+        </v-layout>
+      </template>
+      <!-- End: list assets element -->
+
+      <v-overlay :color="$vuetify.theme.dark ? 'grey darken-4' : 'white'" :value="overlay" absolute opacity="0.8">
+        <v-progress-circular color="yellow darken-3" indeterminate size="50" />
+      </v-overlay>
+
+    </v-component-fullscreen>
+  </v-card>
+</template>
+
+<script>
+
+  import Fullscreen from "../Common/Fullscreen";
+  import Api from "../../libs/api";
+
+  export default {
+    name: "v-component-asset-list",
+    components: {
+      'v-component-fullscreen': Fullscreen
+    },
+    data() {
+      return {
+        overlay: true,
+        search: null,
+        assets: [],
+        height: 0
+      }
+    },
+    mounted() {
+      this.getAssets();
+    },
+    methods: {
+
+      /**
+       * @param h
+       */
+      getHeight(h) {
+        this.height = h - 57;
+      },
+
+      /**
+       * Получаем список всех активов.
+       */
+      getAssets() {
+        this.overlay = true;
+        this.$axios.$post(Api.exchange.getAssets).then((response) => {
+
+          this.assets = response.currencies ?? [];
+          this.overlay = false;
+
+          // Sort assets by index.
+          this.sort();
+        });
+      },
+
+      /**
+       *
+       */
+      sort() {
+        this.assets.sort((a, b) => {
+          if (!a.balance) {
+            a.balance = 0
+          }
+          if (!b.balance) {
+            b.balance = 0
+          }
+          return b.balance - a.balance;
+        });
+      },
+
+      /**
+       * @param unit
+       * @returns {boolean}
+       */
+      active(unit) {
+        if (this.$route.params.unit === null) {
+          return false
+        }
+
+        return this.$route.params.unit === unit;
+      }
+    },
+    computed: {
+
+      /**
+       * @returns {[]|*[]}
+       */
+      items() {
+        if(this.search) {
+          return this.assets.filter((item) => {
+            return item.symbol.toUpperCase().includes(this.search.toUpperCase()) || item.name.toUpperCase().includes(this.search.toUpperCase())
+          });
+        } else {
+          return this.assets;
+        }
+      }
+    }
+  }
+</script>
+
+<style scoped>
+
+</style>
