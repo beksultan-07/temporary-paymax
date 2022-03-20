@@ -104,14 +104,7 @@
     data() {
       return {
         unit: undefined,
-        asset: undefined,
-        active: "deposit"
-      }
-    },
-
-    watch: {
-      $route(params) {
-        this.active = params.name.split("-")[2];
+        asset: undefined
       }
     },
 
