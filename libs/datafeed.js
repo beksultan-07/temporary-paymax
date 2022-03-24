@@ -110,7 +110,7 @@ export default class Datafeed {
        */
       this.$self.$publish.bind('exchange/kline', (data) => {
         if (data.ohlc) {
-          if (symbol[0] === data.ohlc.lastItem.base_unit && symbol[1] === data.ohlc.lastItem.quote_unit) {
+          if (symbol[0].toLowerCase() === data.ohlc.lastItem.base_unit && symbol[1].toLowerCase() === data.ohlc.lastItem.quote_unit) {
 
             this.send(Object.assign(query, {limit: 2})).then((response) => {
               response.ohlc = response.ohlc ?? [];
