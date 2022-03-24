@@ -126,9 +126,8 @@
        */
       this.$publish.bind('exchange/kline', (data) => {
 
-        if (data.ohlc && data.ohlc.length > 2) {
+        if (data.ohlc && data.ohlc.length > 1) {
           this.pairs.filter((item) => {
-
             if (
 
               // Сверяем принадлежат ли новые события к данному активу,
