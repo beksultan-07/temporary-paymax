@@ -85,7 +85,7 @@ export default {
   lang_85: "Scan the QR code with your mobile phone to avoid entering the address manually or copy the address below",
   lang_86: "Minimum %1 network confirmation(s)",
   lang_87: "A minimum of %1 network confirmation(s) is required to be credited to the balance.",
-  lang_88: "Amount less than %1 %2 will not be credited",
+  lang_88: "Amount less than (%1 %2) will not be credited",
   lang_89: "This is due to the fact that the costs of processing such a transaction will be higher than the amount of the transaction itself.",
   lang_90: "Generate address",
   lang_91: "Deposit",
