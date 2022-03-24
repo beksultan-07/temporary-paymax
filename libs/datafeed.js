@@ -17,7 +17,7 @@ export default class Datafeed {
    */
   onReady(cb) {
     setTimeout(() => cb({
-      supported_resolutions: ['5', '10', '15', '30', '1h', '4h', '1d', '1w']
+      supported_resolutions: ['1', '5', '10', '15', '30', '1h', '4h', '1d', '1w']
     }), 0)
   }
 
@@ -38,7 +38,6 @@ export default class Datafeed {
       minmov: 1,
       pricescale: 100000000,
       has_intraday: true,
-      //supported_resolution: ['5', '10', '15', '30', '1h', '4h', '1d', '1w'],
       volume_precision: 8,
       data_status: 'streaming',
     }
