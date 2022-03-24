@@ -43,7 +43,7 @@ export default class Datafeed {
       data_status: 'streaming',
     }
 
-    if (split_data[1].match(/USD|EUR|RUB|UAH|JPY|AUD|GBP|KRW|CNY/)) {
+    if (split_data[1].toUpperCase().match(/USD|EUR|RUB|UAH|JPY|AUD|GBP|KRW|CNY/)) {
       symbol_stub.pricescale = 100;
     }
 
