@@ -17,7 +17,7 @@ export default class Datafeed {
    */
   onReady(cb) {
     setTimeout(() => cb({
-      supported_resolutions: ['1', '5', '10', '15', '30', '1h', '4h', '1d', '1w']
+      supported_resolutions: ['1', '5', '10', '15', '30', '1h', '4h', '1D', '1W']
     }), 0)
   }
 
@@ -204,8 +204,8 @@ export default class Datafeed {
       '30': 1800,   // 30 minutes
       '1h': 3600,   // 1 hour
       '4h': 14400,  // 4 hours
-      '1d': 86400,  // 1 day
-      '1w': 604800  // 1 week
+      '1D': 86400,  // 1 day
+      '1W': 604800  // 1 week
     };
 
     if (interval[resolution]) {
