@@ -29,7 +29,7 @@
           <v-hover v-slot="{ hover }" open-delay="200">
             <v-card class="text-center ma-2 mt-1 mb-1" :elevation="hover ? 3 : 0" height="100" rounded="lg">
               <v-card-text>
-                <h3 class="font-weight-medium">{{ item.base_unit }}/{{ item.quote_unit }}</h3>
+                <h3 class="font-weight-medium">{{ item.base_unit.toUpperCase() }}/{{ item.quote_unit.toUpperCase() }}</h3>
                 <b :class="($vuetify.theme.dark ? 'white' : 'black') + '--text'">{{ item.price ? item.price : '--' }}</b>
                 <div :class="Math.sign(item.ratio) === -1 ? 'red--text' : 'green--text'">
                   {{ item.ratio ? (Math.sign(item.ratio) === -1 ? item.ratio.toFixed(2) : `+${item.ratio.toFixed(2)}`) : '+0.00' }}%
@@ -61,7 +61,7 @@
                     <v-tooltip bottom>
                       <template v-slot:activator="{ on, attrs }">
                         <v-avatar>
-                          <v-img v-bind="attrs" v-on="on" height="50" width="50" :src="$storages(['icon'], item.symbol.toLowerCase())"/>
+                          <v-img v-bind="attrs" v-on="on" height="50" width="50" :src="$storages(['icon'], item.symbol)"/>
                         </v-avatar>
                       </template>
                       <span>{{ $vuetify.lang.t('$vuetify.lang_24') }}</span>
@@ -75,10 +75,10 @@
                     <ul>
                       <li v-for="pair in item.pairs" :key="pair.id">
                         <template v-if="pair.fees_curve">
-                          {{ pair.symbol }}: <span class="green--text">{{ (item.fees_trade - pair.fees_curve).toFixed(4) }}%</span> / <span class="text-decoration-line-through">{{ item.fees_trade }}%</span>
+                          {{ pair.symbol.toUpperCase() }}: <span class="green--text">{{ (item.fees_trade - pair.fees_curve).toFixed(4) }}%</span> / <span class="text-decoration-line-through">{{ item.fees_trade }}%</span>
                         </template>
                         <template v-else>
-                          {{ pair.symbol }}: <span class="grey--text">{{ item.fees_trade }}%</span>
+                          {{ pair.symbol.toUpperCase() }}: <span class="grey--text">{{ item.fees_trade }}%</span>
                         </template>
                       </li>
                     </ul>
@@ -87,7 +87,7 @@
               </v-dialog>
             </template>
             <template v-slot:opposite>
-              <span><b>{{ item.symbol }}</b> <small>({{ item.name }})</small></span>
+              <span><b>{{ item.symbol.toUpperCase() }}</b> <small>({{ item.name }})</small></span>
             </template>
           </v-timeline-item>
           <v-timeline-item class="timeline-more" v-if="currencies.more" large>
