@@ -8,73 +8,73 @@
     <!-- End: tabs bar -->
 
     <!-- Start: tabs items -->
-    <v-tabs-items v-model="eyelet" class="mt-4">
-      <v-tab-item v-for="(item, index) in asset.chains" :key="item.id" :transition="false">
+    <v-tabs-items v-model="eyelet" class="mt-3">
+      <v-tab-item v-for="(item, index) in asset.chains" :key="item.id" :transition="false" class="mt-1">
 
-          <template v-if="item.address">
+        <template v-if="item.address">
 
-            <v-row>
-              <v-col md="6">
-                <v-row align="center">
-                  <v-col md="4">
-                    <v-component-qrcode :content="item.address.toString()" :width="200" />
-                  </v-col>
-                  <v-col md="8">
-                    {{ $vuetify.lang.t('$vuetify.lang_85') }}
-                  </v-col>
-                </v-row>
-                <v-text-field :disabled="!item.status" :value="item.address" class="mt-4" color="yellow darken-3" outlined>
-                  <template v-slot:append>
-                    <v-icon v-if="item.status" style="cursor: pointer;" @click="$copyText(item.address)">
-                      mdi-clipboard-text-multiple-outline
-                    </v-icon>
-                    <v-icon v-else>
-                      mdi-lock-outline
-                    </v-icon>
-                  </template>
-                </v-text-field>
-              </v-col>
-              <v-col md="6">
-                <v-card v-if="!item.status" class="mb-4" elevation="0" outlined>
-                  <v-card-subtitle>
-                    <b class="red--text">{{ $vuetify.lang.t('$vuetify.lang_99') }}</b>
-                  </v-card-subtitle>
-                  <v-divider></v-divider>
-                  <v-card-text class="red--text">
-                    {{ $vuetify.lang.t('$vuetify.lang_98') }}
-                  </v-card-text>
-                </v-card>
-                <v-card class="mb-4" elevation="0" outlined>
-                  <v-card-subtitle>
-                    <b class="blue--text">{{ item.platform }} - {{ $vuetify.lang.t('$vuetify.lang_86').replace(/%1/g, item['confirmation']) }}</b>
-                  </v-card-subtitle>
-                  <v-divider></v-divider>
-                  <v-card-text>
-                    {{ $vuetify.lang.t('$vuetify.lang_87').replace(/%1/g, item['confirmation']) }}
-                  </v-card-text>
-                </v-card>
-                <v-card elevation="0" outlined>
-                  <v-card-subtitle>
-                    <b class="red--text">{{ $vuetify.lang.t('$vuetify.lang_88').replace(/%1/g, asset['min_deposit']).replace(/%2/g, asset['symbol'].toUpperCase()) }}</b>
-                  </v-card-subtitle>
-                  <v-divider></v-divider>
-                  <v-card-text>
-                    {{ $vuetify.lang.t('$vuetify.lang_89') }}
-                  </v-card-text>
-                </v-card>
-              </v-col>
-            </v-row>
+          <v-row>
+            <v-col md="6">
+              <v-row align="center">
+                <v-col md="4">
+                  <v-component-qrcode :content="item.address.toString()" :width="200" />
+                </v-col>
+                <v-col md="8">
+                  {{ $vuetify.lang.t('$vuetify.lang_85') }}
+                </v-col>
+              </v-row>
+              <v-text-field :disabled="!item.status" :value="item.address" class="mt-4" color="yellow darken-3" outlined>
+                <template v-slot:append>
+                  <v-icon v-if="item.status" style="cursor: pointer;" @click="$copyText(item.address)">
+                    mdi-clipboard-text-multiple-outline
+                  </v-icon>
+                  <v-icon v-else>
+                    mdi-lock-outline
+                  </v-icon>
+                </template>
+              </v-text-field>
+            </v-col>
+            <v-col md="6">
+              <v-card v-if="!item.status" class="mb-4" elevation="0" outlined>
+                <v-card-subtitle>
+                  <b class="red--text">{{ $vuetify.lang.t('$vuetify.lang_99') }}</b>
+                </v-card-subtitle>
+                <v-divider></v-divider>
+                <v-card-text class="red--text">
+                  {{ $vuetify.lang.t('$vuetify.lang_98') }}
+                </v-card-text>
+              </v-card>
+              <v-card class="mb-4" elevation="0" outlined>
+                <v-card-subtitle>
+                  <b class="blue--text">{{ item.platform }} - {{ $vuetify.lang.t('$vuetify.lang_86').replace(/%1/g, item['confirmation']) }}</b>
+                </v-card-subtitle>
+                <v-divider></v-divider>
+                <v-card-text>
+                  {{ $vuetify.lang.t('$vuetify.lang_87').replace(/%1/g, item['confirmation']) }}
+                </v-card-text>
+              </v-card>
+              <v-card elevation="0" outlined>
+                <v-card-subtitle>
+                  <b class="red--text">{{ $vuetify.lang.t('$vuetify.lang_88').replace(/%1/g, asset['min_deposit']).replace(/%2/g, asset['symbol'].toUpperCase()) }}</b>
+                </v-card-subtitle>
+                <v-divider></v-divider>
+                <v-card-text>
+                  {{ $vuetify.lang.t('$vuetify.lang_89') }}
+                </v-card-text>
+              </v-card>
+            </v-col>
+          </v-row>
 
-          </template>
-          <template v-else>
-            <v-layout fill-height style="height:200px;" wrap>
-              <v-flex/>
-              <v-flex align-self-center class="text-center" md4 mx5 sm6 xl3>
-                <v-btn block color="black--text yellow darken-1 text-capitalize" elevation="0" large @click="setAsset(item.platform, index)">{{ $vuetify.lang.t('$vuetify.lang_90') }}</v-btn>
-              </v-flex>
-              <v-flex/>
-            </v-layout>
-          </template>
+        </template>
+        <template v-else>
+          <v-layout fill-height style="height:200px;" wrap>
+            <v-flex/>
+            <v-flex align-self-center class="text-center" md4 mx5 sm6 xl3>
+              <v-btn block color="black--text yellow darken-1 text-capitalize" elevation="0" large @click="setAsset(item.platform, index)">{{ $vuetify.lang.t('$vuetify.lang_90') }}</v-btn>
+            </v-flex>
+            <v-flex/>
+          </v-layout>
+        </template>
 
       </v-tab-item>
     </v-tabs-items>
