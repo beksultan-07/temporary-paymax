@@ -99,7 +99,7 @@ export default {
   lang_99: "The network is temporarily unavailable",
   lang_100: "Minimum withdrawal amount",
   lang_101: "When will the funds arrive?",
-  lang_102: "Withdrawal takes approximately 10 minutes. In rare cases, the withdrawal may be delayed up to 24 hours (in case of technical problems, etc.)",
+  lang_102: "Withdrawal takes approximately %1 minutes. In rare cases, the withdrawal may be delayed up to 24 hours (in case of technical problems, etc.)",
   lang_103: "To write off",
   lang_104: "To address",
   lang_105: "Available",
