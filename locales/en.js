@@ -105,7 +105,7 @@ export default {
   lang_105: "Available",
   lang_106: "Meaning",
   lang_107: "The amount must be equal to or greater than",
-  lang_108: "",
+  lang_108: "Maximum withdrawal amount",
   lang_109: "",
   lang_110: "",
 
