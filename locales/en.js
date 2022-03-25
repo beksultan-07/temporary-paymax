@@ -92,7 +92,7 @@ export default {
   lang_92: "Withdraw",
   lang_93: "History",
   lang_94: "In orders",
-  lang_95: "Trading allowed.",
+  lang_95: "Trading allowed",
   lang_96: "Temporarily unavailable",
   lang_97: "Select an asset to work with.",
   lang_98: "All withdrawals or deposits of funds to your personal address will not be credited, we apologize for temporary inconvenience.",
