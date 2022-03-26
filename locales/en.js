@@ -107,6 +107,6 @@ export default {
   lang_107: "The amount must be equal to or greater than",
   lang_108: "Maximum withdrawal amount",
   lang_109: "Reserve",
-  lang_110: "",
+  lang_110: "Make sure that the network matches the withdrawal address and that the platform where you plan to withdraw funds supports it. Otherwise, assets may be lost.",
 
 }

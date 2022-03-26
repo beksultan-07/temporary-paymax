@@ -35,11 +35,16 @@
               </v-text-field>
             </v-col>
             <v-col md="6">
+              <v-card class="mb-4" elevation="0" outlined>
+                <v-card-text>
+                  {{ $vuetify.lang.t('$vuetify.lang_110') }}
+                </v-card-text>
+              </v-card>
               <v-card v-if="!item.status" class="mb-4" elevation="0" outlined>
                 <v-card-subtitle>
                   <b class="red--text">{{ $vuetify.lang.t('$vuetify.lang_99') }}</b>
                 </v-card-subtitle>
-                <v-divider></v-divider>
+                <v-divider />
                 <v-card-text class="red--text">
                   {{ $vuetify.lang.t('$vuetify.lang_98') }}
                 </v-card-text>
@@ -48,7 +53,7 @@
                 <v-card-subtitle>
                   <b class="blue--text">{{ item.platform }} - {{ $vuetify.lang.t('$vuetify.lang_86').replace(/%1/g, item['confirmation']) }}</b>
                 </v-card-subtitle>
-                <v-divider></v-divider>
+                <v-divider />
                 <v-card-text>
                   {{ $vuetify.lang.t('$vuetify.lang_87').replace(/%1/g, item['confirmation']) }}
                 </v-card-text>
@@ -57,7 +62,7 @@
                 <v-card-subtitle>
                   <b class="red--text">{{ $vuetify.lang.t('$vuetify.lang_88').replace(/%1/g, asset['min_deposit']).replace(/%2/g, asset['symbol'].toUpperCase()) }}</b>
                 </v-card-subtitle>
-                <v-divider></v-divider>
+                <v-divider />
                 <v-card-text>
                   {{ $vuetify.lang.t('$vuetify.lang_89') }}
                 </v-card-text>
