@@ -8,7 +8,7 @@ export default ({ app, store }, inject) => {
         html5: true,
         autoplay: false,
         loop: false,
-        volume: 0.2,
+        volume: 0.5,
         preload: false
       });
       player.play(0, false);
