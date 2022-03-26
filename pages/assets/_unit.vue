@@ -4,7 +4,7 @@
       <template v-if="unit">
 
         <!-- Start: tabs bar -->
-        <v-tabs color="yellow darken-3">
+        <v-tabs v-model="eyelet" color="yellow darken-3">
           <v-tab :to="'/assets/' + unit.toLowerCase() + '/deposit'">{{ $vuetify.lang.t('$vuetify.lang_91') }}</v-tab>
           <v-tab :to="'/assets/' + unit.toLowerCase() + '/withdraw'">{{ $vuetify.lang.t('$vuetify.lang_92') }}</v-tab>
           <v-tab :to="'/assets/' + unit.toLowerCase() + '/history'">{{ $vuetify.lang.t('$vuetify.lang_93') }}</v-tab>
@@ -104,7 +104,8 @@
     data() {
       return {
         unit: undefined,
-        asset: undefined
+        asset: undefined,
+        eyelet: 0
       }
     },
 
