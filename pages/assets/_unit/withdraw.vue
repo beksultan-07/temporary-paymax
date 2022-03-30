@@ -14,7 +14,7 @@
         <template v-if="item.address">
 
           <v-row>
-            <v-col md="6">
+            <v-col cols="12" md="6">
               <v-card class="mb-4" elevation="0" outlined>
                 <v-card-title class="text-uppercase">
                   {{ $vuetify.lang.t('$vuetify.lang_111') }}: {{ item.name }}
@@ -89,7 +89,7 @@
               {{ $vuetify.lang.t('$vuetify.lang_105') }}
               {{ $vuetify.lang.t('$vuetify.lang_107') }}
             </v-col>
-            <v-col md="6">
+            <v-col cols="12" md="6">
               <v-card class="mb-4" elevation="0" outlined>
                 <v-card-subtitle>
                   <b class="blue--text">{{ $vuetify.lang.t('$vuetify.lang_101') }}</b>
@@ -221,7 +221,6 @@
        * @returns {number|*}
        */
       getReserveBalance(item) {
-        //balance > this.asset['max_withdraw'] ? this.asset['max_withdraw'] : balance;
         let number = item['reserve'];
         let balance = this.asset.balance ?? 0;
         if (number >= balance) {

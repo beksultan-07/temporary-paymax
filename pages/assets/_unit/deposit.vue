@@ -14,7 +14,7 @@
         <template v-if="item.address">
 
           <v-row>
-            <v-col md="6">
+            <v-col cols="12" md="6">
 
               <template v-if="!item.status">
                 <v-card class="mb-4" elevation="0" outlined>
@@ -57,7 +57,7 @@
 
               </template>
             </v-col>
-            <v-col md="6">
+            <v-col cols="12" md="6">
               <v-card class="mb-4" elevation="0" outlined>
                 <v-card-title class="text-uppercase">
                   {{ $vuetify.lang.t('$vuetify.lang_111') }}: {{ item.name }}

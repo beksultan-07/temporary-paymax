@@ -16,7 +16,7 @@
         <!-- Start: info bar -->
         <div class="mx-4 mt-4">
           <v-row align="center">
-            <v-col md="3">
+            <v-col cols="12" md="3">
               <v-card height="118" outlined rounded="lg">
                 <v-list-item>
                   <v-list-item-content>
@@ -33,7 +33,7 @@
                 </v-list-item>
               </v-card>
             </v-col>
-            <v-col md="3">
+            <v-col cols="12" md="3">
               <v-card height="118" outlined rounded="lg">
                 <v-card-text class="mt-2 text-center">
                   <div><small>{{ $vuetify.lang.t('$vuetify.lang_56') }}</small></div>
@@ -41,7 +41,7 @@
                 </v-card-text>
               </v-card>
             </v-col>
-            <v-col md="3">
+            <v-col cols="12" md="3">
               <v-card height="118" outlined rounded="lg">
                 <v-card-text class="mt-2 text-center">
                   <div><small>{{ $vuetify.lang.t('$vuetify.lang_94') }}</small></div>
@@ -49,7 +49,7 @@
                 </v-card-text>
               </v-card>
             </v-col>
-            <v-col md="3">
+            <v-col cols="12" md="3">
               <v-card height="118" outlined rounded="lg">
                 <v-card-text class="mt-2 text-center">
                   <div><small>{{ $vuetify.lang.t('$vuetify.lang_81') }}</small></div>
