@@ -46,13 +46,23 @@
 }
 
 
+/* Sheet modify style */
+.theme--light.v-sheet--outlined {
+  border: thin solid rgba(236, 242, 246, 1);
+}
+
+.theme--dark.v-sheet--outlined {
+  border: thin solid rgba(42, 42, 42, 1);
+}
+
+
 /* Divider modify style */
 .theme--light.v-divider {
-  border-color: rgba(0, 0, 0, 0.05);
+  border-color: rgba(236, 242, 246, 1);
 }
 
 .theme--dark.v-divider {
-  border-color: rgba(255, 255, 255, 0.09);
+  border-color: rgba(42, 42, 42, 1);
 }
 
 
