@@ -1822,16 +1822,16 @@ html.theme-dark .tv-button--danger_ghost, html.theme-dark .tv-button--default_gh
 .tv-button.i-disabled, .tv-button.i-disabled:active, .tv-button:disabled, .tv-button:disabled:active {
   cursor: default;
   color: #b2b5be;
-  border-color: #e0e3eb;
-  background-color: #e0e3eb
+  border-color: #ecf2f6;
+  background-color: #ecf2f6
 }
 
 @media (any-hover: hover),(min--moz-device-pixel-ratio: 0) {
   .tv-button.i-disabled:hover, .tv-button:disabled:hover {
     cursor: default;
     color: #b2b5be;
-    border-color: #e0e3eb;
-    background-color: #e0e3eb
+    border-color: #ecf2f6;
+    background-color: #ecf2f6
   }
 }
 
@@ -3740,7 +3740,7 @@ html.theme-dark .published-charts-tooltip.right:after {
   box-sizing: border-box;
   overflow: hidden;
   border-top: 1px solid;
-  border-color: var(--tv-color-platform-background, #e0e3eb);
+  border-color: var(--tv-color-platform-background, #ecf2f6);
   border-radius: 0 0 4px 4px;
   background-color: var(--tv-color-pane-background, #fff)
 }
