@@ -14,7 +14,7 @@
       <template v-if="assets.length">
         <template v-if="items.length">
           <v-hover v-slot="{ hover }">
-            <v-virtual-scroll :class="(hover ? '' : 'overflow-y-hidden')" :height="height" :items="items" bench="0" item-height="50">
+            <v-virtual-scroll :class="(hover ? 'bg-state' : 'bg-state overflow-y-hidden')" :height="height" :items="items" bench="0" item-height="50">
               <template v-slot:default="{ item }">
                 <v-list-item :key="item.id" :class="active(item.symbol) ? 'v-list-item--active activator' : 'activator'" :to="'/assets/' + item.symbol + '/deposit'" dense>
                   <v-list-item-avatar size="30">
