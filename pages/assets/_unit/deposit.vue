@@ -60,7 +60,7 @@
             <v-col cols="12" md="6">
               <v-card class="mb-4" elevation="0" outlined>
                 <v-card-title class="text-uppercase">
-                  {{ $vuetify.lang.t('$vuetify.lang_111') }}: {{ item.name }}
+                  {{ item.name }}
                   <v-icon class="green--text" v-if="item.status">
                     mdi-check-circle-outline
                   </v-icon>
@@ -68,7 +68,7 @@
                     mdi-close-circle-outline
                   </v-icon>
                 </v-card-title>
-                <v-card-subtitle v-if="item.network">
+                <v-card-subtitle class="text-uppercase" v-if="item.network">
                   {{ $vuetify.lang.t('$vuetify.lang_112') }}: {{ item.network }}
                 </v-card-subtitle>
                 <v-divider />

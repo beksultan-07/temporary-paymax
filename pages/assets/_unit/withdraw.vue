@@ -17,7 +17,7 @@
             <v-col cols="12" md="6">
               <v-card class="mb-4" elevation="0" outlined>
                 <v-card-title class="text-uppercase">
-                  {{ $vuetify.lang.t('$vuetify.lang_111') }}: {{ item.name }}
+                  {{ item.name }}
                   <v-icon class="green--text" v-if="item.status">
                     mdi-check-circle-outline
                   </v-icon>
@@ -25,7 +25,7 @@
                     mdi-close-circle-outline
                   </v-icon>
                 </v-card-title>
-                <v-card-subtitle v-if="item.network">
+                <v-card-subtitle class="text-uppercase" v-if="item.network">
                   {{ $vuetify.lang.t('$vuetify.lang_112') }}: {{ item.network }}
                 </v-card-subtitle>
                 <v-divider />
@@ -67,7 +67,7 @@
                   <v-text-field v-model="value" color="yellow darken-3" :label="$vuetify.lang.t('$vuetify.lang_106')" outlined :rules="rulesValue" required>
                     <template v-slot:append>
                       <span class="my-1" @click="getBalance(item)" style="cursor: pointer;">
-                        <span class="orange--text">MAX</span> <v-divider class="mx-1" vertical /> <span class="grey--text">{{ getReserveBalance(item) }} {{ asset.symbol.toUpperCase() }}</span>
+                        <span class="orange--text">MAX</span> <span class="grey--text">{{ getReserveBalance(item) }} {{ asset.symbol.toUpperCase() }}</span>
                       </span>
                     </template>
                     <template #message="{ message }">
@@ -101,7 +101,7 @@
               </v-card>
               <v-card elevation="0" outlined>
                 <v-card-subtitle :class="$vuetify.theme.dark ? 'white--text' : 'black--text'">
-                  <b>{{ $vuetify.lang.t('$vuetify.lang_20') }}:</b> {{ item['fees_withdraw'] }}%
+                  <b>{{ $vuetify.lang.t('$vuetify.lang_20') }}:</b> {{ item['fees_withdraw'] }} <b>{{ asset.symbol.toUpperCase() }}</b>
                 </v-card-subtitle>
                 <v-divider />
                 <v-card-text :class="$vuetify.theme.dark ? 'white--text' : 'black--text'">
@@ -168,6 +168,7 @@
       getAsset() {
         this.$axios.$post(Api.exchange.getAsset, {unit: this.$route.params.unit}).then((response) => {
           this.asset = response.currencies.lastItem ?? {};
+          console.log(this.asset)
         }).catch(e => {
           console.log(e)
         });
@@ -227,6 +228,10 @@
           return (balance > this.asset['max_withdraw'] ? this.asset['max_withdraw'] : balance)
         }
         return number
+      },
+
+      getFees() {
+
       }
     },
     computed: {
