@@ -27,7 +27,7 @@
                     </v-list-item-content>
                     <v-list-item-action>
                       <template v-if="hover">
-                        <small v-if="item.convert > 0" class="teal--text">
+                        <small v-if="item.balance > 0" class="teal--text">
                           ≈ ${{ item.convert }}
                         </small>
                       </template>
