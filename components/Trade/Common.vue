@@ -21,18 +21,29 @@
           <v-hover v-slot="{ hover }">
             <v-virtual-scroll :class="'bg-state ' + (hover ? '' : 'overflow-y-hidden')" bench="0" :items="assets" height="393" item-height="50">
               <template v-slot:default="{ item }">
-                <v-list-item active-class="activator" :to="'/assets/' + item.symbol + '/deposit'" :key="item.id" dense>
-                  <v-list-item-avatar size="30">
-                    <v-img :src="$storages(['icon'], item.symbol)"/>
-                  </v-list-item-avatar>
-                  <v-list-item-content>
-                    <v-list-item-title>{{ item.symbol.toUpperCase() }}</v-list-item-title>
-                    <v-list-item-subtitle>{{ item.name }}</v-list-item-subtitle>
-                  </v-list-item-content>
-                  <v-list-item-action>
-                    <small class="teal--text">{{ item.balance ? $decimal.truncate(item.balance, $decimal.decimal(item.balance)) : '' }}</small>
-                  </v-list-item-action>
-                </v-list-item>
+                <v-hover v-slot:default="{ hover }">
+                  <v-list-item active-class="activator" :to="'/assets/' + item.symbol + '/deposit'" :key="item.id" dense>
+                    <v-list-item-avatar size="30">
+                      <v-img :src="$storages(['icon'], item.symbol)"/>
+                    </v-list-item-avatar>
+                    <v-list-item-content>
+                      <v-list-item-title>{{ item.symbol.toUpperCase() }}</v-list-item-title>
+                      <v-list-item-subtitle>{{ item.name }}</v-list-item-subtitle>
+                    </v-list-item-content>
+                    <v-list-item-action>
+                      <template v-if="hover">
+                        <small v-if="item.convert > 0" class="teal--text">
+                          ≈ ${{ item.convert }}
+                        </small>
+                      </template>
+                      <template v-else>
+                        <small class="teal--text">
+                          {{ item.balance ? $decimal.truncate(item.balance, $decimal.decimal(item.balance)) : '' }}
+                        </small>
+                      </template>
+                    </v-list-item-action>
+                  </v-list-item>
+                </v-hover>
               </template>
             </v-virtual-scroll>
           </v-hover>
@@ -164,6 +175,11 @@
         this.$axios.$post(Api.exchange.getAssets).then((response) => {
 
           this.assets = response.currencies ?? [];
+          this.assets.map(item => {
+            this.$axios.$get(Api.exchange.getPrice + '?base_unit=' + item.symbol + '&quote_unit=usdt').then((response) => {
+              item.convert = this.$decimal.truncate(response.price ? (item.balance ? response.price * item.balance : 0) : (item.balance ? item.balance : 0), 8)
+            });
+          });
           this.overlay = false;
 
           // Sort assets by index.
@@ -185,6 +201,15 @@
           // Sort assets by index.
           this.sort();
         });
+      },
+
+      /**
+       * @param unit
+       * @param balance
+       * @returns {*|number}
+       */
+      getPrice(unit, balance) {
+
       },
 
       /**
