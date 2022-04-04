@@ -14,6 +14,7 @@ export default {
     getUser: '/account/get-user'
   },
   exchange: {
+    getPrice: '/exchange/get-price',
     getUnit: '/exchange/get-unit',
     getMarkers: '/exchange/get-markers',
     getKlines: '/exchange/get-klines',
