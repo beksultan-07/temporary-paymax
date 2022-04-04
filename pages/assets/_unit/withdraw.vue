@@ -57,14 +57,12 @@
                       {{ $vuetify.lang.t('$vuetify.lang_110') }}
                     </v-card-text>
                   </v-card>
-
                   <v-text-field v-model="to" color="yellow darken-3" :label="$vuetify.lang.t('$vuetify.lang_104')" outlined :rules="rulesAddress" required>
                     <template #message="{ message }">
                       {{ $vuetify.lang.t(message) }}
                     </template>
                   </v-text-field>
-
-                  <v-text-field v-model="value" color="yellow darken-3" :label="$vuetify.lang.t('$vuetify.lang_106')" outlined :hint="`≈ $${price ? (value ? price * value : 0) : (value ? value : 0)}`" persistent-hint :rules="rulesValue" required>
+                  <v-text-field v-model="value" color="yellow darken-3" :label="$vuetify.lang.t('$vuetify.lang_106')" outlined :hint="`≈ $${price ? $decimal.truncate((value ? price * value : 0), 8) : (value ? value : 0)}`" persistent-hint :rules="rulesValue" required>
                     <template v-slot:append>
                       <span class="my-1" @click="getBalance(item)" style="cursor: pointer;">
                         <span class="orange--text">MAX</span> <span class="grey--text">{{ getReserveBalance(item) }} {{ asset.symbol.toUpperCase() }}</span>
@@ -74,13 +72,10 @@
                       {{ $vuetify.lang.t(message) }}
                     </template>
                   </v-text-field>
-
                   <v-btn large elevation="0" color="black--text yellow darken-1 text-capitalize">
                     {{ $vuetify.lang.t('$vuetify.lang_111') }}
                   </v-btn>
-
                   {{ $vuetify.lang.t('$vuetify.lang_103') }}: {{ value > 0 ? value - item['fees_withdraw'] : 0 }} <b>{{ asset.symbol.toUpperCase() }}</b>
-
                 </template>
                 <template v-else>
                   <v-card elevation="0" outlined>
