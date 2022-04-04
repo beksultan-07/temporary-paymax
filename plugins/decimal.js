@@ -15,7 +15,7 @@ export default (context, inject) => {
       return 8
     },
     format(number, quantity) {
-      return (number).toFixed(quantity ?? 2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+      return number ? (number).toFixed(quantity ?? 2).replace(/\d(?=(\d{3})+\.)/g, '$&,') : 0;
     }
   };
   inject('decimal', context.$decimal);
