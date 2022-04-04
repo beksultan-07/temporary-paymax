@@ -31,7 +31,7 @@
 
                 <v-card class="mb-4" elevation="0" outlined>
                   <v-card-text :class="$vuetify.theme.dark ? 'white--text' : 'black--text'">
-                    <v-icon>mdi-fingerprint</v-icon> {{ $vuetify.lang.t('$vuetify.lang_110') }}
+                    {{ $vuetify.lang.t('$vuetify.lang_110') }}
                   </v-card-text>
                 </v-card>
 
@@ -73,7 +73,7 @@
                 </v-card-subtitle>
                 <v-divider />
                 <v-card-subtitle>
-                  {{ $vuetify.lang.t('$vuetify.lang_113') }}: <b>{{ item.platform }}</b>
+                  {{ $vuetify.lang.t('$vuetify.lang_113') }}: <b>{{ item.platform ? item.platform : 'BITCOIN' }}</b>
                 </v-card-subtitle>
                 <v-divider />
                 <v-card-text :class="$vuetify.theme.dark ? 'white--text' : 'black--text'">

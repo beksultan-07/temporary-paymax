@@ -38,6 +38,7 @@
                 <v-card-text class="mt-2 text-center">
                   <div><small>{{ $vuetify.lang.t('$vuetify.lang_56') }}</small></div>
                   <div class="text-h5">{{ $decimal.format(asset.balance, $decimal.decimal(asset.balance)) }}</div>
+                  <small v-if="asset.balance > 0">${{ $decimal.truncate(price ? (asset.balance ? price * asset.balance : 0) : (asset.balance ? asset.balance : 0), 8) }}</small>
                 </v-card-text>
               </v-card>
             </v-col>
@@ -46,6 +47,7 @@
                 <v-card-text class="mt-2 text-center">
                   <div><small>{{ $vuetify.lang.t('$vuetify.lang_94') }}</small></div>
                   <div class="text-h5">{{  $decimal.format(asset.volume, $decimal.decimal(asset.volume)) }}</div>
+                  <small v-if="asset.volume > 0">${{ $decimal.truncate(price ? (asset.volume ? price * asset.volume : 0) : (asset.volume ? asset.volume : 0), 8) }}</small>
                 </v-card-text>
               </v-card>
             </v-col>
@@ -105,6 +107,7 @@
       return {
         unit: undefined,
         asset: undefined,
+        price: 0,
         eyelet: 0
       }
     },
@@ -128,6 +131,27 @@
         });
       }
       return { unit };
+    },
+    watch: {
+      $route(route) {
+        this.getPrice(route.params.unit);
+      }
+    },
+    create() {
+      setTimeout(() => {
+        this.getPrice(this.unit);
+      }, 1000)
+    },
+    methods: {
+
+      /**
+       * @param unit
+       */
+      getPrice(unit) {
+        this.$axios.$get(Api.exchange.getPrice + '?base_unit=' + unit + '&quote_unit=usdt').then((response) => {
+          this.price = response.price ?? 0;
+        });
+      }
     }
   }
 </script>

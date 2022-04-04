@@ -30,7 +30,7 @@
                 </v-card-subtitle>
                 <v-divider />
                 <v-card-subtitle>
-                  {{ $vuetify.lang.t('$vuetify.lang_113') }}: <b>{{ item.platform }}</b>
+                  {{ $vuetify.lang.t('$vuetify.lang_113') }}: <b>{{ item.platform ? item.platform : 'BITCOIN' }}</b>
                 </v-card-subtitle>
                 <v-divider />
                 <v-card-text :class="$vuetify.theme.dark ? 'white--text' : 'black--text'">
@@ -54,7 +54,7 @@
                 <template v-if="getReserve(item)">
                   <v-card class="mb-4" elevation="0" outlined>
                     <v-card-text :class="$vuetify.theme.dark ? 'white--text' : 'black--text'">
-                      <v-icon>mdi-fingerprint</v-icon> {{ $vuetify.lang.t('$vuetify.lang_110') }}
+                      {{ $vuetify.lang.t('$vuetify.lang_110') }}
                     </v-card-text>
                   </v-card>
 
@@ -64,7 +64,7 @@
                     </template>
                   </v-text-field>
 
-                  <v-text-field v-model="value" color="yellow darken-3" :label="$vuetify.lang.t('$vuetify.lang_106')" outlined :rules="rulesValue" required>
+                  <v-text-field v-model="value" color="yellow darken-3" :label="$vuetify.lang.t('$vuetify.lang_106')" outlined :hint="`≈ $${price ? (value ? price * value : 0) : (value ? value : 0)}`" persistent-hint :rules="rulesValue" required>
                     <template v-slot:append>
                       <span class="my-1" @click="getBalance(item)" style="cursor: pointer;">
                         <span class="orange--text">MAX</span> <span class="grey--text">{{ getReserveBalance(item) }} {{ asset.symbol.toUpperCase() }}</span>
@@ -74,6 +74,13 @@
                       {{ $vuetify.lang.t(message) }}
                     </template>
                   </v-text-field>
+
+                  <v-btn large elevation="0" color="black--text yellow darken-1 text-capitalize">
+                    {{ $vuetify.lang.t('$vuetify.lang_111') }}
+                  </v-btn>
+
+                  {{ $vuetify.lang.t('$vuetify.lang_103') }}: {{ value > 0 ? value - item['fees_withdraw'] : 0 }} <b>{{ asset.symbol.toUpperCase() }}</b>
+
                 </template>
                 <template v-else>
                   <v-card elevation="0" outlined>
@@ -85,9 +92,6 @@
 
               </template>
 
-              {{ $vuetify.lang.t('$vuetify.lang_103') }}
-              {{ $vuetify.lang.t('$vuetify.lang_105') }}
-              {{ $vuetify.lang.t('$vuetify.lang_107') }}
             </v-col>
             <v-col cols="12" md="6">
               <v-card class="mb-4" elevation="0" outlined>
@@ -101,7 +105,7 @@
               </v-card>
               <v-card elevation="0" outlined>
                 <v-card-subtitle :class="$vuetify.theme.dark ? 'white--text' : 'black--text'">
-                  <b>{{ $vuetify.lang.t('$vuetify.lang_20') }}:</b> {{ item['fees_withdraw'] }} <b>{{ asset.symbol.toUpperCase() }}</b>
+                  <b>{{ $vuetify.lang.t('$vuetify.lang_20') }}:</b> {{ item['fees_withdraw'] }} {{ asset.symbol.toUpperCase() }} /≈ ${{ $decimal.truncate(price ? (item['fees_withdraw'] ? price * item['fees_withdraw'] : 0) : (item['fees_withdraw'] ? item['fees_withdraw'] : 0), 8) }}
                 </v-card-subtitle>
                 <v-divider />
                 <v-card-text :class="$vuetify.theme.dark ? 'white--text' : 'black--text'">
@@ -149,6 +153,7 @@
         },
         value: '',
         eyelet: 0,
+        price: 0,
         to: ''
       }
     },
@@ -168,7 +173,7 @@
       getAsset() {
         this.$axios.$post(Api.exchange.getAsset, {unit: this.$route.params.unit}).then((response) => {
           this.asset = response.currencies.lastItem ?? {};
-          console.log(this.asset)
+          this.getPrice(this.asset.symbol);
         }).catch(e => {
           console.log(e)
         });
@@ -230,8 +235,13 @@
         return number
       },
 
-      getFees() {
-
+      /**
+       * @param unit
+       */
+      getPrice(unit) {
+        this.$axios.$get(Api.exchange.getPrice + '?base_unit=' + unit + '&quote_unit=usdt').then((response) => {
+          this.price = response.price ?? 0;
+        });
       }
     },
     computed: {
