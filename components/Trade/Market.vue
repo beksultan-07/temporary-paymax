@@ -91,9 +91,9 @@
 
 <script>
 
-  import Api from "../../libs/api";
+import Api from "../../libs/api";
 
-  export default {
+export default {
     name: "v-component-market",
     props: {
       exchange: String
@@ -110,7 +110,7 @@
     },
     mounted() {
 
-      this.getMarkers();
+      this.getMarkers(this.exchange.split('-')[0]);
       this.getPairs(this.exchange.split('-')[0]);
 
       /**
@@ -174,11 +174,19 @@
       },
 
       /**
-       *
+       * @param unit
        */
-      getMarkers() {
+      getMarkers(unit) {
         this.$axios.$post(Api.exchange.getMarkers).then((response) => {
           this.markers = response.markers ?? [];
+
+          // Sort by unit.
+          this.markers.map((item, index) => {
+            if (item === unit) {
+              this.markers[index] = this.markers[0];
+              this.markers[0] = item
+            }
+          })
         });
       },
 
