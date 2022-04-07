@@ -17,7 +17,7 @@
             <v-virtual-scroll :class="(hover ? 'bg-state' : 'bg-state overflow-y-hidden')" :height="height" :items="items" bench="0" item-height="50">
               <template v-slot:default="{ item }">
                 <v-hover v-slot:default="{ hover }">
-                  <v-list-item :color="$vuetify.theme.dark ? 'grey darken-3' : 'indigo lighten-4'" :key="item.id" :class="active(item.symbol) ? 'v-list-item--active ' + ($vuetify.theme.dark ? 'grey--text text--darken-3' : 'indigo--text text--lighten-4') : ''" :to="'/assets/' + item.symbol + '/deposit'" dense>
+                  <v-list-item :color="$vuetify.theme.dark ? 'grey darken-3' : 'indigo lighten-5'" :key="item.id" :class="active(item.symbol) ? 'v-list-item--active ' + ($vuetify.theme.dark ? 'grey--text text--darken-3' : 'indigo--text text--lighten-5') : ''" :to="'/assets/' + item.symbol + '/deposit'" dense>
                     <v-list-item-avatar size="30">
                       <v-img :src="$storages(['icon'], item.symbol)"/>
                     </v-list-item-avatar>
