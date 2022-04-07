@@ -1,19 +1,17 @@
 <template>
   <span>
-    <template v-if="this.$vuetify.theme.dark">
-      <v-btn @click="setTheme" icon>
+    <v-btn :color="$vuetify.theme.dark ? '' : 'indigo lighten-4'" @click="setTheme" icon>
+      <template v-if="this.$vuetify.theme.dark">
         <v-icon>
           mdi-brightness-1
         </v-icon>
-      </v-btn>
-    </template>
-    <template v-else>
-      <v-btn @click="setTheme" icon>
-        <v-icon>
+      </template>
+      <template v-else>
+        <v-icon :color="$vuetify.theme.dark ? '' : 'grey darken-1'">
           mdi-brightness-3
         </v-icon>
-      </v-btn>
-    </template>
+      </template>
+    </v-btn>
   </span>
 </template>
 
