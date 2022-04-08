@@ -22,7 +22,7 @@
             <v-virtual-scroll :class="'bg-state ' + (hover ? '' : 'overflow-y-hidden')" bench="0" :items="assets" height="393" item-height="50">
               <template v-slot:default="{ item }">
                 <v-hover v-slot:default="{ hover }">
-                  <v-list-item :color="$vuetify.theme.dark ? 'grey darken-3' : 'indigo lighten-5'" :to="'/assets/' + item.symbol + '/deposit'" :key="item.id" dense>
+                  <v-list-item :color="$vuetify.theme.dark ? 'grey darken-3' : 'deep-purple lighten-5'" :to="'/assets/' + item.symbol + '/deposit'" :key="item.id" dense>
                     <v-list-item-avatar size="30">
                       <v-img :src="$storages(['icon'], item.symbol)"/>
                     </v-list-item-avatar>
@@ -119,7 +119,7 @@
          * @object {user_id: int},
          * @object {value: float}
          */
-        this.$publish.bind('exchange/order/create', (data) => {
+        this.$publish.bind('exchange/order/create', '10947', (data) => {
           data.assigning = data.assigning ? 1 : 0;
 
           if (
@@ -147,7 +147,7 @@
          * @object {user_id: int},
          * @object {value: float},
          */
-        this.$publish.bind('exchange/order/cancel', (data) => {
+        this.$publish.bind('exchange/order/cancel', '56982', (data) => {
           data.assigning = data.assigning ? 1 : 0;
 
           if (

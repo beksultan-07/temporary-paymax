@@ -232,7 +232,7 @@
        * @object {user_id: int},
        * @object {value: float}
        */
-      this.$publish.bind('exchange/order/create', (data) => {
+      this.$publish.bind('exchange/order/create', '10966', (data) => {
         data.assigning = data.assigning ? 1 : 0;
 
         if (
@@ -278,7 +278,7 @@
        * @object {user_id: int},
        * @object {value: float}
        */
-      this.$publish.bind('exchange/order/status', (data) => {
+      this.$publish.bind('exchange/order/status', '90816', (data) => {
 
         let index = this.orders.map((o) => o.id).indexOf(data.id);
         let matching = this.orders.some((o) => o.id === data.id);
@@ -338,7 +338,7 @@
        * @object {quote_unit: string},
        * @object {time: int}
        */
-      this.$publish.bind('exchange/kline', (data) => {
+      this.$publish.bind('exchange/kline', '11554', (data) => {
           if (data.ohlc) {
             if (
 

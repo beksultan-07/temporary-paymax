@@ -1,7 +1,7 @@
 <template>
   <v-dialog v-model="dialog" max-width="500px">
     <template v-slot:activator="{ on, attrs }">
-      <v-btn :color="$vuetify.theme.dark ? '' : 'indigo lighten-4'" elevation="0" icon v-bind="attrs" v-on="on">
+      <v-btn :color="$vuetify.theme.dark ? '' : 'deep-purple lighten-4'" elevation="0" icon v-bind="attrs" v-on="on">
         <v-tooltip bottom>
           <template v-slot:activator="{ on, attrs }">
             <v-icon :color="$vuetify.theme.dark ? '' : 'grey darken-1'" v-bind="attrs" v-on="on">

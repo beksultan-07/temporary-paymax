@@ -1,6 +1,6 @@
 <template>
   <span>
-    <v-btn :color="$vuetify.theme.dark ? '' : 'indigo lighten-4'" @click="setTheme" icon>
+    <v-btn :color="$vuetify.theme.dark ? '' : 'deep-purple lighten-4'" @click="setTheme" icon>
       <template v-if="this.$vuetify.theme.dark">
         <v-icon>
           mdi-brightness-1
