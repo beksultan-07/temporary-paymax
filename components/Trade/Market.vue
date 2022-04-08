@@ -124,7 +124,7 @@ export default {
        * @object {quote_unit: string},
        * @object {time: int}
        */
-      this.$publish.bind('exchange/kline', '54509', (data) => {
+      this.$publish.bind('exchange/kline', (data) => {
 
         if (data.ohlc && data.ohlc.length > 1) {
           this.pairs.filter((item) => {

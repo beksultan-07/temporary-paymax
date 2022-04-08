@@ -1,7 +1,8 @@
 import mqtt from 'mqtt';
 
-export default ({ app, store }, inject) => {
+export default ({ app, store, route }, inject) => {
   app.$publish = {
+    message: [],
     client: mqtt.connect(process.env.BASE_BROKER || 'ws://localhost:15675/ws', {
       clean: true
     }),
@@ -18,6 +19,17 @@ export default ({ app, store }, inject) => {
       this.client.publish(topic, null, {qos: 1});
     },
     bind(topic, callback) {
+
+      if (this.client['_events'].message) {
+        switch (route.name) {
+          case 'trade-exchange':
+            if (this.client['_events'].message.length === 14) {
+              this.client['_events'].message.splice(0, 14)
+            }
+            break
+        }
+      }
+
       this.client.on('message', (t, m, packet) => {
         if (!packet.qos || !m.byteLength) {
           return;

@@ -156,7 +156,6 @@ export default class Datafeed {
     if (!this.$subscribers[subscriberUID]) {
       return;
     }
-    this.$self.$publish.client['_events'].message.splice(-1);
     this.$self.ohlc = {};
     delete this.$subscribers[subscriberUID];
   }

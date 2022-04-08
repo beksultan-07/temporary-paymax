@@ -119,7 +119,7 @@
          * @object {user_id: int},
          * @object {value: float}
          */
-        this.$publish.bind('exchange/order/create', '10947', (data) => {
+        this.$publish.bind('exchange/order/create', (data) => {
           data.assigning = data.assigning ? 1 : 0;
 
           if (
@@ -147,7 +147,7 @@
          * @object {user_id: int},
          * @object {value: float},
          */
-        this.$publish.bind('exchange/order/cancel', '56982', (data) => {
+        this.$publish.bind('exchange/order/cancel', (data) => {
           data.assigning = data.assigning ? 1 : 0;
 
           if (
