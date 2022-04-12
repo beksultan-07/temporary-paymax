@@ -94,7 +94,7 @@ export default {
       login: '/signin',
       logout: '/',
       callback: '/signin',
-      home: '/dashboard'
+      home: '/assets'
     }
   },
 
