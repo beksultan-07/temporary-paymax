@@ -57,6 +57,7 @@
                       {{ $vuetify.lang.t('$vuetify.lang_110') }}
                     </v-card-text>
                   </v-card>
+
                   <v-form ref="form">
                     <v-text-field v-model="to" color="yellow darken-3" :label="$vuetify.lang.t('$vuetify.lang_104')" outlined :rules="rulesAddress" required>
                       <template #message="{ message }">
@@ -73,12 +74,13 @@
                         {{ $vuetify.lang.t(message) }}
                       </template>
                     </v-text-field>
+
+                    <v-btn color="black--text yellow darken-1 text-capitalize" large block elevation="0" @click="setWithdraw(item)">
+                      {{ $vuetify.lang.t('$vuetify.lang_111') }} <span v-if="quantity">({{ $vuetify.lang.t('$vuetify.lang_103') }}: {{ $decimal.truncate(quantity > 0 ? quantity - item['fees_withdraw'] : 0, 8) }} <b>{{ asset.symbol.toUpperCase() }}</b>)</span>
+                    </v-btn>
                   </v-form>
-                  <v-btn @click="setWithdraw(item)" large elevation="0" color="black--text yellow darken-1 text-capitalize">
-                    {{ $vuetify.lang.t('$vuetify.lang_111') }}
-                  </v-btn>
-                  {{ $vuetify.lang.t('$vuetify.lang_103') }}: {{ quantity > 0 ? quantity - item['fees_withdraw'] : 0 }} <b>{{ asset.symbol.toUpperCase() }}</b>
                 </template>
+
                 <template v-else>
                   <v-card elevation="0" outlined>
                     <v-card-text :class="$vuetify.theme.dark ? 'white--text' : 'black--text'">
@@ -245,23 +247,23 @@
        * @param item
        */
       setWithdraw(item) {
-        if (this.$refs.form.validate()) {
-          this.$axios.$post(Api.exchange.setWithdraw, {
-            unit: this.$route.params.unit,
-            chain_id: item.id,
-            platform: item.platform,
-            protocol: item.protocol,
-            quantity: this.quantity,
-            address: this.to
-          }).then(() => {
-            return this.$router.push('/assets/' + this.$route.params.unit + '/history')
-          }).catch((error) => {
-            this.$snackbar.open({
-              content: `${error.response.data.code}: ${error.response.data.message}`,
-              color: 'red darken-2'
-            });
+        if (!this.$refs.form[0].validate()) return false;
+
+        this.$axios.$post(Api.exchange.setWithdraw, {
+          unit: this.$route.params.unit,
+          chain_id: item.id,
+          platform: item.platform,
+          protocol: item.protocol,
+          quantity: this.quantity,
+          address: this.to
+        }).then(() => {
+          return this.$router.push('/assets/' + this.$route.params.unit + '/history')
+        }).catch((error) => {
+          this.$snackbar.open({
+            content: `${error.response.data.code}: ${error.response.data.message}`,
+            color: 'red darken-2'
           });
-        }
+        });
       }
     },
     computed: {
