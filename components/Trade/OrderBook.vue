@@ -68,7 +68,7 @@
                 {{ $decimal.truncate(item.value, $decimal.decimal(item.value)) }}
               </v-col>
               <v-col :class="'text-right ' + ($vuetify.theme.dark ? 'grey--text' : '')" cols="4">
-                {{ $decimal.truncate(Math.round(item.value * item.price), $decimal.decimal(item.value))  }}
+                {{ $decimal.truncate(item.value * item.price, $decimal.decimal(item.value))  }}
               </v-col>
             </v-row>
           </v-component-shift-item>
@@ -112,7 +112,7 @@
           </v-col>
           <v-col class="text-right" cols="6">
             <small class="mx-2">
-              {{ eyelet === 1 ? $decimal.truncate(volume, $decimal.decimal(volume)) : $decimal.truncate(Math.round(volume * priceCurrent), $decimal.decimal(volume)) }}<b>({{ eyelet === 1 ? query.split('-')[0].toUpperCase() : query.split('-')[1].toUpperCase() }})</b>
+              {{ eyelet === 1 ? $decimal.truncate(volume, $decimal.decimal(volume)) : $decimal.truncate(volume * priceCurrent, $decimal.decimal(volume)) }}<b>({{ eyelet === 1 ? query.split('-')[0].toUpperCase() : query.split('-')[1].toUpperCase() }})</b>
             </small>
           </v-col>
         </v-row>
