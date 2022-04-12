@@ -62,7 +62,7 @@
                       {{ $vuetify.lang.t(message) }}
                     </template>
                   </v-text-field>
-                  <v-text-field v-model="value" color="yellow darken-3" :label="$vuetify.lang.t('$vuetify.lang_106')" outlined :hint="`≈ $${price ? $decimal.truncate((value ? price * value : 0), 8) : (value ? value : 0)}`" persistent-hint :rules="rulesValue" required>
+                  <v-text-field v-model="quantity" color="yellow darken-3" :label="$vuetify.lang.t('$vuetify.lang_106')" outlined :hint="`≈ $${price ? $decimal.truncate((quantity ? price * quantity : 0), 8) : (quantity ? quantity : 0)}`" persistent-hint :rules="rulesQuantity" required>
                     <template v-slot:append>
                       <span class="my-1" @click="getBalance(item)" style="cursor: pointer;">
                         <span class="orange--text">MAX</span> <span class="grey--text">{{ getReserveBalance(item) }} {{ asset.symbol.toUpperCase() }}</span>
@@ -72,10 +72,10 @@
                       {{ $vuetify.lang.t(message) }}
                     </template>
                   </v-text-field>
-                  <v-btn large elevation="0" color="black--text yellow darken-1 text-capitalize">
+                  <v-btn @click="setWithdraw(item)" large elevation="0" color="black--text yellow darken-1 text-capitalize">
                     {{ $vuetify.lang.t('$vuetify.lang_111') }}
                   </v-btn>
-                  {{ $vuetify.lang.t('$vuetify.lang_103') }}: {{ value > 0 ? value - item['fees_withdraw'] : 0 }} <b>{{ asset.symbol.toUpperCase() }}</b>
+                  {{ $vuetify.lang.t('$vuetify.lang_103') }}: {{ quantity > 0 ? quantity - item['fees_withdraw'] : 0 }} <b>{{ asset.symbol.toUpperCase() }}</b>
                 </template>
                 <template v-else>
                   <v-card elevation="0" outlined>
@@ -146,7 +146,7 @@
         asset: {
           chains: []
         },
-        value: '',
+        quantity: '',
         eyelet: 0,
         price: 0,
         to: ''
@@ -169,6 +169,7 @@
         this.$axios.$post(Api.exchange.getAsset, {unit: this.$route.params.unit}).then((response) => {
           this.asset = response.currencies.lastItem ?? {};
           this.getPrice(this.asset.symbol);
+          console.log(this.asset);
         }).catch(e => {
           console.log(e)
         });
@@ -190,7 +191,7 @@
        * @param item
        */
       getBalance(item) {
-        this.value = this.getReserveBalance(item);
+        this.quantity = this.getReserveBalance(item);
       },
 
       /**
@@ -237,6 +238,17 @@
         this.$axios.$get(Api.exchange.getPrice + '?base_unit=' + unit + '&quote_unit=usdt').then((response) => {
           this.price = response.price ?? 0;
         });
+      },
+
+      /**
+       * @param item
+       */
+      setWithdraw(item) {
+        this.$axios.$post(Api.exchange.setWithdraw, {unit: this.$route.params.unit, chain_id: item.id, platform: item.platform, protocol: item.protocol, quantity: this.quantity, address: this.to}).then(() => {
+          return this.$router.push('/assets/' + this.$route.params.unit + '/history')
+        }).catch((error) => {
+          this.$snackbar.open({content: `${error.response.data.code}: ${error.response.data.message}`, color: 'red darken-2'});
+        });
       }
     },
     computed: {
@@ -246,7 +258,7 @@
           (v) => v.length >= 30 || '$vuetify.lang_115'
         ]
       },
-      rulesValue() {
+      rulesQuantity() {
         return [
           (v) => !!v || '$vuetify.lang_116',
           (v) => v > 0 || '$vuetify.lang_117'
