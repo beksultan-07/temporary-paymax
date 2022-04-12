@@ -1,11 +1,13 @@
+import BigNumber from "bignumber.js";
+
 export default (context, inject) => {
   context.$decimal = {
     truncate(number, quantity) {
-      let nums = String(number).split('.');
+      let nums = new BigNumber(number).toFormat(quantity).split(',')
       if (nums.length === 2) {
-        return Number(nums[0] + '.' + nums[1].substring(0, quantity))
+        return Number(nums[0]+nums[1])
       }
-      return Number(number)
+      return Number(nums[0])
     },
     decimal(number) {
       let nums = String(number).split('.');
