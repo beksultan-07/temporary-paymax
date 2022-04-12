@@ -57,21 +57,23 @@
                       {{ $vuetify.lang.t('$vuetify.lang_110') }}
                     </v-card-text>
                   </v-card>
-                  <v-text-field v-model="to" color="yellow darken-3" :label="$vuetify.lang.t('$vuetify.lang_104')" outlined :rules="rulesAddress" required>
-                    <template #message="{ message }">
-                      {{ $vuetify.lang.t(message) }}
-                    </template>
-                  </v-text-field>
-                  <v-text-field v-model="quantity" color="yellow darken-3" :label="$vuetify.lang.t('$vuetify.lang_106')" outlined :hint="`≈ $${price ? $decimal.truncate((quantity ? price * quantity : 0), 8) : (quantity ? quantity : 0)}`" persistent-hint :rules="rulesQuantity" required>
-                    <template v-slot:append>
-                      <span class="my-1" @click="getBalance(item)" style="cursor: pointer;">
-                        <span class="orange--text">MAX</span> <span class="grey--text">{{ getReserveBalance(item) }} {{ asset.symbol.toUpperCase() }}</span>
-                      </span>
-                    </template>
-                    <template #message="{ message }">
-                      {{ $vuetify.lang.t(message) }}
-                    </template>
-                  </v-text-field>
+                  <v-form ref="form">
+                    <v-text-field v-model="to" color="yellow darken-3" :label="$vuetify.lang.t('$vuetify.lang_104')" outlined :rules="rulesAddress" required>
+                      <template #message="{ message }">
+                        {{ $vuetify.lang.t(message) }}
+                      </template>
+                    </v-text-field>
+                    <v-text-field v-model="quantity" color="yellow darken-3" :label="$vuetify.lang.t('$vuetify.lang_106')" outlined :hint="`≈ $${price ? $decimal.truncate((quantity ? price * quantity : 0), 8) : (quantity ? quantity : 0)}`" persistent-hint :rules="rulesQuantity" required>
+                      <template v-slot:append>
+                        <span class="my-1" @click="getBalance(item)" style="cursor: pointer;">
+                          <span class="orange--text">MAX</span> <span class="grey--text">{{ getReserveBalance(item) }} {{ asset.symbol.toUpperCase() }}</span>
+                        </span>
+                      </template>
+                      <template #message="{ message }">
+                        {{ $vuetify.lang.t(message) }}
+                      </template>
+                    </v-text-field>
+                  </v-form>
                   <v-btn @click="setWithdraw(item)" large elevation="0" color="black--text yellow darken-1 text-capitalize">
                     {{ $vuetify.lang.t('$vuetify.lang_111') }}
                   </v-btn>
@@ -169,7 +171,6 @@
         this.$axios.$post(Api.exchange.getAsset, {unit: this.$route.params.unit}).then((response) => {
           this.asset = response.currencies.lastItem ?? {};
           this.getPrice(this.asset.symbol);
-          console.log(this.asset);
         }).catch(e => {
           console.log(e)
         });
@@ -244,11 +245,23 @@
        * @param item
        */
       setWithdraw(item) {
-        this.$axios.$post(Api.exchange.setWithdraw, {unit: this.$route.params.unit, chain_id: item.id, platform: item.platform, protocol: item.protocol, quantity: this.quantity, address: this.to}).then(() => {
-          return this.$router.push('/assets/' + this.$route.params.unit + '/history')
-        }).catch((error) => {
-          this.$snackbar.open({content: `${error.response.data.code}: ${error.response.data.message}`, color: 'red darken-2'});
-        });
+        if (this.$refs.form.validate()) {
+          this.$axios.$post(Api.exchange.setWithdraw, {
+            unit: this.$route.params.unit,
+            chain_id: item.id,
+            platform: item.platform,
+            protocol: item.protocol,
+            quantity: this.quantity,
+            address: this.to
+          }).then(() => {
+            return this.$router.push('/assets/' + this.$route.params.unit + '/history')
+          }).catch((error) => {
+            this.$snackbar.open({
+              content: `${error.response.data.code}: ${error.response.data.message}`,
+              color: 'red darken-2'
+            });
+          });
+        }
       }
     },
     computed: {
