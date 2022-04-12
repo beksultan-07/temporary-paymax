@@ -106,7 +106,7 @@
     },
     mounted() {
       if (this.$auth.loggedIn) {
-        return this.$router.push('/dashboard')
+        return this.$router.push('/assets')
       }
     },
     methods: {
