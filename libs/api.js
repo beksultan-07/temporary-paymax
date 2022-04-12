@@ -25,7 +25,10 @@ export default {
     getAssets: '/exchange/get-assets',
     setAsset: '/exchange/set-asset',
     setOrder: '/exchange/set-order',
-    cancelOrder: '/exchange/cancel-order'
+    cancelOrder: '/exchange/cancel-order',
+    setWithdraw: '/exchange/set-withdraw',
+    cancelWithdraw: '/exchange/cancel-withdraw',
+    getTransactions: '/exchange/get-transactions'
   },
   status: '/status',
   timestamp: '/timestamp',
