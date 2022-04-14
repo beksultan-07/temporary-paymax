@@ -52,6 +52,9 @@
       this.$publish.subscribe(['exchange/order/create', 'exchange/order/status', 'exchange/order/cancel', 'exchange/kline'], (error) => {
         console.log(error);
       });
+      setInterval(() => {
+        this.$nuxt.$emit('my-custom-event', {test: 242424});
+      }, 5000)
     }
   }
 </script>

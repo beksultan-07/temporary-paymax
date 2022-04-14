@@ -1,5 +1,5 @@
 <template>
-  <div :style="'height:' + height + 'px;overflow: auto;'">
+  <div class="overflow-x-hidden overflow-y-hidden" :style="'height:' + height + 'px;'">
       <slot name="default"></slot>
   </div>
 </template>

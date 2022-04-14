@@ -481,7 +481,7 @@
           // Имя актива (symbol-quote).
           quote_unit: this.query.split('-')[1],
           // Тип [market:0] - [limit:1]
-          type: 0,
+          trade_type: 0,
           // Количество монет sell/buy.
           quantity: this.quantity,
           // Рыночная цена монеты.

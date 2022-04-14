@@ -21,13 +21,9 @@ export default ({ app, store, route }, inject) => {
     bind(topic, callback) {
 
       if (this.client['_events'].message) {
-        switch (route.name) {
-          case 'trade-exchange':
-            if (this.client['_events'].message.length === 14) {
-              this.client['_events'].message.splice(0, 14)
-            }
-            break
-        }
+          if (this.client['_events'].message.length >= 100) {
+            this.client['_events'].message.splice(0, 50)
+          }
       }
 
       this.client.on('message', (t, m, packet) => {
@@ -40,6 +36,6 @@ export default ({ app, store, route }, inject) => {
       });
     }
   };
-  app.$publish.client.setMaxListeners(100);
+  app.$publish.client.setMaxListeners(150);
   inject('publish', app.$publish);
 };
