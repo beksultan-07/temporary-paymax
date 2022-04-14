@@ -177,7 +177,7 @@
        * @object {user_id: int},
        * @object {value: float}
        */
-      this.$publish.bind('exchange/order/status', (data) => {
+      this.$publish.bind('order/status', (data) => {
 
         let index = this.orders.map((o) => o.id).indexOf(data.id);
         let matching = this.orders.some((o) => o.id === data.id);
@@ -229,7 +229,7 @@
        * @object {user_id: int},
        * @object {value: float}
        */
-      this.$publish.bind('exchange/order/create', (data) => {
+      this.$publish.bind('order/create', (data) => {
         data.assigning = data.assigning ?? 0;
 
         if (this.eyelet === data.assigning || this.eyelet === 2) {
@@ -253,7 +253,7 @@
        * @object {user_id: int},
        * @object {value: float},
        */
-      this.$publish.bind('exchange/order/cancel', (data) => {
+      this.$publish.bind('order/cancel', (data) => {
 
         // Удаляем ордер с массива по идентификатору.
         this.orders.splice(this.orders.map((o) => o.id).indexOf(data.id), 1);

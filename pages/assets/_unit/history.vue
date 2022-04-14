@@ -143,8 +143,8 @@
       this.getTransactions();
     },
     created() {
-      this.$nuxt.$on('my-custom-event', (test) => {
-        console.log("my-custom-event", test);
+      this.$publish.bind('trade/kline', (data) => {
+        console.log("trade/kline", data);
       });
     },
     methods: {
@@ -165,7 +165,7 @@
       }
     },
     beforeDestroy() {
-      this.$nuxt.$off('my-custom-event');
+      this.$publish.unbind(['trade/kline']);
     }
   }
 </script>

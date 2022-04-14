@@ -88,6 +88,9 @@
       }).catch(e => {
         error(e)
       });
+    },
+    beforeDestroy() {
+      this.$publish.unbind(['order/create', 'order/status', 'order/cancel', 'trade/kline']);
     }
   }
 </script>

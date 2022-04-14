@@ -1,41 +1,43 @@
 import mqtt from 'mqtt';
+import Vue from 'vue';
 
-export default ({ app, store, route }, inject) => {
+export default ({ app, $on }, inject) => {
+  let event = new Vue();
   app.$publish = {
-    message: [],
     client: mqtt.connect(process.env.BASE_BROKER || 'ws://localhost:15675/ws', {
       clean: true
     }),
-    subscribe(topics, error) {
+    subscribe(topic, channels, error) {
       this.client.on('connect', () => {
-        this.client.subscribe(topics, {qos: 1}, (err) => {
+        this.client.subscribe(topic, {qos: 1}, (err) => {
           if(err) {
             error(`Error on topic subscribe: ${err}`);
           }
+          this.client.on("message", (t, m, packet) => {
+            if (!packet.qos || !m.byteLength) {
+              return;
+            }
+            if (topic === t) {
+              let bytea = JSON.parse(m.toString());
+              channels.map((channel) => {
+                if (channel === bytea.channel) {
+                  event.$emit(bytea.channel, JSON.parse(bytea.data));
+                }
+              });
+            }
+          });
         });
       });
     },
-    unbind(topic) {
-      this.client.publish(topic, null, {qos: 1});
-    },
-    bind(topic, callback) {
-
-      if (this.client['_events'].message) {
-          if (this.client['_events'].message.length >= 100) {
-            this.client['_events'].message.splice(0, 50)
-          }
-      }
-
-      this.client.on('message', (t, m, packet) => {
-        if (!packet.qos || !m.byteLength) {
-          return;
-        }
-        if (topic === t) {
-          callback(JSON.parse(m.toString()));
-        }
+    unbind(channels) {
+      channels.map((channel) => {
+        event.$off(channel);
       });
+    },
+    bind(channel, callback) {
+      event.$on(channel, callback);
     }
   };
-  app.$publish.client.setMaxListeners(150);
+  app.$publish.client.setMaxListeners(50);
   inject('publish', app.$publish);
 };

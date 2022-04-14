@@ -165,7 +165,7 @@
        * @object {user_id: int},
        * @object {value: float}
        */
-      this.$publish.bind('exchange/order/status', (data) => {
+      this.$publish.bind('order/status', (data) => {
         data.assigning = data.assigning ?? 0;
 
         if (
