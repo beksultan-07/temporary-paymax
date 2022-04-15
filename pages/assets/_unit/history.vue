@@ -1,11 +1,22 @@
 <template>
   <div>
-    <v-divider class="mt-5 pb-5"/>
+
+    <!-- Start: tabs bar -->
+    <v-tabs class="px-4 my-4" color="yellow darken-3">
+      <v-tab exact to="?type=2">{{ $vuetify.lang.t('$vuetify.lang_64') }}</v-tab>
+      <v-tab exact to="?type=1">{{ $vuetify.lang.t('$vuetify.lang_121') }}</v-tab>
+      <v-tab exact to="?type=0">{{ $vuetify.lang.t('$vuetify.lang_120') }}</v-tab>
+    </v-tabs>
+    <!-- End: tabs bar -->
+
+    <v-divider class="pb-5"/>
     <v-row>
+
+      <!-- Start: history list -->
       <div id="history-scroll">
         <v-expansion-panels flat accordion>
           <v-expansion-panel v-for="item in transactions" :key="item.id">
-            <v-expansion-panel-header class="py-4">
+            <v-expansion-panel-header class="py-2">
               <v-row justify="center" no-gutters>
                 <v-col cols="12" sm="3">
                   <v-row justify="center" no-gutters>
@@ -114,13 +125,18 @@
           </v-expansion-panel>
         </v-expansion-panels>
       </div>
-      <v-container class="max-width">
+      <!-- End: history list -->
+
+      <!-- Start: pagination -->
+      <v-container v-if="length > 1" class="max-width">
         <v-row justify="center">
           <v-col cols="8">
-            <v-pagination v-model="page" @input="getMore()" :length="length"></v-pagination>
+            <v-pagination v-model="page" circle @input="getMore()" :length="length"></v-pagination>
           </v-col>
         </v-row>
       </v-container>
+      <!-- End: pagination -->
+
     </v-row>
   </div>
 </template>
@@ -139,19 +155,19 @@
         page: 1
       }
     },
-    mounted() {
-      this.getTransactions();
+    watch: {
+      $route(params) {
+        this.getTransactions(Number(params.query.type));
+      }
     },
-    created() {
-      this.$publish.bind('trade/kline', (data) => {
-        console.log("trade/kline", data);
-      });
+    mounted() {
+      this.getTransactions(2);
     },
     methods: {
-      getTransactions() {
+      getTransactions(type) {
         this.$axios.$post(Api.exchange.getTransactions, {
           unit: this.$route.params.unit,
-          transaction_type: 2,
+          transaction_type: type,
           limit: 8,
           page: this.page
         }).then((response) => {
@@ -161,11 +177,8 @@
         });
       },
       getMore() {
-        this.getTransactions();
+        this.getTransactions(2);
       }
-    },
-    beforeDestroy() {
-      this.$publish.unbind(['trade/kline']);
     }
   }
 </script>

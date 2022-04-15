@@ -233,6 +233,11 @@
        * @object {value: float}
        */
       this.$publish.bind('order/create', (data) => {
+
+        if (!this.$auth.loggedIn) {
+          return false;
+        }
+
         data.assigning = data.assigning ? 1 : 0;
 
         if (
@@ -279,6 +284,10 @@
        * @object {value: float}
        */
       this.$publish.bind('order/status', (data) => {
+
+        if (!this.$auth.loggedIn) {
+          return false;
+        }
 
         let index = this.orders.map((o) => o.id).indexOf(data.id);
         let matching = this.orders.some((o) => o.id === data.id);

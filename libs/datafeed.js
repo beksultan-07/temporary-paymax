@@ -107,7 +107,7 @@ export default class Datafeed {
        * @object {quote_unit: string},
        * @object {time: int}
        */
-      this.$self.$publish.bind('exchange/kline', (data) => {
+      this.$self.$publish.bind('trade/kline', (data) => {
         if (data.ohlc) {
           if (symbol[0].toLowerCase() === data.ohlc.lastItem.base_unit && symbol[1].toLowerCase() === data.ohlc.lastItem.quote_unit) {
 
@@ -230,12 +230,10 @@ export default class Datafeed {
       if (previous !== null && current.time < previous.time) return;
       if (previous !== null && current.time > previous.time) {
         record.listener(previous);
-        console.log("Create new bar...");
       }
 
       record.listener(current);
       record.lastBar = current;
-      console.log("Update bar...")
     }
   }
 

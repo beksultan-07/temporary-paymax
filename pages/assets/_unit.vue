@@ -5,9 +5,9 @@
 
         <!-- Start: tabs bar -->
         <v-tabs v-model="eyelet" color="yellow darken-3">
-          <v-tab :to="'/assets/' + unit.toLowerCase() + '/deposit'">{{ $vuetify.lang.t('$vuetify.lang_91') }}</v-tab>
-          <v-tab :to="'/assets/' + unit.toLowerCase() + '/withdraw'">{{ $vuetify.lang.t('$vuetify.lang_92') }}</v-tab>
-          <v-tab :to="'/assets/' + unit.toLowerCase() + '/history'">{{ $vuetify.lang.t('$vuetify.lang_93') }}</v-tab>
+          <v-tab :to="'/assets/' + unit + '/deposit'">{{ $vuetify.lang.t('$vuetify.lang_91') }}</v-tab>
+          <v-tab :to="'/assets/' + unit + '/withdraw'">{{ $vuetify.lang.t('$vuetify.lang_92') }}</v-tab>
+          <v-tab :to="'/assets/' + unit + '/history'">{{ $vuetify.lang.t('$vuetify.lang_93') }}</v-tab>
         </v-tabs>
         <!-- End: tabs bar -->
 
