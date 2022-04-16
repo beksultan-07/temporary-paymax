@@ -144,9 +144,9 @@
 
       </template>
 
-      <!-- Start: not history -->
+      <!-- Start: no history -->
       <template v-else-if="!overlay">
-        <div style="width: 100%;height: 620px;">
+        <div class="mx-4" style="width: 100%;height: 620px;">
           <v-layout fill-height wrap>
             <v-flex/>
             <v-flex align-self-center class="text-center" md4 mx5 sm6 xl3>
@@ -158,7 +158,7 @@
           </v-layout>
         </div>
       </template>
-      <!-- End: not history -->
+      <!-- End: no history -->
 
       <v-overlay absolute :color="$vuetify.theme.dark ? 'grey darken-4' : 'white'" opacity="0.8" :value="overlay">
         <v-progress-circular color="yellow darken-3" indeterminate size="50" />
