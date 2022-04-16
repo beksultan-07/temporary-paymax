@@ -1,5 +1,5 @@
 <template>
-  <div class="overflow-x-hidden overflow-y-hidden" :style="'height:' + height + 'px;'">
+  <div class="overflow-x-hidden overflow-y-hidden" :style="syntax + height + 'px;'">
       <slot name="default"></slot>
   </div>
 </template>
@@ -10,6 +10,7 @@
     data() {
       return {
         height: 0,
+        syntax: 'height:'
       }
     },
     props: {
@@ -24,6 +25,13 @@
     },
     methods: {
       resize() {
+
+        if (this.$vuetify.breakpoint.name === 'xs') {
+          this.syntax = 'min-height:'
+        } else {
+          this.syntax = 'height:'
+        }
+
         this.height = window.innerHeight - this.size;
         this.$emit('v-height', this.height);
       }
