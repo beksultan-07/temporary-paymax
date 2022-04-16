@@ -119,9 +119,9 @@ export default {
   lang_119: "Support ID",
   lang_120: "Deposit",
   lang_121: "Withdrawal",
-  lang_122: "",
-  lang_123: "",
-  lang_124: "",
+  lang_122: "There are no entries to display the history of deposits and withdrawals",
+  lang_123: "No history :(",
+  lang_124: "Withdrawal Cancellation",
   lang_125: "",
   lang_126: ""
 }
