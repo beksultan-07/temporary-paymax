@@ -49,7 +49,7 @@
       'v-component-footer': Footer
     },
     mounted() {
-      this.$publish.subscribe('exchange', ['order/create', 'order/status', 'order/cancel', 'trade/kline'], (error) => {
+      this.$publish.subscribe('exchange', ['order/create', 'order/status', 'order/cancel', 'withdraw/cancel', 'withdraw/create', 'trade/kline'], (error) => {
         console.log(error);
       });
     }

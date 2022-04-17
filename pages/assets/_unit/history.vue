@@ -104,6 +104,30 @@
                   <v-list-item>
                     <v-item-group>
                       <v-list-item-subtitle>
+                        {{ $vuetify.lang.t('$vuetify.lang_104') }}
+                      </v-list-item-subtitle>
+                      <v-list-item-title>
+                        {{ item.to }}
+                      </v-list-item-title>
+                    </v-item-group>
+                  </v-list-item>
+                  <v-list-item>
+                    <v-item-group>
+                      <v-list-item-title>
+                        <v-btn-toggle class="text-uppercase" dense>
+                          <v-btn color="blue white--text">
+                            {{ $vuetify.lang.t('$vuetify.lang_113') }}: {{ item.platform }}({{ item.unit.toUpperCase() }})
+                          </v-btn>
+                          <v-btn color="amber white--text">
+                            {{ $vuetify.lang.t('$vuetify.lang_125') }}: {{ item.protocol ? item.protocol : 'MAINNET' }}
+                          </v-btn>
+                        </v-btn-toggle>
+                      </v-list-item-title>
+                    </v-item-group>
+                  </v-list-item>
+                  <v-list-item>
+                    <v-item-group>
+                      <v-list-item-subtitle>
                         {{ $vuetify.lang.t('$vuetify.lang_118') }}
                       </v-list-item-subtitle>
                       <v-list-item-title>
@@ -122,7 +146,7 @@
                     </v-item-group>
                   </v-list-item>
                   <v-list-item v-if="item.status === 'PENDING' && item.type === 'WITHDRAWS'">
-                    <v-btn color="white--text red darken-1 text-capitalize" large block elevation="0">{{ $vuetify.lang.t('$vuetify.lang_124') }}</v-btn>
+                    <v-btn color="white--text red darken-1 text-capitalize" @click="cancelWithdraw(item.id)" large block elevation="0">{{ $vuetify.lang.t('$vuetify.lang_124') }}</v-btn>
                   </v-list-item>
                 </v-list>
                 <v-divider/>
@@ -184,6 +208,9 @@
       }
     },
     watch: {
+      /**
+       * @param params
+       */
       $route(params) {
         this.getTransactions(Number(params.query.type));
       }
@@ -192,6 +219,10 @@
       this.getTransactions(2);
     },
     methods: {
+
+      /**
+       * @param type
+       */
       getTransactions(type) {
         this.overlay = true;
 
@@ -207,8 +238,29 @@
           this.overlay = false;
         });
       },
+
+      /**
+       *
+       */
       getMore() {
         this.getTransactions(2);
+      },
+
+      /**
+       * @param id
+       */
+      cancelWithdraw(id) {
+        this.$axios.$post(Api.exchange.cancelWithdraw, {
+          // Идентификатор вывода для удаления.
+          id: id
+        }).then(() => {
+
+          // Удаляем вывод с массива по идентификатору.
+          this.transactions.splice(this.transactions.map((o) => o.id).indexOf(id), 1);
+
+        }).catch((error) => {
+          this.$snackbar.open({content: `${error.response.data.code}: ${error.response.data.message}`, color: 'red darken-2'});
+        });
       }
     }
   }

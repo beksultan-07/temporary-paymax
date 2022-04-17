@@ -74,12 +74,7 @@
                   <v-card-text>
                     <ul>
                       <li v-for="pair in item.pairs" :key="pair.id">
-                        <template v-if="pair.fees_curve">
-                          {{ pair.symbol.toUpperCase() }}: <span class="green--text">{{ (item.fees_trade - pair.fees_curve).toFixed(4) }}%</span> / <span class="text-decoration-line-through">{{ item.fees_trade }}%</span>
-                        </template>
-                        <template v-else>
                           {{ pair.symbol.toUpperCase() }}: <span class="grey--text">{{ item.fees_trade }}%</span>
-                        </template>
                       </li>
                     </ul>
                   </v-card-text>
