@@ -4,7 +4,7 @@
     <!-- Start: marker market tab element -->
     <template v-if="markers.length">
       <v-app-bar color="transparent" height="50" flat>
-        <v-tabs color="yellow darken-3" v-model="eyelet" show-arrows>
+        <v-tabs color="primary" v-model="eyelet" show-arrows>
           <v-tab @click="getPairs(item)" v-for="item in markers" :key="item">{{ item }}</v-tab>
         </v-tabs>
       </v-app-bar>
@@ -47,8 +47,8 @@
           <v-flex/>
           <v-flex class="text-center mx-5" align-self-center>
             <div>
-              <v-icon color="yellow darken-3" size="50">
-                mdi-layers-outline
+              <v-icon size="50">
+                mdi-database-remove-outline
               </v-icon>
             </div>
             <h4 class="text-overline">{{ $vuetify.lang.t('$vuetify.lang_49') }}</h4>
@@ -62,8 +62,8 @@
         <v-flex/>
         <v-flex class="text-center mx-5" align-self-center>
           <div>
-            <v-icon color="yellow darken-3" size="50">
-              mdi-layers-outline
+            <v-icon size="50">
+              mdi-database-remove-outline
             </v-icon>
           </div>
           <h4 class="text-overline">{{ $vuetify.lang.t('$vuetify.lang_48') }}</h4>
@@ -77,13 +77,13 @@
     <template v-if="!overlay">
       <v-divider />
       <v-card-actions>
-        <v-text-field color="yellow darken-3" height="40" v-model="search" dense hide-details outlined :label="$vuetify.lang.t('$vuetify.lang_50')" prepend-inner-icon="mdi-layers-search-outline" />
+        <v-text-field color="primary" height="40" v-model="search" dense hide-details outlined :label="$vuetify.lang.t('$vuetify.lang_50')" prepend-inner-icon="mdi-layers-search-outline" />
       </v-card-actions>
     </template>
     <!-- End: pair search element -->
 
     <v-overlay absolute :color="$vuetify.theme.dark ? 'grey darken-4' : 'white'" opacity="0.8" :value="overlay">
-      <v-progress-circular color="yellow darken-3" indeterminate size="50" />
+      <v-progress-circular color="primary" indeterminate size="50" />
     </v-overlay>
 
   </v-card>

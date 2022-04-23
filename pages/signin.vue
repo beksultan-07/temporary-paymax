@@ -7,38 +7,38 @@
       <v-stepper class="transparent" v-model="next" vertical flat>
 
         <!-- Start: step auth signin: 1 -->
-        <v-stepper-step color="black--text yellow darken-1" :complete="next > 1" step="1">
+        <v-stepper-step color="primary" :complete="next > 1" step="1">
           {{ $vuetify.lang.t('$vuetify.lang_25') }}
           <small>{{ $vuetify.lang.t('$vuetify.lang_27') }}</small>
         </v-stepper-step>
         <v-stepper-content step="1">
 
           <v-form class="mt-2" ref="form">
-            <v-text-field color="yellow darken-3" outlined :label="$vuetify.lang.t('$vuetify.lang_4')" v-model="email" :rules="rulesEmail" required>
+            <v-text-field color="primary" outlined :label="$vuetify.lang.t('$vuetify.lang_4')" v-model="email" :rules="rulesEmail" required>
               <template #message="{ message }">
                 {{ $vuetify.lang.t(message) }}
               </template>
             </v-text-field>
-            <v-text-field color="yellow darken-3" outlined :label="$vuetify.lang.t('$vuetify.lang_5')" v-model="password" :rules="rulesPassword" :counter="8" :append-icon="print ? 'mdi-eye' : 'mdi-eye-off'" :type="print ? 'text' : 'password'" @click:append="print = !print" required>
+            <v-text-field color="primary" outlined :label="$vuetify.lang.t('$vuetify.lang_5')" v-model="password" :rules="rulesPassword" :counter="8" :append-icon="print ? 'mdi-eye' : 'mdi-eye-off'" :type="print ? 'text' : 'password'" @click:append="print = !print" required>
               <template #message="{ message }">
                 {{ $vuetify.lang.t(message) }}
               </template>
             </v-text-field>
-            <v-btn color="black--text yellow darken-1 text-capitalize" large block elevation="0" @click="actionSignin(0)">{{ $vuetify.lang.t('$vuetify.lang_40') }}</v-btn>
-            <div class="mt-3"><nuxt-link class="orange--text text-decoration-none" to="/reset">{{ $vuetify.lang.t('$vuetify.lang_28') }}</nuxt-link></div>
-            <div class="mt-1"><nuxt-link class="orange--text text-decoration-none" to="/signup">{{ $vuetify.lang.t('$vuetify.lang_26') }}</nuxt-link></div>
+            <v-btn color="primary text-capitalize" large block elevation="0" @click="actionSignin(0)">{{ $vuetify.lang.t('$vuetify.lang_40') }}</v-btn>
+            <div class="mt-3"><nuxt-link class="primary--text text-decoration-none" to="/reset">{{ $vuetify.lang.t('$vuetify.lang_28') }}</nuxt-link></div>
+            <div class="mt-1"><nuxt-link class="primary--text text-decoration-none" to="/signup">{{ $vuetify.lang.t('$vuetify.lang_26') }}</nuxt-link></div>
           </v-form>
         </v-stepper-content>
         <!-- End: step auth signin: 1 -->
 
         <!-- Start: step auth signin: 2 -->
-        <v-stepper-step color="black--text yellow darken-1" :complete="next > 2" step="2">
+        <v-stepper-step color="primary" :complete="next > 2" step="2">
           {{ $vuetify.lang.t('$vuetify.lang_33') }}
           <small>{{ $vuetify.lang.t('$vuetify.lang_34') }}</small>
         </v-stepper-step>
         <v-stepper-content step="2">
 
-          <v-text-field class="mt-2" color="yellow darken-3" outlined :label="$vuetify.lang.t('$vuetify.lang_35')" v-model="secure" :counter="6" :hint="$vuetify.lang.t('$vuetify.lang_43') + email">
+          <v-text-field class="mt-2" color="primary" outlined :label="$vuetify.lang.t('$vuetify.lang_35')" v-model="secure" :counter="6" :hint="$vuetify.lang.t('$vuetify.lang_43') + email">
             <template v-slot:append>
               <template v-if="timer === 60 || timer === 0">
                 <span class="my-1" @click="actionSignin(1)" style="cursor: pointer;">{{ $vuetify.lang.t('$vuetify.lang_36') }}</span>
@@ -49,7 +49,7 @@
             </template>
           </v-text-field>
 
-          <v-btn v-if="secure.length === 6" color="black--text yellow darken-1 text-capitalize" large block elevation="0" @click="actionSignin(2)">{{ $vuetify.lang.t('$vuetify.lang_29') }}</v-btn>
+          <v-btn v-if="secure.length === 6" color="primary text-capitalize" large block elevation="0" @click="actionSignin(2)">{{ $vuetify.lang.t('$vuetify.lang_29') }}</v-btn>
         </v-stepper-content>
         <!-- End: step auth signin: 2 -->
 

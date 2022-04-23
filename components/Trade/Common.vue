@@ -3,7 +3,7 @@
 
     <!-- Start: app bar element -->
     <v-app-bar color="transparent" height="50" flat>
-      <v-tabs color="yellow darken-3" v-model="eyelet" show-arrows>
+      <v-tabs color="primary" v-model="eyelet" show-arrows>
         <v-tab v-show="$auth.loggedIn">{{ $vuetify.lang.t('$vuetify.lang_79') }}</v-tab>
         <v-tab>{{ $vuetify.lang.t('$vuetify.lang_80') }}</v-tab>
         <v-tab>{{ $vuetify.lang.t('$vuetify.lang_82') }}</v-tab>
@@ -53,8 +53,8 @@
             <v-flex/>
             <v-flex class="text-center mx-5" align-self-center>
               <div>
-                <v-icon color="yellow darken-3" size="50">
-                  mdi-layers-outline
+                <v-icon size="50">
+                  mdi-database-remove-outline
                 </v-icon>
               </div>
               <h4 class="text-overline">{{ $vuetify.lang.t('$vuetify.lang_78') }}</h4>
@@ -79,7 +79,7 @@
     <!-- End: assets list element -->
 
     <v-overlay absolute :color="$vuetify.theme.dark ? 'grey darken-4' : 'white'" opacity="0.8" :value="overlay">
-      <v-progress-circular color="yellow darken-3" indeterminate size="50" />
+      <v-progress-circular color="primary" indeterminate size="50" />
     </v-overlay>
 
   </v-card>
@@ -104,6 +104,8 @@
     },
     mounted() {
       if (this.$auth.loggedIn) {
+        this.eyelet = this.$auth.loggedIn ? 0 : 1;
+
         this.getAssets();
 
         /**

@@ -11,12 +11,12 @@
         <template v-slot:activator="{ on, attrs }">
           <template v-if="balance">
             <div :class="$vuetify.theme.dark ? 'grey--text' : ''" v-bind="attrs" v-on="on">
-              {{ balance ? balance : 0 }} {{ String(unit).toUpperCase() }}
+              {{ balance ? $decimal.truncate(balance, $decimal.decimal(balance)) : 0 }} {{ String(unit).toUpperCase() }}
             </div>
           </template>
           <template v-else>
             <div :class="$vuetify.theme.dark ? 'grey--text' : ''" v-bind="attrs">
-              {{ balance ? balance : 0 }} {{ String(unit).toUpperCase() }}
+              {{ balance ? $decimal.truncate(balance, $decimal.decimal(balance)) : 0 }} {{ String(unit).toUpperCase() }}
             </div>
           </template>
         </template>
@@ -62,17 +62,17 @@
 
     <!-- Start: form order trade element -->
     <v-card-text>
-      <v-text-field v-model="price" @keyup="setPrice" class="mb-4" color="yellow darken-3" height="40" dense hide-details outlined :label="$vuetify.lang.t('$vuetify.lang_52')">
+      <v-text-field v-model="price" @keyup="setPrice" class="mb-4" color="primary" height="40" dense hide-details outlined :label="$vuetify.lang.t('$vuetify.lang_52')">
         <template v-slot:append>
           <span class="my-1">{{ query.split('-')[0].toUpperCase() }}/{{ query.split('-')[1].toUpperCase() }}</span>
         </template>
       </v-text-field>
-      <v-text-field v-model="quantity" @keyup="setQuantity" class="mb-4" color="yellow darken-3" height="40" dense hide-details outlined :label="$vuetify.lang.t('$vuetify.lang_52')">
+      <v-text-field v-model="quantity" @keyup="setQuantity" class="mb-4" color="primary" height="40" dense hide-details outlined :label="$vuetify.lang.t('$vuetify.lang_52')">
         <template v-slot:append>
           <span class="my-1">{{ query.split('-')[0].toUpperCase() }}</span>
         </template>
       </v-text-field>
-      <v-text-field v-model="value" @keyup="setValue" color="yellow darken-3" height="40" dense hide-details outlined :label="$vuetify.lang.t('$vuetify.lang_56')">
+      <v-text-field v-model="value" @keyup="setValue" color="primary" height="40" dense hide-details outlined :label="$vuetify.lang.t('$vuetify.lang_56')">
         <template v-slot:append>
           <span class="my-1">{{ query.split('-')[1].toUpperCase() }}</span>
         </template>
@@ -96,7 +96,7 @@
     <client-only key="order-form">
       <template v-if="$auth.loggedIn">
         <v-overlay :color="$vuetify.theme.dark ? 'grey darken-4' : 'white'" opacity="0.8" absolute :value="overlay">
-          <v-progress-circular color="yellow darken-3" indeterminate size="50" />
+          <v-progress-circular color="primary" indeterminate size="50" />
         </v-overlay>
 
         <template v-if="orders.length">
@@ -138,8 +138,8 @@
             <v-flex/>
             <v-flex class="text-center mx-5" align-self-center>
               <div>
-                <v-icon color="yellow darken-3" size="50">
-                  mdi-layers-outline
+                <v-icon size="50">
+                  mdi-database-remove-outline
                 </v-icon>
               </div>
               <template v-if="overlay">
@@ -156,13 +156,13 @@
       </template>
       <template v-else>
         <v-overlay :color="$vuetify.theme.dark ? 'grey darken-4' : 'white'" opacity="0.8" absolute>
-          <v-btn color="orange lighten-2" to="/signin" large elevation="0">{{ $vuetify.lang.t('$vuetify.lang_29') }}</v-btn>
+          <v-btn color="primary" to="/signin" large elevation="0">{{ $vuetify.lang.t('$vuetify.lang_29') }}</v-btn>
         </v-overlay>
         <v-layout wrap>
           <v-flex/>
           <v-flex class="text-center mx-5 my-14" align-self-center>
             <div>
-              <v-icon color="yellow darken-3" size="50">
+              <v-icon size="50">
                 mdi-fingerprint
               </v-icon>
             </div>

@@ -2,7 +2,7 @@
   <div class="ma-4">
 
     <!-- Start: tabs bar -->
-    <v-tabs v-model="eyelet" color="yellow darken-3">
+    <v-tabs v-model="eyelet" color="primary">
       <v-tab v-for="item in asset.chains" :key="item.id">{{ item.protocol ? item.protocol : 'mainnet' }}</v-tab>
     </v-tabs>
     <!-- End: tabs bar -->
@@ -47,7 +47,7 @@
                     </v-row>
                   </v-card-text>
                 </v-card>
-                <v-text-field :value="item.address" class="mt-4" color="yellow darken-3" outlined>
+                <v-text-field :value="item.address" class="mt-4" color="primary" outlined>
                   <template v-slot:append>
                     <v-icon style="cursor: pointer;" @click="$copyText(item.address)">
                       mdi-clipboard-text-multiple-outline
@@ -97,7 +97,7 @@
           <v-layout fill-height style="height:200px;" wrap>
             <v-flex/>
             <v-flex align-self-center class="text-center" md4 mx5 sm6 xl3>
-              <v-btn block color="black--text yellow darken-1 text-capitalize" elevation="0" large @click="setAsset(item.platform, item.protocol, index)">{{ $vuetify.lang.t('$vuetify.lang_90') }}</v-btn>
+              <v-btn block color="black--text primary darken-1 text-capitalize" elevation="0" large @click="setAsset(item.platform, item.protocol, index)">{{ $vuetify.lang.t('$vuetify.lang_90') }}</v-btn>
             </v-flex>
             <v-flex/>
           </v-layout>

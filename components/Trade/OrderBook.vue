@@ -80,8 +80,8 @@
         <v-flex/>
         <v-flex class="text-center mx-5" align-self-center>
           <div>
-            <v-icon :color="replayColor" size="50">
-              mdi-layers-outline
+            <v-icon size="50">
+              mdi-database-remove-outline
             </v-icon>
           </div>
           <h4 class="text-overline">{{ $vuetify.lang.t('$vuetify.lang_62') }}</h4>
@@ -121,7 +121,7 @@
     <!-- End: price and value element -->
 
     <v-overlay absolute :color="$vuetify.theme.dark ? 'grey darken-4' : 'white'" opacity="0.8" :value="overlay">
-      <v-progress-circular color="yellow darken-3" indeterminate size="50" />
+      <v-progress-circular color="primary" indeterminate size="50" />
     </v-overlay>
 
   </v-card>
@@ -332,11 +332,11 @@
       replayColor() {
         switch (this.eyelet) {
           case 0:
-            return 'teal darken-3'
+            return 'teal'
           case 1:
-            return 'red darken-3';
+            return 'red';
           case 2:
-            return 'yellow darken-3';
+            return 'primary';
         }
       },
 

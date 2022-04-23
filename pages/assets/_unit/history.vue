@@ -2,7 +2,7 @@
   <div>
 
     <!-- Start: tabs bar -->
-    <v-tabs class="px-4 my-4" color="yellow darken-3">
+    <v-tabs class="px-4 my-4" color="primary">
       <v-tab exact to="?type=2">{{ $vuetify.lang.t('$vuetify.lang_64') }}</v-tab>
       <v-tab exact to="?type=1">{{ $vuetify.lang.t('$vuetify.lang_121') }}</v-tab>
       <v-tab exact to="?type=0">{{ $vuetify.lang.t('$vuetify.lang_120') }}</v-tab>
@@ -52,18 +52,18 @@
                   </v-col>
                   <v-col align-self="center" cols="12" sm="3">
                     <template v-if="item.status === 'PENDING'">
-                      <div style="width: 150px;" class="light-blue lighten-2 white--text pa-1 rounded text-center">
-                        PENDING
+                      <div style="width: 150px;" class="grey lighten-3 brown--text pa-1 rounded-xl text-center">
+                        {{ $vuetify.lang.t('$vuetify.lang_131') }}
                       </div>
                     </template>
                     <template v-if="item.status === 'FILLED'">
-                      <div style="width: 150px;" class="green lighten-2 white--text pa-1 rounded text-center">
-                        FILLED
+                      <div style="width: 150px;" class="grey lighten-3 brown--text pa-1 rounded-xl text-center">
+                        {{ $vuetify.lang.t('$vuetify.lang_129') }}
                       </div>
                     </template>
                     <template v-if="item.status === undefined">
-                      <div style="width: 150px;" class="red lighten-2 white--text pa-1 rounded text-center">
-                        CANCEL
+                      <div style="width: 150px;" class="grey lighten-3 brown--text pa-1 rounded-xl text-center">
+                        {{ $vuetify.lang.t('$vuetify.lang_130') }}
                       </div>
                     </template>
                   </v-col>
@@ -146,7 +146,7 @@
                     </v-item-group>
                   </v-list-item>
                   <v-list-item v-if="item.status === 'PENDING' && item.type === 'WITHDRAWS'">
-                    <v-btn color="white--text red darken-1 text-capitalize" @click="cancelWithdraw(item.id)" large block elevation="0">{{ $vuetify.lang.t('$vuetify.lang_124') }}</v-btn>
+                    <v-btn color="white--text red text-capitalize" @click="cancelWithdraw(item.id)" large block elevation="0">{{ $vuetify.lang.t('$vuetify.lang_124') }}</v-btn>
                   </v-list-item>
                 </v-list>
                 <v-divider/>
@@ -185,7 +185,7 @@
       <!-- End: no history -->
 
       <v-overlay absolute :color="$vuetify.theme.dark ? 'grey darken-4' : 'white'" opacity="0.8" :value="overlay">
-        <v-progress-circular color="yellow darken-3" indeterminate size="50" />
+        <v-progress-circular color="primary" indeterminate size="50" />
       </v-overlay>
 
     </v-row>
@@ -267,7 +267,7 @@
 </script>
 
 <style scoped>
-  .history{
+  .history {
     overflow-y: auto;
     width: 100%;
     max-height: 620px;

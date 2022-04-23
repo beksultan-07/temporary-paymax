@@ -28,7 +28,8 @@ export default {
     cancelOrder: '/exchange/cancel-order',
     setWithdraw: '/exchange/set-withdraw',
     cancelWithdraw: '/exchange/cancel-withdraw',
-    getTransactions: '/exchange/get-transactions'
+    getTransactions: '/exchange/get-transactions',
+    getTradestats: '/exchange/get-tradestats'
   },
   status: '/status',
   timestamp: '/timestamp',

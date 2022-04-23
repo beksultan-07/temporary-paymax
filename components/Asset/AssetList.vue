@@ -4,7 +4,7 @@
 
       <!-- Start: search asset element -->
       <v-card-title class="pa-2">
-        <v-text-field v-model="search" :label="$vuetify.lang.t('$vuetify.lang_84')" color="yellow darken-3" dense height="40" hide-details outlined prepend-inner-icon="mdi-layers-search-outline" />
+        <v-text-field v-model="search" :label="$vuetify.lang.t('$vuetify.lang_84')" color="primary" dense height="40" hide-details outlined prepend-inner-icon="mdi-layers-search-outline" />
       </v-card-title>
       <!-- Start: search asset element -->
 
@@ -48,8 +48,8 @@
             <v-flex/>
             <v-flex align-self-center class="text-center mx-5">
               <div>
-                <v-icon color="yellow darken-3" size="50">
-                  mdi-layers-outline
+                <v-icon size="50">
+                  mdi-database-remove-outline
                 </v-icon>
               </div>
               <h4 class="text-overline">{{ $vuetify.lang.t('$vuetify.lang_49') }}</h4>
@@ -63,8 +63,8 @@
           <v-flex/>
           <v-flex align-self-center class="text-center mx-5">
             <div>
-              <v-icon color="yellow darken-3" size="50">
-                mdi-layers-outline
+              <v-icon size="50">
+                mdi-database-remove-outline
               </v-icon>
             </div>
             <h4 class="text-overline">{{ $vuetify.lang.t('$vuetify.lang_78') }}</h4>
@@ -75,7 +75,7 @@
       <!-- End: list assets element -->
 
       <v-overlay :color="$vuetify.theme.dark ? 'grey darken-4' : 'white'" :value="overlay" absolute opacity="0.8">
-        <v-progress-circular color="yellow darken-3" indeterminate size="50" />
+        <v-progress-circular color="primary" indeterminate size="50" />
       </v-overlay>
 
     </v-component-fullscreen>
