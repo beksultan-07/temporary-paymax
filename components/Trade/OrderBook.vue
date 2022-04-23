@@ -17,36 +17,24 @@
         </v-row>
       </template>
       <template v-else>
-        <v-tabs grow :color="replayColor" v-model="eyelet" show-arrows>
+        <v-tabs grow :color="replayColor" v-model="eyelet" icons-and-text centered show-arrows>
           <v-tab @click="getOrders(0)">
-            <v-tooltip bottom>
-              <template v-slot:activator="{ on, attrs }">
-                <v-icon v-bind="attrs" v-on="on">
-                  mdi-alpha-b-circle-outline
-                </v-icon>
-              </template>
-              <span>{{ $vuetify.lang.t('$vuetify.lang_57') }}</span>
-            </v-tooltip>
+            <small>{{ $vuetify.lang.t('$vuetify.lang_57') }}</small>
+            <v-icon>
+              mdi-alpha-b-circle-outline
+            </v-icon>
           </v-tab>
           <v-tab @click="getOrders(1)">
-            <v-tooltip bottom>
-              <template v-slot:activator="{ on, attrs }">
-                <v-icon v-bind="attrs" v-on="on">
-                  mdi-alpha-s-circle-outline
-                </v-icon>
-              </template>
-              <span>{{ $vuetify.lang.t('$vuetify.lang_58') }}</span>
-            </v-tooltip>
+            <small>{{ $vuetify.lang.t('$vuetify.lang_58') }}</small>
+            <v-icon>
+              mdi-alpha-s-circle-outline
+            </v-icon>
           </v-tab>
           <v-tab @click="getOrders(2)">
-            <v-tooltip bottom>
-              <template v-slot:activator="{ on, attrs }">
-                <v-icon v-bind="attrs" v-on="on">
-                  mdi-alpha-a-circle-outline
-                </v-icon>
-              </template>
-              <span>{{ $vuetify.lang.t('$vuetify.lang_64') }}</span>
-            </v-tooltip>
+            <small>{{ $vuetify.lang.t('$vuetify.lang_64') }}</small>
+            <v-icon>
+              mdi-alpha-a-circle-outline
+            </v-icon>
           </v-tab>
         </v-tabs>
       </template>
