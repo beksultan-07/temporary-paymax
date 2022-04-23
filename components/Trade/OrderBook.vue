@@ -17,7 +17,7 @@
         </v-row>
       </template>
       <template v-else>
-        <v-tabs grow :color="replayColor" v-model="eyelet" icons-and-text centered show-arrows>
+        <v-tabs grow :color="replayColor" v-model="eyelet" icons-and-text centered>
           <v-tab @click="getOrders(0)">
             <small>{{ $vuetify.lang.t('$vuetify.lang_57') }}</small>
             <v-icon>

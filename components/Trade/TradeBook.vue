@@ -32,7 +32,7 @@
 
         <v-spacer />
 
-        <v-menu left>
+        <v-menu content-class="elevation-1" left>
           <template v-slot:activator="{ on, attrs }">
             <v-btn elevation="0" small fab icon v-bind="attrs" v-on="on">
               <v-icon>

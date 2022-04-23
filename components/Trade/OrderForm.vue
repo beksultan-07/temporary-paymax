@@ -7,7 +7,7 @@
         mdi-wallet-outline
       </v-icon>
       <v-spacer />
-      <v-menu max-width="110" open-on-hover bottom offset-y>
+      <v-menu max-width="110" content-class="elevation-1" open-on-hover bottom offset-y>
         <template v-slot:activator="{ on, attrs }">
           <template v-if="balance">
             <div :class="$vuetify.theme.dark ? 'grey--text' : ''" v-bind="attrs" v-on="on">
