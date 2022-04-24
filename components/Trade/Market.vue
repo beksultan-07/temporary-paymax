@@ -33,10 +33,22 @@
               </v-list-item-avatar>
               <v-list-item-content>
                 <v-list-item-title><span :class="($vuetify.theme.dark ? 'white' : 'black') + '--text'">{{ item.base_unit.toUpperCase() }}/</span><span class="grey--text">{{ item.quote_unit.toUpperCase() }}</span></v-list-item-title>
-                <v-list-item-subtitle>{{ $decimal.format(item.price ? item.price : 0) }} {{ item.quote_unit.toUpperCase() }}</v-list-item-subtitle>
+                <template v-if="item.status">
+                  <v-list-item-subtitle>{{ $decimal.format(item.price ? item.price : 0) }} {{ item.quote_unit.toUpperCase() }}</v-list-item-subtitle>
+                </template>
+                <template v-else>
+                  <v-list-item-subtitle class="red--text text-uppercase">{{ $vuetify.lang.t('$vuetify.lang_127') }}</v-list-item-subtitle>
+                </template>
               </v-list-item-content>
               <v-list-item-action>
-                <span :class="Math.sign(item.ratio) === -1 ? 'red--text' : 'teal--text'">{{ item.ratio ? (Math.sign(item.ratio) === -1 ? (item.ratio).toFixed(2) : `+${(item.ratio).toFixed(2)}`) : '+0.00' }}%</span>
+                <template v-if="item.status">
+                  <span :class="Math.sign(item.ratio) === -1 ? 'red--text' : 'teal--text'">{{ item.ratio ? (Math.sign(item.ratio) === -1 ? (item.ratio).toFixed(2) : `+${(item.ratio).toFixed(2)}`) : '+0.00' }}%</span>
+                </template>
+                <template v-else>
+                  <v-icon>
+                    mdi-power-cycle
+                  </v-icon>
+                </template>
               </v-list-item-action>
             </v-list-item>
           </template>

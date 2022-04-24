@@ -67,7 +67,7 @@
                     <v-text-field v-model="quantity" color="primary" :label="$vuetify.lang.t('$vuetify.lang_106')" outlined :hint="`≈ $${price ? $decimal.truncate((quantity ? price * quantity : 0), 8) : (quantity ? quantity : 0)}`" persistent-hint :rules="rulesQuantity" required>
                       <template v-slot:append>
                         <span class="my-1" @click="getBalance(item)" style="cursor: pointer;">
-                          <span class="primary--text">MAX</span> <span class="grey--text">{{ getReserveBalance(item) }} {{ asset.symbol.toUpperCase() }}</span>
+                          <span class="primary--text">MAX</span> <span class="grey--text">{{ $decimal.truncate(getReserveBalance(item), 8) }} {{ asset.symbol.toUpperCase() }}</span>
                         </span>
                       </template>
                       <template #message="{ message }">
@@ -195,7 +195,7 @@
        * @param item
        */
       getBalance(item) {
-        this.quantity = this.getReserveBalance(item);
+        this.quantity = this.$decimal.truncate(this.getReserveBalance(item), 8);
       },
 
       /**

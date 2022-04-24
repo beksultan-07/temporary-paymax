@@ -3,9 +3,21 @@
 
     <!-- Start: asset balance element -->
     <v-app-bar color="transparent" height="50" flat>
-      <v-icon size="20">
-        mdi-wallet-outline
-      </v-icon>
+      <template v-if="status">
+        <v-icon size="20">
+          mdi-wallet-outline
+        </v-icon>
+      </template>
+      <template v-else>
+        <v-tooltip top>
+          <template v-slot:activator="{ on, attrs }">
+            <v-icon size="20" v-bind="attrs" v-on="on">
+              mdi-cog-clockwise
+            </v-icon>
+          </template>
+          <span>{{ $vuetify.lang.t('$vuetify.lang_128') }}</span>
+        </v-tooltip>
+      </template>
       <v-spacer />
       <v-menu max-width="110" content-class="elevation-1" open-on-hover bottom offset-y>
         <template v-slot:activator="{ on, attrs }">
@@ -200,6 +212,7 @@
         value: 0,
         quantity: 0,
         balance: 0,
+        status: 0,
         overlay: true
       }
     },
@@ -409,6 +422,8 @@
 
         this.$axios.$post(Api.exchange.getAsset, {unit: unit}).then((response) => {
 
+          console.log(response.currencies);
+
           // После перехода на новый актив обнуляем все параметры.
           this.balance = 0;
           this.value = 0;
@@ -417,6 +432,7 @@
 
           if (response.currencies !== undefined && response.currencies[0].balance !== undefined) {
             this.balance = (response.currencies[0].balance).toFixed(8) > 0 ? response.currencies[0].balance : 0;
+            this.status = response.currencies[0].status ?? 0;
           }
 
           this.overlay = false;
