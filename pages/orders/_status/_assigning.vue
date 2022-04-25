@@ -18,22 +18,27 @@
             </template>
           </template>
           <template v-slot:item.assigning="{ item }">
-            <template v-if="item.assigning">
-              <div style="width: 120px;" class="red lighten-5 red--text pa-1 rounded-xl text-center">
-                <v-icon color="red" size="15">
-                  mdi-arrow-top-left
-                </v-icon>
-                {{ $vuetify.lang.t('$vuetify.lang_140') }}
-              </div>
-            </template>
-            <template v-else>
-              <div style="width: 120px;" class="blue lighten-5 blue--text pa-1 rounded-xl text-center">
-                <v-icon color="blue" size="15">
-                  mdi-arrow-bottom-left
-                </v-icon>
-                {{ $vuetify.lang.t('$vuetify.lang_141') }}
-              </div>
-            </template>
+            <v-tooltip top>
+              <template v-slot:activator="{ on, attrs }">
+                <template v-if="item.assigning">
+                  <div style="width: 120px;" class="red lighten-5 red--text pa-1 rounded-xl text-center" v-bind="attrs" v-on="on">
+                    <v-icon color="red" size="15">
+                      mdi-arrow-top-left
+                    </v-icon>
+                    {{ $vuetify.lang.t('$vuetify.lang_140') }}
+                  </div>
+                </template>
+                <template v-else>
+                  <div style="width: 120px;" class="blue lighten-5 blue--text pa-1 rounded-xl text-center" v-bind="attrs" v-on="on">
+                    <v-icon color="blue" size="15">
+                      mdi-arrow-bottom-left
+                    </v-icon>
+                    {{ $vuetify.lang.t('$vuetify.lang_141') }}
+                  </div>
+                </template>
+              </template>
+              <span>{{ $vuetify.lang.t('$vuetify.lang_139') }}: {{ item.id }}</span>
+            </v-tooltip>
           </template>
           <template v-slot:item.unit="{ item }">
             <b class="text-uppercase">{{ item.base_unit }}/{{ item.quote_unit }}</b>
@@ -75,10 +80,6 @@
           <template v-slot:expanded-item="{ headers, item }">
             <td :colspan="headers.length">
               <v-card class="my-4" outlined elevation="0">
-                <v-card-title>
-                  <v-chip class="text-h6 blue lighten-5 blue--text" label>{{ $vuetify.lang.t('$vuetify.lang_139') }}: {{ item.id }}</v-chip>
-                </v-card-title>
-                <v-divider />
                 <v-data-table :headers="headlines.child" :items="tradestats" :hide-default-header="!tradestats.length" hide-default-footer>
                   <template v-slot:item.quantity="{ item }">
                     <template v-if="item.assigning">
