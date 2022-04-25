@@ -277,7 +277,7 @@
           // Имя актива (symbol-quote).
           quote_unit: this.query.split('-')[1],
           // Показывать записи если они со статусом в ожидании.
-          pending: true
+          status: 2
         }).then((response) => {
 
           this.volume = response.volume ?? 0;
@@ -304,7 +304,7 @@
           // Имя актива (symbol-quote).
           quote_unit: this.query.split('-')[1],
           // Показывать записи если они со статусом в ожидании.
-          pending: true,
+          status: 2,
           // Количество объектов для вывода.
           limit: 1
         }).then((response) => {

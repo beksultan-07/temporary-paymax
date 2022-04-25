@@ -422,8 +422,6 @@
 
         this.$axios.$post(Api.exchange.getAsset, {unit: unit}).then((response) => {
 
-          console.log(response.currencies);
-
           // После перехода на новый актив обнуляем все параметры.
           this.balance = 0;
           this.value = 0;
@@ -537,7 +535,7 @@
           // Показывать записи только если я их владелец.
           owner: true,
           // Показывать записи если они со статусом в ожидании.
-          pending: true
+          status: 2
         }).then((response) => {
 
           // Записываем список ордеров в ожидании в массив.

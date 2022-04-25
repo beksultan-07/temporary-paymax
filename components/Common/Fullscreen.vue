@@ -19,6 +19,12 @@
         default: 80
       }
     },
+    watch: {
+      $route() {
+        this.resize();
+        window.addEventListener("resize", this.resize);
+      }
+    },
     mounted() {
       this.resize();
       window.addEventListener("resize", this.resize);
