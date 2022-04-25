@@ -79,7 +79,7 @@ export default {
   lang_79: "Assets",
   lang_80: "News",
   lang_81: "Status",
-  lang_82: "Discount",
+  lang_82: "",
   lang_83: "Listing",
   lang_84: "Search by assets",
   lang_85: "Scan the QR code with your mobile phone to avoid entering the address manually or copy the address below",

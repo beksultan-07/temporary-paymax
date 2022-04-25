@@ -3,10 +3,9 @@
 
     <!-- Start: app bar element -->
     <v-app-bar color="transparent" height="50" flat>
-      <v-tabs color="primary" v-model="eyelet" show-arrows>
+      <v-tabs grow color="primary" v-model="eyelet">
         <v-tab v-show="$auth.loggedIn">{{ $vuetify.lang.t('$vuetify.lang_79') }}</v-tab>
         <v-tab>{{ $vuetify.lang.t('$vuetify.lang_80') }}</v-tab>
-        <v-tab>{{ $vuetify.lang.t('$vuetify.lang_82') }}</v-tab>
         <v-tab>{{ $vuetify.lang.t('$vuetify.lang_83') }}</v-tab>
       </v-tabs>
     </v-app-bar>
