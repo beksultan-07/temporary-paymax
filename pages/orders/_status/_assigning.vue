@@ -119,7 +119,7 @@
         <v-container v-if="length > 1" class="max-width">
           <v-row justify="center">
             <v-col cols="8">
-              <v-pagination v-model="page" circle @input="getMore()" :length="length"></v-pagination>
+              <v-pagination v-model="page" @input="getMore()" :length="length"></v-pagination>
             </v-col>
           </v-row>
         </v-container>
