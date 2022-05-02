@@ -21,7 +21,7 @@
             <v-tooltip top>
               <template v-slot:activator="{ on, attrs }">
                 <template v-if="item.assigning">
-                  <div style="width: 120px;" class="red lighten-5 red--text pa-1 rounded-xl text-center" v-bind="attrs" v-on="on">
+                  <div style="width: 120px;" :class="($vuetify.theme.dark ? 'grey darken-3' : 'red lighten-5 red--text') + ' pa-1 rounded-xl text-center'" v-bind="attrs" v-on="on">
                     <v-icon color="red" size="15">
                       mdi-arrow-top-left
                     </v-icon>
@@ -29,7 +29,7 @@
                   </div>
                 </template>
                 <template v-else>
-                  <div style="width: 120px;" class="blue lighten-5 blue--text pa-1 rounded-xl text-center" v-bind="attrs" v-on="on">
+                  <div style="width: 120px;" :class="($vuetify.theme.dark ? 'grey darken-3' : 'blue lighten-5 blue--text') + ' pa-1 rounded-xl text-center'" v-bind="attrs" v-on="on">
                     <v-icon color="blue" size="15">
                       mdi-arrow-bottom-left
                     </v-icon>
@@ -54,17 +54,17 @@
           </template>
           <template v-slot:item.status="{ item }">
             <template v-if="item.status === 'PENDING'">
-              <div style="width: 120px;" class="grey lighten-3 brown--text pa-1 rounded-xl text-center">
+              <div style="width: 120px;" :class="($vuetify.theme.dark ? 'grey darken-3' : 'grey lighten-3 brown--text') + ' pa-1 rounded-xl text-center'">
                 {{ $vuetify.lang.t('$vuetify.lang_131') }}
               </div>
             </template>
             <template v-if="item.status === 'FILLED'">
-              <div style="width: 120px;" class="grey lighten-3 brown--text pa-1 rounded-xl text-center">
+              <div style="width: 120px;" :class="($vuetify.theme.dark ? 'grey darken-3' : 'grey lighten-3 brown--text') + ' pa-1 rounded-xl text-center'">
                 {{ $vuetify.lang.t('$vuetify.lang_129') }}
               </div>
             </template>
             <template v-if="item.status === undefined">
-              <div style="width: 120px;" class="grey lighten-3 brown--text pa-1 rounded-xl text-center">
+              <div style="width: 120px;" :class="($vuetify.theme.dark ? 'grey darken-3' : 'grey lighten-3 brown--text') + ' pa-1 rounded-xl text-center'">
                 {{ $vuetify.lang.t('$vuetify.lang_130') }}
               </div>
             </template>
@@ -141,6 +141,11 @@
         </v-layout>
       </div>
     </template>
+
+    <v-overlay absolute :color="$vuetify.theme.dark ? 'grey darken-4' : 'white'" opacity="0.8" :value="overlay">
+      <v-progress-circular color="primary" indeterminate size="50" />
+    </v-overlay>
+
   </div>
 </template>
 

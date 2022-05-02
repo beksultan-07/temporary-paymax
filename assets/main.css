@@ -112,3 +112,12 @@
 .v-application .elevation-1 {
   box-shadow: rgb(0 0 0 / 7%) 0 4px 10px !important;
 }
+
+
+/* Pagination shadow off */
+.v-pagination__navigation {
+  box-shadow: none !important;
+}
+.v-pagination__item {
+  box-shadow: none !important;
+}

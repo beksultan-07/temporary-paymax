@@ -28,7 +28,7 @@
                     <v-list-item-action>
                       <template v-if="hover">
                         <small v-if="item.balance > 0" class="teal--text">
-                          ≈ ${{ item.convert }}
+                          ≈ ${{ $decimal.truncate(item.price ? (item.balance ? item.price * item.balance : 0) : (item.balance ? item.balance : 0), 8) }}
                         </small>
                       </template>
                       <template v-else>
@@ -102,6 +102,32 @@
     },
     mounted() {
       this.getAssets();
+
+      /**
+       * @event 'withdraw/cancel'
+       * @object {unit: string},
+       * @object {value: float64}
+       */
+      this.$nuxt.$on('withdraw/cancel', (data) => {
+        this.assets.map(item => {
+          if(item.symbol === data[0].unit) {
+            item.balance += data[0].value; return item;
+          }
+        });
+      });
+
+      /**
+       * @event 'withdraw/create'
+       * @object {unit: string},
+       * @object {value: float64}
+       */
+      this.$nuxt.$on('withdraw/create', (data) => {
+        this.assets.map(item => {
+          if(item.symbol === data.unit) {
+            item.balance -= data.value; return item;
+          }
+        });
+      });
     },
     methods: {
 
@@ -122,7 +148,7 @@
           this.assets = response.currencies ?? [];
           this.assets.map(item => {
             this.$axios.$get(Api.exchange.getPrice + '?base_unit=' + item.symbol + '&quote_unit=usdt').then((response) => {
-              item.convert = this.$decimal.truncate(response.price ? (item.balance ? response.price * item.balance : 0) : (item.balance ? item.balance : 0), 8)
+              item.price = response.price;
             });
           });
           this.overlay = false;

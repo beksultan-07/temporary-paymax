@@ -131,7 +131,7 @@
             data.user_id === Number(this.$auth.$state.user.id)
 
           ) {
-            this.setBalance(data.assigning ? data.base_unit : data.quote_unit);
+            this.getBalance(data.assigning ? data.base_unit : data.quote_unit);
           }
 
         });
@@ -159,7 +159,7 @@
             data.user_id === Number(this.$auth.$state.user.id)
 
           ) {
-            this.setBalance(data.assigning ? data.base_unit : data.quote_unit);
+            this.getBalance(data.assigning ? data.base_unit : data.quote_unit);
           }
         });
       } else {
@@ -192,7 +192,7 @@
        * Обновляем текущий баланс актива.
        * @param unit
        */
-      setBalance(unit) {
+      getBalance(unit) {
 
         let index = this.assets.map((o) => o.symbol).indexOf(unit);
 
@@ -202,15 +202,6 @@
           // Sort assets by index.
           this.sort();
         });
-      },
-
-      /**
-       * @param unit
-       * @param balance
-       * @returns {*|number}
-       */
-      getPrice(unit, balance) {
-
       },
 
       /**

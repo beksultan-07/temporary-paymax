@@ -103,9 +103,9 @@
 
 <script>
 
-import Api from "../../libs/api";
+  import Api from "../../libs/api";
 
-export default {
+  export default {
     name: "v-component-market",
     props: {
       exchange: String

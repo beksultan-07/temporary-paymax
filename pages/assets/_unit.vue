@@ -137,6 +137,26 @@
         this.getPrice(route.params.unit);
       }
     },
+    mounted() {
+
+      /**
+       * @event 'withdraw/cancel'
+       * @object {unit: string},
+       * @object {value: float64}
+       */
+      this.$nuxt.$on('withdraw/cancel', (data) => {
+        this.asset.balance += data[0].value
+      });
+
+      /**
+       * @event 'withdraw/create'
+       * @object {unit: string},
+       * @object {value: float64}
+       */
+      this.$nuxt.$on('withdraw/create', (data) => {
+        this.asset.balance -= data.value
+      });
+    },
     create() {
       setTimeout(() => {
         this.getPrice(this.unit);
