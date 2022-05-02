@@ -102,8 +102,8 @@
       }
     },
     mounted() {
+      this.eyelet = this.$auth.loggedIn ? 0 : 1;
       if (this.$auth.loggedIn) {
-        this.eyelet = this.$auth.loggedIn ? 0 : 1;
 
         this.getAssets();
 

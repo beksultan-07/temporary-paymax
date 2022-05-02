@@ -59,10 +59,10 @@
             </template>
           </template>
           <template v-slot:item.create_at="{ item }">
-            <div class="ml-2 mb-1">
+            <div>
               {{ $moment(item.create_at).format('DD MMM') }}
             </div>
-            <div class="ml-2">
+            <div>
               <small class="grey--text">{{ $moment(item.create_at).format('hh:mm:ss') }}</small>
             </div>
           </template>
@@ -309,7 +309,7 @@
               value: 'status'
             }, {
               text: this.$vuetify.lang.t('$vuetify.lang_118'),
-              align: 'end',
+              align: 'start',
               sortable: true,
               value: 'create_at'
             }
