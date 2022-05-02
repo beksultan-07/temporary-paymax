@@ -131,7 +131,14 @@
             data.user_id === Number(this.$auth.$state.user.id)
 
           ) {
-            this.getBalance(data.assigning ? data.base_unit : data.quote_unit);
+            this.assets.map(item => {
+              if(item.symbol === (data.assigning ? data.base_unit : data.quote_unit)) {
+                item.balance -= data.assigning ? data.value : data.value * data.price; return item;
+              }
+            });
+
+            // Sort assets by index.
+            this.sort();
           }
 
         });
@@ -159,7 +166,14 @@
             data.user_id === Number(this.$auth.$state.user.id)
 
           ) {
-            this.getBalance(data.assigning ? data.base_unit : data.quote_unit);
+            this.assets.map(item => {
+              if(item.symbol === (data.assigning ? data.base_unit : data.quote_unit)) {
+                item.balance += data.assigning ? data.value : data.value * data.price; return item;
+              }
+            });
+
+            // Sort assets by index.
+            this.sort();
           }
         });
       } else {
@@ -182,22 +196,6 @@
             });
           });
           this.overlay = false;
-
-          // Sort assets by index.
-          this.sort();
-        });
-      },
-
-      /**
-       * Обновляем текущий баланс актива.
-       * @param unit
-       */
-      getBalance(unit) {
-
-        let index = this.assets.map((o) => o.symbol).indexOf(unit);
-
-        this.$axios.$post(Api.exchange.getAsset, {unit: unit}).then((response) => {
-          this.assets[index].balance = response.currencies[0].balance ? ((response.currencies[0].balance).toFixed(8) > 0 ? response.currencies[0].balance : 0) : 0;
 
           // Sort assets by index.
           this.sort();
