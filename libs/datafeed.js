@@ -106,7 +106,6 @@ export default class Datafeed {
        * @object {quote_unit: string},
        * @object {time: int}
        */
-
       this.$self.$publish.bind('trade/kline', (data) => {
         if (data.ohlc) {
           if (symbol[0].toLowerCase() === data.ohlc.lastItem.base_unit && symbol[1].toLowerCase() === data.ohlc.lastItem.quote_unit) {
