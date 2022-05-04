@@ -35,6 +35,10 @@ export default ({ app, $on }, inject) => {
       });
     },
     bind(channel, callback) {
+      if (typeof callback !== "function") {
+        return false
+      }
+
       event.$on(channel, callback);
     }
   };
