@@ -94,8 +94,6 @@ export default class Datafeed {
 
     if (!this.$init) {
 
-      console.log('trade/chart:' + query.resolution)
-
       /**
        * Отслеживаем события бегущей строки, данные об торгах.
        * @return {callback}:

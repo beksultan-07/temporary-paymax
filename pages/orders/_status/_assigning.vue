@@ -197,6 +197,7 @@
       },
 
       /**
+       * TODO: проверить назначения assigning.
        * @param id
        * @param callback
        */
