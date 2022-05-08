@@ -39,7 +39,7 @@ export default class Datafeed {
       pricescale: 100000000,
       has_intraday: true,
       volume_precision: 8,
-      data_status: 'streaming',
+      data_status: 'streaming'
     }
 
     if (split_data[1].toUpperCase().match(/USD|EUR|RUB|UAH|JPY|AUD|GBP|KRW|CNY/)) {
@@ -94,6 +94,8 @@ export default class Datafeed {
 
     if (!this.$init) {
 
+      console.log('trade/chart:' + query.resolution)
+
       /**
        * Отслеживаем события бегущей строки, данные об торгах.
        * @return {callback}:
@@ -106,23 +108,14 @@ export default class Datafeed {
        * @object {quote_unit: string},
        * @object {time: int}
        */
-      this.$self.$publish.bind('trade/kline', (data) => {
-        if (data.ohlc) {
-          if (symbol[0].toLowerCase() === data.ohlc.lastItem.base_unit && symbol[1].toLowerCase() === data.ohlc.lastItem.quote_unit) {
-            this.send(query).then((response) => {
-              response.ohlc = response.ohlc ?? [];
-
-              if (data.ohlc.length) {
-                this.record(response.ohlc[0]);
-              }
-
-              this.$self.ohlc24h = response.ohlc24h;
-            });
-          }
-          this.$init = true;
+      this.$self.$publish.bind('trade/chart:' + query.resolution, (data) => {
+        if (data.ohlc !== undefined && symbol[0].toLowerCase() === data.ohlc[0].base_unit && symbol[1].toLowerCase() === data.ohlc[0].quote_unit) {
+          this.record(data.ohlc[1]);
+          this.$self.ohlc24h = data.ohlc24h;
         }
       });
 
+      this.$init = true;
     }
   }
 
@@ -137,7 +130,7 @@ export default class Datafeed {
       return;
     }
     this.$subscribers[subscriberUID] = {
-      lastBar: null,
+      lastBarTime: null,
       listener: onRealtimeCallback,
       resolution: resolution,
       symbolInfo: symbolInfo,
@@ -152,8 +145,10 @@ export default class Datafeed {
     if (!this.$subscribers[subscriberUID]) {
       return;
     }
+
     this.$init = false;
     this.$self.ohlc = {};
+    this.$self.$publish.unbind(['trade/chart:' + this.interval(this.$subscribers[subscriberUID].resolution)]);
     delete this.$subscribers[subscriberUID];
   }
 
@@ -218,19 +213,15 @@ export default class Datafeed {
     for (let listenerGuid in this.$subscribers) {
 
       let record = this.$subscribers[listenerGuid];
-      let previous = record.lastBar
-      let current = bar;
-      if (!current) return;
+      let time = record.lastBarTime;
+      if (!bar) continue;
 
-      current.time = current.time * 1000;
+      bar.time = bar.time * 1000;
 
-      if (previous !== null && current.time < previous.time) return;
-      if (previous !== null && current.time > previous.time) {
-        record.listener(previous);
-      } else {
-        record.listener(current);
-      }
-      record.lastBar = current;
+      if (time !== null && bar.time < time) continue;
+
+      record.listener(bar);
+      record.lastBarTime = bar.time;
     }
   }
 
@@ -240,7 +231,7 @@ export default class Datafeed {
    * @private
    */
   send(params) {
-    let request = Api.exchange.getKlines;
+    let request = Api.exchange.getChart;
     if (params) {
       for (let i = 0; i < Object.keys(params).length; ++i) {
         let key = Object.keys(params)[i];

@@ -28,7 +28,7 @@
         <v-virtual-scroll @mouseover="hover = true" @mouseleave="hover = false" :class="'bg-state ' + (hover ? '' : 'overflow-y-hidden')" bench="0" :items="items" height="393" item-height="50">
           <template v-slot:default="{ item }">
             <v-list-item :color="$vuetify.theme.dark ? 'grey darken-3' : 'deep-purple lighten-5'" :to="'/trade/' + item.base_unit + '-' + item.quote_unit" :key="item.id" dense>
-              <v-list-item-avatar size="30">
+              <v-list-item-avatar class="mr-2" size="30">
                 <v-img :src="$storages(['icon'], item.symbol)"/>
               </v-list-item-avatar>
               <v-list-item-content>
@@ -127,7 +127,6 @@
 
       /**
        * Отслеживаем события бегущей строки, данные об торгах.
-       * @return {callback}:
        * @object {base_unit: string},
        * @object {close: float},
        * @object {high: float},
@@ -136,16 +135,15 @@
        * @object {quote_unit: string},
        * @object {time: int}
        */
-      this.$publish.bind('trade/kline', (data) => {
-
+      this.$publish.bind('trade/chart:0', (data) => {
         if (data.ohlc && data.ohlc.length > 1) {
           this.pairs.filter((item) => {
             if (
 
-              // Сверяем принадлежат ли новые события к данному активу,
-              // если аргументы совпадают то привязываем полученные данные из события к данному активу.
-              item.base_unit === data.ohlc[0].base_unit &&
-              item.quote_unit === data.ohlc[0].quote_unit
+                // Сверяем принадлежат ли новые события к данному активу,
+                // если аргументы совпадают то привязываем полученные данные из события к данному активу.
+                item.base_unit === data.ohlc[0].base_unit &&
+                item.quote_unit === data.ohlc[0].quote_unit
 
             ) {
               item.ratio = data.ohlc[0].close - data.ohlc[1].close;
@@ -158,7 +156,6 @@
           // Sort pairs by index.
           this.sort();
         }
-
       });
 
     },

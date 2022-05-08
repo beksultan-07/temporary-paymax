@@ -89,8 +89,9 @@
         error(e)
       });
     },
+
     beforeDestroy() {
-      this.$publish.unbind(['order/create', 'order/status', 'order/cancel', 'trade/kline']);
+      this.$publish.unbind(['trade/chart:0', 'order/status', 'order/create', 'order/cancel']);
     }
   }
 </script>

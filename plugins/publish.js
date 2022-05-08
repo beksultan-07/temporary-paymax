@@ -21,7 +21,7 @@ export default ({ app, $on }, inject) => {
               let bytea = JSON.parse(m.toString());
               channels.map((channel) => {
                 if (channel === bytea.channel) {
-                  event.$emit(bytea.channel, JSON.parse(bytea.data));
+                  event.$emit(channel, JSON.parse(bytea.data));
                 }
               });
             }

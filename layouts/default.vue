@@ -48,8 +48,17 @@
       'v-component-menu-account': MenuAccount,
       'v-component-footer': Footer
     },
+    data() {
+      return {
+        channels: ['order/create', 'order/status', 'order/cancel'],
+        interval: [0, 60, 300, 600, 900, 1800, 3600, 14400, 86400, 604800]
+      }
+    },
     mounted() {
-      this.$publish.subscribe('exchange', ['order/create', 'order/status', 'order/cancel', 'trade/kline'], (error) => {
+      this.interval.map((interval) => {
+        this.channels.push('trade/chart:' + interval);
+      });
+      this.$publish.subscribe('exchange', this.channels, (error) => {
         console.log(error);
       });
     }

@@ -7,12 +7,12 @@
         <v-data-table :headers="headlines.top" :items="orders" :page.sync="page" item-key="id" :items-per-page="15" hide-default-footer show-expand single-expand>
           <template v-slot:item.data-table-expand="{ item, expand, isExpanded }">
             <template v-if="isExpanded">
-              <v-icon @click="getTradestats(item.id, expand(!isExpanded))">
+              <v-icon @click="getTradeStats(item.id, expand(!isExpanded))">
                 mdi-chevron-up
               </v-icon>
             </template>
             <template v-else>
-              <v-icon @click="getTradestats(item.id, expand(!isExpanded))">
+              <v-icon @click="getTradeStats(item.id, expand(!isExpanded))">
                 mdi-chevron-down
               </v-icon>
             </template>
@@ -200,8 +200,8 @@
        * @param id
        * @param callback
        */
-      getTradestats(id, callback) {
-        this.$axios.$post(Api.exchange.getTradestats, {
+      getTradeStats(id, callback) {
+        this.$axios.$post(Api.exchange.getTradeStats, {
           order_id: id,
           owner: true,
           assigning: 3,

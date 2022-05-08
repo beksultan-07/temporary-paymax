@@ -224,7 +224,7 @@
         this.getAsset(
           this.getUnit(e.params.exchange)
         );
-        this.getKlines();
+        this.getChart();
         this.getOrders();
       }
     },
@@ -360,7 +360,7 @@
        * @object {quote_unit: string},
        * @object {time: int}
        */
-      this.$publish.bind('trade/kline', (data) => {
+      this.$publish.bind('trade/chart:0', (data) => {
           if (data.ohlc) {
             if (
 
@@ -381,7 +381,7 @@
       });
 
       this.getAsset(undefined);
-      this.getKlines();
+      this.getChart();
       this.getOrders();
     },
     methods: {
@@ -397,8 +397,8 @@
       /**
        * Получаем новые данные бегущей строки, данные об торгах.
        */
-      getKlines() {
-        this.$axios.$get(Api.exchange.getKlines + '?base_unit=' + this.query.split('-')[0] + '&quote_unit=' + this.query.split('-')[1] + '&limit=1').then((response) => {
+      getChart() {
+        this.$axios.$get(Api.exchange.getChart + '?base_unit=' + this.query.split('-')[0] + '&quote_unit=' + this.query.split('-')[1] + '&limit=1').then((response) => {
           this.price = response.ohlc ? response.ohlc[0].close : 0;
         })
       },

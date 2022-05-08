@@ -142,7 +142,7 @@
           locale: this.$vuetify.lang.current,
           container_id: 'charting-library',
           datafeed: new Datafeed(this),
-          interval: '5',
+          interval: '15',
           library_path: '/js/charting_library/',
           disabled_features: [
             "use_localstorage_for_settings",
@@ -151,8 +151,15 @@
             "header_undo_redo",
             "compare_symbol",
             "header_compare",
-            "timeframes_toolbar",
             "header_saveload"
+            //"timeframes_toolbar",
+          ],
+          time_frames: [
+            {text: "1m", resolution: "1D"},
+            {text: "6h", resolution: "15"},
+            {text: "1w", resolution: "30"},
+            {text: "3d", resolution: "30"},
+            {text: "1d", resolution: "30"},
           ],
           enabled_features: [],
           charts_storage_url: 'https://saveload.tradingview.com',

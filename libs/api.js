@@ -17,7 +17,7 @@ export default {
     getPrice: '/exchange/get-price',
     getUnit: '/exchange/get-unit',
     getMarkers: '/exchange/get-markers',
-    getKlines: '/exchange/get-klines',
+    getChart: '/exchange/get-chart',
     getTrades: '/exchange/get-trades',
     getPairs: '/exchange/get-pairs',
     getOrders: '/exchange/get-orders',
@@ -29,7 +29,7 @@ export default {
     setWithdraw: '/exchange/set-withdraw',
     cancelWithdraw: '/exchange/cancel-withdraw',
     getTransactions: '/exchange/get-transactions',
-    getTradestats: '/exchange/get-tradestats'
+    getTradeStats: '/exchange/get-trade-stats'
   },
   status: '/status',
   timestamp: '/timestamp',
