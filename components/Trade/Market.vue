@@ -140,10 +140,10 @@
           this.pairs.filter((item) => {
             if (
 
-                // Сверяем принадлежат ли новые события к данному активу,
-                // если аргументы совпадают то привязываем полученные данные из события к данному активу.
-                item.base_unit === data.ohlc[0].base_unit &&
-                item.quote_unit === data.ohlc[0].quote_unit
+              // Сверяем принадлежат ли новые события к данному активу,
+              // если аргументы совпадают то привязываем полученные данные из события к данному активу.
+              item.base_unit === data.ohlc[0].base_unit &&
+              item.quote_unit === data.ohlc[0].quote_unit
 
             ) {
               item.ratio = data.ohlc[0].close - data.ohlc[1].close;
