@@ -37,11 +37,11 @@ export default {
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
     { src: '~/plugins/single.js' },
-    { src: '~/plugins/decimal.js', mode: 'client' },
+    { src: '~/plugins/decimal.js' },
     { src: '~/plugins/publish.js' },
     { src: '~/plugins/vuetify.js' },
     { src: '~/plugins/snackbar.js' },
-    { src: '~/plugins/storages.js', mode: 'client'}
+    { src: '~/plugins/storages.js'}
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
