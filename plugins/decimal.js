@@ -7,7 +7,12 @@ export default (context, inject) => {
       if (nums.length === 2) {
         return Number(nums[0]+nums[1])
       }
-      return Number(nums[0])
+
+      if (Math.abs(Number(nums[0])) === 0) {
+        return 0
+      }
+
+      return Number(nums[0]).toFixed(quantity)
     },
     decimal(number) {
       let nums = String(number).split('.');
