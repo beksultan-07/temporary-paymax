@@ -31,13 +31,13 @@
                     </v-list-item-content>
                     <v-list-item-action>
                       <template v-if="hover">
-                        <small v-if="item.balance > 0" class="teal--text">
+                        <small v-if="$decimal.truncate(item.balance, $decimal.decimal(item.balance))" class="teal--text">
                           ≈ ${{ item.convert }}
                         </small>
                       </template>
                       <template v-else>
-                        <small class="teal--text">
-                          {{ item.balance ? $decimal.truncate(item.balance, $decimal.decimal(item.balance)) : '' }}
+                        <small v-if="$decimal.truncate(item.balance, $decimal.decimal(item.balance))" class="teal--text">
+                          {{ $decimal.truncate(item.balance, $decimal.decimal(item.balance)) }}
                         </small>
                       </template>
                     </v-list-item-action>
@@ -176,6 +176,35 @@
             this.sort();
           }
         });
+
+        /**
+         * Отслеживаем статус ордера.
+         * @return {callback}:
+         * @object {base_unit: string},
+         * @object {id: int},
+         * @object {assigning: string}
+         * @object {price: float},
+         * @object {quantity: float},
+         * @object {quote_unit: string},
+         * @object {create_at: int},
+         * @object {user_id: int},
+         * @object {value: float}
+         */
+        this.$publish.bind('order/status', (data) => {
+
+          if (
+
+              // Сверяем локальный штат пользователя
+              // это у нас пользовательский [id] с полученным из события пользовательским [user_id],
+              // если аргументы совпадают то это значит что ордер сработал частично или полностью.
+              data.user_id === Number(this.$auth.$state.user.id)
+
+          ) {
+            this.getAssets();
+          }
+
+        });
+
       } else {
         this.overlay = false;
       }
