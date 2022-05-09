@@ -28,7 +28,7 @@
                     <v-list-item-action>
                       <template v-if="hover">
                         <small v-if="$decimal.truncate(item.balance, $decimal.decimal(item.balance))" class="teal--text">
-                          ≈ ${{ $decimal.truncate(item.price * item.balance, 8) }}
+                          ≈ ${{ item.price ? $decimal.truncate(item.price * item.balance, 8) : item.balance }}
                         </small>
                       </template>
                       <template v-else>
