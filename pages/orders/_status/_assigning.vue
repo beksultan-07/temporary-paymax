@@ -7,12 +7,12 @@
         <v-data-table :headers="headlines.top" :items="orders" :page.sync="page" item-key="id" :items-per-page="15" hide-default-footer show-expand single-expand>
           <template v-slot:item.data-table-expand="{ item, expand, isExpanded }">
             <template v-if="isExpanded">
-              <v-icon @click="getTradeStats(item.id, expand(!isExpanded))">
+              <v-icon @click="getTradeStats(item.id, item.assigning, expand(!isExpanded))">
                 mdi-chevron-up
               </v-icon>
             </template>
             <template v-else>
-              <v-icon @click="getTradeStats(item.id, expand(!isExpanded))">
+              <v-icon @click="getTradeStats(item.id, item.assigning, expand(!isExpanded))">
                 mdi-chevron-down
               </v-icon>
             </template>
@@ -89,17 +89,14 @@
                       + {{ $decimal.truncate(item.quantity, 8) }} {{ item.base_unit.toUpperCase() }}
                     </template>
                   </template>
-                  <template v-slot:item.id="{ item }">
-                    {{ item.id }}
-                  </template>
                   <template v-slot:item.fees="{ item }">
-                    {{ getFees(item) }} {{ item.quote_unit.toUpperCase() }}
+                    {{ getFees(item) }} {{ item.assigning ? item.quote_unit.toUpperCase() : item.base_unit.toUpperCase() }}
                   </template>
                   <template v-slot:item.price="{ item }">
-                    {{ item.price }}
+                    {{ item.price }} {{ item.quote_unit.toUpperCase() }}
                   </template>
                   <template v-slot:item.total="{ item }">
-                    {{ $decimal.truncate((item.quantity * item.price), $decimal.decimal(item.quantity)) - getFees(item) }} {{ item.quote_unit.toUpperCase() }}
+                    {{ $decimal.truncate((item.quantity * item.price) - getFees(item), $decimal.decimal(item.quantity)) }} {{ item.quote_unit.toUpperCase() }}
                   </template>
                   <template v-slot:item.create_at="{ item }">
                     <div>
@@ -199,13 +196,14 @@
       /**
        * TODO: проверить назначения assigning.
        * @param id
+       * @param assigning
        * @param callback
        */
-      getTradeStats(id, callback) {
+      getTradeStats(id, assigning, callback) {
         this.$axios.$post(Api.exchange.getTradeStats, {
           order_id: id,
           owner: true,
-          assigning: 3,
+          assigning: assigning,
           limit: 100,
         }).then((response) => {
           this.tradestats = response.tradestats ?? [];
@@ -227,7 +225,11 @@
        * @returns {*|number}
        */
       getFees(item) {
-        return this.$decimal.truncate(((item.quantity * item.price)/100)*item.fees, 8)
+        if (item.assigning) {
+          return this.$decimal.truncate(((item.quantity * item.price)/100)*item.fees, 8)
+        } else {
+          return this.$decimal.truncate(((item.quantity)/100)*item.fees, 8)
+        }
       }
     },
     computed: {
@@ -261,7 +263,7 @@
       },
 
       /**
-       * @returns {{top: [{text: string, sortable: boolean, align: string, value: string},{text: string, sortable: boolean, align: string, value: string},{text: string, sortable: boolean, align: string, value: string},{text: string, sortable: boolean, align: string, value: string},{text: string, sortable: boolean, align: string, value: string},null,null], child: [{text: string, sortable: boolean, align: string, value: string},{text: string, sortable: boolean, align: string, value: string},{text: string, sortable: boolean, align: string, value: string},{text: string, sortable: boolean, align: string, value: string},{text: string, sortable: boolean, align: string, value: string},null]}}
+       * @returns {{top: [{text: string, sortable: boolean, align: string, value: string},{text: string, sortable: boolean, align: string, value: string},{text: string, sortable: boolean, align: string, value: string},{text: string, sortable: boolean, align: string, value: string},{text: string, sortable: boolean, align: string, value: string},null,null], child: [{text: string, sortable: boolean, align: string, value: string},{text: string, sortable: boolean, align: string, value: string},{text: string, sortable: boolean, align: string, value: string},{text: string, sortable: boolean, align: string, value: string},{text: string, sortable: boolean, align: string, value: string}]}}
        */
       headlines() {
         return {
@@ -310,12 +312,7 @@
               sortable: true,
               value: 'quantity'
             }, {
-              text: this.$vuetify.lang.t('$vuetify.lang_134'),
-              align: 'start',
-              sortable: true,
-              value: 'id'
-            }, {
-              text: this.$vuetify.lang.t('$vuetify.lang_24'),
+              text: this.$vuetify.lang.t('$vuetify.lang_20'),
               align: 'start',
               sortable: true,
               value: 'fees'
