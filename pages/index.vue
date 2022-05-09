@@ -64,12 +64,12 @@
                           <v-img v-bind="attrs" v-on="on" height="50" width="50" :src="$storages(['icon'], item.symbol)"/>
                         </v-avatar>
                       </template>
-                      <span>{{ $vuetify.lang.t('$vuetify.lang_24') }}</span>
+                      <span>{{ $vuetify.lang.t('$vuetify.lang_20') }}</span>
                     </v-tooltip>
                   </v-btn>
                 </template>
                 <v-card>
-                  <v-card-title>{{ $vuetify.lang.t('$vuetify.lang_24') }}</v-card-title>
+                  <v-card-title>{{ $vuetify.lang.t('$vuetify.lang_20') }}</v-card-title>
                   <v-divider class="mb-4"></v-divider>
                   <v-card-text>
                     <ul>
