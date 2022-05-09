@@ -21,14 +21,14 @@
       <v-spacer />
       <v-menu max-width="110" content-class="elevation-1" open-on-hover bottom offset-y>
         <template v-slot:activator="{ on, attrs }">
-          <template v-if="balance">
+          <template v-if="$decimal.truncate(balance, $decimal.decimal(balance))">
             <div :class="$vuetify.theme.dark ? 'grey--text' : ''" v-bind="attrs" v-on="on">
-              {{ balance ? $decimal.truncate(balance, $decimal.decimal(balance)) : 0 }} {{ String(unit).toUpperCase() }}
+              {{ $decimal.truncate(balance, $decimal.decimal(balance)) }} {{ String(unit).toUpperCase() }}
             </div>
           </template>
           <template v-else>
             <div :class="$vuetify.theme.dark ? 'grey--text' : ''" v-bind="attrs">
-              {{ balance ? $decimal.truncate(balance, $decimal.decimal(balance)) : 0 }} {{ String(unit).toUpperCase() }}
+              0 {{ String(unit).toUpperCase() }}
             </div>
           </template>
         </template>
