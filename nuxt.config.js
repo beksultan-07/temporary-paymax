@@ -41,7 +41,7 @@ export default {
     { src: '~/plugins/publish.js' },
     { src: '~/plugins/vuetify.js' },
     { src: '~/plugins/snackbar.js' },
-    { src: '~/plugins/storages.js'}
+    { src: '~/plugins/storages.js' }
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components

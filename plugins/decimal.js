@@ -12,7 +12,7 @@ export default (context, inject) => {
         return 0
       }
 
-      return Number(nums[0]).toFixed(quantity)
+      return Number(nums[0])
     },
     decimal(number) {
       let nums = String(number).split('.');
