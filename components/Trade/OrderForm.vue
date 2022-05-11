@@ -68,7 +68,7 @@
           <span class="my-1">{{ query.split('-')[0].toUpperCase() }}/{{ query.split('-')[1].toUpperCase() }}</span>
         </template>
       </v-text-field>
-      <v-text-field v-model="quantity" @keyup="setQuantity" class="mb-4" color="primary" height="40" dense hide-details outlined :label="$vuetify.lang.t('$vuetify.lang_52')">
+      <v-text-field v-model="quantity" @keyup="setQuantity" class="mb-4" color="primary" height="40" dense hide-details outlined :label="$vuetify.lang.t('$vuetify.lang_53')">
         <template v-slot:append>
           <span class="my-1">{{ query.split('-')[0].toUpperCase() }}</span>
         </template>
