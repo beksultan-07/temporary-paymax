@@ -3,21 +3,10 @@
 
     <!-- Start: asset balance element -->
     <v-app-bar color="transparent" height="50" flat>
-      <template v-if="status">
-        <v-icon size="20">
-          mdi-wallet-outline
-        </v-icon>
-      </template>
-      <template v-else>
-        <v-tooltip top>
-          <template v-slot:activator="{ on, attrs }">
-            <v-icon size="20" v-bind="attrs" v-on="on">
-              mdi-cog-clockwise
-            </v-icon>
-          </template>
-          <span>{{ $vuetify.lang.t('$vuetify.lang_128') }}</span>
-        </v-tooltip>
-      </template>
+      <v-icon size="20">
+        mdi-wallet-outline
+      </v-icon>
+      <v-switch v-model="type" class="mx-3" :label="type ? $vuetify.lang.t('$vuetify.lang_128') : $vuetify.lang.t('$vuetify.lang_24')" hide-details />
       <v-spacer />
       <v-menu max-width="110" content-class="elevation-1" open-on-hover bottom offset-y>
         <template v-slot:activator="{ on, attrs }">
@@ -74,7 +63,7 @@
 
     <!-- Start: form order trade element -->
     <v-card-text>
-      <v-text-field v-model="price" @keyup="setPrice" class="mb-4" color="primary" height="40" dense hide-details outlined :label="$vuetify.lang.t('$vuetify.lang_52')">
+      <v-text-field :disabled="type" v-model="price" @keyup="setPrice" class="mb-4" color="primary" height="40" dense hide-details outlined :label="$vuetify.lang.t('$vuetify.lang_52')">
         <template v-slot:append>
           <span class="my-1">{{ query.split('-')[0].toUpperCase() }}/{{ query.split('-')[1].toUpperCase() }}</span>
         </template>
@@ -213,7 +202,8 @@
         quantity: 0,
         balance: 0,
         status: 0,
-        overlay: true
+        overlay: true,
+        type: false
       }
     },
     watch: {
@@ -504,7 +494,7 @@
           // Имя актива (symbol-quote).
           quote_unit: this.query.split('-')[1],
           // Тип [market:0] - [limit:1]
-          trade_type: 0,
+          trade_type: this.type ? 0 : 1,
           // Количество монет sell/buy.
           quantity: this.quantity,
           // Рыночная цена монеты.
