@@ -131,7 +131,7 @@ export default {
   lang_131: "Pending",
   lang_132: "Assigning",
   lang_133: "Base/Quote unit",
-  lang_134: "",
+  lang_134: "At market price",
   lang_135: "No orders to display, start trading now",
   lang_136: "Pending orders",
   lang_137: "Filled orders",

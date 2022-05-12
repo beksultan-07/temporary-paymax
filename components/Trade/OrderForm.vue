@@ -63,11 +63,20 @@
 
     <!-- Start: form order trade element -->
     <v-card-text>
-      <v-text-field :disabled="type" v-model="price" @keyup="setPrice" class="mb-4" color="primary" height="40" dense hide-details outlined :label="$vuetify.lang.t('$vuetify.lang_52')">
-        <template v-slot:append>
-          <span class="my-1">{{ query.split('-')[0].toUpperCase() }}/{{ query.split('-')[1].toUpperCase() }}</span>
-        </template>
-      </v-text-field>
+      <template v-if="type">
+        <v-text-field :disabled="type" :value="$vuetify.lang.t('$vuetify.lang_134')" class="mb-4" color="primary" height="40" dense hide-details outlined :label="$vuetify.lang.t('$vuetify.lang_52')">
+          <template v-slot:append>
+            <span class="my-1">{{ query.split('-')[0].toUpperCase() }}/{{ query.split('-')[1].toUpperCase() }}</span>
+          </template>
+        </v-text-field>
+      </template>
+      <template v-else>
+        <v-text-field v-model="price" @keyup="setPrice" class="mb-4" color="primary" height="40" dense hide-details outlined :label="$vuetify.lang.t('$vuetify.lang_52')">
+          <template v-slot:append>
+            <span class="my-1">{{ query.split('-')[0].toUpperCase() }}/{{ query.split('-')[1].toUpperCase() }}</span>
+          </template>
+        </v-text-field>
+      </template>
       <v-text-field v-model="quantity" @keyup="setQuantity" class="mb-4" color="primary" height="40" dense hide-details outlined :label="$vuetify.lang.t('$vuetify.lang_53')">
         <template v-slot:append>
           <span class="my-1">{{ query.split('-')[0].toUpperCase() }}</span>
