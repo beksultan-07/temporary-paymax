@@ -146,7 +146,7 @@
               item.quote_unit === data.ohlc[0].quote_unit
 
             ) {
-              item.ratio = data.ohlc[0].close - data.ohlc[1].close;
+              item.ratio = data.ohlc[1].close - data.ohlc[0].close;
               item.price = data.ohlc[0].close;
               return item;
             }

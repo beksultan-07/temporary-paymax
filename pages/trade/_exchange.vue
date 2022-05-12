@@ -241,7 +241,7 @@
        * @returns {string}
        */
       change24h() {
-        let ratio = this.priceFirst - this.priceLast;
+        let ratio = this.priceLast - this.priceFirst;
         if (Math.sign(ratio) === -1) {
           return (ratio).toFixed(2)
         }
@@ -252,7 +252,7 @@
        * @returns {string}
        */
       changeColor() {
-        let ratio = this.priceFirst - this.priceLast;
+        let ratio = this.priceLast - this.priceFirst;
         if (Math.sign(ratio) === -1) {
           return 'red--text'
         }
