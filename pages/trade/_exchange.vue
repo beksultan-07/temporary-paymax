@@ -129,7 +129,7 @@
       /**
        * @param symbol
        */
-      getChart: function (symbol) {
+      getChart(symbol) {
         this.overlay = true;
         this.exchange = symbol;
 
