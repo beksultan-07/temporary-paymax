@@ -14,7 +14,7 @@
       <v-divider class="mx-4 hidden-sm-and-down" inset vertical />
       <client-only>
       <template v-if="$auth.loggedIn">
-        <v-component-menu-account />
+        <v-component-menu-private />
       </template>
       </client-only>
       <v-component-language />
@@ -35,7 +35,7 @@
   import Language from '~/components/Language';
   import Snackbar from '~/components/Snackbar';
   import MenuDefault from '~/components/Menu/Default';
-  import MenuAccount from '~/components/Menu/Account';
+  import MenuPrivate from '~/components/Menu/Private';
   import Footer from '~/components/Footer';
 
   export default {
@@ -45,7 +45,7 @@
       'v-component-language': Language,
       'v-component-snackbar': Snackbar,
       'v-component-menu-default': MenuDefault,
-      'v-component-menu-account': MenuAccount,
+      'v-component-menu-private': MenuPrivate,
       'v-component-footer': Footer
     },
     data() {

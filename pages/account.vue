@@ -9,7 +9,7 @@
           <v-component-fullscreen>
             <v-list dense>
               <v-list-item-group color="primary">
-                <v-list-item v-for="(item, i) in navs" :class="item.to === $route.params.settings ? 'v-list-item--active' : ''"  :key="i" :to="`/settings/${item.to}`" exact link>
+                <v-list-item v-for="(item, i) in navs" :class="item.to === $route.params.settings ? 'v-list-item--active' : ''"  :key="i" :to="`/account/${item.to}`" exact link>
                   <v-list-item-content>
                     {{ item.title }}
                   </v-list-item-content>
@@ -41,7 +41,7 @@
 
   export default {
     auth: true,
-    name: "settings",
+    name: "account",
     components: {
       'v-component-fullscreen': Fullscreen
     },

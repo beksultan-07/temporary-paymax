@@ -129,7 +129,7 @@
       /**
        * @param symbol
        */
-      getChart(symbol) {
+      getChart: function (symbol) {
         this.overlay = true;
         this.exchange = symbol;
 
@@ -154,15 +154,15 @@
             "header_saveload",
             "timeframes_toolbar",
           ],
-          //time_frames: [],
-          enabled_features: [],
-          charts_storage_url: 'https://saveload.tradingview.com',
-          charts_storage_api_version: '1.1',
           client_id: 'tradingview.com',
           user_id: 'public_user_id',
           fullscreen: false,
           autosize: true,
-          studies_overrides: {}
+          studies: [
+            "ROC@tv-basicstudies",
+            "StochasticRSI@tv-basicstudies",
+            "MASimple@tv-basicstudies"
+          ],
         });
       }
     },

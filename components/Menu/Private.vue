@@ -38,13 +38,13 @@
 
 <script>
   export default {
-    name: "v-component-menu-account",
+    name: "v-component-menu-private",
     data() {
       return {
         items: [
           {icon: 'mdi-alpha-a-circle-outline', title: 'lang_79', to: '/assets'},
           {icon: 'mdi-alpha-o-circle-outline', title: 'lang_126', to: '/orders/all'},
-          {icon: 'mdi-alpha-s-circle-outline', title: 'lang_146', to: '/settings/profile'}
+          {icon: 'mdi-alpha-c-circle-outline', title: 'lang_146', to: '/account/profile'}
         ],
       }
     },
