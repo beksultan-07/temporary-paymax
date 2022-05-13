@@ -65,12 +65,6 @@
 }
 
 
-/* Default bg style */
-.theme--light .bg-state {
-  background-color: #fdfdfd;
-}
-
-
 /* Virtual scroll style */
 .v-virtual-scroll {
   overflow-y: overlay !important;

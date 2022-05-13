@@ -75,7 +75,7 @@
                       </template>
                     </v-text-field>
 
-                    <v-btn color="primary text-capitalize" large block elevation="0" @click="setWithdraw(item)">
+                    <v-btn color="black--text yellow darken-1 text-capitalize" large block elevation="0" @click="setWithdraw(item)">
                       {{ $vuetify.lang.t('$vuetify.lang_111') }} <span v-if="quantity">({{ $vuetify.lang.t('$vuetify.lang_103') }}: {{ $decimal.truncate(quantity > 0 ? quantity - item['fees_withdraw'] : 0, 8) }} <b>{{ asset.symbol.toUpperCase() }}</b>)</span>
                     </v-btn>
                   </v-form>
@@ -127,7 +127,7 @@
           <v-layout fill-height style="height:200px;" wrap>
             <v-flex/>
             <v-flex align-self-center class="text-center" md4 mx5 sm6 xl3>
-              <v-btn block color="primary text-capitalize" elevation="0" large @click="setAsset(item.platform, item.protocol, index)">{{ $vuetify.lang.t('$vuetify.lang_90') }}</v-btn>
+              <v-btn block color="black--text yellow darken-1 text-capitalize" elevation="0" large @click="setAsset(item.platform, item.protocol, index)">{{ $vuetify.lang.t('$vuetify.lang_90') }}</v-btn>
             </v-flex>
             <v-flex/>
           </v-layout>

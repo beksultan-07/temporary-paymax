@@ -25,7 +25,7 @@
     <!-- Start: pairs list element -->
     <template v-if="pairs.length">
       <template v-if="items.length">
-        <v-virtual-scroll @mouseover="hover = true" @mouseleave="hover = false" :class="'bg-state ' + (hover ? '' : 'overflow-y-hidden')" bench="0" :items="items" height="393" item-height="50">
+        <v-virtual-scroll @mouseover="hover = true" @mouseleave="hover = false" :class="hover ? '' : 'overflow-y-hidden'" bench="0" :items="items" height="393" item-height="50">
           <template v-slot:default="{ item }">
             <v-list-item :color="$vuetify.theme.dark ? 'grey darken-3' : 'deep-purple lighten-5'" :to="'/trade/' + item.base_unit + '-' + item.quote_unit" :key="item.id" dense>
               <v-list-item-avatar class="mr-2" size="30">
@@ -95,7 +95,7 @@
     <!-- End: pair search element -->
 
     <v-overlay absolute :color="$vuetify.theme.dark ? 'grey darken-4' : 'white'" opacity="0.8" :value="overlay">
-      <v-progress-circular color="primary" indeterminate size="50" />
+      <v-progress-circular color="yellow darken-3" indeterminate size="50" />
     </v-overlay>
 
   </v-card>

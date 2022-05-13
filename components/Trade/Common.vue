@@ -18,7 +18,7 @@
       <v-tab-item style="height: 449px">
         <template v-if="assets.length">
           <v-hover v-slot="{ hover }">
-            <v-virtual-scroll :class="'bg-state ' + (hover ? '' : 'overflow-y-hidden')" bench="0" :items="assets" height="393" item-height="50">
+            <v-virtual-scroll :class="hover ? '' : 'overflow-y-hidden'" bench="0" :items="assets" height="393" item-height="50">
               <template v-slot:default="{ item }">
                 <v-hover v-slot:default="{ hover }">
                   <v-list-item :color="$vuetify.theme.dark ? 'grey darken-3' : 'deep-purple lighten-5'" :to="'/assets/' + item.symbol + '/deposit'" :key="item.id" dense>
@@ -78,7 +78,7 @@
     <!-- End: assets list element -->
 
     <v-overlay absolute :color="$vuetify.theme.dark ? 'grey darken-4' : 'white'" opacity="0.8" :value="overlay">
-      <v-progress-circular color="primary" indeterminate size="50" />
+      <v-progress-circular color="yellow darken-3" indeterminate size="50" />
     </v-overlay>
 
   </v-card>
@@ -133,7 +133,10 @@
           ) {
             this.assets.map(item => {
               if(item.symbol === (data.assigning ? data.base_unit : data.quote_unit)) {
-                item.balance -= data.assigning ? data.value : data.value * data.price; return item;
+                item.balance -= data.assigning ? data.value : data.value * data.price;
+
+                // Update convert asset.
+                this.getPrice(item);
               }
             });
 
@@ -168,7 +171,10 @@
           ) {
             this.assets.map(item => {
               if(item.symbol === (data.assigning ? data.base_unit : data.quote_unit)) {
-                item.balance += data.assigning ? data.value : data.value * data.price; return item;
+                item.balance += data.assigning ? data.value : data.value * data.price;
+
+                // Update convert asset.
+                this.getPrice(item);
               }
             });
 
@@ -200,7 +206,21 @@
               data.user_id === Number(this.$auth.$state.user.id)
 
           ) {
-            this.getAssets();
+            // TODO: Test status asset update.
+            this.assets.map(item => {
+              if(item.symbol === (data.assigning ? data.base_unit : data.quote_unit)) {
+
+                if (data.assigning) {
+                  item.balance = data.value;
+                } else {
+                  item.balance = data.value * data.price
+                }
+
+                // Update convert asset.
+                this.getPrice(item);
+              }
+            });
+
           }
 
         });
@@ -220,14 +240,21 @@
 
           this.assets = response.currencies ?? [];
           this.assets.map(item => {
-            this.$axios.$get(Api.exchange.getPrice + '?base_unit=' + item.symbol + '&quote_unit=usdt').then((response) => {
-              item.convert = this.$decimal.truncate(response.price ? (item.balance ? response.price * item.balance : 0) : (item.balance ? item.balance : 0), 8)
-            });
+            this.getPrice(item)
           });
           this.overlay = false;
 
           // Sort assets by index.
           this.sort();
+        });
+      },
+
+      /**
+       * @param item
+       */
+      getPrice(item) {
+        this.$axios.$get(Api.exchange.getPrice + '?base_unit=' + item.symbol + '&quote_unit=usdt').then((response) => {
+          item.convert = this.$decimal.truncate(response.price ? (item.balance ? response.price * item.balance : 0) : (item.balance ? item.balance : 0), 8)
         });
       },
 

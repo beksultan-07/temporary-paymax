@@ -20,24 +20,24 @@
         <v-stepper class="transparent" v-model="next" vertical flat>
 
           <!-- Start: step auth reset: 1 -->
-          <v-stepper-step color="primary" :complete="next > 1" step="1">
+          <v-stepper-step color="yellow darken-1" :complete="next > 1" step="1">
             {{ $vuetify.lang.t('$vuetify.lang_22') }}
           </v-stepper-step>
           <v-stepper-content step="1">
             <v-form class="mt-2" ref="form1">
-              <v-text-field color="yellow darken-3" outlined :label="$vuetify.lang.t('$vuetify.lang_4')" v-model="email" :rules="rulesEmail" required>
+              <v-text-field color="primary" outlined :label="$vuetify.lang.t('$vuetify.lang_4')" v-model="email" :rules="rulesEmail" required>
                 <template #message="{ message }">
                   {{ $vuetify.lang.t(message) }}
                 </template>
               </v-text-field>
 
-              <v-btn color="primary text-capitalize" large block elevation="0" @click="actionReset(0)">{{ $vuetify.lang.t('$vuetify.lang_40') }}</v-btn>
+              <v-btn color="black--text yellow darken-1 text-capitalize" large block elevation="0" @click="actionReset(0)">{{ $vuetify.lang.t('$vuetify.lang_40') }}</v-btn>
             </v-form>
           </v-stepper-content>
           <!-- End: step auth reset: 1 -->
 
           <!-- Start: step auth reset: 2 -->
-          <v-stepper-step color="primary" :complete="next > 2" step="2">
+          <v-stepper-step color="yellow darken-1" :complete="next > 2" step="2">
             {{ $vuetify.lang.t('$vuetify.lang_23') }}
             <small>{{ $vuetify.lang.t('$vuetify.lang_37') }}</small>
           </v-stepper-step>
@@ -58,7 +58,7 @@
           <!-- End: step auth reset: 2 -->
 
           <!-- Start: step auth reset: 3 -->
-          <v-stepper-step color="primary" :complete="next > 3" step="3">
+          <v-stepper-step color="yellow darken-1" :complete="next > 3" step="3">
             {{ $vuetify.lang.t('$vuetify.lang_39') }}
           </v-stepper-step>
           <v-stepper-content step="3">
@@ -73,7 +73,7 @@
                   {{ $vuetify.lang.t(message) }}
                 </template>
               </v-text-field>
-              <v-btn color="primary text-capitalize" large block elevation="0" @click="actionReset(3)">{{ $vuetify.lang.t('$vuetify.lang_40') }}</v-btn>
+              <v-btn color="black--text yellow darken-1 text-capitalize" large block elevation="0" @click="actionReset(3)">{{ $vuetify.lang.t('$vuetify.lang_40') }}</v-btn>
             </v-form>
           </v-stepper-content>
           <!-- End: step auth reset: 3 -->

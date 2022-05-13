@@ -45,7 +45,7 @@
 
     <!-- Start: orders list element -->
     <template v-if="orders.length">
-      <v-virtual-scroll @mouseover="hover = true" @mouseleave="hover = false" :class="'bg-state ' + (hover ? '' : 'overflow-y-hidden')" bench="0" :items="orders" height="393" item-height="30">
+      <v-virtual-scroll @mouseover="hover = true" @mouseleave="hover = false" :class="hover ? '' : 'overflow-y-hidden'" bench="0" :items="orders" height="393" item-height="30">
         <template v-slot:default="{ item }">
           <v-component-shift-item :width="100 - ((item.value * 100) / item.quantity).toFixed(0)" :assigning="item.assigning ? 1 : 0" :key="item.id">
             <v-row no-gutters>
@@ -56,7 +56,7 @@
                 {{ $decimal.truncate(item.value, $decimal.decimal(item.value)) }}
               </v-col>
               <v-col :class="'text-right ' + ($vuetify.theme.dark ? 'grey--text' : '')" cols="4">
-                {{ $decimal.truncate(item.value * item.price, $decimal.decimal(item.value))  }}
+                {{ $decimal.truncate(item.value * item.price, $decimal.decimal(item.value * item.price)) }}
               </v-col>
             </v-row>
           </v-component-shift-item>
@@ -109,7 +109,7 @@
     <!-- End: price and value element -->
 
     <v-overlay absolute :color="$vuetify.theme.dark ? 'grey darken-4' : 'white'" opacity="0.8" :value="overlay">
-      <v-progress-circular color="primary" indeterminate size="50" />
+      <v-progress-circular color="yellow darken-3" indeterminate size="50" />
     </v-overlay>
 
   </v-card>

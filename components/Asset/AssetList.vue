@@ -14,7 +14,7 @@
       <template v-if="assets.length">
         <template v-if="items.length">
           <v-hover v-slot="{ hover }">
-            <v-virtual-scroll :class="(hover ? 'bg-state' : 'bg-state overflow-y-hidden')" :height="height" :items="items" bench="0" item-height="50">
+            <v-virtual-scroll :class="hover ? '' : 'overflow-y-hidden'" :height="height" :items="items" bench="0" item-height="50">
               <template v-slot:default="{ item }">
                 <v-hover v-slot:default="{ hover }">
                   <v-list-item :color="$vuetify.theme.dark ? 'grey darken-3' : 'deep-purple lighten-5'" :key="item.id" :class="active(item.symbol) ? 'v-list-item--active ' + ($vuetify.theme.dark ? 'grey--text text--darken-3' : 'blue--text text--lighten-5') : ''" :to="'/assets/' + item.symbol + '/deposit'" dense>
@@ -75,7 +75,7 @@
       <!-- End: list assets element -->
 
       <v-overlay :color="$vuetify.theme.dark ? 'grey darken-4' : 'white'" :value="overlay" absolute opacity="0.8">
-        <v-progress-circular color="primary" indeterminate size="50" />
+        <v-progress-circular color="yellow darken-3" indeterminate size="50" />
       </v-overlay>
 
     </v-component-fullscreen>

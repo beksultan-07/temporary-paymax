@@ -106,7 +106,7 @@
     <client-only key="order-form">
       <template v-if="$auth.loggedIn">
         <v-overlay :color="$vuetify.theme.dark ? 'grey darken-4' : 'white'" opacity="0.8" absolute :value="overlay">
-          <v-progress-circular color="primary" indeterminate size="50" />
+          <v-progress-circular color="yellow darken-3" indeterminate size="50" />
         </v-overlay>
 
         <template v-if="orders.length">
@@ -166,7 +166,7 @@
       </template>
       <template v-else>
         <v-overlay :color="$vuetify.theme.dark ? 'grey darken-4' : 'white'" opacity="0.8" absolute>
-          <v-btn color="primary" to="/signin" large elevation="0">{{ $vuetify.lang.t('$vuetify.lang_29') }}</v-btn>
+          <v-btn color="black--text yellow darken-1 text-capitalize" to="/signin" large elevation="0">{{ $vuetify.lang.t('$vuetify.lang_29') }}</v-btn>
         </v-overlay>
         <v-layout wrap>
           <v-flex/>
