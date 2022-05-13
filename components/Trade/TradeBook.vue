@@ -78,7 +78,7 @@
     <template v-if="trades.length">
       <v-virtual-scroll @mouseover="hover = true" @mouseleave="hover = false" :class="hover ? '' : 'overflow-y-hidden'" bench="0" :items="trades" height="448" item-height="30">
         <template v-slot:default="{ item }">
-          <v-component-shift-item :assigning="item.assigning ? 1 : 0" :key="item.id">
+          <v-component-shift-item :assigning="item.assigning ? 1 : 0" width="100" :key="item.id">
             <v-row no-gutters>
               <v-col cols="4">
                 <span :class="(item.assigning ? 'red' : 'teal') + '--text'">{{ $decimal.truncate(item.price, $decimal.decimal(item.price)) }}</span>

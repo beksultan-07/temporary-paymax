@@ -1,9 +1,9 @@
 <template>
-  <div class="v-shift-item" :style="`height:${this.height}px`">
+  <div :class="('v-shift-item ') + (this.assigning ? '--sell' : '--buy')" :style="`height:${this.height}px`">
     <div class="v-shift-content">
       <slot name="default"></slot>
     </div>
-    <div :class="('v-shift-bar ') + (this.assigning ? 'sell' : 'buy')" :style="`width:${this.width}%`" />
+    <div class="v-shift-progress" :style="`width:${this.width}%`" />
   </div>
 </template>
 
@@ -49,7 +49,7 @@
       font-size: 14px;
     }
 
-    .v-shift-bar {
+    .v-shift-progress {
       position: absolute;
       height: 100%;
       display: list-item;
@@ -58,20 +58,28 @@
     }
   }
 
-  .theme--light .v-shift-item > .v-shift-bar.sell {
+  .theme--light .v-shift-item.--buy {
+      background-color: #d9fbef;
+  }
+
+  .theme--light .v-shift-item.--sell {
     background-color: #fff3f4;
   }
 
-  .theme--dark .v-shift-item > .v-shift-bar.sell {
+  .theme--light .v-shift-item > .v-shift-progress {
+    background-color: #ffffff;
+  }
+
+  .theme--dark .v-shift-item.--buy {
+    background-color: #192e2c;
+  }
+
+  .theme--dark .v-shift-item.--sell {
     background-color: #382626;
   }
 
-  .theme--light .v-shift-item > .v-shift-bar.buy {
-    background-color: #d9fbef;
-  }
-
-  .theme--dark .v-shift-item > .v-shift-bar.buy {
-    background-color: #192e2c;
+  .theme--dark .v-shift-item > .v-shift-progress {
+    background-color: #1e1e1e;
   }
 
 </style>
