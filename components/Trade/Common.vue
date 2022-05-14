@@ -209,23 +209,6 @@
 
             // Полное обновление цен активов, так как при торговле учитываются комиссии то обновление с помощью реплики проблематично, и не точно.
             this.getAssets();
-
-            // TODO: Test status asset update.
-            /*this.assets.map(item => {
-
-              if(item.symbol === (data.assigning ? data.quote_unit : data.base_unit)) {
-
-                if (data.assigning) {
-                  item.balance += (data.quantity * data.price) - this.getFees(data);
-                } else {
-                  item.balance += data.quantity - this.getFees(data);
-                }
-
-                // Update convert asset.
-                this.getPrice(item);
-              }
-            });*/
-
           }
 
         });
