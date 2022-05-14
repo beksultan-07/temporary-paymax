@@ -206,20 +206,25 @@
               data.user_id === Number(this.$auth.$state.user.id)
 
           ) {
+
+            // Полное обновление цен активов, так как при торговле учитываются комиссии то обновление с помощью реплики проблематично, и не точно.
+            this.getAssets();
+
             // TODO: Test status asset update.
-            this.assets.map(item => {
-              if(item.symbol === (data.assigning ? data.base_unit : data.quote_unit)) {
+            /*this.assets.map(item => {
+
+              if(item.symbol === (data.assigning ? data.quote_unit : data.base_unit)) {
 
                 if (data.assigning) {
-                  item.balance = data.value;
+                  item.balance += (data.quantity * data.price) - this.getFees(data);
                 } else {
-                  item.balance = data.value * data.price
+                  item.balance += data.quantity - this.getFees(data);
                 }
 
                 // Update convert asset.
                 this.getPrice(item);
               }
-            });
+            });*/
 
           }
 
@@ -230,6 +235,18 @@
       }
     },
     methods: {
+
+      /**
+       * @param item
+       * @returns {*|number}
+       */
+      getFees(item) {
+        if (item.assigning) {
+          return this.$decimal.truncate(((item.quantity * item.price)/100)*item.fees, 8)
+        } else {
+          return this.$decimal.truncate(((item.quantity)/100)*item.fees, 8)
+        }
+      },
 
       /**
        * Получаем список всех активов.
