@@ -108,7 +108,7 @@ export default class Datafeed {
        */
       this.$self.$publish.bind('trade/chart:' + query.resolution, (data) => {
         if (data.ohlc !== undefined && symbol[0].toLowerCase() === data.ohlc[0].base_unit && symbol[1].toLowerCase() === data.ohlc[0].quote_unit) {
-          this.record(data.ohlc[1]);
+          this.record(data.ohlc[0]);
           this.$self.ohlc24h = data.ohlc24h;
         }
       });
