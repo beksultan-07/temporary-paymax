@@ -7,12 +7,12 @@
         <v-data-table :headers="headlines.top" :items="orders" :page.sync="page" item-key="id" :items-per-page="15" hide-default-footer show-expand single-expand>
           <template v-slot:item.data-table-expand="{ item, expand, isExpanded }">
             <template v-if="isExpanded">
-              <v-icon @click="getTradeStats(item.id, item.assigning, expand(!isExpanded))">
+              <v-icon @click="getTransfers(item.id, item.assigning, expand(!isExpanded))">
                 mdi-chevron-up
               </v-icon>
             </template>
             <template v-else>
-              <v-icon @click="getTradeStats(item.id, item.assigning, expand(!isExpanded))">
+              <v-icon @click="getTransfers(item.id, item.assigning, expand(!isExpanded))">
                 mdi-chevron-down
               </v-icon>
             </template>
@@ -80,7 +80,7 @@
           <template v-slot:expanded-item="{ headers, item }">
             <td :colspan="headers.length">
               <v-card class="my-4" outlined elevation="0">
-                <v-data-table :headers="headlines.child" :items="tradestats" :hide-default-header="!tradestats.length" hide-default-footer>
+                <v-data-table :headers="headlines.child" :items="transfers" :hide-default-header="!transfers.length" hide-default-footer>
                   <template v-slot:item.quantity="{ item }">
                     <template v-if="item.assigning">
                       - {{ $decimal.truncate(item.quantity, 8) }} {{ item.base_unit.toUpperCase() }}
@@ -158,7 +158,7 @@
     data() {
       return {
         orders: [],
-        tradestats: [],
+        transfers: [],
         overlay: true,
         count: 0,
         length: 0,
@@ -199,14 +199,14 @@
        * @param assigning
        * @param callback
        */
-      getTradeStats(id, assigning, callback) {
-        this.$axios.$post(Api.exchange.getTradeStats, {
+      getTransfers(id, assigning, callback) {
+        this.$axios.$post(Api.exchange.getTransfers, {
           order_id: id,
           owner: true,
           assigning: assigning,
           limit: 100,
         }).then((response) => {
-          this.tradestats = response.tradestats ?? [];
+          this.transfers = response.transfers ?? [];
           if (typeof callback === 'function') {
             callback();
           }

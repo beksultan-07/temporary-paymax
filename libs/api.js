@@ -29,7 +29,7 @@ export default {
     setWithdraw: '/exchange/set-withdraw',
     cancelWithdraw: '/exchange/cancel-withdraw',
     getTransactions: '/exchange/get-transactions',
-    getTradeStats: '/exchange/get-trade-stats'
+    getTransfers: '/exchange/get-transfers'
   },
   status: '/status',
   timestamp: '/timestamp',
