@@ -3,6 +3,10 @@ import BigNumber from "bignumber.js";
 export default (context, inject) => {
   context.$decimal = {
     truncate(number, quantity) {
+      if (number === undefined || number === 0) {
+        return 0
+      }
+
       let nums = new BigNumber(number).toFormat(quantity).split(',')
       if (nums.length === 2) {
         return Number(nums[0]+nums[1])
