@@ -36,7 +36,7 @@ export default class Datafeed {
       timezone: 'Etc/UTC',
       ticker: symbolName,
       minmov: 1,
-      pricescale: 100000000,
+      pricescale: 1000000,
       has_intraday: true,
       volume_precision: 8,
       data_status: 'streaming'
