@@ -228,7 +228,7 @@
         if (item.assigning) {
           return this.$decimal.truncate(this.$decimal.mul(this.$decimal.div(this.$decimal.mul(item.quantity, item.price), 100), item.fees));
         } else {
-          return this.$decimal.truncate(this.$decimal.mul(this.$decimal.div(item.quantity), 100), item.fees);
+          return this.$decimal.truncate(this.$decimal.mul(this.$decimal.div(item.quantity, 100), item.fees));
         }
       }
     },
