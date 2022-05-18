@@ -31,13 +31,13 @@
                     </v-list-item-content>
                     <v-list-item-action>
                       <template v-if="hover">
-                        <small v-if="$decimal.truncate(item.balance, $decimal.decimal(item.balance))" class="teal--text">
+                        <small v-if="$decimal.truncate(item.balance)" class="teal--text">
                           ≈ ${{ item.convert }}
                         </small>
                       </template>
                       <template v-else>
-                        <small v-if="$decimal.truncate(item.balance, $decimal.decimal(item.balance))" class="teal--text">
-                          {{ $decimal.truncate(item.balance, $decimal.decimal(item.balance)) }}
+                        <small v-if="$decimal.truncate(item.balance)" class="teal--text">
+                          {{ $decimal.truncate(item.balance) }}
                         </small>
                       </template>
                     </v-list-item-action>
@@ -133,7 +133,7 @@
           ) {
             this.assets.map(item => {
               if(item.symbol === (data.assigning ? data.base_unit : data.quote_unit)) {
-                item.balance -= data.assigning ? data.value : data.value * data.price;
+                item.balance -= data.assigning ? data.value : this.$decimal.mul(data.value, data.price);
 
                 // Update convert asset.
                 this.getPrice(item);
@@ -171,7 +171,7 @@
           ) {
             this.assets.map(item => {
               if(item.symbol === (data.assigning ? data.base_unit : data.quote_unit)) {
-                item.balance += data.assigning ? data.value : data.value * data.price;
+                item.balance += data.assigning ? data.value : this.$decimal.mul(data.value, data.price);
 
                 // Update convert asset.
                 this.getPrice(item);
@@ -220,18 +220,6 @@
     methods: {
 
       /**
-       * @param item
-       * @returns {*|number}
-       */
-      getFees(item) {
-        if (item.assigning) {
-          return this.$decimal.truncate(((item.quantity * item.price)/100)*item.fees, 8)
-        } else {
-          return this.$decimal.truncate(((item.quantity)/100)*item.fees, 8)
-        }
-      },
-
-      /**
        * Получаем список всех активов.
        */
       getAssets() {
@@ -254,7 +242,7 @@
        */
       getPrice(item) {
         this.$axios.$get(Api.exchange.getPrice + '?base_unit=' + item.symbol + '&quote_unit=usdt').then((response) => {
-          item.convert = this.$decimal.truncate(response.price ? (item.balance ? response.price * item.balance : 0) : (item.balance ? item.balance : 0), 8)
+          item.convert = this.$decimal.truncate(response.price ? (item.balance ? this.$decimal.mul(response.price, item.balance) : 0) : (item.balance ? item.balance : 0))
         });
       },
 

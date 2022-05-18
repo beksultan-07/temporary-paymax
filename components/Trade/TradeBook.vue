@@ -27,7 +27,7 @@
           <v-icon v-else>
             mdi-keyboard-tab
           </v-icon>
-          <span :class="priceConcurrency + '--text'">{{ priceCurrent ? $decimal.format(priceCurrent, $decimal.decimal(priceCurrent)) : $vuetify.lang.t('$vuetify.lang_61') }}</span>
+          <span :class="priceConcurrency + '--text'">{{ priceCurrent ? $decimal.format(priceCurrent) : $vuetify.lang.t('$vuetify.lang_61') }}</span>
         </div>
 
         <v-spacer />
@@ -81,10 +81,10 @@
           <v-component-shift-item :assigning="item.assigning ? 1 : 0" :width="100" :key="item.id">
             <v-row no-gutters>
               <v-col cols="4">
-                <span :class="(item.assigning ? 'red' : 'teal') + '--text'">{{ $decimal.truncate(item.price, $decimal.decimal(item.price)) }}</span>
+                <span :class="(item.assigning ? 'red' : 'teal') + '--text'">{{ $decimal.truncate(item.price) }}</span>
               </v-col>
               <v-col :class="'text-right ' + ($vuetify.theme.dark ? 'grey--text' : '')" cols="4">
-                {{ $decimal.truncate(item.quantity, $decimal.decimal(item.quantity)) }}
+                {{ $decimal.truncate(item.quantity) }}
               </v-col>
               <v-col :class="'text-right ' + ($vuetify.theme.dark ? 'grey--text' : '')" cols="4">
                 {{ item.create_at }}

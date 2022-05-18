@@ -10,9 +10,9 @@
       <v-spacer />
       <v-menu max-width="110" content-class="elevation-1" open-on-hover bottom offset-y>
         <template v-slot:activator="{ on, attrs }">
-          <template v-if="$decimal.truncate(balance, $decimal.decimal(balance))">
+          <template v-if="$decimal.truncate(balance)">
             <div :class="$vuetify.theme.dark ? 'grey--text' : ''" v-bind="attrs" v-on="on">
-              {{ $decimal.truncate(balance, $decimal.decimal(balance)) }} {{ String(unit).toUpperCase() }}
+              {{ $decimal.truncate(balance) }} {{ String(unit).toUpperCase() }}
             </div>
           </template>
           <template v-else>
@@ -117,13 +117,13 @@
                   <template v-slot:activator="{ on, attrs }">
                     <v-list-item v-bind="attrs" v-on="on">
                       <v-list-item-icon class="mr-4">
-                        <v-progress-circular size="40" :width="2" :value="100 - ((item.value * 100) / item.quantity).toFixed(0)" :color="item.assigning ? 'red' : 'teal'">
-                          <small>{{ 100 - ((item.value * 100) / item.quantity).toFixed(0) }}</small>
+                        <v-progress-circular size="40" :width="2" :value="$decimal.sub(100, $decimal.div($decimal.mul(item.value, 100), item.quantity)).toFixed(0)" :color="item.assigning ? 'red' : 'teal'">
+                          <small>{{ $decimal.sub(100, $decimal.div($decimal.mul(item.value, 100), item.quantity)).toFixed(0) }}</small>
                         </v-progress-circular>
                       </v-list-item-icon>
                       <v-list-item-content>
-                        <v-list-item-title>{{ $vuetify.lang.t('$vuetify.lang_52') }}: {{ $decimal.truncate(item.price, 8) }} {{ query.split('-')[1].toUpperCase() }}</v-list-item-title>
-                        <v-list-item-subtitle>{{ $vuetify.lang.t('$vuetify.lang_53') }}: {{ $decimal.truncate(item.value, 8) }} {{ query.split('-')[0].toUpperCase() }}</v-list-item-subtitle>
+                        <v-list-item-title>{{ $vuetify.lang.t('$vuetify.lang_52') }}: {{ $decimal.truncate(item.price) }} {{ query.split('-')[1].toUpperCase() }}</v-list-item-title>
+                        <v-list-item-subtitle>{{ $vuetify.lang.t('$vuetify.lang_53') }}: {{ $decimal.truncate(item.value) }} {{ query.split('-')[0].toUpperCase() }}</v-list-item-subtitle>
                       </v-list-item-content>
                       <v-list-item-action>
                         <v-list-item-action-text>
@@ -190,6 +190,9 @@
 <script>
 
   import Api from "../../libs/api";
+  import Decimal from "decimal.js";
+
+  Decimal.set({ precision: 8, rounding: 1 })
 
   export default {
     name: "v-component-order-form",
@@ -465,14 +468,14 @@
        * Перезаписываем поле [value].
        */
       setQuantity() {
-        this.value = this.quantity * this.price;
+        this.value = this.$decimal.mul(this.quantity, this.price);
       },
 
       /**
        * Перезаписываем поле [quantity].
        */
       setValue() {
-        this.quantity = this.value / this.price;
+        this.quantity = this.$decimal.div(this.value, this.price);
       },
 
       /**
@@ -482,10 +485,10 @@
       setPercent(percent) {
         switch (this.assigning) {
           case 'buy':
-            this.value = (this.balance * percent)  / 100;
+            this.value = this.$decimal.mul(this.balance, percent)  / 100;
             break;
           case 'sell':
-            this.value = ((this.balance * percent)  / 100) * this.price;
+            this.value = this.$decimal.mul((this.$decimal.mul(this.balance, percent)  / 100), this.price);
             break;
         }
         this.setValue();

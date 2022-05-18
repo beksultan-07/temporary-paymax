@@ -38,8 +38,8 @@
               <v-card height="118" outlined rounded="lg">
                 <v-card-text class="mt-2 text-center">
                   <div><small>{{ $vuetify.lang.t('$vuetify.lang_56') }}</small></div>
-                  <div class="text-h5">{{ $decimal.truncate(asset.balance, $decimal.decimal(asset.balance)) }}</div>
-                  <small v-if="asset.balance">${{ $decimal.truncate(price ? (asset.balance ? price * asset.balance : 0) : (asset.balance ? asset.balance : 0), 8) }}</small>
+                  <div class="text-h5">{{ $decimal.truncate(asset.balance) }}</div>
+                  <small v-if="asset.balance">${{ $decimal.truncate(price ? (asset.balance ? $decimal.mul(price, asset.balance) : 0) : (asset.balance ? asset.balance : 0)) }}</small>
                 </v-card-text>
               </v-card>
             </v-col>
@@ -47,8 +47,8 @@
               <v-card height="118" outlined rounded="lg">
                 <v-card-text class="mt-2 text-center">
                   <div><small>{{ $vuetify.lang.t('$vuetify.lang_94') }}</small></div>
-                  <div class="text-h5">{{  $decimal.format(asset.volume, $decimal.decimal(asset.volume)) }}</div>
-                  <small v-if="asset.volume">${{ $decimal.truncate(price ? (asset.volume ? price * asset.volume : 0) : (asset.volume ? asset.volume : 0), 8) }}</small>
+                  <div class="text-h5">{{  $decimal.format(asset.volume) }}</div>
+                  <small v-if="asset.volume">${{ $decimal.truncate(price ? (asset.volume ? $decimal.mul(price, asset.volume) : 0) : (asset.volume ? asset.volume : 0)) }}</small>
                 </v-card-text>
               </v-card>
             </v-col>

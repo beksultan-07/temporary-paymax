@@ -23,7 +23,7 @@
             {{ $vuetify.lang.t('$vuetify.lang_149') }}
           </v-card-title>
           <v-card-subtitle>
-            {{ asset.fees_discount ? $decimal.truncate(asset.fees_trade - asset.fees_discount, 6) : 0 }}%
+            {{ asset.fees_discount ? $decimal.truncate($decimal.sub(asset.fees_trade, asset.fees_discount)) : 0 }}%
           </v-card-subtitle>
           <v-divider />
           <v-card-text>

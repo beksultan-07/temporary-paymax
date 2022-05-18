@@ -18,7 +18,7 @@
                 <v-icon v-else small>
                   mdi-keyboard-tab
                 </v-icon>
-                {{ $decimal.format(priceLast, $decimal.decimal(priceLast)) }}
+                {{ $decimal.format(priceLast) }}
               </small>
             </li>
           </ul>
@@ -41,7 +41,7 @@
           <ul class="header-line">
             <li><small>{{ $vuetify.lang.t('$vuetify.lang_67') }}</small></li>
             <li v-if="ohlc24h.last">
-              <small class="grey--text">{{ $decimal.format(maxPrice24h, $decimal.decimal(maxPrice24h)) }}</small>
+              <small class="grey--text">{{ $decimal.format(maxPrice24h) }}</small>
             </li>
           </ul>
         </v-slide-item>
@@ -52,7 +52,7 @@
           <ul class="header-line">
             <li><small>{{ $vuetify.lang.t('$vuetify.lang_68') }}</small></li>
             <li v-if="ohlc24h.last">
-              <small class="grey--text">{{ $decimal.format(minPrice24h, $decimal.decimal(minPrice24h)) }}</small>
+              <small class="grey--text">{{ $decimal.format(minPrice24h) }}</small>
             </li>
           </ul>
         </v-slide-item>
@@ -63,7 +63,7 @@
           <ul class="header-line">
             <li><small>{{ $vuetify.lang.t('$vuetify.lang_69') }}({{ exchange.split('-')[0].toUpperCase() }})</small></li>
             <li v-if="ohlc24h.last">
-              <small class="grey--text">{{ $decimal.format(volume24h, $decimal.decimal(volume24h)) }}</small>
+              <small class="grey--text">{{ $decimal.format(volume24h) }}</small>
             </li>
           </ul>
         </v-slide-item>
@@ -74,7 +74,7 @@
           <ul class="header-line">
             <li><small>{{ $vuetify.lang.t('$vuetify.lang_69') }}({{ exchange.split('-')[1].toUpperCase() }})</small></li>
             <li v-if="ohlc24h.last">
-              <small class="grey--text">{{ $decimal.format(volume24h * minPrice24h, $decimal.decimal(volume24h * minPrice24h)) }}</small>
+              <small class="grey--text">{{ $decimal.format($decimal.mul(volume24h, minPrice24h)) }}</small>
             </li>
           </ul>
         </v-slide-item>
@@ -134,7 +134,7 @@
         this.exchange = symbol;
 
         /**
-         * @type {IChartingLibraryWidget}
+         * @type {Window.TradingView.widget}
          */
         window.tvWidget = new window.TradingView.widget({
           symbol: symbol,
@@ -241,7 +241,7 @@
        * @returns {string}
        */
       change24h() {
-        let ratio = this.priceLast - this.priceFirst;
+        let ratio = this.$decimal.sub(this.priceLast, this.priceFirst);
         if (Math.sign(ratio) === -1) {
           return (ratio).toFixed(2)
         }
@@ -252,7 +252,7 @@
        * @returns {string}
        */
       changeColor() {
-        let ratio = this.priceLast - this.priceFirst;
+        let ratio = this.$decimal.sub(this.priceLast, this.priceFirst);
         if (Math.sign(ratio) === -1) {
           return 'red--text'
         }

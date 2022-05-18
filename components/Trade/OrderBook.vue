@@ -47,16 +47,16 @@
     <template v-if="orders.length">
       <v-virtual-scroll @mouseover="hover = true" @mouseleave="hover = false" :class="hover ? '' : 'overflow-y-hidden'" bench="0" :items="orders" height="393" item-height="30">
         <template v-slot:default="{ item }">
-          <v-component-shift-item :width="Number(((item.value * 100) / item.quantity).toFixed(0))" :assigning="item.assigning ? 1 : 0" :key="item.id">
+          <v-component-shift-item :width="Number($decimal.div($decimal.mul(item.value, 100), item.quantity).toFixed(0))" :assigning="item.assigning ? 1 : 0" :key="item.id">
             <v-row no-gutters>
               <v-col cols="4">
-                <span :class="(item.assigning ? 'red' : 'teal') + '--text'">{{ $decimal.truncate(item.price, $decimal.decimal(item.price)) }}</span>
+                <span :class="(item.assigning ? 'red' : 'teal') + '--text'">{{ $decimal.truncate(item.price) }}</span>
               </v-col>
               <v-col :class="'text-right ' + ($vuetify.theme.dark ? 'grey--text' : '')" cols="4">
-                {{ $decimal.truncate(item.value, $decimal.decimal(item.value)) }}
+                {{ $decimal.truncate(item.value) }}
               </v-col>
               <v-col :class="'text-right ' + ($vuetify.theme.dark ? 'grey--text' : '')" cols="4">
-                {{ $decimal.truncate(item.value * item.price, $decimal.decimal(item.value * item.price)) }}
+                {{ $decimal.truncate($decimal.mul(item.value, item.price)) }}
               </v-col>
             </v-row>
           </v-component-shift-item>
@@ -95,12 +95,12 @@
               <v-icon v-else>
                 mdi-keyboard-tab
               </v-icon>
-              <span :class="priceConcurrency + '--text'">{{ priceCurrent ? $decimal.format(priceCurrent, $decimal.decimal(priceCurrent)) : $vuetify.lang.t('$vuetify.lang_61') }}</span>
+              <span :class="priceConcurrency + '--text'">{{ priceCurrent ? $decimal.format(priceCurrent) : $vuetify.lang.t('$vuetify.lang_61') }}</span>
             </div>
           </v-col>
           <v-col class="text-right" cols="6">
             <small class="mx-2">
-              {{ eyelet === 1 ? $decimal.truncate(volume, $decimal.decimal(volume)) : $decimal.truncate(volume * priceCurrent, $decimal.decimal(volume)) }}<b>({{ eyelet === 1 ? query.split('-')[0].toUpperCase() : query.split('-')[1].toUpperCase() }})</b>
+              {{ eyelet === 1 ? $decimal.truncate(volume) : $decimal.truncate($decimal.mul(volume, priceCurrent)) }}<b>({{ eyelet === 1 ? query.split('-')[0].toUpperCase() : query.split('-')[1].toUpperCase() }})</b>
             </small>
           </v-col>
         </v-row>

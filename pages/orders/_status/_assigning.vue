@@ -44,13 +44,13 @@
             <b class="text-uppercase">{{ item.base_unit }}/{{ item.quote_unit }}</b>
           </template>
           <template v-slot:item.quantity="{ item }">
-            {{ $decimal.truncate(item.quantity, $decimal.decimal(item.quantity)) }} {{ item.base_unit.toUpperCase() }}
+            {{ $decimal.truncate(item.quantity) }} {{ item.base_unit.toUpperCase() }}
           </template>
           <template v-slot:item.price="{ item }">
             {{ item.price }} {{ item.quote_unit.toUpperCase() }}
           </template>
           <template v-slot:item.total="{ item }">
-            {{ $decimal.truncate(item.quantity * item.price, 8) }} {{ item.quote_unit.toUpperCase() }}
+            {{ $decimal.truncate($decimal.mul(item.quantity, item.price)) }} {{ item.quote_unit.toUpperCase() }}
           </template>
           <template v-slot:item.status="{ item }">
             <template v-if="item.status === 'PENDING'">
@@ -83,10 +83,10 @@
                 <v-data-table :headers="headlines.child" :items="transfers" :hide-default-header="!transfers.length" hide-default-footer>
                   <template v-slot:item.quantity="{ item }">
                     <template v-if="item.assigning">
-                      - {{ $decimal.truncate(item.quantity, 8) }} {{ item.base_unit.toUpperCase() }}
+                      - {{ $decimal.truncate(item.quantity) }} {{ item.base_unit.toUpperCase() }}
                     </template>
                     <template v-else>
-                      + {{ $decimal.truncate(item.quantity, 8) }} {{ item.base_unit.toUpperCase() }}
+                      + {{ $decimal.truncate(item.quantity) }} {{ item.base_unit.toUpperCase() }}
                     </template>
                   </template>
                   <template v-slot:item.fees="{ item }">
@@ -96,7 +96,7 @@
                     {{ item.price }} {{ item.quote_unit.toUpperCase() }}
                   </template>
                   <template v-slot:item.total="{ item }">
-                    {{ $decimal.truncate((item.quantity * item.price) - getFees(item), $decimal.decimal(item.quantity)) }} {{ item.quote_unit.toUpperCase() }}
+                    {{ $decimal.truncate($decimal.sub($decimal.mul(item.quantity, item.price), getFees(item))) }} {{ item.quote_unit.toUpperCase() }}
                   </template>
                   <template v-slot:item.create_at="{ item }">
                     <div>
@@ -226,9 +226,9 @@
        */
       getFees(item) {
         if (item.assigning) {
-          return this.$decimal.truncate(((item.quantity * item.price)/100)*item.fees, 8)
+          return this.$decimal.truncate(this.$decimal.mul(this.$decimal.div(this.$decimal.mul(item.quantity, item.price), 100), item.fees));
         } else {
-          return this.$decimal.truncate(((item.quantity)/100)*item.fees, 8)
+          return this.$decimal.truncate(this.$decimal.mul(this.$decimal.div(item.quantity), 100), item.fees);
         }
       }
     },

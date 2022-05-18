@@ -15,6 +15,7 @@
     "@nuxtjs/moment": "^1.6.1",
     "bignumber.js": "^9.0.2",
     "core-js": "^3.15.1",
+    "decimal.js": "^10.3.1",
     "hooper": "^0.3.4",
     "howler": "^2.2.3",
     "mqtt": "^4.2.8",

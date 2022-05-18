@@ -64,10 +64,10 @@
                         {{ $vuetify.lang.t(message) }}
                       </template>
                     </v-text-field>
-                    <v-text-field v-model="quantity" color="primary" :label="$vuetify.lang.t('$vuetify.lang_106')" outlined :hint="`≈ $${price ? $decimal.truncate((quantity ? price * quantity : 0), 8) : (quantity ? quantity : 0)}`" persistent-hint :rules="rulesQuantity" required>
+                    <v-text-field v-model="quantity" color="primary" :label="$vuetify.lang.t('$vuetify.lang_106')" outlined :hint="`≈ $${price ? $decimal.truncate((quantity ? $decimal.mul(price, quantity) : 0)) : (quantity ? quantity : 0)}`" persistent-hint :rules="rulesQuantity" required>
                       <template v-slot:append>
                         <span class="my-1" @click="getBalance(item)" style="cursor: pointer;">
-                          <span class="primary--text">MAX</span> <span class="grey--text">{{ $decimal.truncate(getReserveBalance(item), 8) }} {{ asset.symbol.toUpperCase() }}</span>
+                          <span class="primary--text">MAX</span> <span class="grey--text">{{ $decimal.truncate(getReserveBalance(item)) }} {{ asset.symbol.toUpperCase() }}</span>
                         </span>
                       </template>
                       <template #message="{ message }">
@@ -76,7 +76,7 @@
                     </v-text-field>
 
                     <v-btn color="black--text yellow darken-1 text-capitalize" large block elevation="0" @click="setWithdraw(item)">
-                      {{ $vuetify.lang.t('$vuetify.lang_111') }} <span v-if="quantity">({{ $vuetify.lang.t('$vuetify.lang_103') }}: {{ $decimal.truncate(quantity > 0 ? quantity - item['fees_withdraw'] : 0, 8) }} <b>{{ asset.symbol.toUpperCase() }}</b>)</span>
+                      {{ $vuetify.lang.t('$vuetify.lang_111') }} <span v-if="quantity">({{ $vuetify.lang.t('$vuetify.lang_103') }}: {{ $decimal.truncate(quantity > 0 ? $decimal.sub(quantity, item['fees_withdraw']) : 0) }} <b>{{ asset.symbol.toUpperCase() }}</b>)</span>
                     </v-btn>
                   </v-form>
                 </template>
@@ -104,7 +104,7 @@
               </v-card>
               <v-card elevation="0" outlined>
                 <v-card-subtitle :class="$vuetify.theme.dark ? 'white--text' : 'black--text'">
-                  <b>{{ $vuetify.lang.t('$vuetify.lang_20') }}:</b> {{ item['fees_withdraw'] }} {{ asset.symbol.toUpperCase() }} /≈ ${{ $decimal.truncate(price ? (item['fees_withdraw'] ? price * item['fees_withdraw'] : 0) : (item['fees_withdraw'] ? item['fees_withdraw'] : 0), 8) }}
+                  <b>{{ $vuetify.lang.t('$vuetify.lang_20') }}:</b> {{ item['fees_withdraw'] }} {{ asset.symbol.toUpperCase() }} /≈ ${{ $decimal.truncate(price ? (item['fees_withdraw'] ? $decimal.mul(price, item['fees_withdraw']) : 0) : (item['fees_withdraw'] ? item['fees_withdraw'] : 0)) }}
                 </v-card-subtitle>
                 <v-divider />
                 <v-card-text :class="$vuetify.theme.dark ? 'white--text' : 'black--text'">
@@ -195,7 +195,7 @@
        * @param item
        */
       getBalance(item) {
-        this.quantity = this.$decimal.truncate(this.getReserveBalance(item), 8);
+        this.quantity = this.$decimal.truncate(this.getReserveBalance(item));
       },
 
       /**
