@@ -43,7 +43,7 @@ export default (context, inject) => {
       }
 
       let nums = String(number).split('.');
-      if (Number(nums[0]) > 1) {
+      if (Number(nums[0]) > 0) {
         return 2
       }
       return 8
