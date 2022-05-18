@@ -5,7 +5,7 @@ Decimal.set({ precision: 8, rounding: 1 })
 export default (context, inject) => {
   context.$decimal = {
     truncate(number, precision) {
-      if (number === '' || number === undefined || number === 0) {
+      if (this.isNumber(number)) {
         return 0
       }
 
@@ -38,6 +38,10 @@ export default (context, inject) => {
       return Number(new Decimal(number).sub(to));
     },
     precision(number) {
+      if (this.isNumber(number)) {
+        return 0
+      }
+
       let nums = String(number).split('.');
       if (Number(nums[0]) > 1) {
         return 2
@@ -45,6 +49,10 @@ export default (context, inject) => {
       return 8
     },
     format(number, precision) {
+      if (!Decimal.isDecimal(number)) {
+        return 0
+      }
+
       if (precision === undefined) {
         precision = this.precision(number);
       }
@@ -52,7 +60,7 @@ export default (context, inject) => {
       return number ? (number).toFixed(precision ?? 2).replace(/\d(?=(\d{3})+\.)/g, '$&,') : 0;
     },
     isNumber(number) {
-      return number === '' || number === undefined;
+      return number === '' || number === undefined || number === 0 || number === null;
     }
   };
   inject('decimal', context.$decimal);
