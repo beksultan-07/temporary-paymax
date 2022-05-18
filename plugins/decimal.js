@@ -49,10 +49,6 @@ export default (context, inject) => {
       return 8
     },
     format(number, precision) {
-      if (!Decimal.isDecimal(number)) {
-        return 0
-      }
-
       if (precision === undefined) {
         precision = this.precision(number);
       }
