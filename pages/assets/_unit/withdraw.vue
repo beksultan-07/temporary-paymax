@@ -34,7 +34,7 @@
                 </v-card-subtitle>
                 <v-divider />
                 <v-card-text :class="$vuetify.theme.dark ? 'white--text' : 'black--text'">
-                  {{ $vuetify.lang.t('$vuetify.lang_87').replace(/%1/g, item['confirmation']) }}
+                  {{ $vuetify.lang.t('$vuetify.lang_87').replace(/%1/g, item.confirmation) }}
                 </v-card-text>
               </v-card>
 
@@ -52,33 +52,73 @@
               <template v-else>
 
                 <template v-if="getReserve(item)">
-                  <v-card class="mb-4" elevation="0" outlined>
-                    <v-card-text :class="$vuetify.theme.dark ? 'white--text' : 'black--text'">
-                      {{ $vuetify.lang.t('$vuetify.lang_110') }}
-                    </v-card-text>
+
+                  <!-- Start: init steps component -->
+                  <v-card elevation="0" outlined>
+                    <v-stepper class="transparent" v-model="next" flat>
+                      <v-stepper-header class="step-header">
+                        <v-stepper-step color="yellow darken-1" editable :complete="next > 1" step="1">
+                          {{ $vuetify.lang.t('$vuetify.lang_152') }}
+                        </v-stepper-step>
+                        <v-divider></v-divider>
+                        <v-stepper-step color="yellow darken-1" :complete="next > 2" step="2">
+                          {{ $vuetify.lang.t('$vuetify.lang_153') }}
+                        </v-stepper-step>
+                      </v-stepper-header>
+
+                      <!-- Start: step withdraw: 1 -->
+                      <v-stepper-content step="1">
+                        <v-form class="mt-1" ref="form">
+                          <v-text-field v-model="to" color="primary" :label="$vuetify.lang.t('$vuetify.lang_104')" outlined :rules="rulesAddress" required>
+                            <template #message="{ message }">
+                              {{ $vuetify.lang.t(message) }}
+                            </template>
+                          </v-text-field>
+                          <v-text-field v-model="quantity" color="primary" :label="$vuetify.lang.t('$vuetify.lang_106')" outlined :hint="`≈ $${price ? $decimal.truncate((quantity ? $decimal.mul(price, quantity) : 0)) : (quantity ? quantity : 0)}`" persistent-hint :rules="rulesQuantity" required>
+                            <template v-slot:append>
+                          <span class="my-1" @click="getBalance(item)" style="cursor: pointer;">
+                            <span class="primary--text">MAX</span> <span class="grey--text">{{ $decimal.truncate(getReserveBalance(item)) }} {{ asset.symbol.toUpperCase() }}</span>
+                          </span>
+                            </template>
+                            <template #message="{ message }">
+                              {{ $vuetify.lang.t(message) }}
+                            </template>
+                          </v-text-field>
+
+                          <template v-if="to && quantity">
+                            <v-btn color="black--text yellow darken-1 text-capitalize" large block elevation="0" @click="setStep(2, item)">{{ $vuetify.lang.t('$vuetify.lang_40') }}</v-btn>
+                          </template>
+                        </v-form>
+
+                      </v-stepper-content>
+                      <!-- End: step withdraw: 1 -->
+
+                      <!-- Start: step withdraw: 2 -->
+                      <v-stepper-content step="2">
+
+                        <v-text-field class="mt-2" color="primary" outlined :label="$vuetify.lang.t('$vuetify.lang_155')" v-model="secure" :counter="6" :hint="$vuetify.lang.t('$vuetify.lang_43') + $auth.$state.user.email">
+                          <template v-slot:append>
+                            <template v-if="timer === 60 || timer === 0">
+                              <span class="my-1" @click="setRefresh()" style="cursor: pointer;">{{ $vuetify.lang.t('$vuetify.lang_36') }}</span>
+                            </template>
+                            <template v-else>
+                              <span class="my-1">{{ timer }}</span>
+                            </template>
+                          </template>
+                        </v-text-field>
+
+                        <template v-if="secure">
+                          <v-btn color="black--text yellow darken-1 text-capitalize" large block elevation="0" @click="setWithdraw(item)">
+                            {{ $vuetify.lang.t('$vuetify.lang_111') }} <span v-if="quantity">({{ $vuetify.lang.t('$vuetify.lang_103') }}: {{ $decimal.truncate(quantity > 0 ? $decimal.sub(quantity, item.fees_withdraw) : 0) }} <b>{{ asset.symbol.toUpperCase() }}</b>)</span>
+                          </v-btn>
+                        </template>
+                      </v-stepper-content>
+                      <!-- End: step withdraw: 2 -->
+
+                    </v-stepper>
                   </v-card>
+                  <!-- End: init steps component -->
 
-                  <v-form ref="form">
-                    <v-text-field v-model="to" color="primary" :label="$vuetify.lang.t('$vuetify.lang_104')" outlined :rules="rulesAddress" required>
-                      <template #message="{ message }">
-                        {{ $vuetify.lang.t(message) }}
-                      </template>
-                    </v-text-field>
-                    <v-text-field v-model="quantity" color="primary" :label="$vuetify.lang.t('$vuetify.lang_106')" outlined :hint="`≈ $${price ? $decimal.truncate((quantity ? $decimal.mul(price, quantity) : 0)) : (quantity ? quantity : 0)}`" persistent-hint :rules="rulesQuantity" required>
-                      <template v-slot:append>
-                        <span class="my-1" @click="getBalance(item)" style="cursor: pointer;">
-                          <span class="primary--text">MAX</span> <span class="grey--text">{{ $decimal.truncate(getReserveBalance(item)) }} {{ asset.symbol.toUpperCase() }}</span>
-                        </span>
-                      </template>
-                      <template #message="{ message }">
-                        {{ $vuetify.lang.t(message) }}
-                      </template>
-                    </v-text-field>
-
-                    <v-btn color="black--text yellow darken-1 text-capitalize" large block elevation="0" @click="setWithdraw(item)">
-                      {{ $vuetify.lang.t('$vuetify.lang_111') }} <span v-if="quantity">({{ $vuetify.lang.t('$vuetify.lang_103') }}: {{ $decimal.truncate(quantity > 0 ? $decimal.sub(quantity, item['fees_withdraw']) : 0) }} <b>{{ asset.symbol.toUpperCase() }}</b>)</span>
-                    </v-btn>
-                  </v-form>
                 </template>
 
                 <template v-else>
@@ -94,21 +134,26 @@
             </v-col>
             <v-col cols="12" md="6">
               <v-card class="mb-4" elevation="0" outlined>
+                <v-card-text :class="$vuetify.theme.dark ? 'white--text' : 'black--text'">
+                  {{ $vuetify.lang.t('$vuetify.lang_110') }}
+                </v-card-text>
+              </v-card>
+              <v-card class="mb-4" elevation="0" outlined>
                 <v-card-subtitle>
                   <b class="blue--text">{{ $vuetify.lang.t('$vuetify.lang_101') }}</b>
                 </v-card-subtitle>
                 <v-divider />
                 <v-card-text class="blue--text">
-                  {{ $vuetify.lang.t('$vuetify.lang_102').replace(/%1/g, item['time_withdraw']) }}
+                  {{ $vuetify.lang.t('$vuetify.lang_102').replace(/%1/g, item.time_withdraw) }}
                 </v-card-text>
               </v-card>
               <v-card elevation="0" outlined>
                 <v-card-subtitle :class="$vuetify.theme.dark ? 'white--text' : 'black--text'">
-                  <b>{{ $vuetify.lang.t('$vuetify.lang_20') }}:</b> {{ item['fees_withdraw'] }} {{ asset.symbol.toUpperCase() }} /≈ ${{ $decimal.truncate(price ? (item['fees_withdraw'] ? $decimal.mul(price, item['fees_withdraw']) : 0) : (item['fees_withdraw'] ? item['fees_withdraw'] : 0)) }}
+                  <b>{{ $vuetify.lang.t('$vuetify.lang_20') }}:</b> {{ item.fees_withdraw }} {{ asset.symbol.toUpperCase() }} /≈ ${{ $decimal.truncate(price ? (item.fees_withdraw ? $decimal.mul(price, item.fees_withdraw) : 0) : (item.fees_withdraw ? item.fees_withdraw : 0)) }}
                 </v-card-subtitle>
                 <v-divider />
                 <v-card-text :class="$vuetify.theme.dark ? 'white--text' : 'black--text'">
-                  <b>{{ $vuetify.lang.t('$vuetify.lang_100') }}:</b> {{ asset['min_withdraw'] }} <b>{{ asset.symbol.toUpperCase() }}</b>
+                  <b>{{ $vuetify.lang.t('$vuetify.lang_100') }}:</b> {{ $decimal.plus(asset.min_withdraw, item.fees_withdraw) }} <b>{{ asset.symbol.toUpperCase() }}</b>
                 </v-card-text>
                 <v-divider />
                 <v-card-text :class="$vuetify.theme.dark ? 'white--text' : 'black--text'">
@@ -148,12 +193,25 @@
     name: "withdraw",
     data() {
       return {
+        next: 1,
         asset: {
-          chains: []
+          chains: [
+            {
+              network: 0,
+              reserve: 0,
+              fees_withdraw: 0,
+              time_withdraw: 0,
+              confirmation: 0
+            }
+          ],
+          max_withdraw: 0,
+          min_withdraw: 0
         },
         quantity: '',
         eyelet: 0,
         price: 0,
+        timer: 60,
+        secure: '',
         to: ''
       }
     },
@@ -166,6 +224,20 @@
       this.getAsset();
     },
     methods: {
+
+      /**
+       *
+       */
+      getTimer() {
+        if(this.timer > 0) {
+          setTimeout(() => {
+            this.timer -= 1;
+            this.getTimer()
+          }, 1000);
+        } else {
+          this.timer = 60;
+        }
+      },
 
       /**
        *
@@ -203,7 +275,7 @@
        * @returns {number|*}
        */
       getMaxWithdraw(item) {
-        let number = item['reserve'] > this.asset['max_withdraw'] ? this.asset['max_withdraw'] : item['reserve'];
+        let number = item.reserve > this.asset.max_withdraw ? this.asset.max_withdraw : item.reserve;
         if (!isNaN(number)) {
           return number;
         }
@@ -215,7 +287,7 @@
        * @returns {number|*}
        */
       getReserve(item) {
-        let number = item['reserve'];
+        let number = item.reserve;
         if (!isNaN(number)) {
           return number;
         }
@@ -227,10 +299,10 @@
        * @returns {number|*}
        */
       getReserveBalance(item) {
-        let number = item['reserve'];
+        let number = item.reserve;
         let balance = this.asset.balance ?? 0;
         if (number >= balance) {
-          return (balance > this.asset['max_withdraw'] ? this.asset['max_withdraw'] : balance)
+          return (balance > this.asset.max_withdraw ? this.asset.max_withdraw : balance)
         }
         return number
       },
@@ -248,15 +320,14 @@
        * @param item
        */
       setWithdraw(item) {
-        if (!this.$refs.form[0].validate()) return false;
-
         this.$axios.$post(Api.exchange.setWithdraw, {
           unit: this.$route.params.unit,
           chain_id: item.id,
           platform: item.platform,
           protocol: item.protocol,
           quantity: this.quantity,
-          address: this.to
+          address: this.to,
+          secure: this.secure
         }).then(() => {
 
           this.$nuxt.$emit('withdraw/create', {
@@ -271,6 +342,40 @@
             color: 'red darken-2'
           });
         });
+      },
+
+      /**
+       * @param step
+       * @param item
+       * @returns {boolean}
+       */
+      setStep(step, item) {
+        if (!this.$refs.form[0].validate()) return false;
+
+        if (this.quantity > this.getReserveBalance(item) || this.quantity < this.$decimal.plus(this.asset.min_withdraw, item.fees_withdraw)) {
+          this.$snackbar.open({
+            content: this.$vuetify.lang.t('$vuetify.lang_154'),
+            color: 'red darken-2'
+          });
+          return false;
+        }
+
+        this.next = step;
+      },
+
+      /**
+       *
+       */
+      setRefresh() {
+        this.$axios.$post(Api.exchange.setWithdraw, {
+          refresh: true
+        }).catch((error) => {
+          this.$snackbar.open({
+            content: `${error.response.data.code}: ${error.response.data.message}`,
+            color: 'red darken-2'
+          });
+        });
+        this.getTimer();
       }
     },
     computed: {
@@ -291,5 +396,8 @@
 </script>
 
 <style scoped>
-
+  .step-header {
+    box-shadow: 0 0 0 !important;
+    border-bottom: 1px solid #ecf2f6;
+  }
 </style>

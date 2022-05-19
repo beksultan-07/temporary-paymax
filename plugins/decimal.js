@@ -37,6 +37,12 @@ export default (context, inject) => {
       }
       return Number(new Decimal(number).sub(to));
     },
+    plus(number, to) {
+      if (this.isNumber(number)) {
+        return 0
+      }
+      return Number(new Decimal(number).plus(to));
+    },
     precision(number) {
       if (this.isNumber(number)) {
         return 0

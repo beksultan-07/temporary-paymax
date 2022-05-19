@@ -50,7 +50,7 @@
     },
     methods: {
       setLogout() {
-        this.$auth.logout({ data: {refresh: this.$auth.$storage['_state']['_refresh_token.local']}}).then(() => {
+        this.$auth.logout({ data: {refresh: this.$auth.$storage['_state']['_refresh_token.local'], email: this.$auth.$state.user.email}}).then(() => {
           this.$router.push('/');
         });
       }
