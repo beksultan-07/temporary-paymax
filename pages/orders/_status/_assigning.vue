@@ -140,7 +140,7 @@
     </template>
 
     <v-overlay absolute :color="$vuetify.theme.dark ? 'grey darken-4' : 'white'" opacity="0.8" :value="overlay">
-      <v-progress-circular color="primary" indeterminate size="50" />
+      <v-progress-circular color="yellow darken-3" indeterminate size="50" />
     </v-overlay>
 
   </div>
