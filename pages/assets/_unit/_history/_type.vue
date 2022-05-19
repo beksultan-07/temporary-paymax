@@ -96,7 +96,7 @@
                         {{ $vuetify.lang.t('$vuetify.lang_107') }}
                       </v-list-item-subtitle>
                       <v-list-item-title>
-                        {{ item.value + item.fees }} {{ item.unit.toUpperCase() }}
+                        {{ item.value }} {{ item.unit.toUpperCase() }}
                       </v-list-item-title>
                     </v-item-group>
                   </v-list-item>
