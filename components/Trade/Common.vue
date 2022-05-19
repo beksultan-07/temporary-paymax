@@ -131,17 +131,7 @@
             data.user_id === Number(this.$auth.$state.user.id)
 
           ) {
-            this.assets.map(item => {
-              if(item.symbol === (data.assigning ? data.base_unit : data.quote_unit)) {
-                item.balance -= data.assigning ? data.value : this.$decimal.mul(data.value, data.price);
-
-                // Update convert asset.
-                this.getPrice(item);
-              }
-            });
-
-            // Sort assets by index.
-            this.sort();
+            this.getAssets();
           }
 
         });
@@ -169,17 +159,7 @@
             data.user_id === Number(this.$auth.$state.user.id)
 
           ) {
-            this.assets.map(item => {
-              if(item.symbol === (data.assigning ? data.base_unit : data.quote_unit)) {
-                item.balance += data.assigning ? data.value : this.$decimal.mul(data.value, data.price);
-
-                // Update convert asset.
-                this.getPrice(item);
-              }
-            });
-
-            // Sort assets by index.
-            this.sort();
+            this.getAssets();
           }
         });
 
@@ -206,8 +186,6 @@
               data.user_id === Number(this.$auth.$state.user.id)
 
           ) {
-
-            // Полное обновление цен активов, так как при торговле учитываются комиссии то обновление с помощью реплики проблематично, и не точно.
             this.getAssets();
           }
 
