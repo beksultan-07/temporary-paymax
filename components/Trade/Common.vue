@@ -15,10 +15,10 @@
 
     <!-- Start: assets list element -->
     <v-tabs-items v-model="eyelet">
-      <v-tab-item style="height: 449px">
+      <v-tab-item>
         <template v-if="assets.length">
           <v-hover v-slot="{ hover }">
-            <v-virtual-scroll :class="hover ? '' : 'overflow-y-hidden'" bench="0" :items="assets" height="393" item-height="50">
+            <v-virtual-scroll :class="hover ? '' : 'overflow-y-hidden'" bench="0" :items="assets" height="448" item-height="50">
               <template v-slot:default="{ item }">
                 <v-hover v-slot:default="{ hover }">
                   <v-list-item :color="$vuetify.theme.dark ? 'grey darken-3' : 'deep-purple lighten-5'" :to="'/assets/' + item.symbol + '/deposit'" :key="item.id" dense>
