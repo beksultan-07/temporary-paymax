@@ -4,7 +4,7 @@
       <template v-if="unit">
 
         <!-- Start: tabs bar -->
-        <v-tabs v-model="eyelet" color="primary">
+        <v-tabs v-model="eyelet" color="primary" show-arrows>
           <v-tab :to="'/assets/' + unit + '/deposit'">{{ $vuetify.lang.t('$vuetify.lang_91') }}</v-tab>
           <v-tab :to="'/assets/' + unit + '/withdraw'">{{ $vuetify.lang.t('$vuetify.lang_92') }}</v-tab>
           <v-tab :to="'/assets/' + unit + '/history'">{{ $vuetify.lang.t('$vuetify.lang_93') }}</v-tab>

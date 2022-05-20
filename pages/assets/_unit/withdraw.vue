@@ -39,15 +39,15 @@
               </v-card>
 
               <template v-if="!item.status">
-              <v-card class="mb-4" elevation="0" outlined>
-                <v-card-subtitle>
-                  <b class="red--text">{{ $vuetify.lang.t('$vuetify.lang_99') }}</b>
-                </v-card-subtitle>
-                <v-divider />
-                <v-card-text class="red--text">
-                  {{ $vuetify.lang.t('$vuetify.lang_98') }}
-                </v-card-text>
-              </v-card>
+                <v-card class="mb-4" elevation="0" outlined>
+                  <v-card-subtitle>
+                    <b class="red--text">{{ $vuetify.lang.t('$vuetify.lang_99') }}</b>
+                  </v-card-subtitle>
+                  <v-divider />
+                  <v-card-text class="red--text">
+                    {{ $vuetify.lang.t('$vuetify.lang_98') }}
+                  </v-card-text>
+                </v-card>
               </template>
               <template v-else>
 
@@ -329,12 +329,10 @@
           address: this.to,
           secure: this.secure
         }).then(() => {
-
           this.$nuxt.$emit('withdraw/create', {
             unit: this.$route.params.unit,
             value: this.quantity
           });
-
           return this.$router.push('/assets/' + this.$route.params.unit + '/history')
         }).catch((error) => {
           this.$snackbar.open({
@@ -351,7 +349,6 @@
        */
       setStep(step, item) {
         if (!this.$refs.form[0].validate()) return false;
-
         if (this.quantity > this.getReserveBalance(item) || this.quantity < this.$decimal.plus(this.asset.min_withdraw, item.fees_withdraw)) {
           this.$snackbar.open({
             content: this.$vuetify.lang.t('$vuetify.lang_154'),
@@ -359,7 +356,6 @@
           });
           return false;
         }
-
         this.next = step;
       },
 

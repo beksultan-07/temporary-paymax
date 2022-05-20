@@ -2,7 +2,7 @@
   <div class="mx-4 mt-3">
 
     <!-- Start: fees info -->
-    <v-row align="center">
+    <v-row class="mb-2" align="center">
       <v-col cols="12" md="6">
         <v-card height="250" outlined rounded="lg">
           <v-card-title>
