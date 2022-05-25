@@ -29,7 +29,7 @@
                       <v-list-item-title>{{ item.symbol.toUpperCase() }}</v-list-item-title>
                       <v-list-item-subtitle>{{ item.name }}</v-list-item-subtitle>
                     </v-list-item-content>
-                    <v-list-item-action>
+                    <v-list-item-action class="d-block text-right">
                       <template v-if="hover">
                         <small v-if="$decimal.truncate(item.balance)" class="teal--text">
                           ≈ ${{ item.convert }}

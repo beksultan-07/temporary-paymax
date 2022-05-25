@@ -4,7 +4,7 @@
       <div class="history">
 
         <!-- Start: data table -->
-        <v-data-table :headers="headlines.top" :items="transactions" :page.sync="page" item-key="id" :items-per-page="15" hide-default-footer show-expand single-expand>
+        <v-data-table :headers="headlines.top" :items="transactions" :page.sync="page" item-key="id" :items-per-page="limit" hide-default-footer show-expand single-expand>
           <template v-slot:item.data-table-expand="{ item, expand, isExpanded }">
             <template v-if="isExpanded">
               <v-icon @click="expand(!isExpanded)">
@@ -154,6 +154,8 @@
         </v-data-table>
         <!-- End: data table -->
 
+        <v-divider />
+
         <!-- Start: pagination -->
         <v-container v-if="length > 1" class="max-width">
           <v-row justify="center">
@@ -200,6 +202,7 @@
       return {
         transactions: [],
         overlay: true,
+        limit: 10,
         count: 0,
         length: 0,
         page: 1
@@ -227,12 +230,12 @@
         this.$axios.$post(Api.exchange.getTransactions, {
           unit: this.$route.params.unit,
           transaction_type: this.type,
-          limit: 10,
+          limit: this.limit,
           page: this.page
         }).then((response) => {
           this.transactions = response.transactions ?? [];
           this.count = response.count ?? 0;
-          this.length = Math.ceil(this.count/10);
+          this.length = Math.ceil(this.count/this.limit);
           this.overlay = false;
         });
       },

@@ -25,7 +25,7 @@
                       <v-list-item-title><span :class="($vuetify.theme.dark ? 'white' : 'black') + '--text'">{{ item.symbol.toUpperCase() }}</span></v-list-item-title>
                       <v-list-item-subtitle>{{ item.name }}</v-list-item-subtitle>
                     </v-list-item-content>
-                    <v-list-item-action>
+                    <v-list-item-action class="d-block text-right">
                       <template v-if="hover">
                         <small v-if="$decimal.truncate(item.balance)" class="teal--text">
                           ≈ ${{ item.price ? $decimal.truncate($decimal.mul(item.balance, item.price)) : $decimal.truncate(item.balance) }}
@@ -88,7 +88,7 @@
   import Api from "../../libs/api";
 
   export default {
-    name: "v-component-asset-list",
+    name: "v-component-assets",
     components: {
       'v-component-fullscreen': Fullscreen
     },

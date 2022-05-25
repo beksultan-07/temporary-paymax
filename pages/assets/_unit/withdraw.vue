@@ -168,7 +168,7 @@
           </v-row>
 
         </template>
-        <template v-else>
+        <template v-else-if="!overlay">
           <v-layout fill-height style="height:200px;" wrap>
             <v-flex/>
             <v-flex align-self-center class="text-center" md4 mx5 sm6 xl3>
@@ -181,6 +181,10 @@
       </v-tab-item>
     </v-tabs-items>
     <!-- End: tabs items -->
+
+    <v-overlay absolute :color="$vuetify.theme.dark ? 'grey darken-4' : 'white'" opacity="0.8" :value="overlay">
+      <v-progress-circular color="yellow darken-3" indeterminate size="50" />
+    </v-overlay>
 
   </div>
 </template>
@@ -209,6 +213,7 @@
         },
         quantity: '',
         eyelet: 0,
+        overlay: true,
         price: 0,
         timer: 60,
         secure: '',
@@ -243,8 +248,11 @@
        *
        */
       getAsset() {
+        this.overlay = true;
+
         this.$axios.$post(Api.exchange.getAsset, {unit: this.$route.params.unit}).then((response) => {
           this.asset = response.currencies.lastItem ?? {};
+          this.overlay = false;
           this.getPrice(this.asset.symbol);
         }).catch(e => {
           console.log(e)

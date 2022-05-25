@@ -4,7 +4,7 @@
       <div class="orders">
 
         <!-- Start: data table -->
-        <v-data-table :headers="headlines.top" :items="orders" :page.sync="page" item-key="id" :items-per-page="15" hide-default-footer show-expand single-expand>
+        <v-data-table :headers="headlines.top" :items="orders" :page.sync="page" item-key="id" :items-per-page="limit" hide-default-footer show-expand single-expand>
           <template v-slot:item.data-table-expand="{ item, expand, isExpanded }">
             <template v-if="isExpanded">
               <v-icon @click="getTransfers(item.id, item.assigning, expand(!isExpanded))">
@@ -113,6 +113,8 @@
         </v-data-table>
         <!-- End: data table -->
 
+        <v-divider />
+
         <!-- Start: pagination -->
         <v-container v-if="length > 1" class="max-width">
           <v-row justify="center">
@@ -160,6 +162,7 @@
         orders: [],
         transfers: [],
         overlay: true,
+        limit: 15,
         count: 0,
         length: 0,
         page: 1
@@ -183,12 +186,12 @@
           owner: true,
           assigning: this.assigning,
           status: this.status,
-          limit: 15,
+          limit: this.limit,
           page: this.page
         }).then((response) => {
           this.orders = response.orders ?? [];
           this.count = response.count ?? 0;
-          this.length = Math.ceil(this.count/15);
+          this.length = Math.ceil(this.count/this.limit);
           this.overlay = false;
         });
       },

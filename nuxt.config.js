@@ -21,7 +21,7 @@ export default {
       { rel: 'icon', async: true, type: 'image/x-icon', href: '/favicon.ico' }
     ],
     script: [
-      { type: 'text/javascript', src: "/js/charting_library/charting_library.min.js" }
+      { type: 'text/javascript', src: "/js/charting_library/charting_library.standalone.js" }
     ]
   },
 

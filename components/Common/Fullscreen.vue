@@ -1,5 +1,5 @@
 <template>
-  <div class="overflow-x-hidden overflow-y-hidden" :style="syntax + height + 'px;'">
+  <div :class="(hideScroll ? 'y-hidden-scroll' : 'overflow-y-hidden') + ' overflow-x-hidden'" :style="syntax + height + 'px;'">
       <slot name="default"></slot>
   </div>
 </template>
@@ -10,13 +10,17 @@
     data() {
       return {
         height: 0,
-        syntax: 'height:'
+        syntax: 'height:',
       }
     },
     props: {
       size: {
         type: Number,
         default: 80
+      },
+      hideScroll: {
+        type: Boolean,
+        default: false
       }
     },
     watch: {
@@ -49,5 +53,9 @@
 </script>
 
 <style lang="scss" scoped>
+
+  .y-hidden-scroll::-webkit-scrollbar {
+    width: 0;
+  }
 
 </style>

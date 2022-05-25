@@ -1,0 +1,126 @@
+<template>
+  <!-- Start: header bar -->
+  <div class="mx-4 mt-4">
+    <v-row align="center">
+      <v-col cols="12" md="3">
+        <v-card height="118" outlined rounded="lg">
+          <v-list-item>
+            <v-list-item-content>
+              <v-list-item-title class="text-h5">
+                {{ asset.symbol.toUpperCase() }}
+              </v-list-item-title>
+              <v-list-item-subtitle>
+                {{ asset.name }}
+              </v-list-item-subtitle>
+            </v-list-item-content>
+            <v-list-item-avatar size="100">
+              <v-img :src="$storages(['icon'], unit)" width="100"/>
+            </v-list-item-avatar>
+          </v-list-item>
+        </v-card>
+      </v-col>
+      <v-col cols="12" md="3">
+        <v-card height="118" outlined rounded="lg">
+          <v-card-text class="mt-2 text-center">
+            <div><small>{{ $vuetify.lang.t('$vuetify.lang_56') }}</small></div>
+            <div class="text-h5">{{ $decimal.truncate(asset.balance) }}</div>
+            <small v-if="asset.balance">${{ $decimal.truncate(price ? (asset.balance ? $decimal.mul(price, asset.balance) : 0) : (asset.balance ? asset.balance : 0)) }}</small>
+          </v-card-text>
+        </v-card>
+      </v-col>
+      <v-col cols="12" md="3">
+        <v-card height="118" outlined rounded="lg">
+          <v-card-text class="mt-2 text-center">
+            <div><small>{{ $vuetify.lang.t('$vuetify.lang_94') }}</small></div>
+            <div class="text-h5">{{  $decimal.format(asset.volume) }}</div>
+            <small v-if="asset.volume">${{ $decimal.truncate(price ? (asset.volume ? $decimal.mul(price, asset.volume) : 0) : (asset.volume ? asset.volume : 0)) }}</small>
+          </v-card-text>
+        </v-card>
+      </v-col>
+      <v-col cols="12" md="3">
+        <v-card height="118" outlined rounded="lg">
+          <v-card-text class="mt-2 text-center">
+            <div><small>{{ $vuetify.lang.t('$vuetify.lang_81') }}</small></div>
+            <div class="text-h5">
+              <template v-if="asset.status">
+                <span class="green--text">{{ $vuetify.lang.t('$vuetify.lang_95') }}</span>
+              </template>
+              <template v-else>
+                <span class="red--text">{{ $vuetify.lang.t('$vuetify.lang_96') }}</span>
+              </template>
+            </div>
+          </v-card-text>
+        </v-card>
+      </v-col>
+    </v-row>
+  </div>
+  <!-- End: header bar -->
+</template>
+
+<script>
+  import Api from "@/libs/api";
+
+  export default {
+    name: "v-component-header",
+    data() {
+      return {
+        price: 0
+      }
+    },
+    props: {
+      asset: {
+        type: Object,
+        default: undefined
+      },
+      unit: {
+        type: String,
+        default: undefined
+      }
+    },
+    watch: {
+      $route(route) {
+        this.getPrice(route.params.unit);
+      }
+    },
+    mounted() {
+
+      /**
+       * @event 'withdraw/cancel'
+       * @object {unit: string},
+       * @object {value: float64}
+       */
+      this.$nuxt.$on('withdraw/cancel', (data) => {
+        this.asset.balance += data[0].value
+      });
+
+      /**
+       * @event 'withdraw/create'
+       * @object {unit: string},
+       * @object {value: float64}
+       */
+      this.$nuxt.$on('withdraw/create', (data) => {
+        this.asset.balance -= data.value
+      });
+    },
+    create() {
+      setTimeout(() => {
+        this.getPrice(this.unit);
+      }, 1000)
+    },
+    methods: {
+
+      /**
+       * @param unit
+       */
+      getPrice(unit) {
+        this.$axios.$get(Api.exchange.getPrice + '?base_unit=' + unit + '&quote_unit=usdt').then((response) => {
+          this.price = response.price ?? 0;
+        });
+      }
+    }
+  }
+</script>
+
+<style scoped>
+
+</style>

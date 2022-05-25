@@ -34,6 +34,10 @@
     </v-row>
     <!-- End: fees info -->
 
+    <v-overlay absolute :color="$vuetify.theme.dark ? 'grey darken-4' : 'white'" opacity="0.8" :value="overlay">
+      <v-progress-circular color="yellow darken-3" indeterminate size="50" />
+    </v-overlay>
+
   </div>
 </template>
 
@@ -47,7 +51,8 @@
         asset: {
           fees_trade: 0,
           fees_discount: 0
-        }
+        },
+        overlay: true
       }
     },
     mounted() {
@@ -59,8 +64,11 @@
        *
        */
       getAsset() {
+        this.overlay = true;
+
         this.$axios.$post(Api.exchange.getAsset, {unit: this.$route.params.unit}).then((response) => {
           this.asset = response.currencies.lastItem ?? {};
+          this.overlay = false;
         }).catch(e => {
           console.log(e)
         });

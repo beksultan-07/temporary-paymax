@@ -5,7 +5,7 @@
 
       <!-- Start: assets list component -->
       <v-col cols="12" md="3" sm="6">
-        <v-component-asset-list />
+        <v-component-assets />
       </v-col>
       <!-- End: assets list component -->
 
@@ -22,13 +22,13 @@
 
 <script>
 
-  import AssetList from "../components/Asset/AssetList";
+  import Assets from "../components/Asset/Assets";
 
   export default {
     auth: true,
     name: "assets",
     components: {
-      'v-component-asset-list': AssetList
+      'v-component-assets': Assets
     }
   }
 </script>

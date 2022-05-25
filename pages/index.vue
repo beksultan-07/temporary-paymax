@@ -74,7 +74,11 @@
                   <v-card-text>
                     <ul>
                       <li v-for="pair in item.pairs" :key="pair.id">
-                          {{ pair.symbol.toUpperCase() }}: <span class="grey--text">{{ item.fees_trade }}%</span>
+                        {{ pair.symbol.toUpperCase() }}:
+                        <ul>
+                          <li>{{ $vuetify.lang.t('$vuetify.lang_148') }}: <span class="red--text">{{ item.fees_trade }}%</span></li>
+                          <li>{{ $vuetify.lang.t('$vuetify.lang_149') }}: <span class="teal--text">{{ $decimal.truncate($decimal.sub(item.fees_trade, item.fees_discount)) }}%</span></li>
+                        </ul>
                       </li>
                     </ul>
                   </v-card-text>

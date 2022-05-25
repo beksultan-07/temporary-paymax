@@ -157,12 +157,7 @@
           client_id: 'tradingview.com',
           user_id: 'public_user_id',
           fullscreen: false,
-          autosize: true,
-          studies: [
-            "ROC@tv-basicstudies",
-            "StochasticRSI@tv-basicstudies",
-            "MASimple@tv-basicstudies"
-          ],
+          autosize: true
         });
       }
     },
