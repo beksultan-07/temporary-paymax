@@ -5,10 +5,10 @@
 
         <!-- Start: tabs bar -->
         <v-tabs v-model="eyelet" color="primary" show-arrows>
-          <v-tab :to="'/assets/' + unit + '/deposit'">{{ $vuetify.lang.t('$vuetify.lang_91') }}</v-tab>
-          <v-tab :to="'/assets/' + unit + '/withdraw'">{{ $vuetify.lang.t('$vuetify.lang_92') }}</v-tab>
-          <v-tab :to="'/assets/' + unit + '/history'">{{ $vuetify.lang.t('$vuetify.lang_93') }}</v-tab>
-          <v-tab :to="'/assets/' + unit + '/fees'">{{ $vuetify.lang.t('$vuetify.lang_151') }}</v-tab>
+          <v-tab :to="'/assets/' + unit + '/deposit'" class="text-capitalize">{{ $vuetify.lang.t('$vuetify.lang_91') }}</v-tab>
+          <v-tab :to="'/assets/' + unit + '/withdraw'" class="text-capitalize">{{ $vuetify.lang.t('$vuetify.lang_92') }}</v-tab>
+          <v-tab :to="'/assets/' + unit + '/history'" class="text-capitalize">{{ $vuetify.lang.t('$vuetify.lang_93') }}</v-tab>
+          <v-tab :to="'/assets/' + unit + '/fees'" class="text-capitalize">{{ $vuetify.lang.t('$vuetify.lang_151') }}</v-tab>
         </v-tabs>
         <!-- End: tabs bar -->
 

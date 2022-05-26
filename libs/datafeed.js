@@ -54,19 +54,34 @@ export default class Datafeed {
   /**
    * @param symbolInfo
    * @param resolution
-   * @param from
-   * @param to
+   * @param interval
    * @param onHistoryCallback
    */
-  getBars(symbolInfo, resolution, from, to, onHistoryCallback) {
+  getBars(symbolInfo, resolution, interval, onHistoryCallback) {
+
+    if (interval.countBack === undefined) {
+      return false;
+    }
+
+    if (String(interval.from).length === 7) {
+      interval.from = interval.from * 1000
+    } else if(Math.sign(interval.from) === -1) {
+      interval.from = Math.abs(interval.from)
+    }
+
+    if (String(interval.to).length === 7) {
+      interval.to = interval.to * 1000
+    } else if(Math.sign(interval.to) === -1) {
+      interval.to = Math.abs(interval.to)
+    }
 
     let symbol = symbolInfo.name.split('/');
     let query = {
       base_unit: symbol[0].toLowerCase(),
       quote_unit: symbol[1].toLowerCase(),
       resolution: this.interval(resolution),
-      from: from,
-      to: to
+      from: interval.from,
+      to: interval.to
     };
 
     this.send(query).then((response) => {

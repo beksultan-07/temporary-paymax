@@ -140,7 +140,7 @@
           symbol: symbol,
           theme: (this.$vuetify.theme.dark ? "Dark" : "Light"),
           locale: this.$vuetify.lang.current,
-          container_id: 'charting-library',
+          container: 'charting-library',
           datafeed: new Datafeed(this),
           interval: '15',
           library_path: '/js/charting_library/',
@@ -155,6 +155,7 @@
             "timeframes_toolbar",
           ],
           client_id: 'tradingview.com',
+          charts_storage_api_version: "1.1",
           user_id: 'public_user_id',
           fullscreen: false,
           autosize: true

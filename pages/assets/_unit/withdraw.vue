@@ -3,7 +3,7 @@
 
     <!-- Start: tabs bar -->
     <v-tabs v-model="eyelet" color="primary">
-      <v-tab v-for="item in asset.chains" :key="item.id">{{ item.protocol ? item.protocol : 'mainnet' }}</v-tab>
+      <v-tab v-for="item in asset.chains" :key="item.id" class="text-capitalize">{{ item.protocol ? item.protocol : 'mainnet' }}</v-tab>
     </v-tabs>
     <!-- End: tabs bar -->
 
