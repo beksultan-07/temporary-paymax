@@ -95,7 +95,7 @@
     <!-- Start: create new order element -->
     <v-card-actions>
       <div class="flex-fill">
-        <v-btn @click="setOrder" :color="(assigning === 'buy' ? 'teal darken-1' : 'red darken-1') + ' white--text'" large block elevation="0" >{{ assigning === 'buy' ? $vuetify.lang.t('$vuetify.lang_57') : $vuetify.lang.t('$vuetify.lang_58') }}</v-btn>
+        <v-btn @click="setOrder" :color="(assigning === 'buy' ? 'teal darken-1' : 'red darken-1') + ' white--text'" large block elevation="0">{{ assigning === 'buy' ? $vuetify.lang.t('$vuetify.lang_57') : $vuetify.lang.t('$vuetify.lang_58') }}</v-btn>
       </div>
     </v-card-actions>
     <!-- End: create new order element -->

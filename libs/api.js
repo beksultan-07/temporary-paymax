@@ -11,7 +11,9 @@ export default {
     getRefresh: '/auth/get-refresh'
   },
   account: {
-    getUser: '/account/get-user'
+    getUser: '/account/get-user',
+    setUser: '/account/set-user',
+    getActivities: '/account/get-activities'
   },
   exchange: {
     getPrice: '/exchange/get-price',

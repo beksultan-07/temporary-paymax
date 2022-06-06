@@ -317,7 +317,7 @@
             }, {
               text: this.$vuetify.lang.t('$vuetify.lang_20'),
               align: 'start',
-              sortable: true,
+              sortable: false,
               value: 'fees'
             }, {
               text: this.$vuetify.lang.t('$vuetify.lang_52'),

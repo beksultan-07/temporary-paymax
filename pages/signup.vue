@@ -135,6 +135,8 @@
             this.timer -= 1
             this.getTimer()
           }, 1000);
+        } else {
+          this.timer = 60;
         }
       }
     },

@@ -209,10 +209,7 @@
       }
     },
     watch: {
-      /**
-       * @param params
-       */
-      $route(params) {
+      $route() {
         this.getTransactions();
       }
     },

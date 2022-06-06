@@ -60,7 +60,10 @@
             to: 'security'
           }, {
             title: this.$vuetify.lang.t('$vuetify.lang_145'),
-            to: 'notification'
+            to: 'communication'
+          }, {
+            title: this.$vuetify.lang.t('$vuetify.lang_161'),
+            to: 'activities'
           }
         ]
       }
