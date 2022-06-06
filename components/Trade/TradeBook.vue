@@ -95,7 +95,7 @@
       </v-virtual-scroll>
     </template>
     <template v-else-if="!overlay">
-      <v-layout style="height: 393px" wrap>
+      <v-layout style="height: 449px" wrap>
         <v-flex/>
         <v-flex class="text-center mx-5" align-self-center>
           <div>
