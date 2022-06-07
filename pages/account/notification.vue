@@ -86,7 +86,7 @@
     content: "";
     width: 100%;
     height: 100%;
-    background-image: url(/asset/5.png);
+    /*background-image: url(/asset/5.png);*/
     background-size: contain;
     background-position: center center;
     background-repeat: no-repeat;

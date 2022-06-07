@@ -1,12 +1,15 @@
 <template>
-  <div>
-    profile
-  </div>
+  <v-component-soon />
 </template>
 
 <script>
+  import Soon from "~/components/Soon";
+
   export default {
-    name: "profile"
+    name: "profile",
+    components: {
+      'v-component-soon': Soon
+    },
   }
 </script>
 

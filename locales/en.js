@@ -142,7 +142,7 @@ export default {
   lang_142: "Asset",
   lang_143: "Profile",
   lang_144: "Security",
-  lang_145: "Communication",
+  lang_145: "Notification",
   lang_146: "Account",
   lang_147: "A maker order is a placed order that is not redeemed immediately, but remains on the order list to be filled in the future.",
   lang_148: "Taker",

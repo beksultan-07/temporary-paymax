@@ -86,7 +86,7 @@ export default class Datafeed {
 
     this.send(query).then((response) => {
 
-      let ohlc = [];
+      let bars = [];
       let item = {};
 
       response.ohlc = response.ohlc ?? [];
@@ -100,11 +100,11 @@ export default class Datafeed {
         item.time = Number(response.ohlc[i].time) * 1000;
         item.volume = response.ohlc[i].volume ?? NaN;
 
-        ohlc.push(Object.assign({}, item));
+        bars.push(Object.assign({}, item));
       }
 
       this.$self.ohlc24h = response.ohlc24h;
-      onHistoryCallback(ohlc.length ? ohlc : [], {noData: !ohlc.length});
+      onHistoryCallback(bars.length ? bars : [], {noData: !bars.length});
     });
 
     if (!this.$init) {

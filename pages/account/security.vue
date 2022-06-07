@@ -1,12 +1,15 @@
 <template>
-  <div>
-    security
-  </div>
+  <v-component-soon />
 </template>
 
 <script>
+  import Soon from "~/components/Soon";
+
   export default {
-    name: "security"
+    name: "security",
+    components: {
+      'v-component-soon': Soon
+    },
   }
 </script>
 
