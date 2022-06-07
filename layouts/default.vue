@@ -11,6 +11,16 @@
         <v-btn class="text-capitalize" to="/signin" text>{{ $vuetify.lang.t('$vuetify.lang_29') }}</v-btn>
         <v-btn class="text-capitalize" to="/signup" text>{{ $vuetify.lang.t('$vuetify.lang_30') }}</v-btn>
       </v-toolbar-items>
+      <v-btn to="/admin" v-if="admin" icon>
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on, attrs }">
+            <v-icon :color="$vuetify.theme.dark ? '' : 'grey darken-1'" v-bind="attrs" v-on="on">
+              mdi-shield-lock-open-outline
+            </v-icon>
+          </template>
+          <span>{{ $vuetify.lang.t('$vuetify.lang_177') }}</span>
+        </v-tooltip>
+      </v-btn>
       <v-divider class="mx-4 hidden-sm-and-down" inset vertical />
       <client-only>
       <template v-if="$auth.loggedIn">
@@ -51,7 +61,8 @@
     data() {
       return {
         channels: ['order/create', 'order/status', 'order/cancel'],
-        interval: [0, 60, 300, 600, 900, 1800, 3600, 14400, 86400, 604800]
+        interval: [0, 60, 300, 600, 900, 1800, 3600, 14400, 86400, 604800],
+        admin: false
       }
     },
     mounted() {
@@ -61,6 +72,15 @@
       this.$publish.subscribe('exchange', this.channels, (error) => {
         console.log(error);
       });
+      this.isAdmin();
+    },
+    methods: {
+      isAdmin() {
+        if (this.$auth.$state.user) {
+          let roles = this.$auth.$state.user.rules ?? []
+          this.admin = roles.length > 0;
+        }
+      }
     }
   }
 </script>

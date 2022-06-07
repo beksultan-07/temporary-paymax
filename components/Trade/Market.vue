@@ -136,18 +136,18 @@
        * @object {time: int}
        */
       this.$publish.bind('trade/chart:0', (data) => {
-        if (data.ohlc && data.ohlc.length > 1) {
+        if (data.graph && data.graph.length > 1) {
           this.pairs.filter((item) => {
             if (
 
               // Сверяем принадлежат ли новые события к данному активу,
               // если аргументы совпадают то привязываем полученные данные из события к данному активу.
-              item.base_unit === data.ohlc[0].base_unit &&
-              item.quote_unit === data.ohlc[0].quote_unit
+              item.base_unit === data.graph[0].base_unit &&
+              item.quote_unit === data.graph[0].quote_unit
 
             ) {
-              item.ratio = data.ohlc[0].close - data.ohlc[1].close;
-              item.price = data.ohlc[0].close;
+              item.ratio = data.graph[0].close - data.graph[1].close;
+              item.price = data.graph[0].close;
               return item;
             }
 

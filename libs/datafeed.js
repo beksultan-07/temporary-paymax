@@ -89,21 +89,21 @@ export default class Datafeed {
       let bars = [];
       let item = {};
 
-      response.ohlc = response.ohlc ?? [];
+      response.graph = response.graph ?? [];
 
-      for (let i = response.ohlc.length - 1; i > 0; i--) {
+      for (let i = response.graph.length - 1; i > 0; i--) {
 
-        item.open = item.close ? item.close : response.ohlc[i].open;
-        item.high = response.ohlc[i].high;
-        item.low = response.ohlc[i].low;
-        item.close = response.ohlc[i].close;
-        item.time = Number(response.ohlc[i].time) * 1000;
-        item.volume = response.ohlc[i].volume ?? NaN;
+        item.open = item.close ? item.close : response.graph[i].open;
+        item.high = response.graph[i].high;
+        item.low = response.graph[i].low;
+        item.close = response.graph[i].close;
+        item.time = Number(response.graph[i].time) * 1000;
+        item.volume = response.graph[i].volume ?? NaN;
 
         bars.push(Object.assign({}, item));
       }
 
-      this.$self.ohlc24h = response.ohlc24h;
+      this.$self.graph24h = response.graph24h;
       onHistoryCallback(bars.length ? bars : [], {noData: !bars.length});
     });
 
@@ -122,9 +122,9 @@ export default class Datafeed {
        * @object {time: int}
        */
       this.$self.$publish.bind('trade/chart:' + query.resolution, (data) => {
-        if (data.ohlc !== undefined && symbol[0].toLowerCase() === data.ohlc[0].base_unit && symbol[1].toLowerCase() === data.ohlc[0].quote_unit) {
-          this.record(data.ohlc[0]);
-          this.$self.ohlc24h = data.ohlc24h;
+        if (data.graph !== undefined && symbol[0].toLowerCase() === data.graph[0].base_unit && symbol[1].toLowerCase() === data.graph[0].quote_unit) {
+          this.record(data.graph[0]);
+          this.$self.graph24h = data.graph24h;
         }
       });
 
@@ -244,7 +244,7 @@ export default class Datafeed {
    * @private
    */
   send(params) {
-    let request = Api.exchange.getChart;
+    let request = Api.exchange.getGraph;
     if (params) {
       for (let i = 0; i < Object.keys(params).length; ++i) {
         let key = Object.keys(params)[i];

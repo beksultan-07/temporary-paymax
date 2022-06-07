@@ -226,7 +226,7 @@
         this.getAsset(
           this.getUnit(e.params.exchange)
         );
-        this.getChart();
+        this.getGraph();
         this.getOrders();
       }
     },
@@ -363,27 +363,27 @@
        * @object {time: int}
        */
       this.$publish.bind('trade/chart:0', (data) => {
-          if (data.ohlc) {
+          if (data.graph) {
             if (
 
               // Сверяем принадлежат ли новые события к данному активу,
               // если аргументы совпадают то привязываем полученные данные из события к данному активу.
-              data.ohlc.lastItem.base_unit === this.query.split('-')[0] &&
-              data.ohlc.lastItem.quote_unit === this.query.split('-')[1]
+              data.graph.lastItem.base_unit === this.query.split('-')[0] &&
+              data.graph.lastItem.quote_unit === this.query.split('-')[1]
 
             ) {
 
               // Эсле поле [value] или поле [quantity] не активно то обновляем данные
               // полученные из события бегущей строки об торгах.
               if (!this.value || !this.quantity) {
-                this.price = data.ohlc[0].close;
+                this.price = data.graph[0].close;
               }
             }
           }
       });
 
       this.getAsset(undefined);
-      this.getChart();
+      this.getGraph();
       this.getOrders();
     },
     methods: {
@@ -399,9 +399,9 @@
       /**
        * Получаем новые данные бегущей строки, данные об торгах.
        */
-      getChart() {
-        this.$axios.$get(Api.exchange.getChart + '?base_unit=' + this.query.split('-')[0] + '&quote_unit=' + this.query.split('-')[1] + '&limit=1').then((response) => {
-          this.price = response.ohlc ? response.ohlc[0].close : 0;
+      getGraph() {
+        this.$axios.$get(Api.exchange.getGraph + '?base_unit=' + this.query.split('-')[0] + '&quote_unit=' + this.query.split('-')[1] + '&limit=1').then((response) => {
+          this.price = response.graph ? response.graph[0].close : 0;
         })
       },
 

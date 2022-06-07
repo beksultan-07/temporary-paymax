@@ -19,7 +19,7 @@ export default {
     getPrice: '/exchange/get-price',
     getUnit: '/exchange/get-unit',
     getMarkers: '/exchange/get-markers',
-    getChart: '/exchange/get-chart',
+    getGraph: '/exchange/get-graph',
     getTrades: '/exchange/get-trades',
     getPairs: '/exchange/get-pairs',
     getOrders: '/exchange/get-orders',
