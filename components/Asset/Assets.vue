@@ -1,6 +1,6 @@
 <template>
   <v-card class="ma-1" elevation="0">
-    <v-component-fullscreen @v-height="getHeight">
+    <v-component-inner @v-height="getHeight">
 
       <!-- Start: search asset element -->
       <v-card-title class="pa-2">
@@ -78,19 +78,19 @@
         <v-progress-circular color="yellow darken-3" indeterminate size="50" />
       </v-overlay>
 
-    </v-component-fullscreen>
+    </v-component-inner>
   </v-card>
 </template>
 
 <script>
 
-  import Fullscreen from "../Common/Fullscreen";
+  import Inner from "../Common/Inner";
   import Api from "../../libs/api";
 
   export default {
     name: "v-component-assets",
     components: {
-      'v-component-fullscreen': Fullscreen
+      'v-component-inner': Inner
     },
     data() {
       return {

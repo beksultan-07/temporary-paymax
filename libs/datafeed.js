@@ -103,7 +103,7 @@ export default class Datafeed {
         bars.push(Object.assign({}, item));
       }
 
-      this.$self.graph24h = response.graph24h;
+      this.$self.graph_day = response.graph_day;
       onHistoryCallback(bars.length ? bars : [], {noData: !bars.length});
     });
 
@@ -121,10 +121,10 @@ export default class Datafeed {
        * @object {quote_unit: string},
        * @object {time: int}
        */
-      this.$self.$publish.bind('trade/chart:' + query.resolution, (data) => {
+      this.$self.$publish.bind('trade/graph:' + query.resolution, (data) => {
         if (data.graph !== undefined && symbol[0].toLowerCase() === data.graph[0].base_unit && symbol[1].toLowerCase() === data.graph[0].quote_unit) {
           this.record(data.graph[0]);
-          this.$self.graph24h = data.graph24h;
+          this.$self.graph_day = data.graph_day;
         }
       });
 
@@ -160,8 +160,8 @@ export default class Datafeed {
     }
 
     this.$init = false;
-    this.$self.ohlc = {};
-    this.$self.$publish.unbind(['trade/chart:' + this.interval(this.$subscribers[subscriberUID].resolution)]);
+    this.$self.graph_day = {};
+    this.$self.$publish.unbind(['trade/graph:' + this.interval(this.$subscribers[subscriberUID].resolution)]);
     delete this.$subscribers[subscriberUID];
   }
 

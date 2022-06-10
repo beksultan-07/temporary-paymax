@@ -362,7 +362,7 @@
        * @object {quote_unit: string},
        * @object {time: int}
        */
-      this.$publish.bind('trade/chart:0', (data) => {
+      this.$publish.bind('trade/graph:0', (data) => {
           if (data.graph) {
             if (
 

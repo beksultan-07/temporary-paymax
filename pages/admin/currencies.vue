@@ -1,23 +1,22 @@
 <template>
-
   <div>
 
-
-    <nuxt-link :to="'/admin/currencies/usdt/details'">USDT</nuxt-link>
-
-
-    <!-- Start: child container -->
-    <nuxt-child style="height: 100%" />
-    <!-- End: child container -->
+    <!-- Start: currencies component -->
+    <v-component-currencies />
+    <!-- End: currencies component -->
 
   </div>
-
 </template>
 
 <script>
-export default {
-  name: "currencies"
-}
+  import Currencies from "../../components/Admin/Currencies";
+
+  export default {
+    name: "currencies",
+    components: {
+      'v-component-currencies': Currencies
+    }
+  }
 </script>
 
 <style scoped>

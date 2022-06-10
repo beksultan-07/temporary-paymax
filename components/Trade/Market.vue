@@ -135,7 +135,7 @@
        * @object {quote_unit: string},
        * @object {time: int}
        */
-      this.$publish.bind('trade/chart:0', (data) => {
+      this.$publish.bind('trade/graph:0', (data) => {
         if (data.graph && data.graph.length > 1) {
           this.pairs.filter((item) => {
             if (

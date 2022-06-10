@@ -1,6 +1,6 @@
 <template>
   <v-card class="ma-1" elevation="0">
-    <v-component-fullscreen>
+    <v-component-inner>
       <template v-if="unit">
 
         <!-- Start: tabs bar -->
@@ -30,7 +30,7 @@
       </template>
       <!-- End: select asset -->
 
-    </v-component-fullscreen>
+    </v-component-inner>
 
   </v-card>
 </template>
@@ -38,7 +38,7 @@
 <script>
 
   import Header from "../../components/Asset/Header";
-  import Fullscreen from "../../components/Common/Fullscreen";
+  import Inner from "../../components/Common/Inner";
   import Analysis from "../../components/Asset/Analysis";
   import Api from "../../libs/api";
 
@@ -46,7 +46,7 @@
     name: "unit",
     components: {
       'v-component-header': Header,
-      'v-component-fullscreen': Fullscreen,
+      'v-component-inner': Inner,
       'v-component-analysis': Analysis
     },
     data() {

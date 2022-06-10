@@ -11,7 +11,7 @@
         <v-btn class="text-capitalize" to="/signin" text>{{ $vuetify.lang.t('$vuetify.lang_29') }}</v-btn>
         <v-btn class="text-capitalize" to="/signup" text>{{ $vuetify.lang.t('$vuetify.lang_30') }}</v-btn>
       </v-toolbar-items>
-      <v-btn to="/admin" v-if="admin" icon>
+      <v-btn to="/admin" v-if="admin" :color="$vuetify.theme.dark ? '' : 'deep-purple lighten-4'" elevation="0" icon>
         <v-tooltip bottom>
           <template v-slot:activator="{ on, attrs }">
             <v-icon :color="$vuetify.theme.dark ? '' : 'grey darken-1'" v-bind="attrs" v-on="on">
@@ -67,7 +67,7 @@
     },
     mounted() {
       this.interval.map((interval) => {
-        this.channels.push('trade/chart:' + interval);
+        this.channels.push('trade/graph:' + interval);
       });
       this.$publish.subscribe('exchange', this.channels, (error) => {
         console.log(error);

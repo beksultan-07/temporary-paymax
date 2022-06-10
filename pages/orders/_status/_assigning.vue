@@ -150,12 +150,12 @@
 
 <script>
   import Api from "@/libs/api";
-  import Fullscreen from "@/components/Common/Fullscreen";
+  import Inner from "@/components/Common/Inner";
 
   export default {
     name: "assigning",
     components: {
-      'v-component-fullscreen': Fullscreen
+      'v-component-inner': Inner
     },
     data() {
       return {

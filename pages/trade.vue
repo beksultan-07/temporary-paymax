@@ -91,7 +91,7 @@
     },
 
     beforeDestroy() {
-      this.$publish.unbind(['trade/chart:0', 'order/status', 'order/create', 'order/cancel']);
+      this.$publish.unbind(['trade/graph:0', 'order/status', 'order/create', 'order/cancel']);
     }
   }
 </script>

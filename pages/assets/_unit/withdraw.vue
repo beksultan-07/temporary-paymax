@@ -341,7 +341,7 @@
             unit: this.$route.params.unit,
             value: this.quantity
           });
-          return this.$router.push('/assets/' + this.$route.params.unit + '/history')
+          return this.$router.push('/assets/' + this.$route.params.unit + '/history');
         }).catch((error) => {
           this.$snackbar.open({
             content: `${error.response.data.code}: ${error.response.data.message}`,

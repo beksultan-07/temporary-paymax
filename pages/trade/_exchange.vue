@@ -7,7 +7,7 @@
         <v-slide-item>
           <ul class="header-line">
             <li>{{ exchange.toUpperCase() }}</li>
-            <li v-if="graph24h.last">
+            <li v-if="graph_day.last">
               <small :class="priceConcurrency + '--text'">
                 <v-icon v-if="priceConcurrency === 'red'" :class="priceConcurrency + '--text'" small>
                   mdi-call-received
@@ -29,7 +29,7 @@
         <v-slide-item>
           <ul class="header-line">
             <li><small>{{ $vuetify.lang.t('$vuetify.lang_66') }}</small></li>
-            <li v-if="graph24h.last">
+            <li v-if="graph_day.last">
               <small :class="changeColor">{{ change24h }}</small>
             </li>
           </ul>
@@ -40,7 +40,7 @@
         <v-slide-item>
           <ul class="header-line">
             <li><small>{{ $vuetify.lang.t('$vuetify.lang_67') }}</small></li>
-            <li v-if="graph24h.last">
+            <li v-if="graph_day.last">
               <small class="grey--text">{{ $decimal.format(maxPrice24h) }}</small>
             </li>
           </ul>
@@ -51,7 +51,7 @@
         <v-slide-item>
           <ul class="header-line">
             <li><small>{{ $vuetify.lang.t('$vuetify.lang_68') }}</small></li>
-            <li v-if="graph24h.last">
+            <li v-if="graph_day.last">
               <small class="grey--text">{{ $decimal.format(minPrice24h) }}</small>
             </li>
           </ul>
@@ -62,7 +62,7 @@
         <v-slide-item>
           <ul class="header-line">
             <li><small>{{ $vuetify.lang.t('$vuetify.lang_69') }}({{ exchange.split('-')[0].toUpperCase() }})</small></li>
-            <li v-if="graph24h.last">
+            <li v-if="graph_day.last">
               <small class="grey--text">{{ $decimal.format(volume24h) }}</small>
             </li>
           </ul>
@@ -73,7 +73,7 @@
         <v-slide-item>
           <ul class="header-line">
             <li><small>{{ $vuetify.lang.t('$vuetify.lang_69') }}({{ exchange.split('-')[1].toUpperCase() }})</small></li>
-            <li v-if="graph24h.last">
+            <li v-if="graph_day.last">
               <small class="grey--text">{{ $decimal.format($decimal.mul(volume24h, minPrice24h)) }}</small>
             </li>
           </ul>
@@ -100,7 +100,7 @@
       return {
         exchange: undefined,
         overlay: true,
-        graph24h: {}
+        graph_day: {}
       }
     },
     head() {
@@ -168,8 +168,8 @@
        * @returns {number|*}
        */
       priceLast() {
-        if (this.graph24h.last) {
-          return this.graph24h.last;
+        if (this.graph_day.last) {
+          return this.graph_day.last;
         }
         return 0;
       },
@@ -178,8 +178,8 @@
        * @returns {number|*}
        */
       priceFirst() {
-        if (this.graph24h.first) {
-          return this.graph24h.first;
+        if (this.graph_day.first) {
+          return this.graph_day.first;
         }
         return 0;
       },
@@ -188,8 +188,8 @@
        * @returns {number|*}
        */
       pricePrevious() {
-        if (this.graph24h.previous) {
-          return this.graph24h.previous;
+        if (this.graph_day.previous) {
+          return this.graph_day.previous;
         }
         return 0;
       },
@@ -213,8 +213,8 @@
        * @returns {*}
        */
       volume24h() {
-        if (this.graph24h.volume) {
-          return this.graph24h.volume;
+        if (this.graph_day.volume) {
+          return this.graph_day.volume;
         }
         return 0;
       },
@@ -223,14 +223,14 @@
        * @returns {number}
        */
       maxPrice24h() {
-        return this.graph24h.high;
+        return this.graph_day.high;
       },
 
       /**
        * @returns {number}
        */
       minPrice24h() {
-        return this.graph24h.low;
+        return this.graph_day.low;
       },
 
       /**

@@ -6,7 +6,7 @@
 
 <script>
   export default {
-    name: "v-component-fullscreen",
+    name: "v-component-inner",
     data() {
       return {
         height: 0,

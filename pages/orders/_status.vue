@@ -1,7 +1,7 @@
 <template>
   <v-card class="ma-1" elevation="0">
 
-    <v-component-fullscreen>
+    <v-component-inner>
 
       <!-- Start: tabs bar -->
       <v-tabs color="primary">
@@ -17,18 +17,18 @@
       <nuxt-child style="height: 100%" />
       <!-- End: child container -->
 
-    </v-component-fullscreen>
+    </v-component-inner>
 
   </v-card>
 </template>
 
 <script>
-  import Fullscreen from "@/components/Common/Fullscreen";
+  import Inner from "@/components/Common/Inner";
 
   export default {
     name: "orders",
     components: {
-      'v-component-fullscreen': Fullscreen
+      'v-component-inner': Inner
     }
   }
 </script>

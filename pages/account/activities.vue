@@ -86,7 +86,7 @@
       <v-layout fill-height wrap>
         <v-flex/>
         <v-flex align-self-center class="text-center" md4 mx5 sm6 xl3>
-          <v-img class="ma-auto" width="250" src="/asset/4.png" />
+          <v-img class="ma-auto" width="250" src="/asset/3.png" />
           <h2>{{ $vuetify.lang.t('$vuetify.lang_123') }}</h2>
           {{ $vuetify.lang.t('$vuetify.lang_162') }}
         </v-flex>

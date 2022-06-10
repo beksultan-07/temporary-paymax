@@ -34,6 +34,17 @@ export default {
     getTransfers: '/exchange/get-transfers',
     getAnalysis: '/exchange/get-analysis'
   },
+  admin: {
+    exchange: {
+      setCurrency: '/exchange/admin/set-currency',
+      getCurrency: '/exchange/admin/get-currency',
+      getCurrencies: '/exchange/admin/get-currencies',
+      getChains: '/exchange/admin/get-chains'
+    },
+    account: {
+
+    }
+  },
   status: '/status',
   timestamp: '/timestamp',
 };
