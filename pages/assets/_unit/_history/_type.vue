@@ -226,7 +226,7 @@
 
         this.$axios.$post(Api.exchange.getTransactions, {
           unit: this.$route.params.unit,
-          transaction_type: this.type,
+          trx_type: this.type,
           limit: this.limit,
           page: this.page
         }).then((response) => {

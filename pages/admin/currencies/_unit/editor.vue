@@ -65,7 +65,7 @@
         <v-text-field v-model="currency.min_deposit" color="primary" :label="$vuetify.lang.t('$vuetify.lang_200')" outlined></v-text-field>
         <v-text-field v-model="currency.fees_trade" color="primary" :label="$vuetify.lang.t('$vuetify.lang_201')" outlined></v-text-field>
         <v-select v-model="currency.status" :items="status" item-text="name" item-value="id" :label="$vuetify.lang.t('$vuetify.lang_191')" outlined></v-select>
-        <v-select v-model="currency.type" :items="type" item-text="name" item-value="id" :label="$vuetify.lang.t('$vuetify.lang_208')" outlined></v-select>
+        <v-select v-model="currency.fin_type" :items="type" item-text="name" item-value="id" :label="$vuetify.lang.t('$vuetify.lang_208')" outlined></v-select>
       </v-col>
       <v-col cols="12" md="4">
         <v-text-field v-model="currency.min_withdraw" color="primary" :label="$vuetify.lang.t('$vuetify.lang_202')" outlined></v-text-field>
@@ -130,7 +130,7 @@
           marker: false,
           chains_ids: [],
           icon: false,
-          type: 0,
+          fin_type: 0,
           status: 0
         },
         image: "",
@@ -151,8 +151,8 @@
         }).then((response) => {
           if (response.currencies) {
             this.currency = Object.assign(this.currency, response.currencies[0]);
-            if (this.currency.type) {
-              this.currency.type = 1;
+            if (this.currency.fin_type) {
+              this.currency.fin_type = 1;
             }
             for (let i = 0; i < this.currency.chains_ids.length; i++) {
               this.currency.chains_ids[i] = (this.currency.chains_ids[i]).toString()

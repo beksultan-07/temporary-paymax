@@ -208,5 +208,6 @@ export default {
   lang_208: "Finance type",
   lang_209: "Search",
   lang_210: "The search has not given any results",
-  lang_211: "Check the correctness of the words you enter and try again"
+  lang_211: "Check the correctness of the words you enter and try again",
+  lang_212: "At the moment, work is underway with the networks of this currency, deposits and withdrawals are not available"
 }

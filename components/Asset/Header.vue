@@ -43,10 +43,24 @@
             <div><small>{{ $vuetify.lang.t('$vuetify.lang_81') }}</small></div>
             <div class="text-h5">
               <template v-if="asset.status">
-                <span class="green--text">{{ $vuetify.lang.t('$vuetify.lang_95') }}</span>
+                <v-tooltip bottom>
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-icon v-bind="attrs" v-on="on">
+                      mdi-checkbox-marked-circle-outline
+                    </v-icon>
+                  </template>
+                  <span>{{ $vuetify.lang.t('$vuetify.lang_95') }}</span>
+                </v-tooltip>
               </template>
               <template v-else>
-                <span class="red--text">{{ $vuetify.lang.t('$vuetify.lang_96') }}</span>
+                <v-tooltip bottom>
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-icon v-bind="attrs" v-on="on">
+                      mdi-alert-circle-outline
+                    </v-icon>
+                  </template>
+                  <span>{{ $vuetify.lang.t('$vuetify.lang_96') }}</span>
+                </v-tooltip>
               </template>
             </div>
           </v-card-text>

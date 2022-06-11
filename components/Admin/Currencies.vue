@@ -43,8 +43,8 @@
               <small class="grey--text">ID: {{ item.id }}</small>
             </div>
           </template>
-          <template v-slot:item.type="{ item }">
-            <template v-if="item.type">
+          <template v-slot:item.fin_type="{ item }">
+            <template v-if="item.fin_type">
               Fiat
             </template>
             <template v-else>
@@ -175,6 +175,7 @@
     watch: {
       $route(params) {
         this.name = params.name;
+        this.getCurrencies();
       }
     },
     mounted() {
@@ -229,7 +230,7 @@
             text: this.$vuetify.lang.t('$vuetify.lang_208'),
             align: 'start',
             sortable: true,
-            value: 'type'
+            value: 'fin_type'
           }, {
             text: this.$vuetify.lang.t('$vuetify.lang_189'),
             align: 'start',
