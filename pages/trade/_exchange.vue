@@ -1,98 +1,121 @@
 <template>
   <v-card class="ma-1" elevation="0" height="500">
 
-    <!-- Start: trading view -->
-    <v-app-bar class="toolbar-px-zero" color="transparent" flat height="50">
-      <v-slide-group multiple show-arrows>
-        <v-slide-item>
-          <ul class="header-line">
-            <li>{{ exchange.toUpperCase() }}</li>
-            <li v-if="graph_day.last">
-              <small :class="priceConcurrency + '--text'">
-                <v-icon v-if="priceConcurrency === 'red'" :class="priceConcurrency + '--text'" small>
-                  mdi-call-received
-                </v-icon>
-                <v-icon v-else-if="priceConcurrency === 'teal'" :class="priceConcurrency + '--text'" small>
-                  mdi-call-made
-                </v-icon>
-                <v-icon v-else small>
-                  mdi-keyboard-tab
-                </v-icon>
-                {{ $decimal.format(priceLast) }}
-              </small>
-            </li>
-          </ul>
-        </v-slide-item>
-        <v-slide-item>
-          <v-divider class="mx-3" vertical />
-        </v-slide-item>
-        <v-slide-item>
-          <ul class="header-line">
-            <li><small>{{ $vuetify.lang.t('$vuetify.lang_66') }}</small></li>
-            <li v-if="graph_day.last">
-              <small :class="changeColor">{{ change24h }}</small>
-            </li>
-          </ul>
-        </v-slide-item>
-        <v-slide-item>
-          <div class="mx-3"></div>
-        </v-slide-item>
-        <v-slide-item>
-          <ul class="header-line">
-            <li><small>{{ $vuetify.lang.t('$vuetify.lang_67') }}</small></li>
-            <li v-if="graph_day.last">
-              <small class="grey--text">{{ $decimal.format(maxPrice24h) }}</small>
-            </li>
-          </ul>
-        </v-slide-item>
-        <v-slide-item>
-          <div class="mx-3"></div>
-        </v-slide-item>
-        <v-slide-item>
-          <ul class="header-line">
-            <li><small>{{ $vuetify.lang.t('$vuetify.lang_68') }}</small></li>
-            <li v-if="graph_day.last">
-              <small class="grey--text">{{ $decimal.format(minPrice24h) }}</small>
-            </li>
-          </ul>
-        </v-slide-item>
-        <v-slide-item>
-          <div class="mx-3"></div>
-        </v-slide-item>
-        <v-slide-item>
-          <ul class="header-line">
-            <li><small>{{ $vuetify.lang.t('$vuetify.lang_69') }}({{ exchange.split('-')[0].toUpperCase() }})</small></li>
-            <li v-if="graph_day.last">
-              <small class="grey--text">{{ $decimal.format(volume24h) }}</small>
-            </li>
-          </ul>
-        </v-slide-item>
-        <v-slide-item>
-          <div class="mx-3"></div>
-        </v-slide-item>
-        <v-slide-item>
-          <ul class="header-line">
-            <li><small>{{ $vuetify.lang.t('$vuetify.lang_69') }}({{ exchange.split('-')[1].toUpperCase() }})</small></li>
-            <li v-if="graph_day.last">
-              <small class="grey--text">{{ $decimal.format($decimal.mul(volume24h, minPrice24h)) }}</small>
-            </li>
-          </ul>
-        </v-slide-item>
-      </v-slide-group>
-    </v-app-bar>
-    <!-- End: trading view -->
+    <template v-if="both || status">
 
-    <v-divider/>
-    <div id="charting-library" class="pa-2 charting" style="height: 448px"></div>
+      <!-- Start: trading view -->
+      <v-app-bar class="toolbar-px-zero" color="transparent" flat height="50">
+        <v-slide-group multiple show-arrows>
+          <v-slide-item>
+            <ul class="header-line">
+              <li>{{ exchange.toUpperCase() }}</li>
+              <li v-if="graph_day.last">
+                <small :class="priceConcurrency + '--text'">
+                  <v-icon v-if="priceConcurrency === 'red'" :class="priceConcurrency + '--text'" small>
+                    mdi-call-received
+                  </v-icon>
+                  <v-icon v-else-if="priceConcurrency === 'teal'" :class="priceConcurrency + '--text'" small>
+                    mdi-call-made
+                  </v-icon>
+                  <v-icon v-else small>
+                    mdi-keyboard-tab
+                  </v-icon>
+                  {{ $decimal.format(priceLast) }}
+                </small>
+              </li>
+            </ul>
+          </v-slide-item>
+          <v-slide-item>
+            <v-divider class="mx-3" vertical />
+          </v-slide-item>
+          <v-slide-item>
+            <ul class="header-line">
+              <li><small>{{ $vuetify.lang.t('$vuetify.lang_66') }}</small></li>
+              <li v-if="graph_day.last">
+                <small :class="changeColor">{{ change24h }}</small>
+              </li>
+            </ul>
+          </v-slide-item>
+          <v-slide-item>
+            <div class="mx-3"></div>
+          </v-slide-item>
+          <v-slide-item>
+            <ul class="header-line">
+              <li><small>{{ $vuetify.lang.t('$vuetify.lang_67') }}</small></li>
+              <li v-if="graph_day.last">
+                <small class="grey--text">{{ $decimal.format(maxPrice24h) }}</small>
+              </li>
+            </ul>
+          </v-slide-item>
+          <v-slide-item>
+            <div class="mx-3"></div>
+          </v-slide-item>
+          <v-slide-item>
+            <ul class="header-line">
+              <li><small>{{ $vuetify.lang.t('$vuetify.lang_68') }}</small></li>
+              <li v-if="graph_day.last">
+                <small class="grey--text">{{ $decimal.format(minPrice24h) }}</small>
+              </li>
+            </ul>
+          </v-slide-item>
+          <v-slide-item>
+            <div class="mx-3"></div>
+          </v-slide-item>
+          <v-slide-item>
+            <ul class="header-line">
+              <li><small>{{ $vuetify.lang.t('$vuetify.lang_69') }}({{ exchange.split('-')[0].toUpperCase() }})</small></li>
+              <li v-if="graph_day.last">
+                <small class="grey--text">{{ $decimal.format(volume24h) }}</small>
+              </li>
+            </ul>
+          </v-slide-item>
+          <v-slide-item>
+            <div class="mx-3"></div>
+          </v-slide-item>
+          <v-slide-item>
+            <ul class="header-line">
+              <li><small>{{ $vuetify.lang.t('$vuetify.lang_69') }}({{ exchange.split('-')[1].toUpperCase() }})</small></li>
+              <li v-if="graph_day.last">
+                <small class="grey--text">{{ $decimal.format($decimal.mul(volume24h, minPrice24h)) }}</small>
+              </li>
+            </ul>
+          </v-slide-item>
+        </v-slide-group>
+      </v-app-bar>
+      <!-- End: trading view -->
+
+      <v-divider/>
+
+    </template>
+    <template v-else-if="!overlay">
+      <v-layout fill-height wrap>
+        <v-flex/>
+        <v-flex align-self-center class="text-center" md4 mx5 sm6 xl3>
+          <div>
+            <v-icon>
+              mdi-alert-circle-outline
+            </v-icon>
+          </div>
+          <div>
+            {{ $vuetify.lang.t('$vuetify.lang_213') }}
+          </div>
+        </v-flex>
+        <v-flex/>
+      </v-layout>
+    </template>
+
+    <div v-show="both || status" id="charting-library" class="pa-2 charting" style="height: 448px"></div>
     <v-overlay :color="$vuetify.theme.dark ? 'grey darken-4' : 'white'" :value="overlay" absolute opacity="0.8">
       <v-progress-circular color="yellow darken-3" indeterminate size="50"/>
     </v-overlay>
+
   </v-card>
 </template>
 
 <script>
 
   import Datafeed from "../../libs/datafeed";
+  import Api from "@/libs/api";
 
   export default {
     name: 'exchange',
@@ -100,7 +123,9 @@
       return {
         exchange: undefined,
         overlay: true,
-        graph_day: {}
+        graph_day: {},
+        both: false,
+        status: 0
       }
     },
     head() {
@@ -110,28 +135,40 @@
     },
     async asyncData({params}) {
       const exchange = params.exchange
-      return {exchange}
+      return { exchange }
     },
     watch: {
       $route(e) {
-        this.getGraph(
-          e.params.exchange
-        );
+        this.getPair(e.params.exchange);
       }
     },
     mounted() {
-      this.getGraph(
-        this.exchange
-      );
+      this.getPair(this.exchange);
     },
     methods: {
 
       /**
        * @param symbol
        */
+      getPair(symbol) {
+        let unit = symbol.split('-');
+        this.$axios.$post(Api.exchange.getPair, {base_unit: unit[0], quote_unit: unit[1]}).then((response) => {
+          this.both = response.pairs[0].both ?? false;
+          this.status = response.pairs[0].status ?? 0;
+          if (this.status || this.both) {
+            return this.getGraph(symbol);
+          }
+          this.overlay = false;
+        }).catch(e => {
+          console.log(e)
+        });
+      },
+
+      /**
+       * @param symbol
+       */
       getGraph(symbol) {
         this.overlay = true;
-        this.exchange = symbol;
 
         /**
          * @type {Window.TradingView.widget}

@@ -209,5 +209,6 @@ export default {
   lang_209: "Search",
   lang_210: "The search has not given any results",
   lang_211: "Check the correctness of the words you enter and try again",
-  lang_212: "At the moment, work is underway with the networks of this currency, deposits and withdrawals are not available"
+  lang_212: "At the moment, work is underway with the networks of this currency, deposits and withdrawals are not available",
+  lang_213: "The schedule in this pair is temporarily unavailable, we will soon restore work, technical robots are being carried out without panic"
 }

@@ -25,7 +25,7 @@
     <!-- Start: pairs list element -->
     <template v-if="pairs.length">
       <template v-if="items.length">
-        <v-virtual-scroll @mouseover="hover = true" @mouseleave="hover = false" :class="hover ? '' : 'overflow-y-hidden'" bench="0" :items="items" height="393" item-height="50">
+        <v-virtual-scroll @mouseover="hover = true" @mouseleave="hover = false" :class="hover ? '' : 'overflow-y-hidden'" bench="0" :items="items" height="393" item-height="49">
           <template v-slot:default="{ item }">
             <v-list-item :color="$vuetify.theme.dark ? 'grey darken-3' : 'deep-purple lighten-5'" :to="'/trade/' + item.base_unit + '-' + item.quote_unit" :key="item.id" dense>
               <v-list-item-avatar class="mr-2" size="30">
