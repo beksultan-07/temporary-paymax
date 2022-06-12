@@ -1,7 +1,7 @@
 <template>
   <v-card class="ma-1" elevation="0" height="500">
 
-    <template v-if="both || status">
+    <template v-if="both && status">
 
       <!-- Start: trading view -->
       <v-app-bar class="toolbar-px-zero" color="transparent" flat height="50">
@@ -88,11 +88,11 @@
 
     </template>
     <template v-else-if="!overlay">
-      <v-layout fill-height wrap>
+      <v-layout class="bg-image" fill-height wrap>
         <v-flex/>
-        <v-flex align-self-center class="text-center" md4 mx5 sm6 xl3>
+        <v-flex align-self-center class="text-center grey--text" md4 mx5 sm6 xl3>
           <div>
-            <v-icon>
+            <v-icon color="grey">
               mdi-alert-circle-outline
             </v-icon>
           </div>
@@ -104,7 +104,7 @@
       </v-layout>
     </template>
 
-    <div v-show="both || status" id="charting-library" class="pa-2 charting" style="height: 448px"></div>
+    <div v-show="both && status" id="charting-library" class="pa-2 charting" style="height: 448px"></div>
     <v-overlay :color="$vuetify.theme.dark ? 'grey darken-4' : 'white'" :value="overlay" absolute opacity="0.8">
       <v-progress-circular color="yellow darken-3" indeterminate size="50"/>
     </v-overlay>
@@ -139,30 +139,13 @@
     },
     watch: {
       $route(e) {
-        this.getPair(e.params.exchange);
+        this.getGraph(e.params.exchange);
       }
     },
     mounted() {
-      this.getPair(this.exchange);
+      this.getGraph(this.exchange);
     },
     methods: {
-
-      /**
-       * @param symbol
-       */
-      getPair(symbol) {
-        let unit = symbol.split('-');
-        this.$axios.$post(Api.exchange.getPair, {base_unit: unit[0], quote_unit: unit[1]}).then((response) => {
-          this.both = response.pairs[0].both ?? false;
-          this.status = response.pairs[0].status ?? 0;
-          if (this.status || this.both) {
-            return this.getGraph(symbol);
-          }
-          this.overlay = false;
-        }).catch(e => {
-          console.log(e)
-        });
-      },
 
       /**
        * @param symbol
@@ -170,32 +153,46 @@
       getGraph(symbol) {
         this.overlay = true;
 
-        /**
-         * @type {Window.TradingView.widget}
-         */
-        window.tvWidget = new window.TradingView.widget({
-          symbol: symbol,
-          theme: (this.$vuetify.theme.dark ? "Dark" : "Light"),
-          locale: this.$vuetify.lang.current,
-          container: 'charting-library',
-          datafeed: new Datafeed(this),
-          interval: '15',
-          library_path: '/js/charting_library/',
-          disabled_features: [
-            "use_localstorage_for_settings",
-            "header_symbol_search",
-            "symbol_search_hot_key",
-            "header_undo_redo",
-            "compare_symbol",
-            "header_compare",
-            "header_saveload",
-            "timeframes_toolbar",
-          ],
-          client_id: 'tradingview.com',
-          charts_storage_api_version: "1.1",
-          user_id: 'public_user_id',
-          fullscreen: false,
-          autosize: true
+        this.$axios.$post(Api.exchange.getPair, {base_unit: symbol.split('-')[0], quote_unit: symbol.split('-')[1]}).then((response) => {
+
+          this.both = response.pairs[0].both ?? false;
+          this.status = response.pairs[0].status ?? 0;
+
+          if (this.status || this.both) {
+
+            /**
+             * @type {IChartingLibraryWidget}
+             */
+            window.tvWidget = new window.TradingView.widget({
+              symbol: symbol,
+              theme: (this.$vuetify.theme.dark ? "Dark" : "Light"),
+              locale: this.$vuetify.lang.current,
+              container: 'charting-library',
+              datafeed: new Datafeed(this),
+              interval: '15',
+              library_path: '/js/charting_library/',
+              disabled_features: [
+                "use_localstorage_for_settings",
+                "header_symbol_search",
+                "symbol_search_hot_key",
+                "header_undo_redo",
+                "compare_symbol",
+                "header_compare",
+                "header_saveload",
+                "timeframes_toolbar",
+              ],
+              client_id: 'tradingview.com',
+              charts_storage_api_version: "1.1",
+              user_id: 'public_user_id',
+              fullscreen: false,
+              autosize: true
+            });
+
+            return
+          }
+          this.overlay = false;
+        }).catch(e => {
+          console.log(e)
         });
       }
     },
@@ -297,3 +294,20 @@
     }
   }
 </script>
+
+<style scoped>
+
+  .bg-image::after {
+    content: "";
+    width: 100%;
+    height: 100%;
+    background-image: url(/asset/4.png);
+    background-size: contain;
+    background-position: center center;
+    background-repeat: no-repeat;
+    position: absolute;
+    display: block;
+    opacity: 0.1;
+  }
+
+</style>

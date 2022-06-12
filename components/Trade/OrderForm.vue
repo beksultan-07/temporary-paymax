@@ -1,12 +1,12 @@
 <template>
-  <v-card class="ma-1" height="500" elevation="0">
+  <v-card :disabled="!status && $auth.loggedIn" class="ma-1" height="500" elevation="0">
 
     <!-- Start: asset balance element -->
     <v-app-bar color="transparent" height="50" flat>
       <v-icon size="20">
         mdi-wallet-outline
       </v-icon>
-      <v-switch v-model="type" class="mx-3" :label="type ? $vuetify.lang.t('$vuetify.lang_128') : $vuetify.lang.t('$vuetify.lang_24')" hide-details />
+      <v-switch :disabled="!status" v-model="type" class="mx-3" :label="type ? $vuetify.lang.t('$vuetify.lang_128') : $vuetify.lang.t('$vuetify.lang_24')" hide-details />
       <v-spacer />
       <v-menu max-width="110" content-class="elevation-1" open-on-hover bottom offset-y>
         <template v-slot:activator="{ on, attrs }">
@@ -430,9 +430,21 @@
           this.quantity = 0;
           this.percent = 0;
 
-          if (response.currencies !== undefined && response.currencies[0].balance !== undefined) {
-            this.balance = (response.currencies[0].balance).toFixed(8) > 0 ? response.currencies[0].balance : 0;
+          if (response.currencies !== undefined) {
+            if (response.currencies[0].balance !== undefined) {
+              this.balance = (response.currencies[0].balance).toFixed(8) > 0 ? response.currencies[0].balance : 0;
+            }
+
+            // Если в этого активе статус 1, то парного ему актива 0,
+            // значит налаживаем вето на эту форму в целом.
             this.status = response.currencies[0].status ?? 0;
+            if (this.status) {
+              this.$axios.$post(Api.exchange.getPair, {base_unit: this.query.split('-')[0], quote_unit: this.query.split('-')[1]}).then((response) => {
+                this.status = response.pairs[0].status ?? 0;
+              }).catch(e => {
+                console.log(e)
+              });
+            }
           }
 
           this.overlay = false;
