@@ -429,6 +429,7 @@
           this.value = 0;
           this.quantity = 0;
           this.percent = 0;
+          this.type = false;
 
           if (response.currencies !== undefined) {
             if (response.currencies[0].balance !== undefined) {
