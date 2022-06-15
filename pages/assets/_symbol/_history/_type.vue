@@ -96,7 +96,7 @@
                         {{ $vuetify.lang.t('$vuetify.lang_107') }}
                       </v-list-item-subtitle>
                       <v-list-item-title>
-                        {{ item.value }} {{ item.symbol.toUpperCase() }}
+                        {{ item.value - item.fees }} {{ item.symbol.toUpperCase() }}
                       </v-list-item-title>
                     </v-item-group>
                   </v-list-item>
@@ -144,7 +144,7 @@
                       </v-list-item-title>
                     </v-item-group>
                   </v-list-item>
-                  <v-list-item v-if="item.status === 'PENDING' || item.type === 'WITHDRAWS'">
+                  <v-list-item v-if="item.status === 'PENDING' && item.trx_type === 'WITHDRAWS'">
                     <v-btn color="white--text red text-capitalize" @click="cancelWithdraw(item.id)" large block elevation="0">{{ $vuetify.lang.t('$vuetify.lang_124') }}</v-btn>
                   </v-list-item>
                 </v-list>
@@ -194,7 +194,7 @@
 
 <script>
 
-  import Api from "@/libs/api";
+  import Api from "/libs/api";
 
   export default {
     data() {

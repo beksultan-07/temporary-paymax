@@ -108,7 +108,7 @@
   export default {
     name: "v-component-market",
     props: {
-      exchange: String
+      unit: String
     },
     data() {
       return {
@@ -122,8 +122,8 @@
     },
     mounted() {
 
-      this.getMarkers(this.exchange.split('-')[0]);
-      this.getPairs(this.exchange.split('-')[0]);
+      this.getMarkers(this.unit.split('-')[0]);
+      this.getPairs(this.unit.split('-')[0]);
 
       /**
        * Отслеживаем события бегущей строки, данные об торгах.

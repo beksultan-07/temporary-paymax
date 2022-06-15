@@ -5,7 +5,7 @@
 
       <!-- Start: order book component -->
       <v-col cols="12" md="3" sm="6">
-        <v-component-order-book :exchange="exchange" />
+        <v-component-order-book :unit="unit" />
       </v-col>
       <!-- End: order book component -->
 
@@ -17,25 +17,25 @@
 
       <!-- Start: list of trading pairs market component -->
       <v-col cols="12" md="3" sm="6">
-        <v-component-market :exchange="exchange" />
+        <v-component-market :unit="unit" />
       </v-col>
       <!-- End: list of trading pairs market component -->
 
       <!-- Start: trade book component -->
       <v-col cols="12" md="3" sm="6">
-        <v-component-trade-book :exchange="exchange" />
+        <v-component-trade-book :unit="unit" />
       </v-col>
       <!-- End: trade book component -->
 
       <!-- Start: buy order form component -->
       <v-col cols="12" md="3" sm="6">
-        <v-component-order-form :exchange="exchange" assigning="buy" />
+        <v-component-order-form :unit="unit" assigning="buy" />
       </v-col>
       <!-- End: order form component -->
 
       <!-- Start: sell order form component -->
       <v-col cols="12" md="3" sm="6">
-        <v-component-order-form :exchange="exchange" assigning="sell" />
+        <v-component-order-form :unit="unit" assigning="sell" />
       </v-col>
       <!-- End: order form component -->
 
@@ -70,7 +70,7 @@
     },
     data() {
       return {
-        exchange: undefined
+        unit: undefined
       }
     },
 
@@ -81,10 +81,9 @@
      * @returns {Promise<{exchange: *}>}
      */
     async asyncData({ $axios, params, error }) {
-      let exchange = params.exchange;
-      let symbol = exchange.split('-');
-      return $axios.$post(Api.exchange.getSymbol, {base_unit: symbol[0], quote_unit: symbol[1]}).then(() => {
-        return { exchange }
+      let unit = params.unit;
+      return $axios.$post(Api.exchange.getSymbol, {base_unit: unit.split('-')[0], quote_unit: unit.split('-')[1]}).then(() => {
+        return { unit }
       }).catch(e => {
         error(e)
       });

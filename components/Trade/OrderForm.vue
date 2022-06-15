@@ -197,7 +197,7 @@
   export default {
     name: "v-component-order-form",
     props: {
-      exchange: {
+      unit: {
         type: String
       },
       assigning: {
@@ -221,10 +221,10 @@
     watch: {
       $route(e) {
         this.getQuery(
-          e.params.exchange
+          e.params.unit
         );
         this.getAsset(
-          this.getSymbol(e.params.exchange)
+          this.getSymbol(e.params.unit)
         );
         this.getGraph();
         this.getOrders();
@@ -232,7 +232,7 @@
     },
     mounted() {
 
-      this.getQuery(this.exchange);
+      this.getQuery(this.unit);
 
       /**
        * Отслеживаем события нового ордера.

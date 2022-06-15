@@ -8,7 +8,7 @@
         <v-slide-group multiple show-arrows>
           <v-slide-item>
             <ul class="header-line">
-              <li>{{ exchange.toUpperCase() }}</li>
+              <li>{{ unit.toUpperCase() }}</li>
               <li v-if="graph_day.last">
                 <small :class="priceConcurrency + '--text'">
                   <v-icon v-if="priceConcurrency === 'red'" :class="priceConcurrency + '--text'" small>
@@ -63,7 +63,7 @@
           </v-slide-item>
           <v-slide-item>
             <ul class="header-line">
-              <li><small>{{ $vuetify.lang.t('$vuetify.lang_69') }}({{ exchange.split('-')[0].toUpperCase() }})</small></li>
+              <li><small>{{ $vuetify.lang.t('$vuetify.lang_69') }}({{ unit.split('-')[0].toUpperCase() }})</small></li>
               <li v-if="graph_day.last">
                 <small class="grey--text">{{ $decimal.format(volume24h) }}</small>
               </li>
@@ -74,7 +74,7 @@
           </v-slide-item>
           <v-slide-item>
             <ul class="header-line">
-              <li><small>{{ $vuetify.lang.t('$vuetify.lang_69') }}({{ exchange.split('-')[1].toUpperCase() }})</small></li>
+              <li><small>{{ $vuetify.lang.t('$vuetify.lang_69') }}({{ unit.split('-')[1].toUpperCase() }})</small></li>
               <li v-if="graph_day.last">
                 <small class="grey--text">{{ $decimal.format($decimal.mul(volume24h, minPrice24h)) }}</small>
               </li>
@@ -115,12 +115,12 @@
 <script>
 
   import Datafeed from "../../libs/datafeed";
-  import Api from "@/libs/api";
+  import Api from "/libs/api";
 
   export default {
     data() {
       return {
-        exchange: undefined,
+        unit: undefined,
         overlay: true,
         graph_day: {},
         both: false,
@@ -129,30 +129,30 @@
     },
     head() {
       return {
-        title: (this.exchange ? this.exchange.toUpperCase() : 'Loading') + ' | ' + (this.priceLast ? this.$decimal.format(this.priceLast) : 0)
+        title: (this.unit ? this.unit.toUpperCase() : 'Loading') + ' | ' + (this.priceLast ? this.$decimal.format(this.priceLast) : 0)
       }
     },
     async asyncData({params}) {
-      const exchange = params.exchange
-      return { exchange }
+      const unit = params.unit
+      return { unit }
     },
     watch: {
       $route(e) {
-        this.getGraph(e.params.exchange);
+        this.getGraph(e.params.unit);
       }
     },
     mounted() {
-      this.getGraph(this.exchange);
+      this.getGraph(this.unit);
     },
     methods: {
 
       /**
-       * @param symbol
+       * @param unit
        */
-      getGraph(symbol) {
+      getGraph(unit) {
         this.overlay = true;
 
-        this.$axios.$post(Api.exchange.getPair, {base_unit: symbol.split('-')[0], quote_unit: symbol.split('-')[1]}).then((response) => {
+        this.$axios.$post(Api.exchange.getPair, {base_unit: unit.split('-')[0], quote_unit: unit.split('-')[1]}).then((response) => {
 
           this.both = response.pairs[0].both ?? false;
           this.status = response.pairs[0].status ?? 0;
@@ -163,7 +163,7 @@
              * @type {IChartingLibraryWidget}
              */
             window.tvWidget = new window.TradingView.widget({
-              symbol: symbol,
+              symbol: unit,
               theme: (this.$vuetify.theme.dark ? "Dark" : "Light"),
               locale: this.$vuetify.lang.current,
               container: 'charting-library',

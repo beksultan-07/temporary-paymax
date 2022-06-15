@@ -126,7 +126,7 @@
       'v-component-shift-item': ShiftItem
     },
     props: {
-      exchange: {
+      unit: {
         type: String
       }
     },
@@ -143,14 +143,14 @@
     watch: {
       $route(e) {
         this.getQuery(
-          e.params.exchange
+          e.params.unit
         );
         this.getOrders(2);
       }
     },
     mounted() {
 
-      this.getQuery(this.exchange);
+      this.getQuery(this.unit);
 
       /**
        * Отслеживаем статус ордера.

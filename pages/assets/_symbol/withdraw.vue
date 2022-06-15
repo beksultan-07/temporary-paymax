@@ -205,7 +205,7 @@
 
 <script>
 
-  import Api from "@/libs/api";
+  import Api from "/libs/api";
 
   export default {
     data() {
