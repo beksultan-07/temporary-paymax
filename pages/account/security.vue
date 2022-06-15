@@ -6,7 +6,6 @@
   import Soon from "~/components/Soon";
 
   export default {
-    name: "security",
     components: {
       'v-component-soon': Soon
     },

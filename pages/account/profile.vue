@@ -24,7 +24,6 @@
   import Api from "~/libs/api";
 
   export default {
-    name: "profile",
     data() {
       return {
         old_password: "",

@@ -12,12 +12,12 @@
         <template v-slot:activator="{ on, attrs }">
           <template v-if="$decimal.truncate(balance)">
             <div :class="$vuetify.theme.dark ? 'grey--text' : ''" v-bind="attrs" v-on="on">
-              {{ $decimal.truncate(balance) }} {{ String(unit).toUpperCase() }}
+              {{ $decimal.truncate(balance) }} {{ String(symbol).toUpperCase() }}
             </div>
           </template>
           <template v-else>
             <div :class="$vuetify.theme.dark ? 'grey--text' : ''" v-bind="attrs">
-              0 {{ String(unit).toUpperCase() }}
+              0 {{ String(symbol).toUpperCase() }}
             </div>
           </template>
         </template>
@@ -208,7 +208,7 @@
       return {
         orders: [],
         query: '--:--',
-        unit: null,
+        symbol: null,
         price: 0,
         value: 0,
         quantity: 0,
@@ -224,7 +224,7 @@
           e.params.exchange
         );
         this.getAsset(
-          this.getUnit(e.params.exchange)
+          this.getSymbol(e.params.exchange)
         );
         this.getGraph();
         this.getOrders();
@@ -407,22 +407,22 @@
 
       /**
        * Получаем данные об активе.
-       * @param unit
+       * @param symbol
        * @returns {boolean}
        */
-      getAsset(unit) {
+      getAsset(symbol) {
 
-        if (unit !== undefined) {
+        if (symbol !== undefined) {
           this.overlay = true;
         }
 
-        unit = (unit === undefined ? this.getUnit(this.query) : unit);
+        symbol = (symbol === undefined ? this.getSymbol(this.query) : symbol);
 
         if (!this.$auth.loggedIn) {
           return false;
         }
 
-        this.$axios.$post(Api.exchange.getAsset, {unit: unit}).then((response) => {
+        this.$axios.$post(Api.exchange.getAsset, {symbol: symbol}).then((response) => {
 
           // После перехода на новый актив обнуляем все параметры.
           this.balance = 0;
@@ -456,16 +456,16 @@
        * @param query
        * @returns {null}
        */
-      getUnit(query) {
+      getSymbol(query) {
         switch (this.assigning) {
           case 'buy':
-            this.unit = query.split('-')[1];
+            this.symbol = query.split('-')[1];
             break;
           case 'sell':
-            this.unit = query.split('-')[0];
+            this.symbol = query.split('-')[0];
             break;
         }
-        return this.unit;
+        return this.symbol;
       },
 
       /**

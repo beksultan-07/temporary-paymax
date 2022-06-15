@@ -105,12 +105,12 @@
 
       /**
        * @event 'withdraw/cancel'
-       * @object {unit: string},
+       * @object {symbol: string},
        * @object {value: float64}
        */
       this.$nuxt.$on('withdraw/cancel', (data) => {
         this.assets.map(item => {
-          if(item.symbol === data[0].unit) {
+          if(item.symbol === data[0].symbol) {
             item.balance += data[0].value; return item;
           }
         });
@@ -118,12 +118,12 @@
 
       /**
        * @event 'withdraw/create'
-       * @object {unit: string},
+       * @object {symbol: string},
        * @object {value: float64}
        */
       this.$nuxt.$on('withdraw/create', (data) => {
         this.assets.map(item => {
-          if(item.symbol === data.unit) {
+          if(item.symbol === data.symbol) {
             item.balance -= data.value; return item;
           }
         });
@@ -174,15 +174,15 @@
       },
 
       /**
-       * @param unit
+       * @param symbol
        * @returns {boolean}
        */
-      active(unit) {
-        if (this.$route.params.unit === null) {
+      active(symbol) {
+        if (this.$route.params.symbol === null) {
           return false
         }
 
-        return this.$route.params.unit === unit;
+        return this.$route.params.symbol === symbol;
       }
     },
     computed: {

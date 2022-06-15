@@ -11,21 +11,23 @@
         <v-btn class="text-capitalize" to="/signin" text>{{ $vuetify.lang.t('$vuetify.lang_29') }}</v-btn>
         <v-btn class="text-capitalize" to="/signup" text>{{ $vuetify.lang.t('$vuetify.lang_30') }}</v-btn>
       </v-toolbar-items>
-      <v-btn to="/admin" v-if="admin" :color="$vuetify.theme.dark ? '' : 'deep-purple lighten-4'" elevation="0" icon>
-        <v-tooltip bottom>
-          <template v-slot:activator="{ on, attrs }">
-            <v-icon :color="$vuetify.theme.dark ? '' : 'grey darken-1'" v-bind="attrs" v-on="on">
-              mdi-shield-lock-open-outline
-            </v-icon>
-          </template>
-          <span>{{ $vuetify.lang.t('$vuetify.lang_177') }}</span>
-        </v-tooltip>
-      </v-btn>
+      <template v-if="$auth.loggedIn">
+        <v-btn to="/admin" v-if="admin" :color="$vuetify.theme.dark ? '' : 'deep-purple lighten-4'" elevation="0" icon>
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on, attrs }">
+              <v-icon :color="$vuetify.theme.dark ? '' : 'grey darken-1'" v-bind="attrs" v-on="on">
+                mdi-shield-lock-open-outline
+              </v-icon>
+            </template>
+            <span>{{ $vuetify.lang.t('$vuetify.lang_177') }}</span>
+          </v-tooltip>
+        </v-btn>
+      </template>
       <v-divider class="mx-4 hidden-sm-and-down" inset vertical />
       <client-only>
-      <template v-if="$auth.loggedIn">
-        <v-component-menu-private />
-      </template>
+        <template v-if="$auth.loggedIn">
+          <v-component-menu-private />
+        </template>
       </client-only>
       <v-component-language />
       <v-divider class="mx-4" inset vertical />

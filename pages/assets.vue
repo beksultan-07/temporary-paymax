@@ -26,7 +26,6 @@
 
   export default {
     auth: true,
-    name: "assets",
     components: {
       'v-component-assets': Assets
     }

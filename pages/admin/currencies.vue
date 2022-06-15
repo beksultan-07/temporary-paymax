@@ -12,7 +12,6 @@
   import Currencies from "../../components/Admin/Currencies";
 
   export default {
-    name: "currencies",
     components: {
       'v-component-currencies': Currencies
     }

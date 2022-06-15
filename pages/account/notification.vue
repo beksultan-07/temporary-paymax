@@ -43,7 +43,6 @@
   import Api from "@/libs/api";
 
   export default {
-    name: "notification",
     data() {
       return {
         sample: []

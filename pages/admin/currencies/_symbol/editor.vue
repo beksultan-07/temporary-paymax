@@ -87,7 +87,7 @@
 
     <v-file-input counter chips show-size truncate-length="34" outlined @change="onChange" />
 
-    <template v-if="this.$route.params.unit === 'create'">
+    <template v-if="this.$route.params.symbol === 'create'">
       <v-btn block color="black--text yellow darken-1 text-capitalize" elevation="0" large @click="setCurrency">{{ $vuetify.lang.t('$vuetify.lang_195') }}</v-btn>
     </template>
     <template v-else>
@@ -101,7 +101,6 @@
   import Api from "@/libs/api";
 
   export default {
-    name: "editor",
     data() {
       return {
         chains: [],
@@ -147,7 +146,7 @@
        */
       getCurrency() {
         this.$axios.$post(Api.admin.exchange.getCurrency, {
-          unit: (this.$route.params.unit !== "create" ? this.$route.params.unit : "")
+          symbol: (this.$route.params.symbol !== "create" ? this.$route.params.symbol : "")
         }).then((response) => {
           if (response.currencies) {
             this.currency = Object.assign(this.currency, response.currencies[0]);
@@ -170,7 +169,7 @@
           this.currency.chains_ids = []
         }
         this.$axios.$post(Api.admin.exchange.setCurrency, {
-          unit: (this.$route.params.unit !== "create" ? this.$route.params.unit : ""),
+          symbol: (this.$route.params.symbol !== "create" ? this.$route.params.symbol : ""),
           image: this.image.split(',')[1],
           currency: this.currency
         }).then(() => {

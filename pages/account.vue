@@ -44,7 +44,6 @@
 
   export default {
     auth: true,
-    name: "account",
     components: {
       'v-component-inner': Inner
     },

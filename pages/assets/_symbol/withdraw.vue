@@ -208,7 +208,6 @@
   import Api from "@/libs/api";
 
   export default {
-    name: "withdraw",
     data() {
       return {
         next: 1,
@@ -264,7 +263,7 @@
       getAsset() {
         this.overlay = true;
 
-        this.$axios.$post(Api.exchange.getAsset, {unit: this.$route.params.unit}).then((response) => {
+        this.$axios.$post(Api.exchange.getAsset, {symbol: this.$route.params.symbol}).then((response) => {
           this.asset = response.currencies.lastItem ?? {};
           this.overlay = false;
           this.getPrice(this.asset.symbol);
@@ -279,7 +278,7 @@
        * @param index
        */
       setAsset(platform, protocol, index) {
-        this.$axios.$post(Api.exchange.setAsset, {unit: this.$route.params.unit, platform: platform, protocol: protocol}).then((response) => {
+        this.$axios.$post(Api.exchange.setAsset, {symbol: this.$route.params.symbol, platform: platform, protocol: protocol}).then((response) => {
           this.asset.chains[index].address = response.address;
           this.$forceUpdate();
         });
@@ -330,10 +329,10 @@
       },
 
       /**
-       * @param unit
+       * @param symbol
        */
-      getPrice(unit) {
-        this.$axios.$get(Api.exchange.getPrice + '?base_unit=' + unit + '&quote_unit=usdt').then((response) => {
+      getPrice(symbol) {
+        this.$axios.$get(Api.exchange.getPrice + '?base_unit=' + symbol + '&quote_unit=usdt').then((response) => {
           this.price = response.price ?? 0;
         });
       },
@@ -343,7 +342,7 @@
        */
       setWithdraw(item) {
         this.$axios.$post(Api.exchange.setWithdraw, {
-          unit: this.$route.params.unit,
+          symbol: this.$route.params.symbol,
           chain_id: item.id,
           platform: item.platform,
           protocol: item.protocol,
@@ -352,10 +351,10 @@
           secure: this.secure
         }).then(() => {
           this.$nuxt.$emit('withdraw/create', {
-            unit: this.$route.params.unit,
+            symbol: this.$route.params.symbol,
             value: this.quantity
           });
-          return this.$router.push('/assets/' + this.$route.params.unit + '/history');
+          return this.$router.push('/assets/' + this.$route.params.symbol + '/history');
         }).catch((error) => {
           this.$snackbar.open({
             content: `${error.response.data.code}: ${error.response.data.message}`,

@@ -40,7 +40,7 @@
               <span>{{ $vuetify.lang.t('$vuetify.lang_139') }}: {{ item.id }}</span>
             </v-tooltip>
           </template>
-          <template v-slot:item.unit="{ item }">
+          <template v-slot:item.symbol="{ item }">
             <b class="text-uppercase">{{ item.base_unit }}/{{ item.quote_unit }}</b>
           </template>
           <template v-slot:item.quantity="{ item }">
@@ -153,7 +153,6 @@
   import Inner from "@/components/Common/Inner";
 
   export default {
-    name: "assigning",
     components: {
       'v-component-inner': Inner
     },
@@ -280,7 +279,7 @@
               text: this.$vuetify.lang.t('$vuetify.lang_133'),
               align: 'start',
               sortable: false,
-              value: 'unit'
+              value: 'symbol'
             }, {
               text: this.$vuetify.lang.t('$vuetify.lang_53'),
               align: 'start',

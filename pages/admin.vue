@@ -45,7 +45,6 @@
   export default {
     auth: true,
     middleware: ['rules'],
-    name: "admin",
     components: {
       'v-component-inner': Inner
     },

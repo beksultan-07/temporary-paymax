@@ -134,7 +134,6 @@
   import Api from "../../../libs/api";
 
   export default {
-    name: "deposit",
     components: {
       'v-component-qrcode': Qrcode
     },
@@ -163,7 +162,7 @@
       getAsset() {
         this.overlay = true;
 
-        this.$axios.$post(Api.exchange.getAsset, {unit: this.$route.params.unit}).then((response) => {
+        this.$axios.$post(Api.exchange.getAsset, {symbol: this.$route.params.symbol}).then((response) => {
           this.asset = response.currencies.lastItem ?? {};
           this.overlay = false;
 
@@ -178,7 +177,7 @@
        * @param index
        */
       setAsset(platform, protocol, index) {
-        this.$axios.$post(Api.exchange.setAsset, {unit: this.$route.params.unit, platform: platform, protocol: protocol}).then((response) => {
+        this.$axios.$post(Api.exchange.setAsset, {symbol: this.$route.params.symbol, platform: platform, protocol: protocol}).then((response) => {
           this.asset.chains[index].address = response.address;
           this.$forceUpdate();
         });

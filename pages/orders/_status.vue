@@ -26,7 +26,6 @@
   import Inner from "@/components/Common/Inner";
 
   export default {
-    name: "orders",
     components: {
       'v-component-inner': Inner
     }

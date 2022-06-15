@@ -40,7 +40,6 @@
 
   export default {
     auth: true,
-    name: "orders",
     components: {
       'v-component-inner': Inner
     },

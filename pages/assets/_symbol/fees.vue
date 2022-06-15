@@ -45,7 +45,6 @@
   import Api from "@/libs/api";
 
   export default {
-    name: "fees",
     data() {
       return {
         asset: {
@@ -66,7 +65,7 @@
       getAsset() {
         this.overlay = true;
 
-        this.$axios.$post(Api.exchange.getAsset, {unit: this.$route.params.unit}).then((response) => {
+        this.$axios.$post(Api.exchange.getAsset, {symbol: this.$route.params.symbol}).then((response) => {
           this.asset = response.currencies.lastItem ?? {};
           this.overlay = false;
         }).catch(e => {

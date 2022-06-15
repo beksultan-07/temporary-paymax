@@ -82,8 +82,8 @@
      */
     async asyncData({ $axios, params, error }) {
       let exchange = params.exchange;
-      let unit = exchange.split('-');
-      return $axios.$post(Api.exchange.getUnit, {base_unit: unit[0], quote_unit: unit[1]}).then(() => {
+      let symbol = exchange.split('-');
+      return $axios.$post(Api.exchange.getSymbol, {base_unit: symbol[0], quote_unit: symbol[1]}).then(() => {
         return { exchange }
       }).catch(e => {
         error(e)

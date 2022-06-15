@@ -106,7 +106,6 @@
   import Api from "@/libs/api";
 
   export default {
-    name: "activities",
     data() {
       return {
         activities: [],

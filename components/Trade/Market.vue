@@ -162,16 +162,16 @@
     methods: {
 
       /**
-       * @param unit
+       * @param symbol
        */
-      getPairs(unit) {
+      getPairs(symbol) {
         this.overlay = true;
 
         let markers = this.markers.length;
-        this.$axios.$post(Api.exchange.getPairs, {unit: unit}).then((response) => {
+        this.$axios.$post(Api.exchange.getPairs, {symbol: symbol}).then((response) => {
 
           if (!markers) {
-            this.eyelet = this.markers.indexOf(unit);
+            this.eyelet = this.markers.indexOf(symbol);
           }
 
           this.pairs = response.pairs ?? [];
@@ -183,15 +183,15 @@
       },
 
       /**
-       * @param unit
+       * @param symbol
        */
-      getMarkers(unit) {
+      getMarkers(symbol) {
         this.$axios.$post(Api.exchange.getMarkers).then((response) => {
           this.markers = response.markers ?? [];
 
-          // Sort by unit.
+          // Sort by symbol.
           this.markers.map((item, index) => {
-            if (item === unit) {
+            if (item === symbol) {
               this.markers[index] = this.markers[0];
               this.markers[0] = item
             }

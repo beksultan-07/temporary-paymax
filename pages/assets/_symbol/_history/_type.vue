@@ -35,11 +35,11 @@
               </div>
             </template>
           </template>
-          <template v-slot:item.unit="{ item }">
-            {{ item.unit.toUpperCase() }}
+          <template v-slot:item.symbol="{ item }">
+            {{ item.symbol.toUpperCase() }}
           </template>
           <template v-slot:item.value="{ item }">
-            -{{ item.value }} <b>{{ item.unit.toUpperCase() }}</b>
+            -{{ item.value }} <b>{{ item.symbol.toUpperCase() }}</b>
           </template>
           <template v-slot:item.status="{ item }">
             <template v-if="item.status === 'PENDING'">
@@ -76,7 +76,7 @@
                         {{ $vuetify.lang.t('$vuetify.lang_105') }}
                       </v-list-item-subtitle>
                       <v-list-item-title>
-                        -{{ item.value }} {{ item.unit.toUpperCase() }}
+                        -{{ item.value }} {{ item.symbol.toUpperCase() }}
                       </v-list-item-title>
                     </v-item-group>
                   </v-list-item>
@@ -86,7 +86,7 @@
                         {{ $vuetify.lang.t('$vuetify.lang_20') }}
                       </v-list-item-subtitle>
                       <v-list-item-title>
-                        {{ item.fees }} {{ item.unit.toUpperCase() }}
+                        {{ item.fees }} {{ item.symbol.toUpperCase() }}
                       </v-list-item-title>
                     </v-item-group>
                   </v-list-item>
@@ -96,7 +96,7 @@
                         {{ $vuetify.lang.t('$vuetify.lang_107') }}
                       </v-list-item-subtitle>
                       <v-list-item-title>
-                        {{ item.value }} {{ item.unit.toUpperCase() }}
+                        {{ item.value }} {{ item.symbol.toUpperCase() }}
                       </v-list-item-title>
                     </v-item-group>
                   </v-list-item>
@@ -115,7 +115,7 @@
                       <v-list-item-title>
                         <v-btn-toggle class="text-uppercase" dense>
                           <v-btn color="blue white--text">
-                            {{ $vuetify.lang.t('$vuetify.lang_113') }}: {{ item.platform }}({{ item.unit.toUpperCase() }})
+                            {{ $vuetify.lang.t('$vuetify.lang_113') }}: {{ item.platform }}({{ item.symbol.toUpperCase() }})
                           </v-btn>
                           <v-btn color="amber white--text">
                             {{ $vuetify.lang.t('$vuetify.lang_125') }}: {{ item.protocol ? item.protocol : 'MAINNET' }}
@@ -144,7 +144,7 @@
                       </v-list-item-title>
                     </v-item-group>
                   </v-list-item>
-                  <v-list-item v-if="item.status === 'PENDING' && item.type === 'WITHDRAWS'">
+                  <v-list-item v-if="item.status === 'PENDING' || item.type === 'WITHDRAWS'">
                     <v-btn color="white--text red text-capitalize" @click="cancelWithdraw(item.id)" large block elevation="0">{{ $vuetify.lang.t('$vuetify.lang_124') }}</v-btn>
                   </v-list-item>
                 </v-list>
@@ -197,7 +197,6 @@
   import Api from "@/libs/api";
 
   export default {
-    name: "type",
     data() {
       return {
         transactions: [],
@@ -225,7 +224,7 @@
         this.overlay = true;
 
         this.$axios.$post(Api.exchange.getTransactions, {
-          unit: this.$route.params.unit,
+          symbol: this.$route.params.symbol,
           trx_type: this.type,
           limit: this.limit,
           page: this.page
@@ -296,7 +295,7 @@
               text: this.$vuetify.lang.t('$vuetify.lang_142'),
               align: 'start',
               sortable: false,
-              value: 'unit'
+              value: 'symbol'
             }, {
               text: this.$vuetify.lang.t('$vuetify.lang_53'),
               align: 'start',

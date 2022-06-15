@@ -14,7 +14,7 @@
               </v-list-item-subtitle>
             </v-list-item-content>
             <v-list-item-avatar size="100">
-              <v-img :src="$storages(['icon'], unit)" width="100"/>
+              <v-img :src="$storages(['icon'], symbol)" width="100"/>
             </v-list-item-avatar>
           </v-list-item>
         </v-card>
@@ -86,21 +86,21 @@
         type: Object,
         default: undefined
       },
-      unit: {
+      symbol: {
         type: String,
         default: undefined
       }
     },
     watch: {
       $route(route) {
-        this.getPrice(route.params.unit);
+        this.getPrice(route.params.symbol);
       }
     },
     mounted() {
 
       /**
        * @event 'withdraw/cancel'
-       * @object {unit: string},
+       * @object {symbol: string},
        * @object {value: float64}
        */
       this.$nuxt.$on('withdraw/cancel', (data) => {
@@ -109,7 +109,7 @@
 
       /**
        * @event 'withdraw/create'
-       * @object {unit: string},
+       * @object {symbol: string},
        * @object {value: float64}
        */
       this.$nuxt.$on('withdraw/create', (data) => {
@@ -118,16 +118,16 @@
     },
     create() {
       setTimeout(() => {
-        this.getPrice(this.unit);
+        this.getPrice(this.symbol);
       }, 1000)
     },
     methods: {
 
       /**
-       * @param unit
+       * @param symbol
        */
-      getPrice(unit) {
-        this.$axios.$get(Api.exchange.getPrice + '?base_unit=' + unit + '&quote_unit=usdt').then((response) => {
+      getPrice(symbol) {
+        this.$axios.$get(Api.exchange.getPrice + '?base_unit=' + symbol + '&quote_unit=usdt').then((response) => {
           this.price = response.price ?? 0;
         });
       }

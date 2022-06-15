@@ -118,7 +118,6 @@
   import Api from "@/libs/api";
 
   export default {
-    name: 'exchange',
     data() {
       return {
         exchange: undefined,
