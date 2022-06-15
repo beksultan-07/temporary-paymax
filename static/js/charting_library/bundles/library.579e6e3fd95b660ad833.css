@@ -693,7 +693,7 @@ input, textarea {
 }
 
 html.theme-dark .chart-page {
-    background-color: var(--tv-color-platform-background, rgba(30, 30, 30, 0))
+    background-color: var(--tv-color-platform-background, rgba(255, 255, 255, 0))
 }
 
 .chart-page .chart-container {
@@ -784,7 +784,7 @@ html.theme-dark .chart-page .chart-container.multiple.active:after {
 }
 
 .loading-indicator {
-    background: #fff;
+    background: rgba(255, 255, 255, 0);
     height: 100%;
     left: 0;
     position: absolute;
@@ -794,7 +794,7 @@ html.theme-dark .chart-page .chart-container.multiple.active:after {
 }
 
 html.theme-dark .loading-indicator {
-    background: #1e1e1e
+    background: rgba(30, 30, 30, 0)
 }
 
 .loading-indicator img {
@@ -3055,7 +3055,7 @@ td.chart-markup-table {
     background-color: #fff;
     border-collapse: collapse;
     box-sizing: border-box;
-    color: #4d4d4d;
+    color: rgba(0, 0, 0, 0);
     margin: 0;
     padding: 0;
     position: absolute;
