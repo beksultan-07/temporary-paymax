@@ -27,7 +27,7 @@ export default {
       this.$store.commit('localStorage/setTheme', !this.$store.state.localStorage.dark);
 
       // Trading view widget change theme.
-      if (window.tvWidget !== undefined && this.$route.name === 'trade-exchange') {
+      if (window.tvWidget !== undefined && this.$route.name === 'trade-unit') {
         window.tvWidget.changeTheme(this.$vuetify.theme.dark ? "Dark" : "Light");
       }
     },
