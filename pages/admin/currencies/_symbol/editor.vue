@@ -87,8 +87,8 @@
 
     <v-file-input counter chips show-size truncate-length="34" outlined @change="onChange" />
 
-    <template v-if="this.$route.params.symbol === 'create'">
-      <v-btn block color="black--text yellow darken-1 text-capitalize" elevation="0" large @click="setCurrency">{{ $vuetify.lang.t('$vuetify.lang_195') }}</v-btn>
+    <template v-if="$route.params.symbol === 'create'">
+      <v-btn v-if="image" block color="black--text yellow darken-1 text-capitalize" elevation="0" large @click="setCurrency">{{ $vuetify.lang.t('$vuetify.lang_195') }}</v-btn>
     </template>
     <template v-else>
       <v-btn block color="white--text red darken-1 text-capitalize" elevation="0" large @click="setCurrency">{{ $vuetify.lang.t('$vuetify.lang_204') }}</v-btn>
@@ -208,6 +208,7 @@
        */
       onChange(file) {
         if (!file) {
+          this.image = "";
           return;
         }
         this.setImage(file);

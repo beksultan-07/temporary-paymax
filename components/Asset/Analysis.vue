@@ -82,7 +82,7 @@
     data() {
       return {
         analysis: undefined,
-        limit: 15,
+        limit: 12,
         page: 1,
         count: 0,
         length: 0,

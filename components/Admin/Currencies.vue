@@ -101,8 +101,27 @@
               </v-icon>
             </v-btn>
           </template>
+          <template v-slot:item.delete="{ item }">
+            <v-btn @click="open(item.symbol)" icon>
+              <v-icon>
+                mdi-close-circle-outline
+              </v-icon>
+            </v-btn>
+          </template>
         </v-data-table>
         <!-- End: data table -->
+
+        <v-dialog v-model="dialog" max-width="500px">
+          <v-card>
+            <v-card-title class="text-h5 text-center">{{ $vuetify.lang.t('$vuetify.lang_215') }}</v-card-title>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn color="blue darken-1" text @click="close">{{ $vuetify.lang.t('$vuetify.lang_217') }}</v-btn>
+              <v-btn color="blue darken-1" text @click="deleteCurrency(symbol)">{{ $vuetify.lang.t('$vuetify.lang_216') }}</v-btn>
+              <v-spacer></v-spacer>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
 
         <v-divider />
 
@@ -162,6 +181,7 @@
     },
     data() {
       return {
+        symbol: "",
         search: "",
         name: "",
         currencies: [],
@@ -169,13 +189,17 @@
         limit: 15,
         count: 0,
         length: 0,
-        page: 1
+        page: 1,
+        dialog: false
       }
     },
     watch: {
       $route(params) {
         this.name = params.name;
         this.getCurrencies();
+      },
+      dialog (val) {
+        val || this.close()
       }
     },
     mounted() {
@@ -203,10 +227,38 @@
       },
 
       /**
+       * @param symbol
+       */
+      deleteCurrency(symbol) {
+        this.$axios.$post(Api.admin.exchange.deleteCurrency, {
+          symbol: symbol
+        }).then(() => {
+          this.currencies.splice(this.currencies.map((o) => o.symbol).indexOf(symbol), 1);
+          this.dialog = false;
+        });
+      },
+
+      /**
        *
        */
       getMore() {
         this.getCurrencies();
+      },
+
+      /**
+       *
+       */
+      close() {
+        this.symbol = "";
+        this.dialog = false;
+      },
+
+      /**
+       *
+       */
+      open(symbol) {
+        this.symbol = symbol;
+        this.dialog = true;
       }
     },
     computed: {
@@ -261,6 +313,11 @@
             align: 'start',
             sortable: false,
             value: 'edit'
+          }, {
+            text: this.$vuetify.lang.t('$vuetify.lang_214'),
+            align: 'end',
+            sortable: false,
+            value: 'delete'
           }
         ]
       }
