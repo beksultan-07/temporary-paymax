@@ -1,9 +1,10 @@
 import mqtt from 'mqtt';
 import Vue from 'vue';
 
-export default ({ app, $on }, inject) => {
+export default ({ app }, inject) => {
   let event = new Vue();
   app.$publish = {
+    route: null,
     client: mqtt.connect(process.env.BASE_BROKER || 'ws://localhost:15675/ws', {
       clean: true
     }),
@@ -38,7 +39,6 @@ export default ({ app, $on }, inject) => {
       if (typeof callback !== "function") {
         return false
       }
-
       event.$on(channel, callback);
     }
   };

@@ -7,7 +7,7 @@
 
         <!-- Start: tabs bar -->
         <v-tabs v-model="eyelet" color="primary">
-          <v-tab v-for="item in asset.chains" :key="item.id" class="text-capitalize">{{ item.protocol ? item.protocol : 'mainnet' }}</v-tab>
+          <v-tab v-for="item in asset.chains" :key="item.id" class="text-capitalize">{{ item.contract ? item.contract.protocol : 'mainnet' }}</v-tab>
         </v-tabs>
         <!-- End: tabs bar -->
 
@@ -106,7 +106,7 @@
             <v-layout fill-height style="height:200px;" wrap>
               <v-flex/>
               <v-flex align-self-center class="text-center" md4 mx5 sm6 xl3>
-                <v-btn block color="black--text yellow darken-1 text-capitalize" elevation="0" large @click="setAsset(item.platform, item.protocol, index)">{{ $vuetify.lang.t('$vuetify.lang_90') }}</v-btn>
+                <v-btn block color="black--text yellow darken-1 text-capitalize" elevation="0" large @click="setAsset(item.platform, (item.contract ? item.contract.protocol : 0), index)">{{ $vuetify.lang.t('$vuetify.lang_90') }}</v-btn>
               </v-flex>
               <v-flex/>
             </v-layout>
@@ -118,7 +118,7 @@
 
     </template>
     <template v-else>
-      Fiat form...
+      <v-component-soon class="mt-15" />
     </template>
 
     <v-overlay absolute :color="$vuetify.theme.dark ? 'grey darken-4' : 'white'" opacity="0.8" :value="overlay">
@@ -131,11 +131,13 @@
 <script>
 
   import Qrcode from "../../../components/Qrcode";
+  import Soon from "../../../components/Soon";
   import Api from "../../../libs/api";
 
   export default {
     components: {
-      'v-component-qrcode': Qrcode
+      'v-component-qrcode': Qrcode,
+      'v-component-soon': Soon
     },
     data() {
       return {
@@ -165,7 +167,6 @@
         this.$axios.$post(Api.exchange.getAsset, {symbol: this.$route.params.symbol}).then((response) => {
           this.asset = response.currencies.lastItem ?? {};
           this.overlay = false;
-
         }).catch(e => {
           console.log(e)
         });

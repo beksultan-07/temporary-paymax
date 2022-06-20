@@ -7,7 +7,7 @@
 
         <!-- Start: tabs bar -->
         <v-tabs v-model="eyelet" color="primary">
-          <v-tab v-for="item in asset.chains" :key="item.id" class="text-capitalize">{{ item.protocol ? item.protocol : 'mainnet' }}</v-tab>
+          <v-tab v-for="item in asset.chains" :key="item.id" class="text-capitalize">{{ item.contract ? item.contract.protocol : 'mainnet' }}</v-tab>
         </v-tabs>
         <!-- End: tabs bar -->
 
@@ -181,7 +181,7 @@
             <v-layout fill-height style="height:200px;" wrap>
               <v-flex/>
               <v-flex align-self-center class="text-center" md4 mx5 sm6 xl3>
-                <v-btn block color="black--text yellow darken-1 text-capitalize" elevation="0" large @click="setAsset(item.platform, item.protocol, index)">{{ $vuetify.lang.t('$vuetify.lang_90') }}</v-btn>
+                <v-btn block color="black--text yellow darken-1 text-capitalize" elevation="0" large @click="setAsset(item.platform, (item.contract ? item.contract.protocol : 0), index)">{{ $vuetify.lang.t('$vuetify.lang_90') }}</v-btn>
               </v-flex>
               <v-flex/>
             </v-layout>
@@ -193,7 +193,7 @@
 
     </template>
     <template v-else>
-      Fiat form...
+      <v-component-soon class="mt-15" />
     </template>
 
     <v-overlay absolute :color="$vuetify.theme.dark ? 'grey darken-4' : 'white'" opacity="0.8" :value="overlay">
@@ -206,23 +206,17 @@
 <script>
 
   import Api from "/libs/api";
+  import Soon from "../../../components/Soon";
 
   export default {
+    components: {
+      'v-component-soon': Soon
+    },
     data() {
       return {
         next: 1,
         asset: {
-          chains: [
-            {
-              network: 0,
-              reserve: 0,
-              fees_withdraw: 0,
-              time_withdraw: 0,
-              confirmation: 0
-            }
-          ],
-          max_withdraw: 0,
-          min_withdraw: 0
+          chains: []
         },
         quantity: '',
         eyelet: 0,
@@ -345,7 +339,7 @@
           symbol: this.$route.params.symbol,
           chain_id: item.id,
           platform: item.platform,
-          protocol: item.protocol,
+          protocol: (item.contract ? item.contract.protocol : 0),
           quantity: this.quantity,
           address: this.to,
           secure: this.secure

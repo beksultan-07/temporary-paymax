@@ -87,7 +87,7 @@
 <script>
 
   import Api from "../../libs/api";
-  import Soon from "../../components/Soon"
+  import Soon from "../../components/Soon";
 
   export default {
     name: "v-component-common",
