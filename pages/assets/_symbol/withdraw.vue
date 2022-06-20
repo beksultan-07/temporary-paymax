@@ -339,7 +339,6 @@
           symbol: this.$route.params.symbol,
           chain_id: item.id,
           platform: item.platform,
-          protocol: (item.contract ? item.contract.protocol : 0),
           quantity: this.quantity,
           address: this.to,
           secure: this.secure
