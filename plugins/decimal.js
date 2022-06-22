@@ -62,7 +62,7 @@ export default (context, inject) => {
       return number ? (number).toFixed(precision ?? 2).replace(/\d(?=(\d{3})+\.)/g, '$&,') : 0;
     },
     isNumber(number) {
-      return number === '' || number === undefined || number === 0 || number === null;
+      return number === '' || number === undefined || number === 0 || number === null || isNaN(Number(number));
     }
   };
   inject('decimal', context.$decimal);

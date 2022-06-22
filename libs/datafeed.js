@@ -123,8 +123,8 @@ export default class Datafeed {
        */
       this.$self.$publish.bind('trade/graph:' + query.resolution, (data) => {
         if (data.graph !== undefined && symbol[0].toLowerCase() === data.graph[0].base_unit && symbol[1].toLowerCase() === data.graph[0].quote_unit) {
-          this.record(data.graph[0]);
           this.$self.graph_day = data.graph_day;
+          this.record(data.graph[0]);
         }
       });
 
@@ -149,6 +149,7 @@ export default class Datafeed {
       symbolInfo: symbolInfo,
     };
     this.$self.overlay = false;
+    this.$init = false;
   }
 
   /**
@@ -159,8 +160,6 @@ export default class Datafeed {
       return;
     }
 
-    this.$init = false;
-    this.$self.graph_day = {};
     this.$self.$publish.unbind(['trade/graph:' + this.interval(this.$subscribers[subscriberUID].resolution)]);
     delete this.$subscribers[subscriberUID];
   }
