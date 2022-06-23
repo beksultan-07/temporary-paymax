@@ -10,7 +10,7 @@ export default ({ app }, inject) => {
     }),
     subscribe(topic, channels, error) {
       this.client.on('connect', () => {
-        this.client.subscribe(topic, {qos: 1}, (err) => {
+        this.client.subscribe(topic, {qos: 2}, (err) => {
           if(err) {
             error(`Error on topic subscribe: ${err}`);
           }
