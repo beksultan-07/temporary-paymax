@@ -89,7 +89,7 @@
     <template v-if="!overlay">
       <v-divider />
       <v-card-actions>
-        <v-text-field color="primary" height="40" v-model="search" dense hide-details outlined :label="$vuetify.lang.t('$vuetify.lang_50')" prepend-inner-icon="mdi-layers-search-outline" />
+        <v-text-field color="primary" v-model="search" dense hide-details outlined :label="$vuetify.lang.t('$vuetify.lang_50')" prepend-inner-icon="mdi-layers-search-outline" />
       </v-card-actions>
     </template>
     <!-- End: pair search element -->

@@ -4,32 +4,28 @@
     <v-row class="ma-1" no-gutters>
 
       <!-- Start: nav list component -->
-      <v-col cols="12" md="3" sm="6">
-        <v-card class="ma-1" elevation="0">
-          <v-component-inner>
-            <v-list dense>
-              <v-list-item-group color="primary">
-                <v-list-item v-for="(item, i) in navs" :class="item.to === $route.params.settings ? 'v-list-item--active' : ''"  :key="i" :to="`/admin/${item.to}`" exact link>
-                  <v-list-item-icon class="mr-3">
-                    <v-icon v-text="item.icon"></v-icon>
-                  </v-list-item-icon>
-                  <v-list-item-content>
-                    {{ item.title }}
-                  </v-list-item-content>
-                </v-list-item>
-              </v-list-item-group>
-            </v-list>
-          </v-component-inner>
+      <v-col class="mb-2" cols="12" md="3" sm="6">
+        <v-card class="ma-1 fill-height" elevation="0">
+          <v-list dense>
+            <v-list-item-group color="primary">
+              <v-list-item v-for="(item, i) in navs" :class="item.to === $route.params.settings ? 'v-list-item--active' : ''"  :key="i" :to="`/admin/${item.to}`" exact link>
+                <v-list-item-icon class="mr-3">
+                  <v-icon v-text="item.icon"></v-icon>
+                </v-list-item-icon>
+                <v-list-item-content>
+                  {{ item.title }}
+                </v-list-item-content>
+              </v-list-item>
+            </v-list-item-group>
+          </v-list>
         </v-card>
       </v-col>
       <!-- End: nav list component -->
 
       <!-- Start: child container -->
-      <v-col cols="12" md="9" sm="6">
-        <v-card class="ma-1" elevation="0">
-          <v-component-inner>
-            <nuxt-child />
-          </v-component-inner>
+      <v-col class="mb-2" cols="12" md="9" sm="6">
+        <v-card class="ma-1 fill-height" elevation="0">
+          <nuxt-child />
         </v-card>
       </v-col>
       <!-- End: child container -->
@@ -40,14 +36,10 @@
 </template>
 
 <script>
-  import Inner from "~/components/Common/Inner";
 
   export default {
     auth: true,
     middleware: ['rules'],
-    components: {
-      'v-component-inner': Inner
-    },
     mounted() {
       this.rules();
     },

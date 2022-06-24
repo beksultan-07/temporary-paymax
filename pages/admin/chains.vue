@@ -6,7 +6,7 @@
     <!-- End: chains component -->
 
     <!-- Start: child container -->
-    <nuxt-child style="height: 100%" />
+    <nuxt-child />
     <!-- End: child container -->
 
   </div>

@@ -1,36 +1,34 @@
 <template>
-  <v-card class="ma-1" elevation="0">
-    <v-component-inner>
-      <template v-if="symbol">
+  <v-card class="ma-1 fill-height" elevation="0">
 
-        <!-- Start: tabs bar -->
-        <v-tabs v-model="eyelet" color="primary" show-arrows>
-          <v-tab :to="'/assets/' + symbol + '/deposit'" class="text-capitalize">{{ $vuetify.lang.t('$vuetify.lang_91') }}</v-tab>
-          <v-tab :to="'/assets/' + symbol + '/withdraw'" class="text-capitalize">{{ $vuetify.lang.t('$vuetify.lang_92') }}</v-tab>
-          <v-tab :to="'/assets/' + symbol + '/history'" class="text-capitalize">{{ $vuetify.lang.t('$vuetify.lang_93') }}</v-tab>
-          <v-tab :to="'/assets/' + symbol + '/fees'" class="text-capitalize">{{ $vuetify.lang.t('$vuetify.lang_151') }}</v-tab>
-        </v-tabs>
-        <!-- End: tabs bar -->
+    <template v-if="symbol">
 
-        <v-divider />
+      <!-- Start: tabs bar -->
+      <v-tabs v-model="eyelet" color="primary" show-arrows>
+        <v-tab :to="'/assets/' + symbol + '/deposit'" class="text-capitalize">{{ $vuetify.lang.t('$vuetify.lang_91') }}</v-tab>
+        <v-tab :to="'/assets/' + symbol + '/withdraw'" class="text-capitalize">{{ $vuetify.lang.t('$vuetify.lang_92') }}</v-tab>
+        <v-tab :to="'/assets/' + symbol + '/history'" class="text-capitalize">{{ $vuetify.lang.t('$vuetify.lang_93') }}</v-tab>
+        <v-tab :to="'/assets/' + symbol + '/fees'" class="text-capitalize">{{ $vuetify.lang.t('$vuetify.lang_151') }}</v-tab>
+      </v-tabs>
+      <!-- End: tabs bar -->
 
-        <!-- Start: header bar -->
-        <v-component-header :asset="asset" :symbol="symbol" />
-        <!-- End: header bar -->
+      <v-divider />
 
-        <!-- Start: child container -->
-        <nuxt-child />
-        <!-- End: child container -->
+      <!-- Start: header bar -->
+      <v-component-header :asset="asset" :symbol="symbol" />
+      <!-- End: header bar -->
 
-      </template>
+      <!-- Start: child container -->
+      <nuxt-child />
+      <!-- End: child container -->
 
-      <!-- Start: analysis asset -->
-      <template v-else>
-        <v-component-analysis />
-      </template>
-      <!-- End: select asset -->
+    </template>
 
-    </v-component-inner>
+    <!-- Start: analysis asset -->
+    <template v-else>
+      <v-component-analysis />
+    </template>
+    <!-- End: select asset -->
 
   </v-card>
 </template>
@@ -38,14 +36,12 @@
 <script>
 
   import Header from "../../components/Asset/Header";
-  import Inner from "../../components/Common/Inner";
   import Analysis from "../../components/Asset/Analysis";
   import Api from "../../libs/api";
 
   export default {
     components: {
       'v-component-header': Header,
-      'v-component-inner': Inner,
       'v-component-analysis': Analysis
     },
     data() {

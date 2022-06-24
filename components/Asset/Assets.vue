@@ -1,65 +1,49 @@
 <template>
-  <v-card class="ma-1" elevation="0">
-    <v-component-inner @v-height="getHeight">
+  <v-card class="ma-1 fill-height" elevation="0">
 
-      <!-- Start: search asset element -->
-      <v-card-title class="pa-2">
-        <v-text-field v-model="search" :label="$vuetify.lang.t('$vuetify.lang_84')" color="primary" dense height="40" hide-details outlined prepend-inner-icon="mdi-layers-search-outline" />
-      </v-card-title>
-      <!-- Start: search asset element -->
+    <!-- Start: search asset element -->
+    <v-card-actions>
+      <v-text-field v-model="search" :label="$vuetify.lang.t('$vuetify.lang_84')" color="primary" dense hide-details outlined prepend-inner-icon="mdi-layers-search-outline" />
+    </v-card-actions>
+    <!-- Start: search asset element -->
 
-      <v-divider />
+    <v-divider />
 
-      <!-- Start: list assets element -->
-      <template v-if="assets.length">
-        <template v-if="items.length">
-          <v-hover v-slot="{ hover }">
-            <v-virtual-scroll :class="hover ? '' : 'overflow-y-hidden'" :height="height" :items="items" bench="0" item-height="50">
-              <template v-slot:default="{ item }">
-                <v-hover v-slot:default="{ hover }">
-                  <v-list-item :color="$vuetify.theme.dark ? 'grey darken-3' : 'deep-purple lighten-5'" :key="item.id" :class="active(item.symbol) ? 'v-list-item--active ' + ($vuetify.theme.dark ? 'grey--text text--darken-3' : 'blue--text text--lighten-5') : ''" :to="'/assets/' + item.symbol + '/deposit'" dense>
-                    <v-list-item-avatar size="30">
-                      <v-img :src="$storages(['icon'], item.symbol)"/>
-                    </v-list-item-avatar>
-                    <v-list-item-content>
-                      <v-list-item-title><span :class="($vuetify.theme.dark ? 'white' : 'black') + '--text'">{{ item.symbol.toUpperCase() }}</span></v-list-item-title>
-                      <v-list-item-subtitle>{{ item.name }}</v-list-item-subtitle>
-                    </v-list-item-content>
-                    <v-list-item-action class="d-block text-right">
-                      <template v-if="hover">
-                        <small v-if="$decimal.truncate(item.balance)" class="teal--text">
-                          ≈ ${{ item.price ? $decimal.truncate($decimal.mul(item.balance, item.price)) : $decimal.truncate(item.balance) }}
-                        </small>
-                      </template>
-                      <template v-else>
-                        <small v-if="$decimal.truncate(item.balance)" class="teal--text">
-                          {{ $decimal.truncate(item.balance) }}
-                        </small>
-                      </template>
-                    </v-list-item-action>
-                  </v-list-item>
-                </v-hover>
-              </template>
-            </v-virtual-scroll>
-          </v-hover>
-        </template>
-        <template v-else>
-          <v-layout :style="'height: '+ (height) +'px'" wrap>
-            <v-flex/>
-            <v-flex align-self-center class="text-center mx-5">
-              <div>
-                <v-icon size="50">
-                  mdi-database-remove-outline
-                </v-icon>
-              </div>
-              <h4 class="text-overline">{{ $vuetify.lang.t('$vuetify.lang_49') }}</h4>
-            </v-flex>
-            <v-flex/>
-          </v-layout>
-        </template>
+    <!-- Start: list assets element -->
+    <template v-if="assets.length">
+      <template v-if="items.length">
+        <v-hover v-slot="{ hover }">
+          <v-virtual-scroll :class="hover ? '' : 'overflow-y-hidden'" :items="items" bench="0" item-height="50">
+            <template v-slot:default="{ item }">
+              <v-hover v-slot:default="{ hover }">
+                <v-list-item :color="$vuetify.theme.dark ? 'grey darken-3' : 'deep-purple lighten-5'" :key="item.id" :class="active(item.symbol) ? 'v-list-item--active ' + ($vuetify.theme.dark ? 'grey--text text--darken-3' : 'blue--text text--lighten-5') : ''" :to="'/assets/' + item.symbol + '/deposit'" dense>
+                  <v-list-item-avatar size="30">
+                    <v-img :src="$storages(['icon'], item.symbol)"/>
+                  </v-list-item-avatar>
+                  <v-list-item-content>
+                    <v-list-item-title><span :class="($vuetify.theme.dark ? 'white' : 'black') + '--text'">{{ item.symbol.toUpperCase() }}</span></v-list-item-title>
+                    <v-list-item-subtitle>{{ item.name }}</v-list-item-subtitle>
+                  </v-list-item-content>
+                  <v-list-item-action class="d-block text-right">
+                    <template v-if="hover">
+                      <small v-if="$decimal.truncate(item.balance)" class="teal--text">
+                        ≈ ${{ item.price ? $decimal.truncate($decimal.mul(item.balance, item.price)) : $decimal.truncate(item.balance) }}
+                      </small>
+                    </template>
+                    <template v-else>
+                      <small v-if="$decimal.truncate(item.balance)" class="teal--text">
+                        {{ $decimal.truncate(item.balance) }}
+                      </small>
+                    </template>
+                  </v-list-item-action>
+                </v-list-item>
+              </v-hover>
+            </template>
+          </v-virtual-scroll>
+        </v-hover>
       </template>
-      <template v-else-if="!overlay">
-        <v-layout wrap>
+      <template v-else>
+        <v-layout :style="'height: '+ (height) +'px'" wrap>
           <v-flex/>
           <v-flex align-self-center class="text-center mx-5">
             <div>
@@ -67,18 +51,32 @@
                 mdi-database-remove-outline
               </v-icon>
             </div>
-            <h4 class="text-overline">{{ $vuetify.lang.t('$vuetify.lang_78') }}</h4>
+            <h4 class="text-overline">{{ $vuetify.lang.t('$vuetify.lang_49') }}</h4>
           </v-flex>
           <v-flex/>
         </v-layout>
       </template>
-      <!-- End: list assets element -->
+    </template>
+    <template v-else-if="!overlay">
+      <v-layout wrap>
+        <v-flex/>
+        <v-flex align-self-center class="text-center mx-5">
+          <div>
+            <v-icon size="50">
+              mdi-database-remove-outline
+            </v-icon>
+          </div>
+          <h4 class="text-overline">{{ $vuetify.lang.t('$vuetify.lang_78') }}</h4>
+        </v-flex>
+        <v-flex/>
+      </v-layout>
+    </template>
+    <!-- End: list assets element -->
 
-      <v-overlay :color="$vuetify.theme.dark ? 'grey darken-4' : 'white'" :value="overlay" absolute opacity="0.8">
-        <v-progress-circular color="yellow darken-3" indeterminate size="50" />
-      </v-overlay>
+    <v-overlay :color="$vuetify.theme.dark ? 'grey darken-4' : 'white'" :value="overlay" absolute opacity="0.8">
+      <v-progress-circular color="yellow darken-3" indeterminate size="50" />
+    </v-overlay>
 
-    </v-component-inner>
   </v-card>
 </template>
 

@@ -67,8 +67,6 @@
       </v-data-table>
       <!-- End: data table -->
 
-      <v-divider />
-
       <!-- Start: pagination -->
       <v-container v-if="length > 1" class="max-width">
         <v-row justify="center">
@@ -83,15 +81,17 @@
 
     <!-- Start: no history -->
     <template v-else-if="!overlay">
-      <v-layout fill-height wrap>
-        <v-flex/>
-        <v-flex align-self-center class="text-center" md4 mx5 sm6 xl3>
-          <v-img class="ma-auto" width="250" src="/asset/3.png" />
-          <h2>{{ $vuetify.lang.t('$vuetify.lang_123') }}</h2>
-          {{ $vuetify.lang.t('$vuetify.lang_162') }}
-        </v-flex>
-        <v-flex/>
-      </v-layout>
+      <div class="mx-4 max-width">
+        <v-layout fill-height wrap>
+          <v-flex/>
+          <v-flex align-self-center class="text-center my-16" md4 mx5 sm6 xl3>
+            <v-img class="ma-auto" width="250" src="/asset/3.png" />
+            <h2>{{ $vuetify.lang.t('$vuetify.lang_123') }}</h2>
+            {{ $vuetify.lang.t('$vuetify.lang_162') }}
+          </v-flex>
+          <v-flex/>
+        </v-layout>
+      </div>
     </template>
     <!-- End: no history -->
 

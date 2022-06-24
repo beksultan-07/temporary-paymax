@@ -1,7 +1,7 @@
 <template>
   <v-layout class="bg-image" fill-height wrap>
     <v-flex/>
-    <v-flex align-self-center class="text-center relative" md4 mx5 sm6 xl3>
+    <v-flex align-self-center class="text-center relative my-16" md4 mx5 sm6 xl3>
       <v-switch
           v-model="sample"
           color="primary"

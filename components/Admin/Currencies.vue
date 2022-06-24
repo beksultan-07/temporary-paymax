@@ -1,10 +1,10 @@
 <template>
-  <v-component-inner>
+  <div>
 
     <template v-if="name === 'admin-currencies'">
 
       <!-- Start: header bar -->
-      <div class="ma-2">
+      <div class="pa-2">
         <v-row>
           <v-col cols="12" md="4">
             <v-btn color="black--text grey lighten-5 text-capitalize" elevation="0" large :to="'/admin/currencies/create/editor'">
@@ -119,8 +119,6 @@
           </v-card>
         </v-dialog>
 
-        <v-divider />
-
         <!-- Start: pagination -->
         <v-container v-if="length > 1" class="max-width">
           <v-row justify="center">
@@ -137,7 +135,7 @@
       <template v-else-if="!overlay">
         <v-layout fill-height wrap>
           <v-flex/>
-          <v-flex align-self-center class="text-center" md4 mx5 sm6 xl3>
+          <v-flex align-self-center class="text-center my-16" md4 mx5 sm6 xl3>
             <v-img class="ma-auto" width="250" src="/asset/3.png" />
             <template v-if="search">
               <h2>{{ $vuetify.lang.t('$vuetify.lang_210') }}</h2>
@@ -163,18 +161,14 @@
     <nuxt-child style="height: 100%" />
     <!-- End: child container -->
 
-  </v-component-inner>
+  </div>
 </template>
 
 <script>
   import Api from "/libs/api";
-  import Inner from "~/components/Common/Inner";
 
   export default {
     name: "v-component-currencies",
-    components: {
-      'v-component-inner': Inner
-    },
     data() {
       return {
         symbol: "",

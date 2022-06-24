@@ -4,7 +4,7 @@
     <!-- Start: analysis asset -->
     <template v-if="analysis">
 
-      <div class="pa-3 my-1">
+      <div class="pa-3">
         {{ $vuetify.lang.t('$vuetify.lang_158') }}
       </div>
 
@@ -39,8 +39,6 @@
       </v-data-table>
       <!-- End: data table -->
 
-      <v-divider />
-
       <!-- Start: pagination -->
       <v-container v-if="length > 1" class="max-width">
         <v-row justify="center">
@@ -58,7 +56,7 @@
     <template v-else-if="!overlay">
       <v-layout fill-height wrap>
         <v-flex/>
-        <v-flex align-self-center class="text-center" md4 mx5 sm6 xl3>
+        <v-flex align-self-center class="text-center my-16" md4 mx5 sm6 xl3>
           <v-img src="/asset/1.png" />
           {{ $vuetify.lang.t('$vuetify.lang_97') }}
         </v-flex>
