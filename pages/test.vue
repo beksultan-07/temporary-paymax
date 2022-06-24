@@ -1,19 +1,19 @@
 <template>
   <section class="pa-0" role="main">
 
-    <v-row class="ma-1" no-gutters>
+    <v-row class="ma-1">
 
       <!-- Start: assets list component -->
-      <v-col cols="12" md="3" sm="6">
-        <v-card class="ma-1 pa-3 fill-height" elevation="0">
+      <v-col class="pa-1" cols="12" md="3" sm="6">
+        <v-card class="pa-3 fill-height" elevation="0">
           test
         </v-card>
       </v-col>
       <!-- End: assets list component -->
 
       <!-- Start: child container -->
-      <v-col cols="12" md="9" sm="6">
-        <v-card class="ma-1 pa-3 fill-height" elevation="0" ref="infoBox">
+      <v-col class="pa-1" cols="12" md="9" sm="6">
+        <v-card class="pa-3 fill-height" elevation="0" ref="infoBox">
           Pro-Russian politician killed in occupied Kherson, state media says
           From CNN's Oleksandra Ochman
 

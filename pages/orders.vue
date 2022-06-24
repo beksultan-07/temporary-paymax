@@ -1,11 +1,11 @@
 <template>
   <section class="pa-0" role="main">
 
-    <v-row class="ma-1" no-gutters>
+    <v-row class="ma-1">
 
       <!-- Start: assets list component -->
-      <v-col class="mb-2" cols="12" md="3" sm="6">
-        <v-card class="ma-1 fill-height" elevation="0">
+      <v-col class="pa-1" cols="12" md="3" sm="6">
+        <v-card class="fill-height" elevation="0">
           <v-list dense>
             <v-list-item-group color="primary">
               <v-list-item v-for="(item, i) in navs" :class="item.status === $route.params.status ? 'v-list-item--active' : ''"  :key="i" :to="`/orders/${item.status}`" exact link>
@@ -23,7 +23,7 @@
       <!-- End: assets list component -->
 
       <!-- Start: child container -->
-      <v-col class="mb-2" cols="12" md="9" sm="6">
+      <v-col class="pa-1" cols="12" md="9" sm="6">
         <nuxt-child />
       </v-col>
       <!-- End: child container -->
@@ -34,13 +34,9 @@
 </template>
 
 <script>
-  import Inner from "~/components/Common/Inner";
 
   export default {
     auth: true,
-    components: {
-      'v-component-inner': Inner
-    },
     computed: {
 
       /**

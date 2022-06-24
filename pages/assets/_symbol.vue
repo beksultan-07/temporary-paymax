@@ -1,5 +1,5 @@
 <template>
-  <v-card class="ma-1 fill-height" elevation="0">
+  <v-card class="fill-height" elevation="0">
 
     <template v-if="symbol">
 

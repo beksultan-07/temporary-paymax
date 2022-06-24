@@ -1,5 +1,5 @@
 <template>
-  <v-card class="ma-1 fill-height" elevation="0">
+  <v-card class="fill-height" elevation="0">
 
     <!-- Start: search asset element -->
     <v-card-actions>
@@ -13,7 +13,7 @@
     <template v-if="assets.length">
       <template v-if="items.length">
         <v-hover v-slot="{ hover }">
-          <v-virtual-scroll :class="hover ? '' : 'overflow-y-hidden'" :items="items" bench="0" item-height="50">
+          <v-virtual-scroll :class="hover ? '' : 'overflow-y-hidden'" :items="items" bench="0" max-height="900" item-height="50">
             <template v-slot:default="{ item }">
               <v-hover v-slot:default="{ hover }">
                 <v-list-item :color="$vuetify.theme.dark ? 'grey darken-3' : 'deep-purple lighten-5'" :key="item.id" :class="active(item.symbol) ? 'v-list-item--active ' + ($vuetify.theme.dark ? 'grey--text text--darken-3' : 'blue--text text--lighten-5') : ''" :to="'/assets/' + item.symbol + '/deposit'" dense>
@@ -82,14 +82,10 @@
 
 <script>
 
-  import Inner from "../Common/Inner";
   import Api from "../../libs/api";
 
   export default {
     name: "v-component-assets",
-    components: {
-      'v-component-inner': Inner
-    },
     data() {
       return {
         overlay: true,

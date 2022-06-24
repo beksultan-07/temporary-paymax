@@ -4,8 +4,8 @@
     <v-row class="ma-1" no-gutters>
 
       <!-- Start: nav list component -->
-      <v-col class="mb-2" cols="12" md="3" sm="6">
-        <v-card class="ma-1 fill-height" elevation="0">
+      <v-col class="pa-1" cols="12" md="3" sm="6">
+        <v-card class="fill-height" elevation="0">
           <v-list dense>
             <v-list-item-group color="primary">
               <v-list-item v-for="(item, i) in navs" :class="item.to === $route.params.settings ? 'v-list-item--active' : ''"  :key="i" :to="`/admin/${item.to}`" exact link>
@@ -23,8 +23,8 @@
       <!-- End: nav list component -->
 
       <!-- Start: child container -->
-      <v-col class="mb-2" cols="12" md="9" sm="6">
-        <v-card class="ma-1 fill-height" elevation="0">
+      <v-col class="pa-1" cols="12" md="9" sm="6">
+        <v-card class="fill-height" elevation="0">
           <nuxt-child />
         </v-card>
       </v-col>
