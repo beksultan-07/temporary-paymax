@@ -67,6 +67,8 @@
       </v-data-table>
       <!-- End: data table -->
 
+      <v-divider v-if="count > limit" />
+
       <!-- Start: pagination -->
       <v-container v-if="length > 1" class="max-width">
         <v-row justify="center">

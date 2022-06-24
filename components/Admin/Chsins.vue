@@ -138,6 +138,8 @@
           </template>
         </v-data-table>
 
+        <v-divider v-if="count > limit" />
+
         <!-- Start: pagination -->
         <v-container v-if="length > 1" class="max-width">
           <v-row justify="center">
@@ -244,6 +246,7 @@
             text: this.$vuetify.lang.t('$vuetify.lang_188'),
             align: 'start',
             sortable: false,
+            divider: true,
             value: 'name'
           }, {
             text: this.$vuetify.lang.t('$vuetify.lang_219'),
@@ -269,6 +272,7 @@
             text: this.$vuetify.lang.t('$vuetify.lang_194'),
             align: 'start',
             sortable: false,
+            divider: true,
             value: 'edit'
           }, {
             text: this.$vuetify.lang.t('$vuetify.lang_222'),

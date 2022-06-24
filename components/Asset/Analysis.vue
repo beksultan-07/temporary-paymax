@@ -155,6 +155,7 @@
             width: '5%',
             align: 'start',
             sortable: false,
+            divider: true,
             value: 'icons'
           }, {
             text: this.$vuetify.lang.t('$vuetify.lang_52'),
