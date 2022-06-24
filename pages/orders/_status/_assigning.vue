@@ -3,7 +3,7 @@
     <template v-if="orders.length">
 
       <!-- Start: data table -->
-      <v-data-table :headers="headlines.top" :items="orders" :page.sync="page" item-key="id" :items-per-page="limit" hide-default-footer show-expand single-expand>
+      <v-data-table :class="count > limit ? 'none-radius ' : ''" :headers="headlines.top" :items="orders" :page.sync="page" item-key="id" :items-per-page="limit" hide-default-footer show-expand single-expand>
         <template v-slot:item.data-table-expand="{ item, expand, isExpanded }">
           <template v-if="isExpanded">
             <v-icon @click="getTransfers(item.id, item.assigning, expand(!isExpanded))">

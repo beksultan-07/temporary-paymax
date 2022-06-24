@@ -51,6 +51,19 @@
 .theme--dark.v-data-table .v-data-footer {
   border-top: thin solid rgba(96, 96, 96, 0.12) !important;
 }
+.v-data-table > .v-data-table__wrapper tbody tr:first-child:hover td:first-child {
+  border-top-left-radius: 0 !important;
+}
+.v-data-table > .v-data-table__wrapper tbody tr:first-child:hover td:last-child {
+  border-top-right-radius: 0 !important;
+}
+.v-data-table.none-radius > .v-data-table__wrapper tbody tr:last-child:hover td:first-child {
+  border-bottom-left-radius: 0 !important;
+}
+.v-data-table.none-radius > .v-data-table__wrapper tbody tr:last-child:hover td:last-child {
+  border-bottom-right-radius: 0 !important;
+}
+
 
 
 /* Sheet modify style */

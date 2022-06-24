@@ -11,7 +11,7 @@
       <v-divider />
 
       <!-- Start: data table -->
-      <v-data-table class="analysis" :headers="headlines" :items="analysis" :page.sync="page" item-key="id" :items-per-page="limit" hide-default-footer>
+      <v-data-table :class="(count > limit ? 'none-radius ' : '') + 'analysis'" :headers="headlines" :items="analysis" :page.sync="page" item-key="id" :items-per-page="limit" hide-default-footer>
         <template v-slot:item.icons="{ item }">
           <div class="icon">
             <v-img class="base" width="30" :src="$storages(['icon'], item.base_unit)"/>

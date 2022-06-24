@@ -1,5 +1,5 @@
 <template>
-  <div class="px-4 mt-4">
+  <div class="px-3 mt-3">
 
     <v-row align="center">
       <v-col cols="12" md="4">

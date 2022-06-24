@@ -3,7 +3,7 @@
     <template v-if="activities.length">
 
       <!-- Start: data table -->
-      <v-data-table :headers="headlines.top" :items="activities" :page.sync="page" item-key="id" :items-per-page="limit" hide-default-footer>
+      <v-data-table :class="count > limit ? 'none-radius' : ''" :headers="headlines.top" :items="activities" :page.sync="page" item-key="id" :items-per-page="limit" hide-default-footer>
         <template v-slot:item.os="{ item }">
           <v-icon>mdi-application-cog-outline</v-icon> <span class="text-capitalize">{{ item.os }}</span>
         </template>

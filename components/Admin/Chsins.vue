@@ -26,7 +26,7 @@
       <template v-if="chains.length">
 
         <!-- Start: data table -->
-        <v-data-table :headers="headlines" :items="chains" :page.sync="page" item-key="id" :items-per-page="limit" hide-default-footer show-expand single-expand>
+        <v-data-table :class="count > limit ? 'none-radius ' : ''" :headers="headlines" :items="chains" :page.sync="page" item-key="id" :items-per-page="limit" hide-default-footer show-expand single-expand>
           <template v-slot:item.data-table-expand="{ item, expand, isExpanded }">
             <template v-if="isExpanded">
               <v-icon @click="expand(!isExpanded)">
