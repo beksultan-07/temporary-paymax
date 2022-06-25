@@ -264,7 +264,6 @@
             text: this.$vuetify.lang.t('$vuetify.lang_187'),
             align: 'start',
             sortable: false,
-            divider: true,
             value: 'symbol'
           }, {
             text: this.$vuetify.lang.t('$vuetify.lang_188'),
@@ -300,7 +299,6 @@
             text: this.$vuetify.lang.t('$vuetify.lang_194'),
             align: 'start',
             sortable: false,
-            divider: true,
             value: 'edit'
           }, {
             text: this.$vuetify.lang.t('$vuetify.lang_222'),

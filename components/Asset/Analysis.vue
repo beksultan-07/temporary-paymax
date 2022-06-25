@@ -34,7 +34,7 @@
           </v-progress-circular>
         </template>
         <template v-slot:item.chart="{ item }">
-          <v-sparkline :value="item.chart" :smooth="16" :height="80" line-width="2" :padding="10" :gradient="['#396dc7', '#d3d4ef', '#dbe7e7']" />
+          <v-sparkline :value="item.chart.reverse()" :smooth="16" :height="80" line-width="2" :padding="10" :gradient="['#396dc7', '#d3d4ef', '#dbe7e7']" />
         </template>
       </v-data-table>
       <!-- End: data table -->
@@ -155,7 +155,6 @@
             width: '5%',
             align: 'start',
             sortable: false,
-            divider: true,
             value: 'icons'
           }, {
             text: this.$vuetify.lang.t('$vuetify.lang_52'),
@@ -174,7 +173,6 @@
             width: '20%',
             align: 'start',
             sortable: false,
-            divider: true,
             value: 'sell_ratio'
           }, {
             text: this.$vuetify.lang.t('$vuetify.lang_159'),

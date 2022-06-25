@@ -17,7 +17,7 @@
           </template>
         </template>
         <template v-slot:item.type="{ item }">
-          <template v-if="item.type === 'WITHDRAWS'">
+          <template v-if="item.tx_type === 'WITHDRAWS'">
             <div style="width: 120px;" :class="($vuetify.theme.dark ? 'grey darken-3' : 'red lighten-5 red--text') + ' pa-1 rounded-xl text-center'">
               <v-icon :color="item.status === 'PENDING' ? 'light-blue' : 'green'" size="15">
                 mdi-arrow-top-left
@@ -143,7 +143,7 @@
                     </v-list-item-title>
                   </v-item-group>
                 </v-list-item>
-                <v-list-item v-if="item.status === 'PENDING' && item.trx_type === 'WITHDRAWS'">
+                <v-list-item v-if="item.status === 'PENDING' && item.tx_type === 'WITHDRAWS'">
                   <v-btn color="white--text red text-capitalize" @click="cancelWithdraw(item.id)" large block elevation="0">{{ $vuetify.lang.t('$vuetify.lang_124') }}</v-btn>
                 </v-list-item>
               </v-list>
@@ -223,7 +223,7 @@
 
         this.$axios.$post(Api.exchange.getTransactions, {
           symbol: this.$route.params.symbol,
-          trx_type: this.type,
+          tx_type: this.type,
           limit: this.limit,
           page: this.page
         }).then((response) => {
