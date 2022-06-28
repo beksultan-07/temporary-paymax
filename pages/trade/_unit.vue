@@ -1,7 +1,7 @@
 <template>
   <v-card class="ma-1" elevation="0" height="500">
 
-    <template v-if="liquidity && status">
+    <template v-if="status">
 
       <!-- Start: trading view -->
       <v-app-bar class="toolbar-px-zero" color="transparent" flat height="50">
@@ -104,7 +104,7 @@
       </v-layout>
     </template>
 
-    <div v-show="liquidity && status" id="charting-library" class="pa-2 charting" style="height: 448px"></div>
+    <div v-show="status" id="charting-library" class="pa-2 charting" style="height: 448px"></div>
     <v-overlay :color="$vuetify.theme.dark ? 'grey darken-4' : 'white'" :value="overlay" absolute opacity="0.8">
       <v-progress-circular color="yellow darken-3" indeterminate size="50"/>
     </v-overlay>
@@ -123,8 +123,7 @@
         unit: undefined,
         overlay: true,
         graph_day: {},
-        liquidity: false,
-        status: 0
+        status: false
       }
     },
     head() {
@@ -154,10 +153,9 @@
 
         this.$axios.$post(Api.exchange.getPair, {base_unit: unit.split('-')[0], quote_unit: unit.split('-')[1]}).then((response) => {
 
-          this.liquidity = response.pairs[0].liquidity ?? false;
-          this.status = response.pairs[0].status ?? 0;
+          this.status = response.pairs[0].status ?? false;
 
-          if (this.status || this.liquidity) {
+          if (this.status) {
 
             /**
              * @type {IChartingLibraryWidget}
