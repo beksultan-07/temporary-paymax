@@ -130,7 +130,7 @@
           chains_ids: [],
           icon: false,
           fin_type: 0,
-          status: 0
+          status: false
         },
         image: "",
       }
