@@ -221,6 +221,12 @@
         data.assigning = data.assigning ?? 0;
 
         if (this.eyelet === data.assigning || this.eyelet === 2) {
+
+          // Если сообщение дублированною, то не добавляем в список ордеров.
+          if (this.orders.find((item) => item.id === data.id)) {
+            return
+          }
+
           this.orders.unshift(Object.assign({}, data));
 
           // Получаем текущий объем в ордерах.

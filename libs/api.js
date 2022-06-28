@@ -36,12 +36,13 @@ export default {
     getAnalysis: '/exchange/get-analysis'
   },
   admin: {
+    getDashboard: '/admin/get-dashboard',
     exchange: {
-      setCurrency: '/exchange/admin/set-currency',
-      getCurrency: '/exchange/admin/get-currency',
-      getCurrencies: '/exchange/admin/get-currencies',
-      getChains: '/exchange/admin/get-chains',
-      deleteCurrency: 'exchange/admin/delete-currency'
+      setCurrency: '/admin/exchange/set-currency',
+      getCurrency: '/admin/exchange/get-currency',
+      getCurrencies: '/admin/exchange/get-currencies',
+      getChains: '/admin/exchange/get-chains',
+      deleteCurrency: '/admin/exchange/delete-currency'
     },
     account: {
 

@@ -25,7 +25,12 @@
       <!-- Start: child container -->
       <v-col class="pa-1" cols="12" md="9" sm="6">
         <v-card class="fill-height" elevation="0">
-          <nuxt-child />
+          <template v-if="$route.name === 'admin'">
+            <v-component-dashboard />
+          </template>
+          <template v-else>
+            <nuxt-child />
+          </template>
         </v-card>
       </v-col>
       <!-- End: child container -->
@@ -36,10 +41,14 @@
 </template>
 
 <script>
+  import Dashboard from "../components/Admin/Dashboard";
 
   export default {
     auth: true,
     middleware: ['rules'],
+    components: {
+      'v-component-dashboard': Dashboard
+    },
     mounted() {
       this.rules();
     },
