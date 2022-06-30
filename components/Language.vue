@@ -40,6 +40,13 @@
     methods: {
       setLanguage(name) {
         this.$store.commit('localStorage/setLanguage', this.$vuetify.lang.current = name);
+
+        // Update locale trading view chart.
+        if (window.tvWidget !== undefined) {
+          window.tvWidget = new window.TradingView.widget(
+              Object.assign(window.tvWidget['_options'], { locale: name})
+          );
+        }
       }
     }
   }
