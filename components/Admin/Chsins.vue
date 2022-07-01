@@ -79,7 +79,7 @@
             </template>
           </template>
           <template v-slot:item.edit="{ item }">
-            <v-btn icon>
+            <v-btn :to="`/admin/chains/${item.id}/editor`" icon>
               <v-icon>
                 mdi-circle-edit-outline
               </v-icon>

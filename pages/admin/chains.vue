@@ -5,10 +5,6 @@
     <v-component-chains />
     <!-- End: chains component -->
 
-    <!-- Start: child container -->
-    <nuxt-child />
-    <!-- End: child container -->
-
   </div>
 </template>
 

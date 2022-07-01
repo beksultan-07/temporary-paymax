@@ -3,48 +3,23 @@
 
     <v-row align="center">
       <v-col cols="12" md="4">
-
-        <v-card height="80" outlined rounded="lg">
-
-          <!-- Start: icon crypto -->
-          <v-list>
-              <v-list-item>
-                <v-list-item-avatar>
-                  <v-avatar color="indigo">
-                    <template v-if="currency.icon">
-                      <v-img :src="image" />
-                    </template>
-                    <template v-else>
-                      <span class="white--text text-h5">{{ currency.symbol }}</span>
-                    </template>
-                  </v-avatar>
-                </v-list-item-avatar>
-                <v-list-item-content>
-                  <v-list-item-title>
-                    {{ currency.symbol ? currency.symbol.toUpperCase() : $vuetify.lang.t('$vuetify.lang_205') }}
-                  </v-list-item-title>
-                  <v-list-item-subtitle>
-                    {{ currency.name ? currency.name : $vuetify.lang.t('$vuetify.lang_206') }}
-                  </v-list-item-subtitle>
-                </v-list-item-content>
-              </v-list-item>
-          </v-list>
-          <!-- End: icon crypto -->
-
-        </v-card>
-
-      </v-col>
-      <v-col cols="12" md="4" align-self="center">
         <v-card height="80" outlined rounded="lg">
           <v-card-title class="mt-2">
-            {{ $vuetify.lang.t('$vuetify.lang_148') }} {{ currency.fees_trade }}%
+            1
           </v-card-title>
         </v-card>
       </v-col>
       <v-col cols="12" md="4" align-self="center">
         <v-card height="80" outlined rounded="lg">
           <v-card-title class="mt-2">
-            {{ $vuetify.lang.t('$vuetify.lang_149') }} {{ currency.fees_discount ? $decimal.truncate($decimal.sub(currency.fees_trade, currency.fees_discount)) : 0 }}%
+            2
+          </v-card-title>
+        </v-card>
+      </v-col>
+      <v-col cols="12" md="4" align-self="center">
+        <v-card height="80" outlined rounded="lg">
+          <v-card-title class="mt-2">
+            3
           </v-card-title>
         </v-card>
       </v-col>
@@ -52,46 +27,25 @@
 
     <v-divider class="my-4" />
 
-    <!-- Start: crypto info form -->
+    <!-- Start: chain info form -->
     <v-row>
       <v-col cols="12" md="4">
-        <v-text-field v-model="currency.name" color="primary" :label="$vuetify.lang.t('$vuetify.lang_188')" outlined></v-text-field>
-        <v-text-field v-model="currency.max_withdraw" color="primary" :label="$vuetify.lang.t('$vuetify.lang_198')" outlined></v-text-field>
-        <v-text-field v-model="currency.max_trade" color="primary" :label="$vuetify.lang.t('$vuetify.lang_199')" outlined></v-text-field>
-        <v-select v-model="currency.marker" :items="marker" :label="$vuetify.lang.t('$vuetify.lang_190')" outlined></v-select>
+        1
       </v-col>
       <v-col cols="12" md="4">
-        <v-text-field v-model="currency.symbol" color="primary" :label="$vuetify.lang.t('$vuetify.lang_187')" outlined></v-text-field>
-        <v-text-field v-model="currency.min_deposit" color="primary" :label="$vuetify.lang.t('$vuetify.lang_200')" outlined></v-text-field>
-        <v-text-field v-model="currency.fees_trade" color="primary" :label="$vuetify.lang.t('$vuetify.lang_201')" outlined></v-text-field>
-        <v-select v-model="currency.status" :items="status" item-text="name" item-value="value" :label="$vuetify.lang.t('$vuetify.lang_191')" outlined></v-select>
-        <v-select v-model="currency.fin_type" :items="type" item-text="name" item-value="value" :label="$vuetify.lang.t('$vuetify.lang_208')" outlined></v-select>
+        2
       </v-col>
       <v-col cols="12" md="4">
-        <v-text-field v-model="currency.min_withdraw" color="primary" :label="$vuetify.lang.t('$vuetify.lang_202')" outlined></v-text-field>
-        <v-text-field v-model="currency.min_trade" color="primary" :label="$vuetify.lang.t('$vuetify.lang_203')" outlined></v-text-field>
-        <v-text-field v-model="currency.fees_discount" color="primary" :label="$vuetify.lang.t('$vuetify.lang_207')" outlined></v-text-field>
-        <v-select v-model="currency.chains_ids" :items="chains" item-text="name" item-value="id" :label="$vuetify.lang.t('$vuetify.lang_179')" multiple outlined>
-          <template v-slot:selection="{ item, index }">
-            <v-chip v-if="index === 0">
-              <span>{{ item.name }}</span>
-            </v-chip>
-            <span v-if="index === 1" class="grey--text text-caption">
-              (+{{ currency.chains_ids.length - 1 }} others)
-            </span>
-          </template>
-        </v-select>
+        3
       </v-col>
     </v-row>
-    <!-- End: crypto info form -->
-
-    <v-file-input counter chips show-size truncate-length="34" outlined @change="onChange" />
+    <!-- End: chain info form -->
 
     <template v-if="$route.params.symbol === 'create'">
-      <v-btn v-if="image" block color="black--text yellow darken-1 text-capitalize" elevation="0" large @click="setCurrency">{{ $vuetify.lang.t('$vuetify.lang_195') }}</v-btn>
+      <v-btn block color="black--text yellow darken-1 text-capitalize" elevation="0" large @click="setChain">{{ $vuetify.lang.t('$vuetify.lang_195') }}</v-btn>
     </template>
     <template v-else>
-      <v-btn block color="white--text red darken-1 text-capitalize" elevation="0" large @click="setCurrency">{{ $vuetify.lang.t('$vuetify.lang_204') }}</v-btn>
+      <v-btn block color="white--text red darken-1 text-capitalize" elevation="0" large @click="setChain">{{ $vuetify.lang.t('$vuetify.lang_204') }}</v-btn>
     </template>
 
   </div>
@@ -103,60 +57,26 @@
   export default {
     data() {
       return {
-        chains: [],
-        status: [
-          { value: false, name: "Off"},
-          { value: true, name: "On"},
-        ],
-        type: [
-          { value: 0, name: "Crypto"},
-          { value: 1, name: "Fiat"},
-        ],
-        marker: [
-          true,
-          false
-        ],
-        currency: {
-          name: "",
-          symbol: "",
-          min_withdraw: 0.0001,
-          max_withdraw: 100,
-          min_deposit: 0.0100,
-          min_trade: 0.0100,
-          max_trade: 1000000,
-          fees_trade: 0.1500,
-          fees_discount: 0.0500,
-          marker: false,
-          chains_ids: [],
-          icon: false,
-          fin_type: 0,
-          status: false
-        },
-        image: "",
+        chains: {
+
+        }
       }
     },
     mounted() {
-      this.getCurrency();
-      this.getChains();
+      this.getChain();
     },
     methods: {
 
       /**
        *
        */
-      getCurrency() {
-        this.$axios.$post(Api.admin.exchange.getCurrency, {
-          symbol: (this.$route.params.symbol !== "create" ? this.$route.params.symbol : "")
+      getChain() {
+        this.$axios.$post(Api.admin.exchange.getChain, {
+          id: (this.$route.params.id !== "create" ? this.$route.params.id : "")
         }).then((response) => {
-          if (response.currencies) {
-            this.currency = Object.assign(this.currency, response.currencies[0]);
-            if (this.currency.fin_type) {
-              this.currency.fin_type = 1;
-            }
-            for (let i = 0; i < this.currency.chains_ids.length; i++) {
-              this.currency.chains_ids[i] = (this.currency.chains_ids[i]).toString()
-            }
-            this.image = this.$storages(['icon'], this.currency.symbol);
+          if (response.chains) {
+            this.chains = Object.assign(this.chains, response.chains[0]);
+            console.log(this.chains);
           }
         });
       },
@@ -164,55 +84,7 @@
       /**
        *
        */
-      setCurrency() {
-        if (this.currency.chains_ids === null) {
-          this.currency.chains_ids = []
-        }
-        this.$axios.$post(Api.admin.exchange.setCurrency, {
-          symbol: (this.$route.params.symbol !== "create" ? this.$route.params.symbol : ""),
-          image: this.image.split(',')[1],
-          currency: this.currency
-        }).then(() => {
-          return this.$router.push('/admin/currencies');
-        }).catch((error) => {
-          this.$snackbar.open({
-            content: `${error.response.data.code}: ${error.response.data.message}`,
-            color: 'red darken-2'
-          });
-        });
-      },
-
-      /**
-       *
-       */
-      getChains() {
-        this.$axios.$post(Api.admin.exchange.getChains).then((response) => {
-          this.chains = response.chains ?? [];
-        })
-      },
-
-      /**
-       * @param file
-       */
-      setImage(file) {
-        const reader = new FileReader();
-        reader.onload = e => {
-          this.image = e.target.result;
-          this.currency.icon = true;
-        };
-        reader.readAsDataURL(file);
-      },
-
-      /**
-       * @param file
-       */
-      onChange(file) {
-        if (!file) {
-          this.image = "";
-          return;
-        }
-        this.setImage(file);
-      }
+      setChain() {}
     }
   }
 </script>

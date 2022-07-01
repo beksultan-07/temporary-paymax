@@ -224,6 +224,7 @@
 
           // Если сообщение дублированною, то не добавляем в список ордеров.
           if (this.orders.find((item) => item.id === data.id)) {
+            console.log("Duplicate!...");
             return
           }
 

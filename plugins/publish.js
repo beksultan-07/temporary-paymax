@@ -10,14 +10,16 @@ export default ({ app }, inject) => {
     }),
     subscribe(topic, channels, error) {
       this.client.on('connect', () => {
-        this.client.subscribe(topic, {qos: 2}, (err) => {
+        this.client.subscribe(topic, {
+          qos: 0
+        }, (err) => {
           if(err) {
             error(`Error on topic subscribe: ${err}`);
           }
           this.client.on("message", (t, m, packet) => {
-            if (!packet.qos || !m.byteLength) {
-              return;
-            }
+            //if (!packet.qos || !m.byteLength) {
+            //  return;
+            //}
             if (topic === t) {
               let bytea = JSON.parse(m.toString());
               channels.map((channel) => {

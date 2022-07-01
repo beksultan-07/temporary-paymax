@@ -41,8 +41,9 @@ export default {
       setCurrency: '/admin/exchange/set-currency',
       getCurrency: '/admin/exchange/get-currency',
       getCurrencies: '/admin/exchange/get-currencies',
+      deleteCurrency: '/admin/exchange/delete-currency',
       getChains: '/admin/exchange/get-chains',
-      deleteCurrency: '/admin/exchange/delete-currency'
+      getChain: '/admin/exchange/get-chain'
     },
     account: {
 
