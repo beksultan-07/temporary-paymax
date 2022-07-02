@@ -235,60 +235,6 @@
       this.getQuery(this.unit);
 
       /**
-       * Отслеживаем события нового ордера.
-       * @return {callback}:
-       * @object {base_unit: string},
-       * @object {id: int},
-       * @object {assigning: string}
-       * @object {price: float},
-       * @object {quantity: float},
-       * @object {quote_unit: string},
-       * @object {create_at: int},
-       * @object {user_id: int},
-       * @object {value: float}
-       */
-      this.$publish.bind('order/create', (data) => {
-
-        if (!this.$auth.loggedIn) {
-          return false;
-        }
-
-        data.assigning = data.assigning ? 1 : 0;
-
-        if (
-
-          // Если сообщение дублированною, то не добавляем в список ордеров.
-          !this.orders.find((item) => item.id === data.id) &&
-
-          // Сверяем принадлежит ли запись к этому блоку или не принадлежат.
-          data.assigning === (this.assigning === 'sell' ? 1 : 0) &&
-
-          // Сверяем локальный штат пользователя
-          // это у нас пользовательский [id] с полученным из события пользовательским [user_id],
-          // если аргументы совпадают то это значит что ордер сработал частично или полностью.
-          data.user_id === Number(this.$auth.$state.user.id) &&
-
-          // Сверяем принадлежат ли новые события к данному активу,
-          // если аргументы совпадают то привязываем полученные данные из события к данному активу.
-          data.base_unit === this.query.split('-')[0] &&
-          data.quote_unit === this.query.split('-')[1]
-
-        ) {
-
-          // Добавляем новый ордер в массив.
-          this.orders.unshift(Object.assign({}, data));
-
-          // Обновляем данные об активе, в нашем случае нам нужно обновить текущий баланс актива.
-          this.getAsset(undefined);
-
-          // Озвучиваем действие звуковым сопровождением.
-          this.$single.play('create');
-
-        }
-
-      });
-
-      /**
        * Отслеживаем статус ордера.
        * @return {callback}:
        * @object {base_unit: string},
@@ -527,6 +473,19 @@
           quantity: this.quantity,
           // Рыночная цена монеты.
           price: this.price,
+        }).then((response) => {
+
+          response.orders[0].assigning = response.orders[0].assigning ? 1 : 0;
+
+          // Добавляем новый ордер в массив.
+          this.orders.unshift(Object.assign({}, response.orders[0]));
+
+          // Обновляем данные об активе, в нашем случае нам нужно обновить текущий баланс актива.
+          this.getAsset(undefined);
+
+          // Озвучиваем действие звуковым сопровождением.
+          this.$single.play('create');
+
         }).catch((error) => {
           this.$snackbar.open({content: `${error.response.data.code}: ${error.response.data.message}`, color: 'red darken-2'});
         });

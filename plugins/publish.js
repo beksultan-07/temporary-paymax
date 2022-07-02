@@ -20,7 +20,7 @@ export default ({ app }, inject) => {
       // Connect broker client.
       this.client.on('connect', () => {
         this.client.subscribe(topic, {
-          qos: 0
+          qos: 2
         }, (err) => {
           if(err) {
             error(`Error on topic subscribe: ${err}`);
@@ -36,7 +36,7 @@ export default ({ app }, inject) => {
 
       // Message broker client.
       this.client.on("message", (t, m, packet) => {
-        if (!m.byteLength) {
+        if (!packet.qos || !m.byteLength) {
           return;
         }
         if (topic === t) {
