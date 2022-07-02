@@ -11,7 +11,9 @@ export default ({ app }, inject) => {
 
   app.$publish = {
     client: mqtt.connect(process.env.BASE_BROKER || 'ws://localhost:15675/ws', {
-      clean: true
+      clean: true,
+      reschedulePings: false,
+      queueQoSZero: false
     }),
     subscribe(topic, channels, error) {
 
