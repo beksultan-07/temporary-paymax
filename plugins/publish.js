@@ -23,7 +23,7 @@ export default ({ app }, inject) => {
           if(err) {
             error(`Error on topic subscribe: ${err}`);
           }
-          console.log('Connect to a trading broker.')
+          console.log('Connect to a trading broker.');
         });
       });
 
@@ -49,7 +49,7 @@ export default ({ app }, inject) => {
     },
     unbind(channels) {
       channels.map((channel) => {
-        event.$off(channel)
+        event.$off(channel);
       });
     },
     bind(channel, callback) {
