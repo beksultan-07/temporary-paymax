@@ -1,18 +1,18 @@
 export default ({app}, inject) => {
   app.$platform = {
     list: [
-      {id: 0, type: 'crypto', name: 'BITCOIN', symbol: 'BTC'},
-      {id: 1, type: 'crypto', name: 'ETHEREUM', symbol: 'ETH'},
-      {id: 2, type: 'crypto', name: 'TRON', symbol: 'TRX'},
-      {id: 3, type: 'fiat', name: 'VISA', symbol: ['USD','EUR','RUB','UAH','JPY','AUD','GBP','KRW','CNY']},
-      {id: 4, type: 'fiat', name: 'MASTERCARD', symbol: ['USD','EUR','RUB','UAH','JPY','AUD','GBP','KRW','CNY']},
+      {id: 0, type: 'CRYPTO', name: 'BITCOIN', symbol: 'BTC'},
+      {id: 1, type: 'CRYPTO', name: 'ETHEREUM', symbol: 'ETH'},
+      {id: 2, type: 'CRYPTO', name: 'TRON', symbol: 'TRX'},
+      {id: 3, type: 'FIAT', name: 'VISA', symbol: 'MULTI CURRENCY'},
+      {id: 4, type: 'FIAT', name: 'MASTERCARD', symbol: 'MULTI CURRENCY'},
     ],
-    getId(name) {
+    get(name) {
       if (!name) {
         name = this.list[0].name;
       }
 
-      return this.list.find((item) => item.name === name).id
+      return this.list.find((item) => item.name === name)
     },
     getSymbol(name) {
       if (!name) {

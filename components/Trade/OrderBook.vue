@@ -223,10 +223,10 @@
         if (this.eyelet === data.assigning || this.eyelet === 2) {
 
           // Если сообщение дублированною, то не добавляем в список ордеров.
-          if (this.orders.find((item) => item.id === data.id)) {
-            console.log("Duplicate!...");
-            return
-          }
+          //if (this.orders.find((item) => item.id === data.id)) {
+          //  console.log("Duplicate!...");
+          //  return
+          //}
 
           this.orders.unshift(Object.assign({}, data));
 

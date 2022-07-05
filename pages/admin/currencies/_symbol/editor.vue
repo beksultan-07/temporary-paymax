@@ -58,14 +58,14 @@
         <v-text-field v-model="currency.name" color="primary" :label="$vuetify.lang.t('$vuetify.lang_188')" outlined></v-text-field>
         <v-text-field v-model="currency.max_withdraw" color="primary" :label="$vuetify.lang.t('$vuetify.lang_198')" outlined></v-text-field>
         <v-text-field v-model="currency.max_trade" color="primary" :label="$vuetify.lang.t('$vuetify.lang_199')" outlined></v-text-field>
-        <v-select v-model="currency.marker" :items="marker" :label="$vuetify.lang.t('$vuetify.lang_190')" outlined></v-select>
+        <v-select v-model="currency.marker" :items="marker" item-text="name" item-value="value" :label="$vuetify.lang.t('$vuetify.lang_190')" outlined></v-select>
       </v-col>
       <v-col cols="12" md="4">
         <v-text-field v-model="currency.symbol" color="primary" :label="$vuetify.lang.t('$vuetify.lang_187')" outlined></v-text-field>
         <v-text-field v-model="currency.min_deposit" color="primary" :label="$vuetify.lang.t('$vuetify.lang_200')" outlined></v-text-field>
         <v-text-field v-model="currency.fees_trade" color="primary" :label="$vuetify.lang.t('$vuetify.lang_201')" outlined></v-text-field>
         <v-select v-model="currency.status" :items="status" item-text="name" item-value="value" :label="$vuetify.lang.t('$vuetify.lang_191')" outlined></v-select>
-        <v-select v-model="currency.fin_type" :items="type" item-text="name" item-value="value" :label="$vuetify.lang.t('$vuetify.lang_208')" outlined></v-select>
+        <v-select v-model="currency.fin_type" :items="type" item-text="name" item-value="name" :label="$vuetify.lang.t('$vuetify.lang_208')" outlined></v-select>
       </v-col>
       <v-col cols="12" md="4">
         <v-text-field v-model="currency.min_withdraw" color="primary" :label="$vuetify.lang.t('$vuetify.lang_202')" outlined></v-text-field>
@@ -105,16 +105,16 @@
       return {
         chains: [],
         status: [
-          { value: false, name: "Off"},
-          { value: true, name: "On"},
+          { value: false, name: "OFF" },
+          { value: true, name: "ON" },
         ],
         type: [
-          { value: 0, name: "Crypto"},
-          { value: 1, name: "Fiat"},
+          { name: "CRYPTO" },
+          { name: "FIAT" },
         ],
         marker: [
-          true,
-          false
+          { value: false, name: "OFF" },
+          { value: true, name: "ON" },
         ],
         currency: {
           name: "",
@@ -129,7 +129,7 @@
           marker: false,
           chains_ids: [],
           icon: false,
-          fin_type: 0,
+          fin_type: "CRYPTO",
           status: false
         },
         image: "",
@@ -150,9 +150,6 @@
         }).then((response) => {
           if (response.currencies) {
             this.currency = Object.assign(this.currency, response.currencies[0]);
-            if (this.currency.fin_type) {
-              this.currency.fin_type = 1;
-            }
             for (let i = 0; i < this.currency.chains_ids.length; i++) {
               this.currency.chains_ids[i] = (this.currency.chains_ids[i]).toString()
             }

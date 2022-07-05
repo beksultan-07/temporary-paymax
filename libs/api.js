@@ -28,8 +28,8 @@ export default {
     getAssets: '/exchange/get-assets',
     setAsset: '/exchange/set-asset',
     setOrder: '/exchange/set-order',
-    setWithdraw: '/exchange/set-withdraw',
     cancelOrder: '/exchange/cancel-order',
+    setWithdraw: '/exchange/set-withdraw',
     cancelWithdraw: '/exchange/cancel-withdraw',
     getTransactions: '/exchange/get-transactions',
     getTransfers: '/exchange/get-transfers',
@@ -43,7 +43,9 @@ export default {
       getCurrencies: '/admin/exchange/get-currencies',
       deleteCurrency: '/admin/exchange/delete-currency',
       getChains: '/admin/exchange/get-chains',
-      getChain: '/admin/exchange/get-chain'
+      getChain: '/admin/exchange/get-chain',
+      setChain: '/admin/exchange/set-chain',
+      deleteChain: '/admin/exchange/delete-chain'
     },
     account: {
 

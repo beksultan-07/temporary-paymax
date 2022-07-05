@@ -63,7 +63,7 @@
     data() {
       return {
         channels: ['order/create', 'order/status', 'order/cancel'],
-        interval: [0, 60, 300, 600, 900, 1800, 3600, 14400, 86400, 604800],
+        interval: [0, 300, 600, 900, 1800, 3600, 14400, 86400, 604800],
         admin: false
       }
     },
@@ -83,6 +83,9 @@
           this.admin = roles.length > 0;
         }
       }
+    },
+    beforeDestroy() {
+      this.$publish.unsubscribe('exchange');
     }
   }
 </script>

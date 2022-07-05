@@ -11,27 +11,21 @@ export default ({ app }, inject) => {
 
   app.$publish = {
     client: mqtt.connect(process.env.BASE_BROKER || 'ws://localhost:15675/ws', {
-      clean: true,
-      reschedulePings: false,
-      queueQoSZero: false
+      clean: true
     }),
     subscribe(topic, channels, error) {
 
       // Connect broker client.
       this.client.on('connect', () => {
-        this.client.subscribe(topic, {
-          qos: 2
-        }, (err) => {
-          if(err) {
-            error(`Error on topic subscribe: ${err}`);
-          }
-          console.log('Connect to a trading broker.');
-        });
+        console.log("Connect to a trading broker.");
       });
-
-      // Reconnect broker client.
-      this.client.on("reconnect", () => {
-        console.log('Reconnecting to a trading broker.');
+      this.client.subscribe(topic, {
+        qos: 2
+      }, (err) => {
+        if (err) {
+          error(`Error on topic subscribe: ${err}`);
+        }
+        console.log("Subscribe topic:", topic);
       });
 
       // Message broker client.
@@ -48,6 +42,25 @@ export default ({ app }, inject) => {
           });
         }
       });
+
+      // Reconnect broker client.
+      this.client.on("reconnect", (e) => {
+        console.log("Reconnecting to a trading broker.", e);
+      });
+
+      this.client.on("disconnect", (e) => {
+        console.log("Disconnect to a trading broker.", e);
+      });
+    },
+    unsubscribe(topic) {
+      this.client.unsubscribe(topic, {qos: 2}, (err) => {
+        if (err) {
+          console.log(err);
+        }
+
+        this.client.removeAllListeners("message");
+      });
+      console.log("Unsubscribe topic:", topic);
     },
     unbind(channels) {
       channels.map((channel) => {

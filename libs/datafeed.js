@@ -17,7 +17,7 @@ export default class Datafeed {
    */
   onReady(cb) {
     setTimeout(() => cb({
-      supported_resolutions: ['1', '5', '10', '15', '30', '1h', '4h', '1D', '1W']
+      supported_resolutions: ['5', '10', '15', '30', '1h', '4h', '1D', '1W']
     }), 0)
   }
 
@@ -200,7 +200,6 @@ export default class Datafeed {
    */
   interval(resolution) {
     const interval = {
-      '1': 60,      // 1 minutes
       '5': 300,     // 5 minutes
       '10': 600,    // 10 minutes
       '15': 900,    // 15 minutes
@@ -211,11 +210,19 @@ export default class Datafeed {
       '1W': 604800  // 1 week
     };
 
+    if (resolution === '60') {
+      return 3600
+    }
+
+    if (resolution === '240') {
+      return 14400
+    }
+
     if (interval[resolution]) {
       return interval[resolution]
     }
 
-    return interval[1]
+    return interval[2]
   }
 
   /**
