@@ -16,21 +16,6 @@ export default ({ app }, inject) => {
     connect: true,
     subscribe(topic, channels, error) {
 
-      // Message broker.
-      const message = (t, m, packet) => {
-        if (!packet.qos || !m.byteLength) {
-          return;
-        }
-        if (topic === t) {
-          let bytea = JSON.parse(m.toString());
-          channels.map((channel) => {
-            if (channel === bytea.channel) {
-              event.$emit(channel, JSON.parse(bytea.data));
-            }
-          });
-        }
-      };
-
       // Connect broker client.
       if (this.connect) {
         this.client.on('connect', () => {
@@ -48,7 +33,19 @@ export default ({ app }, inject) => {
       });
 
       // Message broker client.
-      this.client.on("message", message);
+      this.client.on("message", (t, m, packet) => {
+        if (!packet.qos || !m.byteLength) {
+          return;
+        }
+        if (topic === t) {
+          let bytea = JSON.parse(m.toString());
+          channels.map((channel) => {
+            if (channel === bytea.channel) {
+              event.$emit(channel, JSON.parse(bytea.data));
+            }
+          });
+        }
+      });
     },
     unsubscribe(topic) {
       this.client.unsubscribe(topic, {qos: 2}, (err) => {
