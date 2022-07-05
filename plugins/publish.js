@@ -44,8 +44,8 @@ export default ({ app }, inject) => {
       });
 
       // Reconnect broker client.
-      this.client.on("reconnect", (e) => {
-        console.log("Reconnecting to a trading broker.", e);
+      this.client.on("reconnect", () => {
+        console.log("Reconnecting to a trading broker.");
       });
 
       this.client.on("disconnect", (e) => {
@@ -58,7 +58,9 @@ export default ({ app }, inject) => {
           console.log(err);
         }
 
-        this.client.removeAllListeners("message");
+        ["connect", "reconnect", "disconnect", "message"].map((event) => {
+          this.client.removeAllListeners(event);
+        })
       });
       console.log("Unsubscribe topic:", topic);
     },
