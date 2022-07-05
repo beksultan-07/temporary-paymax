@@ -13,23 +13,11 @@ export default ({ app }, inject) => {
     client: mqtt.connect(process.env.BASE_BROKER || 'ws://localhost:15675/ws', {
       clean: true
     }),
+    connect: true,
     subscribe(topic, channels, error) {
 
-      // Connect broker client.
-      this.client.on('connect', () => {
-        console.log("Connect to a trading broker.");
-      });
-      this.client.subscribe(topic, {
-        qos: 2
-      }, (err) => {
-        if (err) {
-          error(`Error on topic subscribe: ${err}`);
-        }
-        console.log("Subscribe topic:", topic);
-      });
-
-      // Message broker client.
-      this.client.on("message", (t, m, packet) => {
+      // Message broker.
+      const message = (t, m, packet) => {
         if (!packet.qos || !m.byteLength) {
           return;
         }
@@ -41,26 +29,33 @@ export default ({ app }, inject) => {
             }
           });
         }
+      };
+
+      // Connect broker client.
+      if (this.connect) {
+        this.client.on('connect', () => {
+          this.connect = false;
+        });
+        console.log("Connect to a trading broker.");
+      }
+
+      // Subscribe to topic.
+      this.client.subscribe(topic, {qos: 2}, (err) => {
+        if (err) {
+          error(`Error on topic subscribe: ${err}`);
+        }
+        console.log("Subscribe topic:", topic);
       });
 
-      // Reconnect broker client.
-      this.client.on("reconnect", () => {
-        console.log("Reconnecting to a trading broker.");
-      });
-
-      this.client.on("disconnect", (e) => {
-        console.log("Disconnect to a trading broker.", e);
-      });
+      // Message broker client.
+      this.client.on("message", message);
     },
     unsubscribe(topic) {
       this.client.unsubscribe(topic, {qos: 2}, (err) => {
         if (err) {
           console.log(err);
         }
-
-        ["connect", "reconnect", "disconnect", "message"].map((event) => {
-          this.client.removeAllListeners(event);
-        })
+        this.client.removeAllListeners("message");
       });
       console.log("Unsubscribe topic:", topic);
     },
@@ -73,7 +68,6 @@ export default ({ app }, inject) => {
       if (typeof callback !== "function") {
         return false
       }
-
       event.$on(channel, callback);
     }
   };
