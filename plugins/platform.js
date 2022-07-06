@@ -26,7 +26,7 @@ export default ({app}, inject) => {
     },
     getType(type) {
       return this.list.filter((item) => item.type === type)
-    },
+    }
   };
   inject('platform', app.$platform);
 };

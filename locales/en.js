@@ -227,7 +227,7 @@ export default {
   lang_227: "Rpc user",
   lang_228: "Rpc password",
   lang_229: "This network is limited in some parameters, this network is centralized and configured according to the documentation of the payment system.",
-  lang_230: "Debit account/address",
+  lang_230: "Withdrawal account/address",
   lang_231: "Enter the name of the chain/network to receive or send payments in this field.",
   lang_232: "If the chain/network has a fixed withdrawal fee, then be sure to fill in this field, but if this chain/network has a floating fee, then enter the default is 0.",
   lang_233: "Be careful when choosing platforms for this chain/network, incorrect assignment of platforms may result in asset withdrawal/deposit errors.",

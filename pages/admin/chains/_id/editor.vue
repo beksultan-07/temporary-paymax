@@ -14,7 +14,7 @@
         <v-text-field v-model="chain.confirmation" color="primary" :label="$vuetify.lang.t('$vuetify.lang_153')" outlined></v-text-field>
         <v-text-field v-model="chain.time_withdraw" color="primary" :label="$vuetify.lang.t('$vuetify.lang_225')" outlined></v-text-field>
         <v-text-field v-model="chain.rpc_user" color="orange" :label="$vuetify.lang.t('$vuetify.lang_227')" outlined></v-text-field>
-        <v-text-field v-model="chain.debit_point" :label="$vuetify.lang.t('$vuetify.lang_230')" outlined></v-text-field>
+        <v-text-field v-model="chain.address" :label="$vuetify.lang.t('$vuetify.lang_230')" outlined></v-text-field>
       </v-col>
       <v-col cols="12" md="4">
         <v-text-field v-model="chain.fees_withdraw" color="primary" :label="$vuetify.lang.t('$vuetify.lang_221')" outlined></v-text-field>
@@ -129,7 +129,7 @@
           rpc_user: "",
           rpc_password: "",
           explorer_link: "",
-          debit_point: "",
+          address: "",
           network: 0,
           confirmation: 0,
           time_withdraw: 10,
