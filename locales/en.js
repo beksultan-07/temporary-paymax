@@ -249,7 +249,7 @@ export default {
   lang_249: "Currencies status",
   lang_250: "Chains/Network status",
   lang_251: "Accounts status",
-  lang_252: "",
+  lang_252: "Your account and assets have been blocked, please contact technical support for any questions",
   lang_253: "",
   lang_254: "",
   lang_255: "",

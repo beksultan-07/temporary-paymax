@@ -32,6 +32,13 @@
     auth: true,
     components: {
       'v-component-assets': Assets
+    },
+    async asyncData({ $auth, $vuetify, error }) {
+      if(!$auth.$state.user.status) {
+        error({
+          message: $vuetify.lang.t('$vuetify.lang_252')
+        });
+      }
     }
   }
 </script>
