@@ -1,48 +1,35 @@
 <template>
-  <v-card class="fill-height" elevation="0">
+  <div>
 
-    <template v-if="symbol">
+    <!-- Start: tabs bar -->
+    <v-tabs v-model="eyelet" color="primary" show-arrows>
+      <v-tab :to="'/assets/' + symbol + '/deposit'" class="text-capitalize">{{ $vuetify.lang.t('$vuetify.lang_91') }}</v-tab>
+      <v-tab :to="'/assets/' + symbol + '/withdraw'" class="text-capitalize">{{ $vuetify.lang.t('$vuetify.lang_92') }}</v-tab>
+      <v-tab :to="'/assets/' + symbol + '/history'" class="text-capitalize">{{ $vuetify.lang.t('$vuetify.lang_93') }}</v-tab>
+      <v-tab :to="'/assets/' + symbol + '/fees'" class="text-capitalize">{{ $vuetify.lang.t('$vuetify.lang_151') }}</v-tab>
+    </v-tabs>
+    <!-- End: tabs bar -->
 
-      <!-- Start: tabs bar -->
-      <v-tabs v-model="eyelet" color="primary" show-arrows>
-        <v-tab :to="'/assets/' + symbol + '/deposit'" class="text-capitalize">{{ $vuetify.lang.t('$vuetify.lang_91') }}</v-tab>
-        <v-tab :to="'/assets/' + symbol + '/withdraw'" class="text-capitalize">{{ $vuetify.lang.t('$vuetify.lang_92') }}</v-tab>
-        <v-tab :to="'/assets/' + symbol + '/history'" class="text-capitalize">{{ $vuetify.lang.t('$vuetify.lang_93') }}</v-tab>
-        <v-tab :to="'/assets/' + symbol + '/fees'" class="text-capitalize">{{ $vuetify.lang.t('$vuetify.lang_151') }}</v-tab>
-      </v-tabs>
-      <!-- End: tabs bar -->
+    <v-divider />
 
-      <v-divider />
+    <!-- Start: header bar -->
+    <v-component-header :asset="asset" :symbol="symbol" />
+    <!-- End: header bar -->
 
-      <!-- Start: header bar -->
-      <v-component-header :asset="asset" :symbol="symbol" />
-      <!-- End: header bar -->
+    <!-- Start: child container -->
+    <nuxt-child />
+    <!-- End: child container -->
 
-      <!-- Start: child container -->
-      <nuxt-child />
-      <!-- End: child container -->
-
-    </template>
-
-    <!-- Start: analysis asset -->
-    <template v-else>
-      <v-component-analysis />
-    </template>
-    <!-- End: select asset -->
-
-  </v-card>
+  </div>
 </template>
 
 <script>
-
   import Header from "../../components/Asset/Header";
-  import Analysis from "../../components/Asset/Analysis";
   import Api from "../../libs/api";
 
   export default {
     components: {
       'v-component-header': Header,
-      'v-component-analysis': Analysis
     },
     data() {
       return {

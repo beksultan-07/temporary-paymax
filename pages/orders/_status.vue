@@ -1,5 +1,5 @@
 <template>
-  <v-card class="fill-height" elevation="0">
+  <div>
 
     <!-- Start: tabs bar -->
     <v-tabs color="primary">
@@ -15,7 +15,7 @@
     <nuxt-child />
     <!-- End: child container -->
 
-  </v-card>
+  </div>
 </template>
 
 <script>

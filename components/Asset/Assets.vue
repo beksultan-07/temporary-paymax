@@ -1,5 +1,5 @@
 <template>
-  <v-card class="fill-height" elevation="0">
+  <div>
 
     <!-- Start: search asset element -->
     <v-card-actions>
@@ -77,7 +77,7 @@
       <v-progress-circular color="yellow darken-3" indeterminate size="50" />
     </v-overlay>
 
-  </v-card>
+  </div>
 </template>
 
 <script>

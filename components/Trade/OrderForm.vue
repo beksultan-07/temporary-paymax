@@ -235,6 +235,20 @@
       this.getQuery(this.unit);
 
       /**
+       * Брать цену с ордер листа.
+       */
+      this.$nuxt.$on('price:update', (price) => {
+
+        if (!this.$auth.loggedIn) {
+          return false;
+        }
+        this.price = price;
+
+        // Обновляем целевую политику в форме.
+        this.setPrice();
+      });
+
+      /**
        * Отслеживаем статус ордера.
        * @return {callback}:
        * @object {base_unit: string},

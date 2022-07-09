@@ -108,7 +108,9 @@
         }).then((response) => {
           this.analysis = response.analysis ?? [];
           this.analysis.map((item) => {
-            item.chart.reverse()
+            if(item.chart) {
+              item.chart.reverse()
+            }
           });
           this.count = response.count ?? 0;
           this.length = Math.ceil(this.count/this.limit);

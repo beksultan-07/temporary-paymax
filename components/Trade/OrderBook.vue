@@ -48,7 +48,7 @@
       <v-virtual-scroll @mouseover="hover = true" @mouseleave="hover = false" :class="hover ? '' : 'overflow-y-hidden'" bench="0" :items="orders" height="393" item-height="30">
         <template v-slot:default="{ item }">
           <v-component-shift-item :width="Number($decimal.div($decimal.mul(item.value, 100), item.quantity).toFixed(0))" :assigning="item.assigning ? 1 : 0" :key="item.id">
-            <v-row no-gutters>
+            <v-row style="cursor: pointer;" @click="addPriceToForm($decimal.truncate(item.price))" no-gutters>
               <v-col cols="4">
                 <span :class="(item.assigning ? 'red' : 'teal') + '--text'">{{ $decimal.truncate(item.price) }}</span>
               </v-col>
@@ -316,6 +316,13 @@
         }).then((response) => {
           this.volume = response.volume ?? 0;
         });
+      },
+
+      /**
+       * @param price
+       */
+      addPriceToForm(price) {
+        this.$nuxt.$emit("price:update", price)
       }
     },
     computed: {

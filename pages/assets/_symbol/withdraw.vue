@@ -63,7 +63,7 @@
                             <v-stepper-step color="yellow darken-1" editable :complete="next > 1" step="1">
                               {{ $vuetify.lang.t('$vuetify.lang_152') }}
                             </v-stepper-step>
-                            <v-divider></v-divider>
+                            <v-divider />
                             <v-stepper-step color="yellow darken-1" :complete="next > 2" step="2">
                               {{ $vuetify.lang.t('$vuetify.lang_153') }}
                             </v-stepper-step>

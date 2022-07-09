@@ -24,7 +24,9 @@
 
       <!-- Start: child container -->
       <v-col class="pa-1" cols="12" md="9" sm="6">
-        <nuxt-child />
+        <v-card class="fill-height" elevation="0">
+          <nuxt-child />
+        </v-card>
       </v-col>
       <!-- End: child container -->
 

@@ -3,140 +3,190 @@
 
     <!-- Start: dashboard info -->
     <v-row align="center">
-      <v-col v-if="dashboard.accounts" cols="12" md="3">
-        <v-card outlined rounded="lg">
-          <v-card-title>
-            Accounts status
+      <v-col cols="12" md="3">
+        <v-card height="150" outlined rounded="lg">
+          <v-card-title class="font-size-18px">
+            <v-icon>mdi-account-circle-outline</v-icon>&nbsp;{{ $vuetify.lang.t('$vuetify.lang_251') }}
           </v-card-title>
           <v-divider />
-          <v-card-text>
-            <v-layout fill-height wrap>
-              <v-flex class="text-center">
-                <h2>{{ dashboard.accounts.disable ? dashboard.accounts.disable : 0 }}</h2>
+          <v-card-text class="text-center">
+            <v-row align="center">
+              <v-col cols="12" md="6">
+                <h2>{{ dashboard.accounts ? (dashboard.accounts.disable ? dashboard.accounts.disable : 0) : 0 }}</h2>
                 <small class="red--text">Disable</small>
-              </v-flex>
+              </v-col>
               <v-divider vertical />
-              <v-flex class="text-center">
-                <h2>{{ dashboard.accounts.enable ? dashboard.accounts.enable : 0 }}</h2>
+              <v-col cols="12" md="6">
+                <h2>{{ dashboard.accounts ? (dashboard.accounts.enable ? dashboard.accounts.enable : 0) : 0 }}</h2>
                 <small class="teal--text">Enable</small>
-              </v-flex>
-            </v-layout>
+              </v-col>
+            </v-row>
           </v-card-text>
         </v-card>
       </v-col>
 
-      <v-col v-if="dashboard.chains" cols="12" md="3">
-        <v-card outlined rounded="lg">
-          <v-card-title>
-            Chains status
+      <v-col cols="12" md="3">
+        <v-card height="150" outlined rounded="lg">
+          <v-card-title class="font-size-18px">
+            <v-icon>mdi-upload-network-outline</v-icon>&nbsp;{{ $vuetify.lang.t('$vuetify.lang_250') }}
           </v-card-title>
           <v-divider />
-          <v-card-text>
-            <v-layout fill-height wrap>
-              <v-flex class="text-center">
-                <h2>{{ dashboard.chains.disable ? dashboard.chains.disable : 0 }}</h2>
+          <v-card-text class="text-center">
+            <v-row align="center">
+              <v-col cols="12" md="6">
+                <h2>{{ dashboard.chains ? (dashboard.chains.disable ? dashboard.chains.disable : 0) : 0 }}</h2>
                 <small class="red--text">Disable</small>
-              </v-flex>
+              </v-col>
               <v-divider vertical />
-              <v-flex class="text-center">
-                <h2>{{ dashboard.chains.enable ? dashboard.chains.enable : 0 }}</h2>
+              <v-col cols="12" md="6">
+                <h2>{{ dashboard.chains ? (dashboard.chains.enable ? dashboard.chains.enable : 0) : 0 }}</h2>
                 <small class="teal--text">Enable</small>
-              </v-flex>
-            </v-layout>
+              </v-col>
+            </v-row>
           </v-card-text>
         </v-card>
       </v-col>
 
-      <v-col v-if="dashboard.currencies" cols="12" md="3">
-        <v-card outlined rounded="lg">
-          <v-card-title>
-            Currencies status
+      <v-col cols="12" md="3">
+        <v-card height="150" outlined rounded="lg">
+          <v-card-title class="font-size-18px">
+            <v-icon>mdi-priority-high</v-icon>&nbsp;{{ $vuetify.lang.t('$vuetify.lang_249') }}
           </v-card-title>
           <v-divider />
-          <v-card-text>
-            <v-layout fill-height wrap>
-              <v-flex class="text-center">
-                <h2>{{ dashboard.currencies.disable ? dashboard.currencies.disable : 0 }}</h2>
+          <v-card-text class="text-center">
+            <v-row align="center">
+              <v-col cols="12" md="6">
+                <h2>{{ dashboard.currencies ? (dashboard.currencies.disable ? dashboard.currencies.disable : 0) : 0 }}</h2>
                 <small class="red--text">Disable</small>
-              </v-flex>
+              </v-col>
               <v-divider vertical />
-              <v-flex class="text-center">
-                <h2>{{ dashboard.currencies.enable ? dashboard.currencies.enable : 0 }}</h2>
+              <v-col cols="12" md="6">
+                <h2>{{ dashboard.currencies ? (dashboard.currencies.enable ? dashboard.currencies.enable : 0) : 0 }}</h2>
                 <small class="teal--text">Enable</small>
-              </v-flex>
-            </v-layout>
+              </v-col>
+            </v-row>
           </v-card-text>
         </v-card>
       </v-col>
 
-      <v-col v-if="dashboard.pairs" cols="12" md="3">
-        <v-card outlined rounded="lg">
-          <v-card-title>
-            Pairs status
+      <v-col cols="12" md="3">
+        <v-card height="150" outlined rounded="lg">
+          <v-card-title class="font-size-18px">
+            <v-icon>mdi-arrange-send-to-back</v-icon>&nbsp;{{ $vuetify.lang.t('$vuetify.lang_248') }}
           </v-card-title>
           <v-divider />
-          <v-card-text>
-            <v-layout fill-height wrap>
-              <v-flex class="text-center">
-                <h2>{{ dashboard.pairs.disable ? dashboard.pairs.disable : 0 }}</h2>
+          <v-card-text class="text-center">
+            <v-row align="center">
+              <v-col cols="12" md="6">
+                <h2>{{ dashboard.pairs ? (dashboard.pairs.disable ? dashboard.pairs.disable : 0) : 0 }}</h2>
                 <small class="red--text">Disable</small>
-              </v-flex>
+              </v-col>
               <v-divider vertical />
-              <v-flex class="text-center">
-                <h2>{{ dashboard.pairs.enable ? dashboard.pairs.enable : 0 }}</h2>
+              <v-col cols="12" md="6">
+                <h2>{{ dashboard.pairs ? (dashboard.pairs.enable ? dashboard.pairs.enable : 0) : 0 }}</h2>
                 <small class="teal--text">Enable</small>
-              </v-flex>
-            </v-layout>
+              </v-col>
+            </v-row>
           </v-card-text>
         </v-card>
       </v-col>
 
-      <v-col v-if="dashboard.transactions" cols="12" md="6">
-        <v-card outlined rounded="lg">
-          <v-card-title>
-            Transactions stats
+      <v-col cols="12" md="4">
+        <v-card height="150" outlined rounded="lg">
+          <v-card-title class="font-size-18px">
+            <v-icon>mdi-transfer</v-icon>&nbsp;{{ $vuetify.lang.t('$vuetify.lang_247') }}
           </v-card-title>
           <v-divider />
-          <v-card-text>
-            <v-layout fill-height wrap>
-              <v-flex class="text-center">
-                <h2>{{ dashboard.transactions.filled ? dashboard.transactions.filled : 0 }}</h2>
+          <v-card-text class="text-center">
+            <v-row align="center">
+              <v-col cols="12" md="6">
+                <h2>{{ dashboard.transactions ? (dashboard.transactions.filled ? dashboard.transactions.filled : 0) : 0 }}</h2>
                 <small class="red--text">Filled</small>
-              </v-flex>
+              </v-col>
               <v-divider vertical />
-              <v-flex class="text-center">
-                <h2>{{ dashboard.transactions.pending ? dashboard.transactions.pending : 0 }}</h2>
+              <v-col cols="12" md="6">
+                <h2>{{ dashboard.transactions ? (dashboard.transactions.pending ? dashboard.transactions.pending : 0) : 0 }}</h2>
                 <small class="teal--text">Pending</small>
-              </v-flex>
-            </v-layout>
+              </v-col>
+            </v-row>
           </v-card-text>
         </v-card>
       </v-col>
 
-      <v-col v-if="dashboard.orders" cols="12" md="6">
-        <v-card outlined rounded="lg">
-          <v-card-title>
-            Orders pending stats
+      <v-col cols="12" md="4">
+        <v-card height="150" outlined rounded="lg">
+          <v-card-title class="font-size-18px">
+            <v-icon>mdi-radar</v-icon>&nbsp;{{ $vuetify.lang.t('$vuetify.lang_246') }}
           </v-card-title>
           <v-divider />
-          <v-card-text>
-            <v-layout fill-height wrap>
-              <v-flex class="text-center">
-                <h2>{{ dashboard.orders.buy ? dashboard.orders.buy : 0 }}</h2>
+          <v-card-text class="text-center">
+            <v-row align="center">
+              <v-col cols="12" md="6">
+                <h2>{{ dashboard.orders ? (dashboard.orders.buy ? dashboard.orders.buy : 0) : 0 }}</h2>
                 <small class="teal--text">Buy</small>
-              </v-flex>
+              </v-col>
               <v-divider vertical />
-              <v-flex class="text-center">
-                <h2>{{ dashboard.orders.sell ? dashboard.orders.sell : 0 }}</h2>
+              <v-col cols="12" md="6">
+                <h2>{{ dashboard.orders ? (dashboard.orders.sell ? dashboard.orders.sell : 0) : 0 }}</h2>
                 <small class="red--text">Sell</small>
-              </v-flex>
-            </v-layout>
+              </v-col>
+            </v-row>
+          </v-card-text>
+        </v-card>
+      </v-col>
+
+      <v-col cols="12" md="4">
+        <v-card height="150" outlined rounded="lg">
+          <v-card-title class="font-size-18px">
+            <v-icon>mdi-safe-square-outline</v-icon>&nbsp;{{ $vuetify.lang.t('$vuetify.lang_245') }}
+          </v-card-title>
+          <v-divider />
+          <v-card-text class="text-center">
+            <h3 class="my-3">{{ $decimal.truncate(value) }} USD</h3>
           </v-card-text>
         </v-card>
       </v-col>
 
     </v-row>
     <!-- End: dashboard info -->
+
+    <v-divider class="my-5" />
+
+    <v-row align="center">
+      <v-col v-for="(item, i) in dashboard.reserves" :key="i" cols="12" md="3">
+        <v-card outlined rounded="lg">
+          <v-card-text class="text-center">
+            <v-row align="center">
+              <v-col cols="12" md="6">
+                <v-avatar size="50">
+                  <v-img :src="$storages(['icon'], item.symbol)" />
+                </v-avatar>
+              </v-col>
+              <v-divider vertical />
+              <v-col cols="12" md="6">
+                <div><b>{{ (item.symbol).toUpperCase() }}</b></div>
+                <v-divider class="my-2" />
+                <div>
+                  <small>
+                    <v-tooltip top>
+                      <template v-slot:activator="{ on, attrs }">
+                        <span v-bind="attrs" v-on="on">{{ item.value ? $decimal.truncate(item.value) : 0 }}</span>
+                      </template>
+                      <span>Резерв</span>
+                    </v-tooltip> / <v-tooltip top>
+                      <template v-slot:activator="{ on, attrs }">
+                        <span v-bind="attrs" v-on="on">{{ item.value_charged ? $decimal.truncate(item.value_charged) : 0 }}</span>
+                      </template>
+                      <span>{{ $vuetify.lang.t('$vuetify.lang_245') }}</span>
+                    </v-tooltip>
+                  </small>
+                </div>
+              </v-col>
+            </v-row>
+          </v-card-text>
+        </v-card>
+      </v-col>
+    </v-row>
 
   </div>
 </template>
@@ -149,6 +199,7 @@
     data() {
       return {
         dashboard: {},
+        value: 0
       }
     },
     mounted() {
@@ -156,78 +207,16 @@
     },
     methods: {
       getDashboard() {
-
-        /**
-         * {
-         *     "dashboard": {
-         *         "account": {
-         *             "enable": 3
-         *         },
-         *         "chain": {
-         *             "disable": 1,
-         *             "enable": 3
-         *         },
-         *         "currency": {
-         *             "disable": 3,
-         *             "enable": 8
-         *         },
-         *         "pair": {
-         *             "disable": 3,
-         *             "enable": 12
-         *         },
-         *         "transaction": {
-         *             "pending": 1
-         *         },
-         *         "order": {
-         *             "buy": 58,
-         *             "sell": 81
-         *         },
-         *         "reserves": [
-         *             {
-         *                 "symbol": "link"
-         *             },
-         *             {
-         *                 "symbol": "btc"
-         *             },
-         *             {
-         *                 "symbol": "omg"
-         *             },
-         *             {
-         *                 "symbol": "trx"
-         *             },
-         *             {
-         *                 "symbol": "gbp"
-         *             },
-         *             {
-         *                 "symbol": "aave"
-         *             },
-         *             {
-         *                 "symbol": "bnb"
-         *             },
-         *             {
-         *                 "symbol": "usdt",
-         *                 "value": 1500,
-         *                 "charged": 1.2208006949999586
-         *             },
-         *             {
-         *                 "symbol": "eth",
-         *                 "value": 1,
-         *                 "charged": 1.9430811422568
-         *             },
-         *             {
-         *                 "symbol": "eur"
-         *             },
-         *             {
-         *                 "symbol": "uah"
-         *             }
-         *         ]
-         *     }
-         * }
-         */
-
         this.$axios.$post(Api.admin.getDashboard).then((response) => {
-          console.log(response.dashboard);
-          this.dashboard = response.dashboard
+          this.dashboard = response.dashboard;
+          this.dashboard.reserves.map((item) => {
+            if (item.symbol === "usdt") {
+              item.value_charged_convert = item.value_charged;
+            }
+            if (item.value_charged_convert) {
+              this.value += item.value_charged_convert;
+            }
+          })
         });
       }
     }
@@ -235,5 +224,9 @@
 </script>
 
 <style scoped>
+
+  .font-size-18px {
+    font-size: 18px;
+  }
 
 </style>

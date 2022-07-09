@@ -74,6 +74,18 @@
 }
 
 
+/* Step modify style */
+.theme--light .step-header {
+  box-shadow: 0 0 0 !important;
+  border-bottom: 1px solid #ECF2F6FF !important;
+}
+
+.theme--dark .step-header {
+  box-shadow: 0 0 0 !important;
+  border-bottom: 1px solid #2a2a2a !important;
+}
+
+
 /* Divider modify style */
 .theme--light.v-divider {
   border-color: rgba(236, 242, 246, 1);
