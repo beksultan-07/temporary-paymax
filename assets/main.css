@@ -67,10 +67,10 @@
 
 /* Sheet modify style */
 .theme--light.v-sheet--outlined {
-  border: thin solid rgba(236, 242, 246, 1);
+  border: thin solid rgba(236, 242, 246, 1) !important;
 }
 .theme--dark.v-sheet--outlined {
-  border: thin solid rgba(42, 42, 42, 1);
+  border: thin solid rgba(42, 42, 42, 1) !important;
 }
 
 
@@ -88,10 +88,10 @@
 
 /* Divider modify style */
 .theme--light.v-divider {
-  border-color: rgba(236, 242, 246, 1);
+  border-color: rgba(236, 242, 246, 1) !important;
 }
 .theme--dark.v-divider {
-  border-color: rgba(42, 42, 42, 1);
+  border-color: rgba(42, 42, 42, 1) !important;
 }
 
 

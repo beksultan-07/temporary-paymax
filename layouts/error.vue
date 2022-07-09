@@ -23,19 +23,19 @@
 
 <script>
 
-  export default {
-    layout: 'mono',
-    props: {
-      error: {
-        type: Object,
-        default: null
-      }
-    },
-    head () {
-      return {
-        title: this.error.statusCode === 404 ? this.$vuetify.lang.t('$vuetify.lang_70') : this.$vuetify.lang.t('$vuetify.lang_71')
-      }
+export default {
+  layout: 'mono',
+  props: {
+    error: {
+      type: Object,
+      default: null
+    }
+  },
+  head () {
+    return {
+      title: this.error.statusCode === 404 ? this.$vuetify.lang.t('$vuetify.lang_70') : this.$vuetify.lang.t('$vuetify.lang_71')
     }
   }
+}
 
 </script>
