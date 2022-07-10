@@ -146,7 +146,7 @@
               item.quote_unit === data.graph[0].quote_unit
 
             ) {
-              item.ratio = data.graph[0].close - data.graph[1].close;
+              item.ratio = ((data.graph[0].close - data.graph[1].close) / data.graph[1].close) * 100;
               item.price = data.graph[0].close;
               return item;
             }
