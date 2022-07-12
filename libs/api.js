@@ -1,5 +1,6 @@
 export default {
   index: {
+    getStatistic: '/index/get-statistic',
     getCurrencies: '/index/get-currencies',
     getPairs: '/index/get-pairs'
   },
@@ -36,7 +37,6 @@ export default {
     getAnalysis: '/exchange/get-analysis'
   },
   admin: {
-    getDashboard: '/admin/get-dashboard',
     exchange: {
       setCurrency: '/admin/exchange/set-currency',
       getCurrency: '/admin/exchange/get-currency',
@@ -45,7 +45,12 @@ export default {
       getChains: '/admin/exchange/get-chains',
       getChain: '/admin/exchange/get-chain',
       setChain: '/admin/exchange/set-chain',
-      deleteChain: '/admin/exchange/delete-chain'
+      deleteChain: '/admin/exchange/delete-chain',
+      getPairs: '/admin/exchange/get-pairs',
+      getPair: '/admin/exchange/get-pair',
+      setPair: '/admin/exchange/set-pair',
+      deletePair: '/admin/exchange/delete-pair',
+      getMarketPrice: '/admin/exchange/get-market-price',
     },
     account: {
 

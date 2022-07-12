@@ -66,7 +66,7 @@
             icon: "mdi-alpha-o-circle-outline",
             to: 'orders'
           }, {
-            title: this.$vuetify.lang.t('$vuetify.lang_184'),
+            title: this.$vuetify.lang.t('$vuetify.lang_83'),
             icon: "mdi-alpha-l-circle-outline",
             to: 'listing'
           }, {

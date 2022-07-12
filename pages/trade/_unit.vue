@@ -1,7 +1,7 @@
 <template>
   <v-card class="ma-1" elevation="0" height="500">
 
-    <template v-if="status">
+    <template v-if="status && count >= 30">
 
       <!-- Start: trading view -->
       <v-app-bar class="toolbar-px-zero" color="transparent" flat height="50">
@@ -9,7 +9,7 @@
           <v-slide-item>
             <ul class="header-line">
               <li>{{ unit.toUpperCase() }}</li>
-              <li v-if="graph_day.last">
+              <li v-if="header.last">
                 <small :class="priceConcurrency + '--text'">
                   <v-icon v-if="priceConcurrency === 'red'" :class="priceConcurrency + '--text'" small>
                     mdi-call-received
@@ -31,8 +31,8 @@
           <v-slide-item>
             <ul class="header-line">
               <li><small>{{ $vuetify.lang.t('$vuetify.lang_66') }}</small></li>
-              <li v-if="graph_day.last">
-                <small :class="changeColor">{{ change24h }}</small>
+              <li v-if="header.last">
+                <small :class="changeColor">{{ change24h }} {{ ratio24h }}%</small>
               </li>
             </ul>
           </v-slide-item>
@@ -42,7 +42,7 @@
           <v-slide-item>
             <ul class="header-line">
               <li><small>{{ $vuetify.lang.t('$vuetify.lang_67') }}</small></li>
-              <li v-if="graph_day.last">
+              <li v-if="header.last">
                 <small class="grey--text">{{ $decimal.format(maxPrice24h) }}</small>
               </li>
             </ul>
@@ -53,7 +53,7 @@
           <v-slide-item>
             <ul class="header-line">
               <li><small>{{ $vuetify.lang.t('$vuetify.lang_68') }}</small></li>
-              <li v-if="graph_day.last">
+              <li v-if="header.last">
                 <small class="grey--text">{{ $decimal.format(minPrice24h) }}</small>
               </li>
             </ul>
@@ -64,7 +64,7 @@
           <v-slide-item>
             <ul class="header-line">
               <li><small>{{ $vuetify.lang.t('$vuetify.lang_69') }}({{ unit.split('-')[0].toUpperCase() }})</small></li>
-              <li v-if="graph_day.last">
+              <li v-if="header.last">
                 <small class="grey--text">{{ $decimal.format(volume24h) }}</small>
               </li>
             </ul>
@@ -75,7 +75,7 @@
           <v-slide-item>
             <ul class="header-line">
               <li><small>{{ $vuetify.lang.t('$vuetify.lang_69') }}({{ unit.split('-')[1].toUpperCase() }})</small></li>
-              <li v-if="graph_day.last">
+              <li v-if="header.last">
                 <small class="grey--text">{{ $decimal.format($decimal.mul(volume24h, minPrice24h)) }}</small>
               </li>
             </ul>
@@ -91,20 +91,26 @@
       <v-layout class="bg-image" fill-height wrap>
         <v-flex/>
         <v-flex align-self-center class="text-center grey--text" md4 mx5 sm6 xl3>
-          <div>
-            <v-icon color="grey">
-              mdi-alert-circle-outline
-            </v-icon>
-          </div>
-          <div>
-            {{ $vuetify.lang.t('$vuetify.lang_213') }}
-          </div>
+          <template v-if="status && count <= 30">
+            {{ $decimal.format(( count / 30 ) * 100) }} %
+            <v-progress-linear :value="( count / 30 ) * 100" color="yellow darken-3" />
+          </template>
+          <template v-else>
+            <div>
+              <v-icon color="grey">
+                mdi-alert-circle-outline
+              </v-icon>
+            </div>
+            <div>
+              {{ $vuetify.lang.t('$vuetify.lang_213') }}
+            </div>
+          </template>
         </v-flex>
         <v-flex/>
       </v-layout>
     </template>
 
-    <div v-show="status" id="charting-library" class="pa-2 charting" style="height: 448px"></div>
+    <div v-show="status && count >= 30" id="charting-library" class="pa-2 charting" style="height: 448px"></div>
     <v-overlay :color="$vuetify.theme.dark ? 'grey darken-4' : 'white'" :value="overlay" absolute opacity="0.8">
       <v-progress-circular color="yellow darken-3" indeterminate size="50"/>
     </v-overlay>
@@ -122,7 +128,7 @@
       return {
         unit: undefined,
         overlay: true,
-        graph_day: {},
+        header: {},
         status: false
       }
     },
@@ -154,7 +160,6 @@
         this.$axios.$post(Api.exchange.getPair, {base_unit: unit.split('-')[0], quote_unit: unit.split('-')[1]}).then((response) => {
 
           this.status = response.pairs[0].status ?? false;
-
           if (this.status) {
 
             /**
@@ -198,9 +203,19 @@
       /**
        * @returns {number|*}
        */
+      count() {
+        if (this.header.count) {
+          return this.header.count;
+        }
+        return 0;
+      },
+
+      /**
+       * @returns {number|*}
+       */
       priceLast() {
-        if (this.graph_day.last) {
-          return this.graph_day.last;
+        if (this.header.last) {
+          return this.header.last;
         }
         return 0;
       },
@@ -209,8 +224,8 @@
        * @returns {number|*}
        */
       priceFirst() {
-        if (this.graph_day.first) {
-          return this.graph_day.first;
+        if (this.header.first) {
+          return this.header.first;
         }
         return 0;
       },
@@ -219,8 +234,8 @@
        * @returns {number|*}
        */
       pricePrevious() {
-        if (this.graph_day.previous) {
-          return this.graph_day.previous;
+        if (this.header.previous) {
+          return this.header.previous;
         }
         return 0;
       },
@@ -244,8 +259,8 @@
        * @returns {*}
        */
       volume24h() {
-        if (this.graph_day.volume) {
-          return this.graph_day.volume;
+        if (this.header.volume) {
+          return this.header.volume;
         }
         return 0;
       },
@@ -254,14 +269,14 @@
        * @returns {number}
        */
       maxPrice24h() {
-        return this.graph_day.high;
+        return this.header.high;
       },
 
       /**
        * @returns {number}
        */
       minPrice24h() {
-        return this.graph_day.low;
+        return this.header.low;
       },
 
       /**
@@ -269,6 +284,17 @@
        */
       change24h() {
         let ratio = this.$decimal.sub(this.priceLast, this.priceFirst);
+        if (Math.sign(ratio) === -1) {
+          return (ratio).toFixed(2)
+        }
+        return `+${(ratio).toFixed(2)}`
+      },
+
+      /**
+       * @returns {string}
+       */
+      ratio24h() {
+        let ratio = (this.$decimal.sub(this.priceLast, this.priceFirst) / this.priceFirst) * 100;
         if (Math.sign(ratio) === -1) {
           return (ratio).toFixed(2)
         }

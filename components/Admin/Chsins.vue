@@ -271,6 +271,7 @@
           id: id
         }).then(() => {
           this.chains.splice(this.chains.map((o) => o.id).indexOf(id), 1);
+          this.count -= 1;
           this.dialog = false;
         });
       },

@@ -103,7 +103,7 @@ export default class Datafeed {
         bars.push(Object.assign({}, item));
       }
 
-      this.$self.graph_day = response.graph_day;
+      this.$self.header = response.graph_stats;
       onHistoryCallback(bars.length ? bars : [], {noData: !bars.length});
     });
 
@@ -123,7 +123,7 @@ export default class Datafeed {
        */
       this.$self.$publish.bind('trade/graph:' + query.resolution, (data) => {
         if (data.graph !== undefined && symbol[0].toLowerCase() === data.graph[0].base_unit && symbol[1].toLowerCase() === data.graph[0].quote_unit) {
-          this.$self.graph_day = data.graph_day;
+          this.$self.header = data.graph_stats;
           this.record(data.graph[0]);
         }
       });

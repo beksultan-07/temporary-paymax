@@ -12,12 +12,12 @@
           <v-card-text class="text-center">
             <v-row align="center">
               <v-col cols="12" md="6">
-                <h2>{{ dashboard.accounts ? (dashboard.accounts.disable ? dashboard.accounts.disable : 0) : 0 }}</h2>
+                <h2>{{ statistic.accounts ? (statistic.accounts.disable ? statistic.accounts.disable : 0) : 0 }}</h2>
                 <small class="red--text">Disable</small>
               </v-col>
               <v-divider vertical />
               <v-col cols="12" md="6">
-                <h2>{{ dashboard.accounts ? (dashboard.accounts.enable ? dashboard.accounts.enable : 0) : 0 }}</h2>
+                <h2>{{ statistic.accounts ? (statistic.accounts.enable ? statistic.accounts.enable : 0) : 0 }}</h2>
                 <small class="teal--text">Enable</small>
               </v-col>
             </v-row>
@@ -34,12 +34,12 @@
           <v-card-text class="text-center">
             <v-row align="center">
               <v-col cols="12" md="6">
-                <h2>{{ dashboard.chains ? (dashboard.chains.disable ? dashboard.chains.disable : 0) : 0 }}</h2>
+                <h2>{{ statistic.chains ? (statistic.chains.disable ? statistic.chains.disable : 0) : 0 }}</h2>
                 <small class="red--text">Disable</small>
               </v-col>
               <v-divider vertical />
               <v-col cols="12" md="6">
-                <h2>{{ dashboard.chains ? (dashboard.chains.enable ? dashboard.chains.enable : 0) : 0 }}</h2>
+                <h2>{{ statistic.chains ? (statistic.chains.enable ? statistic.chains.enable : 0) : 0 }}</h2>
                 <small class="teal--text">Enable</small>
               </v-col>
             </v-row>
@@ -56,12 +56,12 @@
           <v-card-text class="text-center">
             <v-row align="center">
               <v-col cols="12" md="6">
-                <h2>{{ dashboard.currencies ? (dashboard.currencies.disable ? dashboard.currencies.disable : 0) : 0 }}</h2>
+                <h2>{{ statistic.currencies ? (statistic.currencies.disable ? statistic.currencies.disable : 0) : 0 }}</h2>
                 <small class="red--text">Disable</small>
               </v-col>
               <v-divider vertical />
               <v-col cols="12" md="6">
-                <h2>{{ dashboard.currencies ? (dashboard.currencies.enable ? dashboard.currencies.enable : 0) : 0 }}</h2>
+                <h2>{{ statistic.currencies ? (statistic.currencies.enable ? statistic.currencies.enable : 0) : 0 }}</h2>
                 <small class="teal--text">Enable</small>
               </v-col>
             </v-row>
@@ -78,12 +78,12 @@
           <v-card-text class="text-center">
             <v-row align="center">
               <v-col cols="12" md="6">
-                <h2>{{ dashboard.pairs ? (dashboard.pairs.disable ? dashboard.pairs.disable : 0) : 0 }}</h2>
+                <h2>{{ statistic.pairs ? (statistic.pairs.disable ? statistic.pairs.disable : 0) : 0 }}</h2>
                 <small class="red--text">Disable</small>
               </v-col>
               <v-divider vertical />
               <v-col cols="12" md="6">
-                <h2>{{ dashboard.pairs ? (dashboard.pairs.enable ? dashboard.pairs.enable : 0) : 0 }}</h2>
+                <h2>{{ statistic.pairs ? (statistic.pairs.enable ? statistic.pairs.enable : 0) : 0 }}</h2>
                 <small class="teal--text">Enable</small>
               </v-col>
             </v-row>
@@ -100,12 +100,12 @@
           <v-card-text class="text-center">
             <v-row align="center">
               <v-col cols="12" md="6">
-                <h2>{{ dashboard.transactions ? (dashboard.transactions.filled ? dashboard.transactions.filled : 0) : 0 }}</h2>
+                <h2>{{ statistic.transactions ? (statistic.transactions.filled ? statistic.transactions.filled : 0) : 0 }}</h2>
                 <small class="red--text">Filled</small>
               </v-col>
               <v-divider vertical />
               <v-col cols="12" md="6">
-                <h2>{{ dashboard.transactions ? (dashboard.transactions.pending ? dashboard.transactions.pending : 0) : 0 }}</h2>
+                <h2>{{ statistic.transactions ? (statistic.transactions.pending ? statistic.transactions.pending : 0) : 0 }}</h2>
                 <small class="teal--text">Pending</small>
               </v-col>
             </v-row>
@@ -122,12 +122,12 @@
           <v-card-text class="text-center">
             <v-row align="center">
               <v-col cols="12" md="6">
-                <h2>{{ dashboard.orders ? (dashboard.orders.buy ? dashboard.orders.buy : 0) : 0 }}</h2>
+                <h2>{{ statistic.orders ? (statistic.orders.buy ? statistic.orders.buy : 0) : 0 }}</h2>
                 <small class="teal--text">Buy</small>
               </v-col>
               <v-divider vertical />
               <v-col cols="12" md="6">
-                <h2>{{ dashboard.orders ? (dashboard.orders.sell ? dashboard.orders.sell : 0) : 0 }}</h2>
+                <h2>{{ statistic.orders ? (statistic.orders.sell ? statistic.orders.sell : 0) : 0 }}</h2>
                 <small class="red--text">Sell</small>
               </v-col>
             </v-row>
@@ -153,7 +153,7 @@
     <v-divider class="my-5" />
 
     <v-row align="center">
-      <v-col v-for="(item, i) in dashboard.reserves" :key="i" cols="12" md="3">
+      <v-col v-for="(item, i) in statistic.reserves" :key="i" cols="12" md="3">
         <v-card outlined rounded="lg">
           <v-card-text class="text-center">
             <v-row align="center">
@@ -198,7 +198,7 @@
     name: "v-component-dashboard",
     data() {
       return {
-        dashboard: {},
+        statistic: {},
         value: 0
       }
     },
@@ -207,9 +207,9 @@
     },
     methods: {
       getDashboard() {
-        this.$axios.$post(Api.admin.getDashboard).then((response) => {
-          this.dashboard = response.dashboard;
-          this.dashboard.reserves.map((item) => {
+        this.$axios.$get(Api.index.getStatistic).then((response) => {
+          this.statistic = response.statistic;
+          this.statistic.reserves.map((item) => {
             if (item.symbol === "usdt") {
               item.value_charged_convert = item.value_charged;
             }
