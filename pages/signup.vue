@@ -92,8 +92,6 @@
 
 <script>
 
-  import Api from '../libs/api';
-
   export default {
     layout: 'mono',
     middleware: 'auth',

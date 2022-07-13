@@ -1,5 +1,3 @@
-import Api from "@/libs/api";
-
 export default ({ app }, inject) => {
   app.$datafeed = {
 
@@ -181,7 +179,7 @@ export default ({ app }, inject) => {
      * @param callback
      */
     getServerTime(callback) {
-      app.$axios.$get(Api.timestamp).then((response) => {
+      app.$axios.$get(app.$api.timestamp).then((response) => {
         callback(Math.floor(response / 1000));
       });
     },
@@ -235,7 +233,7 @@ export default ({ app }, inject) => {
      * @private
      */
     send(params) {
-      let request = Api.exchange.getGraph;
+      let request = app.$api.exchange.getGraph;
       if (params) {
         for (let i = 0; i < Object.keys(params).length; ++i) {
           let key = Object.keys(params)[i];

@@ -1,5 +1,4 @@
 import colors from 'vuetify/es5/util/colors';
-import Api from './libs/api';
 
 export default {
 
@@ -86,10 +85,10 @@ export default {
           tokenRequired: true
         },
         endpoints: {
-          login: { url: Api.auth.actionSignin, method: 'post' },
-          refresh: { url: Api.auth.getRefresh, method: 'post' },
-          logout: { url: Api.auth.setLogout, method: 'post', data: 'refresh'},
-          user: { url: Api.account.getUser, method: 'get' }
+          login: { url: '/auth/action-signin', method: 'post' },
+          refresh: { url: '/auth/get-refresh', method: 'post' },
+          logout: { url: '/auth/set-logout', method: 'post', data: 'refresh'},
+          user: { url: '/account/get-user', method: 'get' }
         },
         autoLogout: true
       }

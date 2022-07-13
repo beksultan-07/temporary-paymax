@@ -108,7 +108,6 @@
 
 <script>
 
-  import Api from "../libs/api";
   import {Hooper, Navigation as HooperNavigation, Slide} from 'hooper';
   import 'hooper/dist/hooper.css';
 

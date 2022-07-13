@@ -40,7 +40,6 @@
 </template>
 
 <script>
-  import Api from "/libs/api";
 
   export default {
     data() {

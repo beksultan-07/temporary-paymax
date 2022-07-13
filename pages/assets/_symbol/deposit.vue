@@ -147,7 +147,6 @@
 <script>
 
   import Qrcode from "../../../components/Qrcode";
-  import Api from "../../../libs/api";
 
   export default {
     components: {

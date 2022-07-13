@@ -52,7 +52,6 @@
 
 <script>
 
-  import Api from "../libs/api";
   import Market from '../components/Trade/Market';
   import OrderForm from '../components/Trade/OrderForm';
   import OrderBook from "../components/Trade/OrderBook";
