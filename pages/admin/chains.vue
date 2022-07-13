@@ -1,11 +1,9 @@
 <template>
-  <div>
 
-    <!-- Start: chains component -->
-    <v-component-chains />
-    <!-- End: chains component -->
+  <!-- Start: chains component -->
+  <v-component-chains />
+  <!-- End: chains component -->
 
-  </div>
 </template>
 
 <script>

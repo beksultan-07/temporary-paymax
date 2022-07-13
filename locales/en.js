@@ -257,7 +257,7 @@ export default {
   lang_257: "Enable pair disable, default is OFF.",
   lang_258: "Update pair information",
   lang_259: "Clear chart history",
-  lang_260: "",
+  lang_260: "Decimal",
   lang_261: "",
   lang_262: "",
   lang_263: "",

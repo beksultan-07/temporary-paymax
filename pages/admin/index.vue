@@ -1,5 +1,9 @@
 <template>
+
+  <!-- Start: dashboard component -->
   <v-component-dashboard />
+  <!-- End: dashboard component -->
+
 </template>
 
 <script>

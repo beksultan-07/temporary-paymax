@@ -53,6 +53,9 @@
           <template v-slot:item.price="{ item }">
             {{ item.price }} <b>{{ (item.quote_unit).toUpperCase() }}</b>
           </template>
+          <template v-slot:item.decimal="{ item }">
+            {{ item.decimal }}
+          </template>
           <template v-slot:item.status="{ item }">
             <template v-if="item.status">
               <v-icon color="green">
@@ -246,6 +249,11 @@
             align: 'start',
             sortable: true,
             value: 'price'
+          }, {
+            text: this.$vuetify.lang.t('$vuetify.lang_260'),
+            align: 'start',
+            sortable: true,
+            value: 'decimal'
           }, {
             text: this.$vuetify.lang.t('$vuetify.lang_81'),
             align: 'start',

@@ -14,19 +14,19 @@ export default ({ app }, inject) => {
     },
 
     /**
-     * @param symbolName
+     * @param params
      * @param onSymbolResolvedCallback
      */
-    resolveSymbol(symbolName, onSymbolResolvedCallback) {
+    resolveSymbol(params, onSymbolResolvedCallback) {
 
-      let unit = symbolName.split(/[-/]/);
-      let symbol_stub = {
-        name: unit[0].toUpperCase() + '/' + unit[1].toUpperCase(),
+      let serialize = JSON.parse(params)
+      let resolved = {
+        name: serialize.base_unit.toUpperCase() + '/' + serialize.quote_unit.toUpperCase(),
         description: '',
         type: 'crypto',
         session: '24x7',
         timezone: 'Etc/UTC',
-        ticker: symbolName,
+        ticker: `${serialize.base_unit.toUpperCase() + '-' + serialize.quote_unit.toUpperCase()}`,
         minmov: 1,
         pricescale: 1000000,
         has_intraday: true,
@@ -34,12 +34,23 @@ export default ({ app }, inject) => {
         data_status: 'streaming'
       }
 
-      if (unit[1].toUpperCase().match(/USD|EUR|RUB|UAH|JPY|AUD|GBP|KRW|CNY/)) {
-        symbol_stub.pricescale = 100;
+      switch (serialize.decimal) {
+        case 2:
+          resolved.pricescale = 100;
+          break
+        case 4:
+          resolved.pricescale = 10000;
+          break
+        case 6:
+          resolved.pricescale = 1000000;
+          break
+        case 8:
+          resolved.pricescale = 100000000;
+          break
       }
 
       setTimeout(() => {
-        onSymbolResolvedCallback(symbol_stub)
+        onSymbolResolvedCallback(resolved)
       }, 0);
     },
 

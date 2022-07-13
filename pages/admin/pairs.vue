@@ -1,11 +1,9 @@
 <template>
-  <div>
 
-    <!-- Start: pairs component -->
-    <v-component-pairs />
-    <!-- End: pairs component -->
+  <!-- Start: pairs component -->
+  <v-component-pairs />
+  <!-- End: pairs component -->
 
-  </div>
 </template>
 
 <script>

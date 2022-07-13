@@ -1,11 +1,9 @@
 <template>
-  <div>
 
-    <!-- Start: currencies component -->
-    <v-component-currencies />
-    <!-- End: currencies component -->
+  <!-- Start: currencies component -->
+  <v-component-currencies />
+  <!-- End: currencies component -->
 
-  </div>
 </template>
 
 <script>

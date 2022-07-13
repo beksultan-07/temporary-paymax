@@ -43,6 +43,7 @@
           </template>
         </v-select>
         <v-text-field v-model="pair.price" color="primary" :loading="loading" :label="$vuetify.lang.t('$vuetify.lang_52')" outlined></v-text-field>
+        <v-select v-model="pair.decimal" :items="decimals" item-text="name" item-value="value" :label="$vuetify.lang.t('$vuetify.lang_191')" outlined></v-select>
         <v-select v-model="pair.status" :items="status" item-text="name" item-value="value" :label="$vuetify.lang.t('$vuetify.lang_191')" outlined></v-select>
         <template v-if="$route.params.id !== 'create'">
           <v-switch v-model="pair.graph_clear" :label="$vuetify.lang.t('$vuetify.lang_259')" />
@@ -121,10 +122,17 @@
           { value: false, name: "OFF" },
           { value: true, name: "ON" },
         ],
+        decimals: [
+          { value: 2, name: "100.00" },
+          { value: 4, name: "100.0000" },
+          { value: 6, name: "100.000000" },
+          { value: 8, name: "100.00000000" },
+        ],
         pair: {
           base_unit: "",
           quote_unit: "",
           price: 0,
+          decimal: 2,
           status: false,
           graph_clear: false
         },

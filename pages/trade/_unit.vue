@@ -93,7 +93,7 @@
         <v-flex align-self-center class="text-center grey--text" md4 mx5 sm6 xl3>
           <template v-if="status && count <= 30">
             {{ $decimal.format(( count / 30 ) * 100) }} %
-            <v-progress-linear :value="( count / 30 ) * 100" color="yellow darken-3" />
+            <v-progress-linear :value="( count / 30 ) * 100" color="primary" />
           </template>
           <template v-else>
             <div>
@@ -198,7 +198,7 @@
              * @type {IChartingLibraryWidget}
              */
             window.tvWidget = new window.TradingView.widget({
-              symbol: unit,
+              symbol: JSON.stringify(response.pairs[0]),
               theme: (this.$vuetify.theme.dark ? "Dark" : "Light"),
               locale: this.$vuetify.lang.current,
               container: 'charting-library',
