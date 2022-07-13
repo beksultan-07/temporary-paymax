@@ -124,7 +124,7 @@
     methods: {
       actionSignup(task) {
         if (this.$refs.form.validate()) {
-          this.$axios.$post(Api.auth.actionSignup, {name: this.name, email: this.email, password: this.password, secure: this.secure, signup: task}).then(() => {
+          this.$axios.$post(this.$api.auth.actionSignup, {name: this.name, email: this.email, password: this.password, secure: this.secure, signup: task}).then(() => {
             switch (task) {
               case 0:
                 this.next = 2;

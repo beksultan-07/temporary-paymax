@@ -221,7 +221,7 @@
       getTransactions() {
         this.overlay = true;
 
-        this.$axios.$post(Api.exchange.getTransactions, {
+        this.$axios.$post(this.$api.exchange.getTransactions, {
           symbol: this.$route.params.symbol,
           tx_type: this.type,
           limit: this.limit,
@@ -245,7 +245,7 @@
        * @param id
        */
       cancelWithdraw(id) {
-        this.$axios.$post(Api.exchange.cancelWithdraw, {
+        this.$axios.$post(this.$api.exchange.cancelWithdraw, {
           // Идентификатор вывода для удаления.
           id: id
         }).then(() => {

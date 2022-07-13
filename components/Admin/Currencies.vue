@@ -206,7 +206,7 @@
       getCurrencies() {
         this.overlay = true;
 
-        this.$axios.$post(Api.admin.exchange.getCurrencies, {
+        this.$axios.$post(this.$api.admin.exchange.getCurrencies, {
           search: this.search,
           limit: this.limit,
           page: this.page
@@ -222,7 +222,7 @@
        * @param symbol
        */
       deleteCurrency(symbol) {
-        this.$axios.$post(Api.admin.exchange.deleteCurrency, {
+        this.$axios.$post(this.$api.admin.exchange.deleteCurrency, {
           symbol: symbol
         }).then(() => {
           this.currencies.splice(this.currencies.map((o) => o.symbol).indexOf(symbol), 1);

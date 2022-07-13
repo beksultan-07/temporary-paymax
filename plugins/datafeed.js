@@ -1,7 +1,7 @@
 import Api from "@/libs/api";
 
 export default ({ app }, inject) => {
-  app.$trading = {
+  app.$datafeed = {
 
     $init: false,
     $subscribers: {},
@@ -248,5 +248,5 @@ export default ({ app }, inject) => {
     }
 
   };
-  inject('trading', app.$trading);
+  inject('datafeed', app.$datafeed);
 };

@@ -86,7 +86,6 @@
 
 <script>
 
-  import Api from "../../libs/api";
   import Soon from "../../components/Soon";
 
   export default {
@@ -202,7 +201,7 @@
        */
       getAssets() {
         this.overlay = true;
-        this.$axios.$post(Api.exchange.getAssets).then((response) => {
+        this.$axios.$post(this.$api.exchange.getAssets).then((response) => {
 
           this.assets = response.currencies ?? [];
           this.assets.map(item => {
@@ -219,7 +218,7 @@
        * @param item
        */
       getPrice(item) {
-        this.$axios.$get(Api.exchange.getPrice + '?base_unit=' + item.symbol + '&quote_unit=usdt').then((response) => {
+        this.$axios.$get(this.$api.exchange.getPrice + '?base_unit=' + item.symbol + '&quote_unit=usdt').then((response) => {
           item.convert = this.$decimal.truncate(response.price ? (item.balance ? this.$decimal.mul(response.price, item.balance) : 0) : (item.balance ? item.balance : 0))
         });
       },

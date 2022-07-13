@@ -120,8 +120,6 @@
 
 <script>
 
-  import Api from "/libs/api";
-
   export default {
     data() {
       return {
@@ -190,7 +188,7 @@
         this.getHeader(unit);
 
         // Проверяем есть ли такая пара.
-        this.$axios.$post(Api.exchange.getPair, {base_unit: unit.split('-')[0], quote_unit: unit.split('-')[1]}).then((response) => {
+        this.$axios.$post(this.$api.exchange.getPair, {base_unit: unit.split('-')[0], quote_unit: unit.split('-')[1]}).then((response) => {
 
           // Если статус пары false, то мы не иниацылизируем график.
           this.status = response.pairs[0].status ?? false;
@@ -204,7 +202,7 @@
               theme: (this.$vuetify.theme.dark ? "Dark" : "Light"),
               locale: this.$vuetify.lang.current,
               container: 'charting-library',
-              datafeed: this.$trading,
+              datafeed: this.$datafeed,
               interval: '15',
               library_path: '/js/charting_library/',
               disabled_features: [
@@ -238,7 +236,7 @@
        * @param unit
        */
       getHeader(unit) {
-        this.$axios.$get(Api.exchange.getGraph + '?base_unit=' + unit.split('-')[0] + '&quote_unit=' + unit.split('-')[1] + '&limit=2').then((response) => {
+        this.$axios.$get(this.$api.exchange.getGraph + '?base_unit=' + unit.split('-')[0] + '&quote_unit=' + unit.split('-')[1] + '&limit=2').then((response) => {
           this.header = response.graph_stats;
         })
       }

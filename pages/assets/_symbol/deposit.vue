@@ -178,7 +178,7 @@
       getAsset() {
         this.overlay = true;
 
-        this.$axios.$post(Api.exchange.getAsset, {symbol: this.$route.params.symbol}).then((response) => {
+        this.$axios.$post(this.$api.exchange.getAsset, {symbol: this.$route.params.symbol}).then((response) => {
           this.asset = response.currencies.lastItem ?? {};
 
           this.overlay = false;
@@ -193,7 +193,7 @@
        * @param index
        */
       setAsset(platform, protocol, index) {
-        this.$axios.$post(Api.exchange.setAsset, {symbol: this.$route.params.symbol, platform: platform, protocol: protocol}).then((response) => {
+        this.$axios.$post(this.$api.exchange.setAsset, {symbol: this.$route.params.symbol, platform: platform, protocol: protocol}).then((response) => {
           this.asset.chains[index].address = response.address;
           this.$forceUpdate();
         });

@@ -119,7 +119,6 @@
 
 <script>
 
-  import Api from "../../libs/api";
   import ShiftItem from "./ShiftItem";
 
   export default {
@@ -206,7 +205,7 @@
         this.overlay = true;
         this.eyelet = assigning;
 
-        this.$axios.$post(Api.exchange.getTrades, {
+        this.$axios.$post(this.$api.exchange.getTrades, {
           // Назначение [sell:1] - [buy:0].
           assigning: assigning,
           // Имя актива (symbol-base).

@@ -103,7 +103,7 @@
       actionSignin(task) {
         if (task === 0 || task === 1) {
           if (this.$refs.form.validate()) {
-            this.$axios.$post(Api.auth.actionSignin, {email: this.email, password: this.password, secure: this.secure, signin: task}).then(() => {
+            this.$axios.$post(this.$api.auth.actionSignin, {email: this.email, password: this.password, secure: this.secure, signin: task}).then(() => {
               switch (task) {
                 case 0:
                   this.next = 2;

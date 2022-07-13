@@ -207,7 +207,7 @@
     },
     methods: {
       getDashboard() {
-        this.$axios.$get(Api.index.getStatistic).then((response) => {
+        this.$axios.$get(this.$api.index.getStatistic).then((response) => {
           this.statistic = response.statistic;
           this.statistic.reserves.map((item) => {
             if (item.symbol === "usdt") {

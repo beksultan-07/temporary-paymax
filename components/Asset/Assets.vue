@@ -82,8 +82,6 @@
 
 <script>
 
-  import Api from "../../libs/api";
-
   export default {
     name: "v-component-assets",
     data() {
@@ -137,11 +135,11 @@
        */
       getAssets() {
         this.overlay = true;
-        this.$axios.$post(Api.exchange.getAssets).then((response) => {
+        this.$axios.$post(this.$api.exchange.getAssets).then((response) => {
 
           this.assets = response.currencies ?? [];
           this.assets.map(item => {
-            this.$axios.$get(Api.exchange.getPrice + '?base_unit=' + item.symbol + '&quote_unit=usdt').then((response) => {
+            this.$axios.$get(this.$api.exchange.getPrice + '?base_unit=' + item.symbol + '&quote_unit=usdt').then((response) => {
               item.price = response.price;
             });
           });

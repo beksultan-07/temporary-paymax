@@ -181,7 +181,7 @@
       getPairs() {
         this.overlay = true;
 
-        this.$axios.$post(Api.admin.exchange.getPairs, {
+        this.$axios.$post(this.$api.admin.exchange.getPairs, {
           search: this.search,
           limit: this.limit,
           page: this.page

@@ -127,7 +127,7 @@
       actionReset(task) {
         if (task === 0 || task === 1 || task === 2) {
           if (this.$refs.form1.validate()) {
-            this.$axios.$post(Api.auth.actionReset, {email: this.email, secure: this.secure, reset: task}).then(() => {
+            this.$axios.$post(this.$api.auth.actionReset, {email: this.email, secure: this.secure, reset: task}).then(() => {
               switch (task) {
                 case 0:
                   this.next = 2;
@@ -145,7 +145,7 @@
           }
         } else {
           if (this.$refs.form2.validate()) {
-            this.$axios.$post(Api.auth.actionReset, {email: this.email, secure: this.secure, password: this.password, reset: task}).then(() => {
+            this.$axios.$post(this.$api.auth.actionReset, {email: this.email, secure: this.secure, password: this.password, reset: task}).then(() => {
               this.finish = true;
             }).catch((error) => {
               this.$snackbar.open({content: `${error.response.data.code}: ${error.response.data.message}`, color: 'red darken-2'});

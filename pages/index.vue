@@ -154,7 +154,7 @@
         this.getCurrencies(this.currencies.items[this.currencies.items.length - 1].id)
       },
       getCurrencies(latest) {
-        this.$axios.$post(Api.index.getCurrencies, {latest: latest}).then((response) => {
+        this.$axios.$post(this.$api.index.getCurrencies, {latest: latest}).then((response) => {
 
           if (!latest) {
             this.currencies.items = [];
@@ -173,7 +173,7 @@
         });
       },
       getPairs() {
-        this.$axios.$post(Api.index.getPairs).then((response) => {
+        this.$axios.$post(this.$api.index.getPairs).then((response) => {
           this.pairs = response.pairs;
         });
       }

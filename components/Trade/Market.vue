@@ -103,8 +103,6 @@
 
 <script>
 
-  import Api from "../../libs/api";
-
   export default {
     name: "v-component-market",
     props: {
@@ -168,7 +166,7 @@
         this.overlay = true;
 
         let markers = this.markers.length;
-        this.$axios.$post(Api.exchange.getPairs, {symbol: symbol}).then((response) => {
+        this.$axios.$post(this.$api.exchange.getPairs, {symbol: symbol}).then((response) => {
 
           if (!markers) {
             this.eyelet = this.markers.indexOf(symbol);
@@ -186,7 +184,7 @@
        * @param symbol
        */
       getMarkers(symbol) {
-        this.$axios.$post(Api.exchange.getMarkers).then((response) => {
+        this.$axios.$post(this.$api.exchange.getMarkers).then((response) => {
           this.markers = response.markers ?? [];
 
           // Sort by symbol.

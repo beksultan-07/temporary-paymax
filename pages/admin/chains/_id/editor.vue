@@ -148,7 +148,7 @@
        *
        */
       getChain() {
-        this.$axios.$post(Api.admin.exchange.getChain, {
+        this.$axios.$post(this.$api.admin.exchange.getChain, {
           id: (this.$route.params.id !== "create" ? this.$route.params.id : 0)
         }).then((response) => {
           if (response.chains) {
@@ -161,7 +161,7 @@
        *
        */
       setChain() {
-        this.$axios.$post(Api.admin.exchange.setChain, {
+        this.$axios.$post(this.$api.admin.exchange.setChain, {
           id: (this.$route.params.id !== "create" ? this.$route.params.id : 0),
           chain: this.chain
         }).then(() => {

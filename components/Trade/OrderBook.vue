@@ -117,7 +117,6 @@
 
 <script>
 
-  import Api from "../../libs/api";
   import ShiftItem from "./ShiftItem";
 
   export default {
@@ -275,7 +274,7 @@
       getOrders(assigning) {
         this.overlay = true;
 
-        this.$axios.$post(Api.exchange.getOrders, {
+        this.$axios.$post(this.$api.exchange.getOrders, {
           // Назначение [sell:1] - [buy:0].
           assigning: assigning,
           // Имя актива (symbol-base).
@@ -302,7 +301,7 @@
        * @param assigning
        */
       getVolume(assigning) {
-        this.$axios.$post(Api.exchange.getOrders, {
+        this.$axios.$post(this.$api.exchange.getOrders, {
           // Назначение [sell:1] - [buy:0].
           assigning: assigning,
           // Имя актива (symbol-base).

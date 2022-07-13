@@ -25,7 +25,6 @@
 
 <script>
   import Header from "../../components/Asset/Header";
-  import Api from "../../libs/api";
 
   export default {
     components: {
@@ -41,14 +40,15 @@
 
     /**
      * @param $axios
+     * @param $api
      * @param params
      * @param error
-     * @returns {Promise<{symbol: *, asset: *}|{symbol: *}>}
+     * @returns {Promise<{symbol: string}|{symbol: *, asset: *}>}
      */
-    async asyncData({ $axios, params, error }) {
+    async asyncData({ $axios, $api, params, error }) {
       let symbol = params.symbol;
       if (symbol) {
-        return $axios.$post(Api.exchange.getAsset, {symbol: symbol}).then((response) => {
+        return $axios.$post($api.exchange.getAsset, {symbol: symbol}).then((response) => {
           let asset = response.currencies.lastItem
           asset.volume = asset.volume ?? 0;
           asset.balance = asset.balance ?? 0;

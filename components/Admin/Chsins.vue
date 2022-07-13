@@ -214,7 +214,6 @@
 </template>
 
 <script>
-  import Api from "../../libs/api";
 
   export default {
     name: "v-component-chains",
@@ -252,7 +251,7 @@
       getChains() {
         this.overlay = true;
 
-        this.$axios.$post(Api.admin.exchange.getChains, {
+        this.$axios.$post(this.$api.admin.exchange.getChains, {
           limit: this.limit,
           page: this.page
         }).then((response) => {
@@ -267,7 +266,7 @@
        * @param id
        */
       deleteChain(id) {
-        this.$axios.$post(Api.admin.exchange.deleteChain, {
+        this.$axios.$post(this.$api.admin.exchange.deleteChain, {
           id: id
         }).then(() => {
           this.chains.splice(this.chains.map((o) => o.id).indexOf(id), 1);

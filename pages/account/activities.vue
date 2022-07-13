@@ -134,7 +134,7 @@
       getActivities() {
         this.overlay = true;
 
-        this.$axios.$post(Api.account.getActivities, {
+        this.$axios.$post(this.$api.account.getActivities, {
           limit: this.limit,
           page: this.page
         }).then((response) => {

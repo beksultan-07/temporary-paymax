@@ -44,7 +44,8 @@ export default {
     { src: '~/plugins/storages.js' },
     { src: '~/plugins/protocol.js' },
     { src: '~/plugins/platform.js' },
-    { src: '~/plugins/trading.js' }
+    { src: '~/plugins/datafeed.js' },
+    { src: '~/plugins/api.js' }
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components

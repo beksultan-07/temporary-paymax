@@ -76,13 +76,14 @@
 
     /**
      * @param $axios
+     * @param $api
      * @param params
      * @param error
-     * @returns {Promise<{exchange: *}>}
+     * @returns {Promise<{unit: *}>}
      */
-    async asyncData({ $axios, params, error }) {
+    async asyncData({ $axios, $api, params, error }) {
       let unit = params.unit;
-      return $axios.$post(Api.exchange.getSymbol, {base_unit: unit.split('-')[0], quote_unit: unit.split('-')[1]}).then(() => {
+      return $axios.$post($api.exchange.getSymbol, {base_unit: unit.split('-')[0], quote_unit: unit.split('-')[1]}).then(() => {
         return { unit }
       }).catch(e => {
         error(e)

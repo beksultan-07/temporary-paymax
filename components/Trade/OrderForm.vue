@@ -189,7 +189,6 @@
 
 <script>
 
-  import Api from "../../libs/api";
   import Decimal from "decimal.js";
 
   Decimal.set({ precision: 8, rounding: 1 })
@@ -363,7 +362,7 @@
        * Получаем новые данные бегущей строки, данные об торгах.
        */
       getGraph() {
-        this.$axios.$get(Api.exchange.getGraph + '?base_unit=' + this.query.split('-')[0] + '&quote_unit=' + this.query.split('-')[1] + '&limit=1').then((response) => {
+        this.$axios.$get(this.$api.exchange.getGraph + '?base_unit=' + this.query.split('-')[0] + '&quote_unit=' + this.query.split('-')[1] + '&limit=1').then((response) => {
           this.price = response.graph ? response.graph[0].close : 0;
         })
       },
@@ -385,7 +384,7 @@
           return false;
         }
 
-        this.$axios.$post(Api.exchange.getAsset, {symbol: symbol}).then((response) => {
+        this.$axios.$post(this.$api.exchange.getAsset, {symbol: symbol}).then((response) => {
 
           // После перехода на новый актив обнуляем все параметры.
           this.balance = 0;
@@ -403,7 +402,7 @@
             // значит налаживаем вето на эту форму в целом.
             this.status = response.currencies[0].status ?? 0;
             if (this.status) {
-              this.$axios.$post(Api.exchange.getPair, {base_unit: this.query.split('-')[0], quote_unit: this.query.split('-')[1]}).then((response) => {
+              this.$axios.$post(this.$api.exchange.getPair, {base_unit: this.query.split('-')[0], quote_unit: this.query.split('-')[1]}).then((response) => {
                 this.status = response.pairs[0].status ?? 0;
               }).catch(e => {
                 console.log(e)
@@ -474,7 +473,7 @@
        * Создаём новый ордер.
        */
       setOrder() {
-        this.$axios.$post(Api.exchange.setOrder, {
+        this.$axios.$post(this.$api.exchange.setOrder, {
           // Назначение [sell:1] - [buy:0].
           assigning: this.assigning === 'sell' ? 1 : 0,
           // Имя актива (symbol-base).
@@ -514,7 +513,7 @@
           return false;
         }
 
-        this.$axios.$post(Api.exchange.getOrders, {
+        this.$axios.$post(this.$api.exchange.getOrders, {
           // Назначение [sell:1] - [buy:0].
           assigning: this.assigning === 'sell' ? 1 : 0,
           // Имя актива (symbol-base).
@@ -542,7 +541,7 @@
        * @param id
        */
       cancelOrder(id) {
-        this.$axios.$post(Api.exchange.cancelOrder, {
+        this.$axios.$post(this.$api.exchange.cancelOrder, {
           // Идентификатор ордера для удаления.
           id: id
         }).then(() => {

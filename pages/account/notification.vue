@@ -62,7 +62,7 @@
        *
        */
       getUser() {
-        this.$axios.$get(Api.account.getUser).then((response) => {
+        this.$axios.$get(this.$api.account.getUser).then((response) => {
           this.sample = response.sample ?? [];
         });
       },
@@ -71,7 +71,7 @@
        * @param e
        */
       setSample(e) {
-        this.$axios.$post(Api.account.setUser, {
+        this.$axios.$post(this.$api.account.setUser, {
           sample: e.path[1].firstChild.value
         });
       }

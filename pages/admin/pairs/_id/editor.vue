@@ -151,7 +151,7 @@
         if (this.pair.base_unit && this.pair.quote_unit) {
           this.loading = true;
 
-          this.$axios.$post(Api.admin.exchange.getMarketPrice, {
+          this.$axios.$post(this.$api.admin.exchange.getMarketPrice, {
             base_unit: this.pair.base_unit,
             quote_unit: this.pair.quote_unit
           }).then((response) => {
@@ -166,7 +166,7 @@
        *
        */
       getPair() {
-        this.$axios.$post(Api.admin.exchange.getPair, {
+        this.$axios.$post(this.$api.admin.exchange.getPair, {
           id: (this.$route.params.id !== "create" ? this.$route.params.id : 0)
         }).then((response) => {
           if (response.pairs) {
@@ -179,7 +179,7 @@
        *
        */
       setPair() {
-        this.$axios.$post(Api.admin.exchange.setPair, {
+        this.$axios.$post(this.$api.admin.exchange.setPair, {
           id: (this.$route.params.id !== "create" ? this.$route.params.id : 0),
           pair: this.pair
         }).then(() => {
@@ -196,7 +196,7 @@
        *
        */
       getCurrencies() {
-        this.$axios.$post(Api.admin.exchange.getCurrencies).then((response) => {
+        this.$axios.$post(this.$api.admin.exchange.getCurrencies).then((response) => {
           this.currencies = response.currencies ?? [];
         })
       }

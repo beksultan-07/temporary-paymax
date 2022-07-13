@@ -175,7 +175,7 @@
        *
        */
       getOrders() {
-        this.$axios.$post(Api.exchange.getOrders, {
+        this.$axios.$post(this.$api.exchange.getOrders, {
           owner: true,
           assigning: this.assigning,
           status: this.status,
@@ -196,7 +196,7 @@
        * @param callback
        */
       getTransfers(id, assigning, callback) {
-        this.$axios.$post(Api.exchange.getTransfers, {
+        this.$axios.$post(this.$api.exchange.getTransfers, {
           order_id: id,
           owner: true,
           assigning: assigning,

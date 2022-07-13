@@ -102,7 +102,7 @@
       getAnalysis() {
         this.overlay = true;
 
-        this.$axios.$post(Api.exchange.getAnalysis, {
+        this.$axios.$post(this.$api.exchange.getAnalysis, {
           limit: this.limit,
           page: this.page
         }).then((response) => {

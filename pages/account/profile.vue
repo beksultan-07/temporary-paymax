@@ -37,7 +37,7 @@
        */
       setUser() {
         if (!this.$refs.form.validate()) return false;
-        this.$axios.$post(Api.account.setUser, {
+        this.$axios.$post(this.$api.account.setUser, {
           old_password: this.old_password,
           new_password: this.new_password
         }).then(() => {
