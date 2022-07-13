@@ -190,8 +190,8 @@
         <v-flex/>
         <v-flex align-self-center class="text-center my-16" md4 mx5 sm6 xl3>
           <v-img class="ma-auto" width="250" src="/asset/3.png" />
-          <h2>{{ $vuetify.lang.t('$vuetify.lang_196') }}</h2>
-          {{ $vuetify.lang.t('$vuetify.lang_197') }}
+          <h2>{{ $vuetify.lang.t('$vuetify.lang_264') }}</h2>
+          {{ $vuetify.lang.t('$vuetify.lang_265') }}
         </v-flex>
         <v-flex/>
       </v-layout>

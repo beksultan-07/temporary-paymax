@@ -119,8 +119,8 @@
             {{ $vuetify.lang.t('$vuetify.lang_211') }}
           </template>
           <template v-else>
-            <h2>{{ $vuetify.lang.t('$vuetify.lang_196') }}</h2>
-            {{ $vuetify.lang.t('$vuetify.lang_197') }}
+            <h2>{{ $vuetify.lang.t('$vuetify.lang_262') }}</h2>
+            {{ $vuetify.lang.t('$vuetify.lang_263') }}
           </template>
         </v-flex>
         <v-flex/>
