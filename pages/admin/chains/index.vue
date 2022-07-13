@@ -7,7 +7,7 @@
 </template>
 
 <script>
-  import Chains from "@/components/Admin/Chsins";
+  import Chains from "@/components/Admin/Chains";
 
   export default {
     components: {
