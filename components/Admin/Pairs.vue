@@ -1,145 +1,136 @@
 <template>
   <div>
 
-    <template v-if="name === 'admin-pairs'">
+    <!-- Start: header bar -->
+    <div class="pa-2">
+      <v-row>
+        <v-col cols="12" md="4">
+          <v-btn color="black--text grey lighten-5 text-capitalize" elevation="0" large :to="'/admin/pairs/create/editor'">
+            <v-icon color="green">mdi-plus-thick</v-icon> {{ $vuetify.lang.t('$vuetify.lang_255') }}
+          </v-btn>
+        </v-col>
+        <v-col cols="12" md="4">
+          <v-text-field v-model="search" v-on:keyup="getPairs" color="primary" :label="$vuetify.lang.t('$vuetify.lang_209')" outlined dense hide-details />
+        </v-col>
+        <v-col cols="12" md="4">
+          <v-btn color="black--text grey lighten-5 text-capitalize" elevation="0" large class="float-end">
+            {{ count }}
+          </v-btn>
+        </v-col>
+      </v-row>
+    </div>
+    <!-- End: header bar -->
 
-      <!-- Start: header bar -->
-      <div class="pa-2">
-        <v-row>
-          <v-col cols="12" md="4">
-            <v-btn color="black--text grey lighten-5 text-capitalize" elevation="0" large :to="'/admin/pairs/create/editor'">
-              <v-icon color="green">mdi-plus-thick</v-icon> {{ $vuetify.lang.t('$vuetify.lang_255') }}
-            </v-btn>
-          </v-col>
-          <v-col cols="12" md="4">
-            <v-text-field v-model="search" v-on:keyup="getPairs" color="primary" :label="$vuetify.lang.t('$vuetify.lang_209')" outlined dense hide-details />
-          </v-col>
-          <v-col cols="12" md="4">
-            <v-btn color="black--text grey lighten-5 text-capitalize" elevation="0" large class="float-end">
-              {{ count }}
-            </v-btn>
+    <v-divider />
+
+    <template v-if="pairs.length">
+
+      <!-- Start: data table -->
+      <v-data-table :class="count > limit ? 'none-radius ' : ''" :headers="headlines" :items="pairs" :page.sync="page" item-key="id" :items-per-page="limit" hide-default-footer>
+        <template v-slot:item.base_unit="{ item }">
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on, attrs }">
+              <v-avatar size="30">
+                <v-img :src="$storages(['icon'], item.base_unit)" v-bind="attrs" v-on="on" />
+              </v-avatar>
+            </template>
+            <span>{{ (item.base_unit).toUpperCase() }}</span>
+          </v-tooltip>
+        </template>
+        <template v-slot:item.quote_unit="{ item }">
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on, attrs }">
+              <v-avatar size="30">
+                <v-img :src="$storages(['icon'], item.quote_unit)" v-bind="attrs" v-on="on" />
+              </v-avatar>
+            </template>
+            <span>{{ (item.quote_unit).toUpperCase() }}</span>
+          </v-tooltip>
+        </template>
+        <template v-slot:item.price="{ item }">
+          {{ item.price }} <b>{{ (item.quote_unit).toUpperCase() }}</b>
+        </template>
+        <template v-slot:item.decimal="{ item }">
+          {{ item.decimal }}
+        </template>
+        <template v-slot:item.status="{ item }">
+          <template v-if="item.status">
+            <v-icon color="green">
+              mdi-check-circle-outline
+            </v-icon>
+          </template>
+          <template v-else>
+            <v-icon color="red">
+              mdi-close-circle-outline
+            </v-icon>
+          </template>
+        </template>
+        <template v-slot:item.edit="{ item }">
+          <v-btn :to="`/admin/pairs/${item.id}/editor`" icon>
+            <v-icon>
+              mdi-circle-edit-outline
+            </v-icon>
+          </v-btn>
+        </template>
+        <template v-slot:item.delete="{ item }">
+          <v-btn @click="open(item.id)" icon>
+            <v-icon>
+              mdi-close-circle-outline
+            </v-icon>
+          </v-btn>
+        </template>
+      </v-data-table>
+      <!-- End: data table -->
+
+      <v-dialog v-model="dialog" max-width="500px">
+        <v-card>
+          <v-card-title class="text-h5 text-center">{{ $vuetify.lang.t('$vuetify.lang_215') }}</v-card-title>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="blue darken-1" text @click="close">{{ $vuetify.lang.t('$vuetify.lang_217') }}</v-btn>
+            <v-btn color="blue darken-1" text @click="deletePair(pair_id)">{{ $vuetify.lang.t('$vuetify.lang_216') }}</v-btn>
+            <v-spacer></v-spacer>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+
+      <v-divider v-if="count > limit" />
+
+      <!-- Start: pagination -->
+      <v-container v-if="length > 1" class="max-width">
+        <v-row justify="center">
+          <v-col cols="8">
+            <v-pagination v-model="page" @input="getMore()" :length="length"></v-pagination>
           </v-col>
         </v-row>
-      </div>
-      <!-- End: header bar -->
-
-      <v-divider />
-
-
-      <template v-if="pairs.length">
-
-        <!-- Start: data table -->
-        <v-data-table :class="count > limit ? 'none-radius ' : ''" :headers="headlines" :items="pairs" :page.sync="page" item-key="id" :items-per-page="limit" hide-default-footer>
-          <template v-slot:item.base_unit="{ item }">
-            <v-tooltip bottom>
-              <template v-slot:activator="{ on, attrs }">
-                <v-avatar size="30">
-                  <v-img :src="$storages(['icon'], item.base_unit)" v-bind="attrs" v-on="on" />
-                </v-avatar>
-              </template>
-              <span>{{ (item.base_unit).toUpperCase() }}</span>
-            </v-tooltip>
-          </template>
-          <template v-slot:item.quote_unit="{ item }">
-            <v-tooltip bottom>
-              <template v-slot:activator="{ on, attrs }">
-                <v-avatar size="30">
-                  <v-img :src="$storages(['icon'], item.quote_unit)" v-bind="attrs" v-on="on" />
-                </v-avatar>
-              </template>
-              <span>{{ (item.quote_unit).toUpperCase() }}</span>
-            </v-tooltip>
-          </template>
-          <template v-slot:item.price="{ item }">
-            {{ item.price }} <b>{{ (item.quote_unit).toUpperCase() }}</b>
-          </template>
-          <template v-slot:item.decimal="{ item }">
-            {{ item.decimal }}
-          </template>
-          <template v-slot:item.status="{ item }">
-            <template v-if="item.status">
-              <v-icon color="green">
-                mdi-check-circle-outline
-              </v-icon>
-            </template>
-            <template v-else>
-              <v-icon color="red">
-                mdi-close-circle-outline
-              </v-icon>
-            </template>
-          </template>
-          <template v-slot:item.edit="{ item }">
-            <v-btn :to="`/admin/pairs/${item.id}/editor`" icon>
-              <v-icon>
-                mdi-circle-edit-outline
-              </v-icon>
-            </v-btn>
-          </template>
-          <template v-slot:item.delete="{ item }">
-            <v-btn @click="open(item.id)" icon>
-              <v-icon>
-                mdi-close-circle-outline
-              </v-icon>
-            </v-btn>
-          </template>
-        </v-data-table>
-        <!-- End: data table -->
-
-        <v-dialog v-model="dialog" max-width="500px">
-          <v-card>
-            <v-card-title class="text-h5 text-center">{{ $vuetify.lang.t('$vuetify.lang_215') }}</v-card-title>
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn color="blue darken-1" text @click="close">{{ $vuetify.lang.t('$vuetify.lang_217') }}</v-btn>
-              <v-btn color="blue darken-1" text @click="deletePair(pair_id)">{{ $vuetify.lang.t('$vuetify.lang_216') }}</v-btn>
-              <v-spacer></v-spacer>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
-
-        <v-divider v-if="count > limit" />
-
-        <!-- Start: pagination -->
-        <v-container v-if="length > 1" class="max-width">
-          <v-row justify="center">
-            <v-col cols="8">
-              <v-pagination v-model="page" @input="getMore()" :length="length"></v-pagination>
-            </v-col>
-          </v-row>
-        </v-container>
-        <!-- End: pagination -->
-
-      </template>
-
-      <!-- Start: no history -->
-      <template v-else-if="!overlay">
-        <v-layout fill-height wrap>
-          <v-flex/>
-          <v-flex align-self-center class="text-center my-16" md4 mx5 sm6 xl3>
-            <v-img class="ma-auto" width="250" src="/asset/3.png" />
-            <template v-if="search">
-              <h2>{{ $vuetify.lang.t('$vuetify.lang_210') }}</h2>
-              {{ $vuetify.lang.t('$vuetify.lang_211') }}
-            </template>
-            <template v-else>
-              <h2>{{ $vuetify.lang.t('$vuetify.lang_196') }}</h2>
-              {{ $vuetify.lang.t('$vuetify.lang_197') }}
-            </template>
-          </v-flex>
-          <v-flex/>
-        </v-layout>
-      </template>
-      <!-- End: no history -->
-
-      <v-overlay absolute :color="$vuetify.theme.dark ? 'grey darken-4' : 'white'" opacity="0.8" :value="overlay">
-        <v-progress-circular color="yellow darken-3" indeterminate size="50" />
-      </v-overlay>
+      </v-container>
+      <!-- End: pagination -->
 
     </template>
 
-    <!-- Start: child container -->
-    <nuxt-child />
-    <!-- End: child container -->
+    <!-- Start: no history -->
+    <template v-else-if="!overlay">
+      <v-layout fill-height wrap>
+        <v-flex/>
+        <v-flex align-self-center class="text-center my-16" md4 mx5 sm6 xl3>
+          <v-img class="ma-auto" width="250" src="/asset/3.png" />
+          <template v-if="search">
+            <h2>{{ $vuetify.lang.t('$vuetify.lang_210') }}</h2>
+            {{ $vuetify.lang.t('$vuetify.lang_211') }}
+          </template>
+          <template v-else>
+            <h2>{{ $vuetify.lang.t('$vuetify.lang_196') }}</h2>
+            {{ $vuetify.lang.t('$vuetify.lang_197') }}
+          </template>
+        </v-flex>
+        <v-flex/>
+      </v-layout>
+    </template>
+    <!-- End: no history -->
+
+    <v-overlay absolute :color="$vuetify.theme.dark ? 'grey darken-4' : 'white'" opacity="0.8" :value="overlay">
+      <v-progress-circular color="yellow darken-3" indeterminate size="50" />
+    </v-overlay>
 
   </div>
 </template>
@@ -150,7 +141,6 @@
     name: "v-component-pairs",
     data() {
       return {
-        name: "",
         search: "",
         pair_id: "",
         pairs: [],
@@ -163,8 +153,7 @@
       }
     },
     watch: {
-      $route(params) {
-        this.name = params.name;
+      $route() {
         this.getPairs();
       },
       dialog (val) {
@@ -172,7 +161,6 @@
       }
     },
     mounted() {
-      this.name = this.$route.name;
       this.getPairs();
     },
     methods: {
@@ -182,6 +170,10 @@
        */
       getPairs() {
         this.overlay = true;
+
+        if (this.search) {
+          this.page = 1
+        }
 
         this.$axios.$post(this.$api.admin.exchange.getPairs, {
           search: this.search,
@@ -199,9 +191,13 @@
        * @param pair_id
        */
       deletePair(pair_id) {
-        this.pairs.splice(this.pairs.map((o) => o.id).indexOf(pair_id), 1);
-        this.count -= 1;
-        this.dialog = false;
+        this.$axios.$post(this.$api.admin.exchange.deletePair, {
+          id: pair_id
+        }).then(() => {
+          this.pairs.splice(this.pairs.map((o) => o.id).indexOf(pair_id), 1);
+          this.count -= 1;
+          this.dialog = false;
+        });
       },
 
       /**
@@ -215,7 +211,7 @@
        *
        */
       close() {
-        this.unit = "";
+        this.pair_id = 0;
         this.dialog = false;
       },
 

@@ -1,19 +1,13 @@
 <template>
 
-  <!-- Start: pairs component -->
-  <v-component-pairs />
-  <!-- End: pairs component -->
+  <!-- Start: child container -->
+  <nuxt-child />
+  <!-- End: child container -->
 
 </template>
 
 <script>
-  import Pairs from "../../components/Admin/Pairs";
-
-  export default {
-    components: {
-      'v-component-pairs': Pairs
-    }
-  }
+  export default {}
 </script>
 
 <style scoped>

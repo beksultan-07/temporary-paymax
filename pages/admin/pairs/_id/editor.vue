@@ -43,7 +43,7 @@
           </template>
         </v-select>
         <v-text-field v-model="pair.price" color="primary" :loading="loading" :label="$vuetify.lang.t('$vuetify.lang_52')" outlined></v-text-field>
-        <v-select v-model="pair.decimal" :items="decimals" item-text="name" item-value="value" :label="$vuetify.lang.t('$vuetify.lang_191')" outlined></v-select>
+        <v-select v-model="pair.decimal" :items="decimals" item-text="name" item-value="value" :label="$vuetify.lang.t('$vuetify.lang_260')" outlined></v-select>
         <v-select v-model="pair.status" :items="status" item-text="name" item-value="value" :label="$vuetify.lang.t('$vuetify.lang_191')" outlined></v-select>
         <template v-if="$route.params.id !== 'create'">
           <v-switch v-model="pair.graph_clear" :label="$vuetify.lang.t('$vuetify.lang_259')" />
@@ -85,6 +85,11 @@
             <tr :class="duplicate ? 'white--text red lighten-2' : ''">
               <td>{{ $vuetify.lang.t('$vuetify.lang_254') }}</td>
               <td>{{ $vuetify.lang.t('$vuetify.lang_193') }}</td>
+              <td>*</td>
+            </tr>
+            <tr>
+              <td>{{ $vuetify.lang.t('$vuetify.lang_260') }}</td>
+              <td>{{ $vuetify.lang.t('$vuetify.lang_261') }}</td>
               <td>*</td>
             </tr>
             <tr>

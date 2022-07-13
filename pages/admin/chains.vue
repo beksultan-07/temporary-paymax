@@ -1,19 +1,13 @@
 <template>
 
-  <!-- Start: chains component -->
-  <v-component-chains />
-  <!-- End: chains component -->
+  <!-- Start: child container -->
+  <nuxt-child />
+  <!-- End: child container -->
 
 </template>
 
 <script>
-  import Chains from "../../components/Admin/Chsins";
-
-  export default {
-    components: {
-      'v-component-chains': Chains
-    }
-  }
+  export default {}
 </script>
 
 <style scoped>

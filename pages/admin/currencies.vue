@@ -1,19 +1,13 @@
 <template>
 
-  <!-- Start: currencies component -->
-  <v-component-currencies />
-  <!-- End: currencies component -->
+  <!-- Start: child container -->
+  <nuxt-child />
+  <!-- End: child container -->
 
 </template>
 
 <script>
-  import Currencies from "../../components/Admin/Currencies";
-
-  export default {
-    components: {
-      'v-component-currencies': Currencies
-    }
-  }
+  export default {}
 </script>
 
 <style scoped>
