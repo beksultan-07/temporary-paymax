@@ -43,7 +43,8 @@ export default {
     { src: '~/plugins/snackbar.js' },
     { src: '~/plugins/storages.js' },
     { src: '~/plugins/protocol.js' },
-    { src: '~/plugins/platform.js' }
+    { src: '~/plugins/platform.js' },
+    { src: '~/plugins/trading.js' }
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components

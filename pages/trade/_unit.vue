@@ -120,7 +120,6 @@
 
 <script>
 
-  import Datafeed from "../../libs/datafeed";
   import Api from "/libs/api";
 
   export default {
@@ -142,12 +141,42 @@
       return { unit }
     },
     watch: {
+
+      /**
+       * @param e
+       */
       $route(e) {
         this.getGraph(e.params.unit);
+      },
+
+      /**
+       * @param e
+       * @returns {*}
+       */
+      unit (e) {
+        return e
       }
     },
     mounted() {
       this.getGraph(this.unit);
+
+      /**
+       * Отслеживаем события бегущей строки, данные об торгах.
+       * @return {callback}:
+       * @object {base_unit: string},
+       * @object {close: float},
+       * @object {high: float},
+       * @object {low: float},
+       * @object {open: float},
+       * @object {price: float},
+       * @object {quote_unit: string},
+       * @object {time: int}
+       */
+      this.$publish.bind('trade/graph:0', (data) => {
+        if (data.graph !== undefined && this.unit.split('-')[0] === data.graph[0].base_unit && this.unit.split('-')[1] === data.graph[0].quote_unit) {
+          this.header = data.graph_stats;
+        }
+      });
     },
     methods: {
 
@@ -157,8 +186,13 @@
       getGraph(unit) {
         this.overlay = true;
 
+        // Иниацылизируем шапку со статическими данными.
+        this.getHeader(unit);
+
+        // Проверяем есть ли такая пара.
         this.$axios.$post(Api.exchange.getPair, {base_unit: unit.split('-')[0], quote_unit: unit.split('-')[1]}).then((response) => {
 
+          // Если статус пары false, то мы не иниацылизируем график.
           this.status = response.pairs[0].status ?? false;
           if (this.status) {
 
@@ -170,7 +204,7 @@
               theme: (this.$vuetify.theme.dark ? "Dark" : "Light"),
               locale: this.$vuetify.lang.current,
               container: 'charting-library',
-              datafeed: new Datafeed(this),
+              datafeed: this.$trading,
               interval: '15',
               library_path: '/js/charting_library/',
               disabled_features: [
@@ -189,13 +223,24 @@
               fullscreen: false,
               autosize: true
             });
-
-            return
           }
-          this.overlay = false;
+
+          // Выполняем действия после того как график прогрузился.
+          window.tvWidget.onChartReady(() => {
+            this.overlay = false;
+          });
         }).catch(e => {
           console.log(e)
         });
+      },
+
+      /**
+       * @param unit
+       */
+      getHeader(unit) {
+        this.$axios.$get(Api.exchange.getGraph + '?base_unit=' + unit.split('-')[0] + '&quote_unit=' + unit.split('-')[1] + '&limit=2').then((response) => {
+          this.header = response.graph_stats;
+        })
       }
     },
     computed: {
