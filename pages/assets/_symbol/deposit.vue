@@ -1,7 +1,7 @@
 <template>
   <div class="ma-4">
 
-    <template v-if="asset.chains">
+    <template v-if="asset.chains && (!empty || empty === 1)">
       <template v-if="!asset.fin_type">
 
         <!-- Start: tabs bar -->
@@ -129,7 +129,6 @@
         </v-tabs-items>
 
       </template>
-
     </template>
     <template v-else>
       <v-alert icon="mdi-shield-lock-outline" prominent text type="error">
@@ -146,7 +145,7 @@
 
 <script>
 
-  import Qrcode from "../../../components/Qrcode";
+  import Qrcode from "@/components/Qrcode";
 
   export default {
     components: {
@@ -154,6 +153,7 @@
     },
     data() {
       return {
+        empty: 0,
         asset: {
           chains: []
         },
@@ -176,9 +176,18 @@
        */
       getAsset() {
         this.overlay = true;
+        this.empty = 0;
 
         this.$axios.$post(this.$api.exchange.getAsset, {symbol: this.$route.params.symbol}).then((response) => {
           this.asset = response.currencies.lastItem ?? {};
+
+          if (!this.asset.fin_type) {
+            this.asset.chains.map((item) => {
+              if (!item.contract) {
+                this.empty += 1;
+              }
+            });
+          }
 
           this.overlay = false;
         }).catch(e => {

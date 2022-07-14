@@ -5,12 +5,12 @@
     <div class="pa-2">
       <v-row>
         <v-col cols="12" md="4">
-          <v-btn color="black--text grey lighten-5 text-capitalize" elevation="0" large :to="'/admin/pairs/create/editor'">
-            <v-icon color="green">mdi-plus-thick</v-icon> {{ $vuetify.lang.t('$vuetify.lang_255') }}
+          <v-btn color="black--text grey lighten-5 text-capitalize" elevation="0" large :to="'/admin/contracts/create/editor'">
+            <v-icon color="green">mdi-plus-thick</v-icon> {{ $vuetify.lang.t('$vuetify.lang_267') }}
           </v-btn>
         </v-col>
         <v-col cols="12" md="4">
-          <v-text-field v-model="search" v-on:keyup="getPairs" color="primary" :label="$vuetify.lang.t('$vuetify.lang_209')" outlined dense hide-details />
+          <v-text-field v-model="search" v-on:keyup="getContracts" color="primary" :label="$vuetify.lang.t('$vuetify.lang_209')" outlined dense hide-details />
         </v-col>
         <v-col cols="12" md="4">
           <v-btn color="black--text grey lighten-5 text-capitalize" elevation="0" large class="float-end">
@@ -23,50 +23,28 @@
 
     <v-divider />
 
-    <template v-if="pairs.length">
+    <template v-if="contracts.length">
 
       <!-- Start: data table -->
-      <v-data-table :class="count > limit ? 'none-radius ' : ''" :headers="headlines" :items="pairs" :page.sync="page" item-key="id" :items-per-page="limit" hide-default-footer>
-        <template v-slot:item.base_unit="{ item }">
+      <v-data-table :class="count > limit ? 'none-radius ' : ''" :headers="headlines" :items="contracts" :page.sync="page" item-key="id" :items-per-page="limit" hide-default-footer>
+        <template v-slot:item.symbol="{ item }">
           <v-tooltip bottom>
             <template v-slot:activator="{ on, attrs }">
               <v-avatar size="30">
-                <v-img :src="$storages(['icon'], item.base_unit)" v-bind="attrs" v-on="on" />
+                <v-img :src="$storages(['icon'], item.symbol)" v-bind="attrs" v-on="on" />
               </v-avatar>
             </template>
-            <span>{{ (item.base_unit).toUpperCase() }}</span>
+            <span>{{ (item.symbol).toUpperCase() }}</span>
           </v-tooltip>
         </template>
-        <template v-slot:item.quote_unit="{ item }">
-          <v-tooltip bottom>
-            <template v-slot:activator="{ on, attrs }">
-              <v-avatar size="30">
-                <v-img :src="$storages(['icon'], item.quote_unit)" v-bind="attrs" v-on="on" />
-              </v-avatar>
-            </template>
-            <span>{{ (item.quote_unit).toUpperCase() }}</span>
-          </v-tooltip>
+        <template v-slot:item.chain_id="{ item }">
+          {{ item.chain_id }}: {{ item.chain_name }}
         </template>
-        <template v-slot:item.price="{ item }">
-          {{ item.price }} <b>{{ (item.quote_unit).toUpperCase() }}</b>
-        </template>
-        <template v-slot:item.decimal="{ item }">
-          {{ item.decimal }}
-        </template>
-        <template v-slot:item.status="{ item }">
-          <template v-if="item.status">
-            <v-icon color="green">
-              mdi-check-circle-outline
-            </v-icon>
-          </template>
-          <template v-else>
-            <v-icon color="red">
-              mdi-close-circle-outline
-            </v-icon>
-          </template>
+        <template v-slot:item.fees_withdraw="{ item }">
+          {{ item.fees_withdraw }} <b>{{ (item.symbol).toUpperCase() }}</b>
         </template>
         <template v-slot:item.edit="{ item }">
-          <v-btn :to="`/admin/pairs/${item.id}/editor`" icon>
+          <v-btn :to="`/admin/contracts/${item.id}/editor`" icon>
             <v-icon>
               mdi-circle-edit-outline
             </v-icon>
@@ -88,7 +66,7 @@
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn color="blue darken-1" text @click="close">{{ $vuetify.lang.t('$vuetify.lang_217') }}</v-btn>
-            <v-btn color="blue darken-1" text @click="deletePair(pair_id)">{{ $vuetify.lang.t('$vuetify.lang_216') }}</v-btn>
+            <v-btn color="blue darken-1" text @click="deleteContract(contract_id)">{{ $vuetify.lang.t('$vuetify.lang_216') }}</v-btn>
             <v-spacer></v-spacer>
           </v-card-actions>
         </v-card>
@@ -114,14 +92,8 @@
         <v-flex/>
         <v-flex align-self-center class="text-center my-16" md4 mx5 sm6 xl3>
           <v-img class="ma-auto" width="250" src="/asset/3.png" />
-          <template v-if="search">
-            <h2>{{ $vuetify.lang.t('$vuetify.lang_210') }}</h2>
-            {{ $vuetify.lang.t('$vuetify.lang_211') }}
-          </template>
-          <template v-else>
-            <h2>{{ $vuetify.lang.t('$vuetify.lang_262') }}</h2>
-            {{ $vuetify.lang.t('$vuetify.lang_263') }}
-          </template>
+          <h2>{{ $vuetify.lang.t('$vuetify.lang_271') }}</h2>
+          {{ $vuetify.lang.t('$vuetify.lang_272') }}
         </v-flex>
         <v-flex/>
       </v-layout>
@@ -136,14 +108,14 @@
 </template>
 
 <script>
-
   export default {
-    name: "v-component-pairs",
+    name: "v-component-contracts",
     data() {
       return {
         search: "",
-        pair_id: 0,
-        pairs: [],
+        contract_id: 0,
+        chains: [],
+        contracts: [],
         overlay: true,
         limit: 12,
         count: 0,
@@ -154,47 +126,47 @@
     },
     watch: {
       $route() {
-        this.getPairs();
+        this.getContracts();
       },
       dialog (val) {
         val || this.close()
       }
     },
     mounted() {
-      this.getPairs();
+      this.getContracts();
     },
     methods: {
 
       /**
        *
        */
-      getPairs() {
+      getContracts() {
         this.overlay = true;
 
         if (this.search) {
           this.page = 1
         }
 
-        this.$axios.$post(this.$api.admin.exchange.getPairs, {
+        this.$axios.$post(this.$api.admin.exchange.getContracts, {
           search: this.search,
           limit: this.limit,
           page: this.page
         }).then((response) => {
-          this.pairs = response.pairs ?? [];
+          this.contracts = response.contracts ?? [];
           this.count = response.count ?? 0;
-          this.length = Math.ceil(this.count/this.limit);
+          this.length = Math.ceil(this.count / this.limit);
           this.overlay = false;
         });
       },
 
       /**
-       * @param pair_id
+       * @param contract_id
        */
-      deletePair(pair_id) {
-        this.$axios.$post(this.$api.admin.exchange.deletePair, {
-          id: pair_id
+      deleteContract(contract_id) {
+        this.$axios.$post(this.$api.admin.exchange.deleteContract, {
+          id: contract_id
         }).then(() => {
-          this.pairs.splice(this.pairs.map((o) => o.id).indexOf(pair_id), 1);
+          this.contracts.splice(this.contracts.map((o) => o.id).indexOf(contract_id), 1);
           this.count -= 1;
           this.dialog = false;
         });
@@ -204,57 +176,62 @@
        *
        */
       getMore() {
-        this.getPairs();
+        this.getContracts();
       },
 
       /**
        *
        */
       close() {
-        this.pair_id = 0;
+        this.contract_id = 0;
         this.dialog = false;
       },
 
       /**
-       * @param pair_id
+       *
        */
-      open(pair_id) {
-        this.pair_id = pair_id;
+      open(contract_id) {
+        this.contract_id = contract_id;
         this.dialog = true;
       }
     },
     computed: {
 
       /**
-       * @returns {[{text: *, sortable: boolean, align: string, value: string},{text: *, sortable: boolean, align: string, value: string},{text: *, sortable: boolean, align: string, value: string},{text: *, sortable: boolean, align: string, value: string},{text: *, sortable: boolean, align: string, value: string},null]}
+       * @returns {[{text: *, sortable: boolean, align: string, value: string},{text: *, sortable: boolean, align: string, value: string},{text: *, sortable: boolean, align: string, value: string},{text: *, sortable: boolean, align: string, value: string},{text: *, sortable: boolean, align: string, value: string},null,null,null]}
        */
       headlines() {
         return [
           {
-            text: this.$vuetify.lang.t('$vuetify.lang_253'),
+            text: this.$vuetify.lang.t('$vuetify.lang_187'),
             align: 'start',
             sortable: true,
-            value: 'base_unit'
+            value: 'symbol'
           }, {
-            text: this.$vuetify.lang.t('$vuetify.lang_254'),
+            text: this.$vuetify.lang.t('$vuetify.lang_268'),
             align: 'start',
             sortable: true,
-            value: 'quote_unit'
+            value: 'chain_id'
           }, {
-            text: this.$vuetify.lang.t('$vuetify.lang_52'),
+            text: this.$vuetify.lang.t('$vuetify.lang_269'),
             align: 'start',
-            sortable: true,
-            value: 'price'
+            sortable: false,
+            value: 'address'
           }, {
-            text: this.$vuetify.lang.t('$vuetify.lang_260'),
+            text: this.$vuetify.lang.t('$vuetify.lang_221'),
             align: 'start',
             sortable: true,
-            value: 'decimal'
+            value: 'fees_withdraw'
           }, {
-            text: this.$vuetify.lang.t('$vuetify.lang_81'),
+            text: this.$vuetify.lang.t('$vuetify.lang_270'),
             align: 'start',
             sortable: true,
-            value: 'status'
+            value: 'protocol'
+          }, {
+            text: this.$vuetify.lang.t('$vuetify.lang_113'),
+            align: 'start',
+            sortable: true,
+            value: 'platform'
           }, {
             text: this.$vuetify.lang.t('$vuetify.lang_194'),
             align: 'start',

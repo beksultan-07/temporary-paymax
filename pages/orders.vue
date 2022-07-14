@@ -48,15 +48,15 @@
         return [
           {
             title: this.$vuetify.lang.t('$vuetify.lang_138'),
-            icon: "mdi-alpha-a-circle-outline",
+            icon: "mdi-archive-search-outline",
             status: 'all'
           }, {
             title: this.$vuetify.lang.t('$vuetify.lang_136'),
-            icon: "mdi-alpha-p-circle-outline",
+            icon: "mdi-archive-clock-outline",
             status: 'pending'
           }, {
             title: this.$vuetify.lang.t('$vuetify.lang_137'),
-            icon: "mdi-alpha-f-circle-outline",
+            icon: "mdi-archive-star-outline",
             status: 'filled'
           }
         ]

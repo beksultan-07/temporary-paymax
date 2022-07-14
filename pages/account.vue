@@ -48,19 +48,19 @@
         return [
           {
             title: this.$vuetify.lang.t('$vuetify.lang_143'),
-            icon: "mdi-alpha-p-circle-outline",
+            icon: "mdi-account-circle-outline",
             to: 'profile'
           }, {
             title: this.$vuetify.lang.t('$vuetify.lang_144'),
-            icon: "mdi-alpha-s-circle-outline",
+            icon: "mdi-shield-lock-outline",
             to: 'security'
           }, {
             title: this.$vuetify.lang.t('$vuetify.lang_145'),
-            icon: "mdi-alpha-n-circle-outline",
+            icon: "mdi-bell-cog-outline",
             to: 'notification'
           }, {
             title: this.$vuetify.lang.t('$vuetify.lang_161'),
-            icon: "mdi-alpha-a-circle-outline",
+            icon: "mdi-account-convert-outline",
             to: 'activities'
           }
         ]

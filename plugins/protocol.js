@@ -1,7 +1,6 @@
 export default ({app}, inject) => {
   app.$protocol = {
     list: [
-      {id: 0, name: 'MAINNET'},
       {id: 1, name: 'ERC20'},
       {id: 2, name: 'ERC721'},
       {id: 3, name: 'ERC1155'},

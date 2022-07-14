@@ -52,6 +52,10 @@ export default ({ app }, inject) => {
         setPair: '/admin/exchange/set-pair',
         deletePair: '/admin/exchange/delete-pair',
         getMarketPrice: '/admin/exchange/get-market-price',
+        getContracts: '/admin/exchange/get-contracts',
+        getContract: '/admin/exchange/get-contract',
+        setContract: '/admin/exchange/set-contract',
+        deleteContract: '/admin/exchange/delete-contract'
       },
       account: {
 

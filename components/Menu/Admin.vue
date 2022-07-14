@@ -39,43 +39,51 @@
         return [
           {
             title: this.$vuetify.lang.t('$vuetify.lang_178'),
-            icon: "mdi-alpha-c-circle-outline",
+            icon: "mdi-priority-high",
             to: 'currencies'
           }, {
             title: this.$vuetify.lang.t('$vuetify.lang_179'),
-            icon: "mdi-alpha-c-circle-outline",
+            icon: "mdi-upload-network-outline",
             to: 'chains'
           }, {
             title: this.$vuetify.lang.t('$vuetify.lang_180'),
-            icon: "mdi-alpha-p-circle-outline",
+            icon: "mdi-arrange-send-to-back",
             to: 'pairs'
           }, {
-            title: this.$vuetify.lang.t('$vuetify.lang_181'),
-            icon: "mdi-alpha-a-circle-outline",
-            to: 'accounts'
-          }, {
             title: this.$vuetify.lang.t('$vuetify.lang_182'),
-            icon: "mdi-alpha-c-circle-outline",
+            icon: "mdi-ballot-recount-outline",
             to: 'contracts'
           }, {
+            title: this.$vuetify.lang.t('$vuetify.lang_181'),
+            icon: "mdi-account-circle-outline",
+            to: 'accounts'
+          }, {
             title: this.$vuetify.lang.t('$vuetify.lang_79'),
-            icon: "mdi-alpha-a-circle-outline",
+            icon: "mdi-notebook-plus-outline",
             to: 'assets'
           }, {
+            title: this.$vuetify.lang.t('$vuetify.lang_273'),
+            icon: "mdi-transfer",
+            to: 'transactions'
+          }, {
             title: this.$vuetify.lang.t('$vuetify.lang_183'),
-            icon: "mdi-alpha-o-circle-outline",
+            icon: "mdi-radar",
             to: 'orders'
           }, {
             title: this.$vuetify.lang.t('$vuetify.lang_83'),
-            icon: "mdi-alpha-l-circle-outline",
+            icon: "mdi-package-variant-closed-plus",
             to: 'listing'
           }, {
             title: this.$vuetify.lang.t('$vuetify.lang_185'),
-            icon: "mdi-alpha-n-circle-outline",
+            icon: "mdi-page-next-outline",
             to: 'news'
           }, {
+            title: this.$vuetify.lang.t('$vuetify.lang_266'),
+            icon: "mdi-presentation-play",
+            to: 'advertising'
+          }, {
             title: this.$vuetify.lang.t('$vuetify.lang_186'),
-            icon: "mdi-alpha-s-circle-outline",
+            icon: "mdi-robot-excited-outline",
             to: 'support'
           }
         ]

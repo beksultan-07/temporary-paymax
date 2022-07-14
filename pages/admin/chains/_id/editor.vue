@@ -151,6 +151,9 @@
           id: (this.$route.params.id !== "create" ? this.$route.params.id : 0)
         }).then((response) => {
           if (response.chains) {
+            if (!response.chains[0].platform) {
+              response.chains[0].platform = 'BITCOIN'
+            }
             this.chain = Object.assign(this.chain, response.chains[0]);
           }
         });
