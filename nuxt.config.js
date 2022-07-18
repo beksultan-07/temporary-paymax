@@ -44,6 +44,7 @@ export default {
     { src: '~/plugins/protocol.js' },
     { src: '~/plugins/platform.js' },
     { src: '~/plugins/datafeed.js' },
+    { src: '~/plugins/rule.js' },
     { src: '~/plugins/api.js' }
   ],
 

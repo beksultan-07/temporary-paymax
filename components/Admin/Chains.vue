@@ -261,6 +261,11 @@
           this.chains.splice(this.chains.map((o) => o.id).indexOf(id), 1);
           this.count -= 1;
           this.dialog = false;
+        }).catch((error) => {
+          this.$snackbar.open({
+            content: `${error.response.data.code}: ${error.response.data.message}`,
+            color: 'red darken-2'
+          });
         });
       },
 

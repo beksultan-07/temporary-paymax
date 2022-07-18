@@ -204,6 +204,11 @@
         this.$axios.$post(this.$api.exchange.setAsset, {symbol: this.$route.params.symbol, platform: platform, protocol: protocol}).then((response) => {
           this.asset.chains[index].address = response.address;
           this.$forceUpdate();
+        }).catch((error) => {
+          this.$snackbar.open({
+            content: `${error.response.data.code}: ${error.response.data.message}`,
+            color: 'red darken-2'
+          });
         });
       }
     }

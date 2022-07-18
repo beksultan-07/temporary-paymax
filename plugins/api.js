@@ -58,7 +58,8 @@ export default ({ app }, inject) => {
         deleteContract: '/admin/exchange/delete-contract'
       },
       account: {
-
+        getAccounts: '/admin/account/get-accounts',
+        setAccount: '/admin/account/set-account'
       }
     },
     status: '/status',

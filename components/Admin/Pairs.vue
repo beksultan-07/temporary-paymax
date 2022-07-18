@@ -197,6 +197,11 @@
           this.pairs.splice(this.pairs.map((o) => o.id).indexOf(pair_id), 1);
           this.count -= 1;
           this.dialog = false;
+        }).catch((error) => {
+          this.$snackbar.open({
+            content: `${error.response.data.code}: ${error.response.data.message}`,
+            color: 'red darken-2'
+          });
         });
       },
 
