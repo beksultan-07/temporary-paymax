@@ -66,25 +66,25 @@
       <template v-if="type">
         <v-text-field :disabled="type" :value="$vuetify.lang.t('$vuetify.lang_134')" class="mb-4" color="primary" height="40" dense hide-details outlined :label="$vuetify.lang.t('$vuetify.lang_52')">
           <template v-slot:append>
-            <span class="my-1">{{ query.split('-')[0].toUpperCase() }}/{{ query.split('-')[1].toUpperCase() }}</span>
+            <span class="my-1">{{ getQuery()[0].toUpperCase() }}/{{ getQuery()[1].toUpperCase() }}</span>
           </template>
         </v-text-field>
       </template>
       <template v-else>
         <v-text-field v-model="price" @keyup="setPrice" class="mb-4" color="primary" height="40" dense hide-details outlined :label="$vuetify.lang.t('$vuetify.lang_52')">
           <template v-slot:append>
-            <span class="my-1">{{ query.split('-')[0].toUpperCase() }}/{{ query.split('-')[1].toUpperCase() }}</span>
+            <span class="my-1">{{ getQuery()[0].toUpperCase() }}/{{ getQuery()[1].toUpperCase() }}</span>
           </template>
         </v-text-field>
       </template>
       <v-text-field v-model="quantity" @keyup="setQuantity" class="mb-4" color="primary" height="40" dense hide-details outlined :label="$vuetify.lang.t('$vuetify.lang_53')">
         <template v-slot:append>
-          <span class="my-1">{{ query.split('-')[0].toUpperCase() }}</span>
+          <span class="my-1">{{ getQuery()[0].toUpperCase() }}</span>
         </template>
       </v-text-field>
       <v-text-field v-model="value" @keyup="setValue" color="primary" height="40" dense hide-details outlined :label="$vuetify.lang.t('$vuetify.lang_56')">
         <template v-slot:append>
-          <span class="my-1">{{ query.split('-')[1].toUpperCase() }}</span>
+          <span class="my-1">{{ getQuery()[1].toUpperCase() }}</span>
         </template>
       </v-text-field>
     </v-card-text>
@@ -122,8 +122,8 @@
                         </v-progress-circular>
                       </v-list-item-icon>
                       <v-list-item-content>
-                        <v-list-item-title>{{ $vuetify.lang.t('$vuetify.lang_52') }}: {{ $decimal.truncate(item.price) }} {{ query.split('-')[1].toUpperCase() }}</v-list-item-title>
-                        <v-list-item-subtitle>{{ $vuetify.lang.t('$vuetify.lang_53') }}: {{ $decimal.truncate(item.value) }} {{ query.split('-')[0].toUpperCase() }}</v-list-item-subtitle>
+                        <v-list-item-title>{{ $vuetify.lang.t('$vuetify.lang_52') }}: {{ $decimal.truncate(item.price) }} {{ getQuery()[1].toUpperCase() }}</v-list-item-title>
+                        <v-list-item-subtitle>{{ $vuetify.lang.t('$vuetify.lang_53') }}: {{ $decimal.truncate(item.value) }} {{ getQuery()[0].toUpperCase() }}</v-list-item-subtitle>
                       </v-list-item-content>
                       <v-list-item-action>
                         <v-list-item-action-text>
@@ -219,7 +219,7 @@
     },
     watch: {
       $route(e) {
-        this.getQuery(
+        this.setQuery(
           e.params.unit
         );
         this.getAsset(
@@ -231,7 +231,7 @@
     },
     mounted() {
 
-      this.getQuery(this.unit);
+      this.setQuery(this.unit);
 
       /**
        * Брать цену с ордер листа.
@@ -266,23 +266,17 @@
           return false;
         }
 
-        let index = this.orders.map((o) => o.id).indexOf(data.id);
-        let matching = this.orders.some((o) => o.id === data.id);
-
         if (
 
           // Сверяем принадлежат ли новые события к данному активу,
           // если аргументы совпадают то привязываем полученные данные из события к данному активу.
-          data.base_unit === this.query.split('-')[0] &&
-          data.quote_unit === this.query.split('-')[1] &&
-
-          // Сверяем локальный штат пользователя
-          // это у нас пользовательский [id] с полученным из события пользовательским [user_id],
-          // если аргументы совпадают то это значит что ордер сработал частично или полностью.
-          data.user_id === Number(this.$auth.$state.user.id)
+          data.base_unit === this.getQuery()[0] &&
+          data.quote_unit === this.getQuery()[1]
 
         ) {
 
+          let index = this.orders.map((o) => Number(o.id)).indexOf(data.id);
+          let matching = this.orders.some((o) => Number(o.id) === data.id);
           if (matching) {
 
             switch (data.status) {
@@ -303,12 +297,10 @@
 
             // Озвучиваем действие звуковым сопровождением.
             this.$single.play('trade');
-
           }
 
           // Обновляем данные об активе, в нашем случае нам нужно обновить текущий баланс актива.
           this.getAsset(undefined);
-
         }
 
       });
@@ -330,8 +322,8 @@
 
               // Сверяем принадлежат ли новые события к данному активу,
               // если аргументы совпадают то привязываем полученные данные из события к данному активу.
-              data.graph.lastItem.base_unit === this.query.split('-')[0] &&
-              data.graph.lastItem.quote_unit === this.query.split('-')[1]
+              data.graph.lastItem.base_unit === this.getQuery()[0] &&
+              data.graph.lastItem.quote_unit === this.getQuery()[1]
 
             ) {
 
@@ -354,15 +346,22 @@
        * Перезаписываем адрес запроса.
        * @param query
        */
-      getQuery(query) {
+      setQuery(query) {
         this.query = query;
+      },
+
+      /**
+       * @returns {string[]}
+       */
+      getQuery() {
+        return this.query.split('-')
       },
 
       /**
        * Получаем новые данные бегущей строки, данные об торгах.
        */
       getGraph() {
-        this.$axios.$get(this.$api.exchange.getGraph + '?base_unit=' + this.query.split('-')[0] + '&quote_unit=' + this.query.split('-')[1] + '&limit=1').then((response) => {
+        this.$axios.$get(this.$api.exchange.getGraph + '?base_unit=' + this.getQuery()[0] + '&quote_unit=' + this.getQuery()[1] + '&limit=1').then((response) => {
           this.price = response.graph ? response.graph[0].close : 0;
         })
       },
@@ -397,12 +396,13 @@
             if (response.currencies[0].balance !== undefined) {
               this.balance = (response.currencies[0].balance).toFixed(8) > 0 ? response.currencies[0].balance : 0;
             }
+            let query = this.getQuery();
 
             // Если в этого активе статус 1, то парного ему актива 0,
             // значит налаживаем вето на эту форму в целом.
             this.status = response.currencies[0].status ?? 0;
             if (this.status) {
-              this.$axios.$post(this.$api.exchange.getPair, {base_unit: this.query.split('-')[0], quote_unit: this.query.split('-')[1]}).then((response) => {
+              this.$axios.$post(this.$api.exchange.getPair, {base_unit: query[0], quote_unit: query[1]}).then((response) => {
                 this.status = response.pairs[0].status ?? 0;
               }).catch(e => {
                 console.log(e)
@@ -477,9 +477,9 @@
           // Назначение [sell:1] - [buy:0].
           assigning: this.assigning === 'sell' ? 1 : 0,
           // Имя актива (symbol-base).
-          base_unit: this.query.split('-')[0],
+          base_unit: this.getQuery()[0],
           // Имя актива (symbol-quote).
-          quote_unit: this.query.split('-')[1],
+          quote_unit: this.getQuery()[1],
           // Тип [market:0] - [limit:1]
           trade_type: this.type ? 0 : 1,
           // Количество монет sell/buy.
@@ -517,9 +517,9 @@
           // Назначение [sell:1] - [buy:0].
           assigning: this.assigning === 'sell' ? 1 : 0,
           // Имя актива (symbol-base).
-          base_unit: this.query.split('-')[0],
+          base_unit: this.getQuery()[0],
           // Имя актива (symbol-quote).
-          quote_unit: this.query.split('-')[1],
+          quote_unit: this.getQuery()[1],
           // Показывать количество записей в массиве.
           limit: 10,
           // Показывать записи только если я их владелец.
@@ -559,7 +559,6 @@
           this.$snackbar.open({content: `${error.response.data.code}: ${error.response.data.message}`, color: 'red darken-2'});
         });
       }
-
     }
   }
 </script>

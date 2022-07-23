@@ -279,7 +279,7 @@ export default {
   lang_279: "Account/User ID",
   lang_280: "Email",
   lang_281: "Rules",
-  lang_282: "",
+  lang_282: "Save user changes",
   lang_283: "",
   lang_284: "",
   lang_285: "",

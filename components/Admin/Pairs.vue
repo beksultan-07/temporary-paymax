@@ -51,7 +51,7 @@
           {{ item.price }} <b>{{ (item.quote_unit).toUpperCase() }}</b>
         </template>
         <template v-slot:item.decimal="{ item }">
-          {{ item.decimal }}
+          <v-chip color="blue lighten-4" class="ml-0 mr-2 black--text" label small>{{ item.decimal }}</v-chip>
         </template>
         <template v-slot:item.status="{ item }">
           <template v-if="item.status">

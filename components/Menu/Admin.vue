@@ -37,7 +37,7 @@
     computed: {
 
       /**
-       * @returns {[{icon: string, to: string, title: *},{icon: string, to: string, title: *},{icon: string, to: string, title: *},{icon: string, to: string, title: *},{icon: string, to: string, title: *},null,null,null,null,null,null]}
+       * @returns {[{icon: string, to: string, title: *},{icon: string, to: string, title: *},{icon: string, to: string, title: *},{icon: string, to: string, title: *},{icon: string, to: string, title: *},null,null,null,null]}
        */
       menu() {
         return [
@@ -61,14 +61,6 @@
             title: this.$vuetify.lang.t('$vuetify.lang_181'),
             icon: "mdi-account-circle-outline",
             to: 'accounts'
-          }, {
-            title: this.$vuetify.lang.t('$vuetify.lang_273'),
-            icon: "mdi-transfer",
-            to: 'transactions'
-          }, {
-            title: this.$vuetify.lang.t('$vuetify.lang_183'),
-            icon: "mdi-radar",
-            to: 'orders'
           }, {
             title: this.$vuetify.lang.t('$vuetify.lang_83'),
             icon: "mdi-package-variant-closed-plus",

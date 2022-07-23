@@ -194,15 +194,18 @@
           this.status = response.pairs[0].status ?? false;
           if (this.status) {
 
+            let params = this.$datafeed;
+            params.$decimal = response.pairs[0].decimal;
+
             /**
              * @type {IChartingLibraryWidget}
              */
             window.tvWidget = new window.TradingView.widget({
-              symbol: JSON.stringify(response.pairs[0]),
+              symbol: response.pairs[0].base_unit.toUpperCase() + '-' + response.pairs[0].quote_unit.toUpperCase(),
               theme: (this.$vuetify.theme.dark ? "Dark" : "Light"),
               locale: this.$vuetify.lang.current,
               container: 'charting-library',
-              datafeed: this.$datafeed,
+              datafeed: params,
               interval: '15',
               library_path: '/js/charting_library/',
               disabled_features: [
@@ -213,13 +216,13 @@
                 "compare_symbol",
                 "header_compare",
                 "header_saveload",
-                "timeframes_toolbar",
+                "timeframes_toolbar"
               ],
               client_id: 'tradingview.com',
               charts_storage_api_version: "1.1",
               user_id: 'public_user_id',
               fullscreen: false,
-              autosize: true
+              autosize: true,
             });
           }
 

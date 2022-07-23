@@ -48,18 +48,20 @@
         <template v-slot:item.rpc="{ item }">
           <v-tooltip bottom>
             <template v-slot:activator="{ on, attrs }">
-              <span v-bind="attrs" v-on="on">{{(item.rpc).substr(0, 20) }}{{ item.rpc.length > 20 ? "..." : "" }}</span>
+              <span v-bind="attrs" v-on="on">{{(item.rpc).slice(0, 20) }}{{ item.rpc.length > 20 ? "..." : "" }}</span>
             </template>
             <span>{{ item.rpc }}</span>
           </v-tooltip>
         </template>
         <template v-slot:item.platform="{ item }">
-          <template v-if="item.platform">
-            <b>{{ item.platform }}</b>
-          </template>
-          <template v-else>
-            <b>BITCOIN</b>
-          </template>
+          <v-chip :color="$platform.get(item.platform).color" class="ml-0 mr-2 black--text" label small>
+            <template v-if="item.platform">
+              {{ item.platform }}
+            </template>
+            <template v-else>
+              BITCOIN
+            </template>
+          </v-chip>
         </template>
         <template v-slot:item.fees_withdraw="{ item }">
           {{ item.fees_withdraw ? item.fees_withdraw : '∽' /*Supplier dependent*/ }} <b>{{ $platform.getSymbol(item.platform) }}</b>

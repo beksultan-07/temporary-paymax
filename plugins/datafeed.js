@@ -1,8 +1,13 @@
 export default ({ app }, inject) => {
+
+  /**
+   * @type {{subscribeBars(*, *, *, *): void, resolveSymbol(*, *): void, getBars(*, *, *, *): (boolean|undefined), getServerTime(*): void, $subscribers: {}, unsubscribeBars(*): void, getTimeScaleMarks(*, *, *, *, *): void, calculateHistoryDepth(*, *, *): *, record(*): void, $init: boolean, interval(*): *, send(*): Promise<*>, onReady(*): void}}
+   */
   app.$datafeed = {
 
     $init: false,
     $subscribers: {},
+    $decimal: 0,
 
     /**
      * @param cb
@@ -14,27 +19,27 @@ export default ({ app }, inject) => {
     },
 
     /**
-     * @param params
+     * @param unit
      * @param onSymbolResolvedCallback
      */
-    resolveSymbol(params, onSymbolResolvedCallback) {
+    resolveSymbol(unit, onSymbolResolvedCallback) {
 
-      let serialize = JSON.parse(params)
       let resolved = {
-        name: serialize.base_unit.toUpperCase() + '/' + serialize.quote_unit.toUpperCase(),
+        name: `${unit.split("-")[0] + '/' + unit.split("-")[1]}`,
         description: '',
         type: 'crypto',
         session: '24x7',
         timezone: 'Etc/UTC',
-        ticker: `${serialize.base_unit.toUpperCase() + '-' + serialize.quote_unit.toUpperCase()}`,
+        ticker: `${unit.split("-")[0] + '-' + unit.split("-")[1]}`,
         minmov: 1,
         pricescale: 1000000,
         has_intraday: true,
+        has_empty_bars: true,
         volume_precision: 8,
         data_status: 'streaming'
       }
 
-      switch (serialize.decimal) {
+      switch (this.$decimal) {
         case 2:
           resolved.pricescale = 100;
           break
@@ -61,7 +66,6 @@ export default ({ app }, inject) => {
      * @param onHistoryCallback
      */
     getBars(symbolInfo, resolution, interval, onHistoryCallback) {
-
       if (interval.countBack === undefined) {
         return false;
       }
@@ -149,7 +153,6 @@ export default ({ app }, inject) => {
         resolution: resolution,
         symbolInfo: symbolInfo,
       };
-      //this.$self.overlay = false;
       this.$init = false;
     },
 

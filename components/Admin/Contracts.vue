@@ -38,10 +38,30 @@
           </v-tooltip>
         </template>
         <template v-slot:item.chain_id="{ item }">
-          {{ item.chain_id }}: {{ item.chain_name }}
+          <v-chip color="blue lighten-4" class="ml-0 mr-2 black--text" label small>{{ item.chain_id }}</v-chip> {{ item.chain_name }}
+        </template>
+        <template v-slot:item.address="{ item }">
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on, attrs }">
+              <span v-bind="attrs" v-on="on">
+                {{ item.address.slice(0,20) }}...
+              </span>
+            </template>
+            <span>{{ item.address }}</span>
+          </v-tooltip>
         </template>
         <template v-slot:item.fees_withdraw="{ item }">
           {{ item.fees_withdraw }} <b>{{ (item.symbol).toUpperCase() }}</b>
+        </template>
+        <template v-slot:item.protocol="{ item }">
+          <v-chip :color="$protocol.get(item.protocol).color" class="ml-0 mr-2 black--text" label small>
+            {{ item.protocol }}
+          </v-chip>
+        </template>
+        <template v-slot:item.platform="{ item }">
+          <v-chip :color="$platform.get(item.platform).color" class="ml-0 mr-2 black--text" label small>
+            {{ item.platform }}
+          </v-chip>
         </template>
         <template v-slot:item.edit="{ item }">
           <v-btn :to="`/admin/contracts/${item.id}/editor`" icon>

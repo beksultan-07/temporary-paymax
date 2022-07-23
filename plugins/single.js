@@ -1,7 +1,15 @@
 import {Howl} from "howler";
 
 export default ({ app, store }, inject) => {
+
+  /**
+   * @type {{play(*): void}}
+   */
   app.$single = {
+
+    /**
+     * @param name
+     */
     play(name) {
       const player = new Howl({
         src: `${app.$axios.defaults.baseURL}/storage/media/${name}.ogg`,

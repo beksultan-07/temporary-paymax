@@ -59,6 +59,7 @@ export default ({ app }, inject) => {
       },
       account: {
         getAccounts: '/admin/account/get-accounts',
+        getAccount: '/admin/account/get-account',
         setAccount: '/admin/account/set-account'
       }
     },

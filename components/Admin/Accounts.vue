@@ -21,7 +21,7 @@
     <template v-if="accounts.length">
 
       <!-- Start: data table -->
-      <v-data-table :class="count > limit ? 'none-radius ' : ''" :headers="headlines" :items="accounts" :page.sync="page" item-key="id" :items-per-page="limit" hide-default-footer hide-default-footer show-expand single-expand>
+      <v-data-table :class="count > limit ? 'none-radius ' : ''" :headers="headlines" :items="accounts" :page.sync="page" item-key="id" :items-per-page="limit" hide-default-footer show-expand single-expand>
         <template v-slot:item.data-table-expand="{ item, expand, isExpanded }">
           <template v-if="isExpanded">
             <v-icon @click="expand(!isExpanded)">
@@ -86,24 +86,35 @@
             </span>
           </v-tooltip>
         </template>
+        <template v-slot:item.edit="{ item }">
+          <v-btn :to="`/admin/accounts/${item.id}/editor`" icon>
+            <v-icon>
+              mdi-circle-edit-outline
+            </v-icon>
+          </v-btn>
+        </template>
         <template v-slot:expanded-item="{ headers, item }">
           <td :colspan="headers.length">
-            <v-select class="my-4" v-model="item.rules" :items="rules" chips :label="$vuetify.lang.t('$vuetify.lang_281')" @change="setAccount(item)" small-chips multiple outlined hide-details></v-select>
-            <v-select class="my-4" v-model="item.status" :items="status" item-text="name" item-value="value" :label="$vuetify.lang.t('$vuetify.lang_191')" @change="setAccount(item)" outlined hide-details></v-select>
-            <v-row v-if="$rule.get('transactions') || $rule.get('orders')" class="mb-2" align="center">
-              <v-col v-if="$rule.get('transactions')" cols="12" md="6">
-                <v-btn :to="`/admin/transactions?user=${item.id}`" block depressed color="teal white--text">
-                  {{ $vuetify.lang.t('$vuetify.lang_273') }}
+            <v-row class="mt-2">
+              <v-col cols="12" md="4">
+                <v-btn :to="`/admin/accounts/${item.id}/transactions`" class="mb-5 text-capitalize" block depressed large outlined color="red">
+                  {{ $vuetify.lang.t('$vuetify.lang_273') }} {{ item.counts.transaction }}
                 </v-btn>
               </v-col>
-              <v-col v-if="$rule.get('orders')" cols="12" md="6">
-                <v-btn :to="`/admin/orders?user=${item.id}`" block depressed color="cyan white--text">
-                  {{ $vuetify.lang.t('$vuetify.lang_183') }}
+              <v-col cols="12" md="4">
+                <v-btn :to="`/admin/accounts/${item.id}/orders`" class="mb-5 text-capitalize" block depressed large outlined color="cyan">
+                  {{ $vuetify.lang.t('$vuetify.lang_183') }} {{ item.counts.order }}
+                </v-btn>
+              </v-col>
+              <v-col cols="12" md="4">
+                <v-btn :to="`/admin/accounts/${item.id}/assets`" class="mb-5 text-capitalize" block depressed large outlined color="lime">
+                  {{ $vuetify.lang.t('$vuetify.lang_79') }} {{ item.counts.asset }}
                 </v-btn>
               </v-col>
             </v-row>
           </td>
         </template>
+
       </v-data-table>
       <!-- End: data table -->
 
@@ -154,11 +165,6 @@
     data() {
       return {
         search: "",
-        status: [
-          { value: false, name: "OFF"},
-          { value: true, name: "ON"},
-        ],
-        rules: ["currencies", "chains", "pairs", "accounts", "contracts", "transactions", "orders", "listing", "news", "support", "advertising", "deny-record"],
         accounts: [],
         overlay: true,
         limit: 12,
@@ -197,23 +203,6 @@
           this.count = response.count ?? 0;
           this.length = Math.ceil(this.count/this.limit);
           this.overlay = false;
-        });
-      },
-
-      /**
-       * @param item
-       */
-      setAccount(item) {
-        this.$axios.$post(this.$api.admin.account.setAccount, {
-          id: item.id,
-          user: item
-        }).then(() => {
-          this.$forceUpdate();
-        }).catch((error) => {
-          this.$snackbar.open({
-            content: `${error.response.data.code}: ${error.response.data.message}`,
-            color: 'red darken-2'
-          });
         });
       },
 
@@ -262,7 +251,12 @@
             align: 'end',
             sortable: false,
             value: 'create_at'
-          }
+          }, {
+            text: this.$vuetify.lang.t('$vuetify.lang_194'),
+            align: 'start',
+            sortable: false,
+            value: 'edit'
+          },
         ]
       }
     }

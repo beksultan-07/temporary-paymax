@@ -52,11 +52,11 @@
 
 <script>
 
-  import Market from '../components/Trade/Market';
-  import OrderForm from '../components/Trade/OrderForm';
-  import OrderBook from "../components/Trade/OrderBook";
-  import TradeBook from "../components/Trade/TradeBook";
-  import Common from "../components/Trade/Common";
+  import Market from '@/components/Trade/Market';
+  import OrderForm from '@/components/Trade/OrderForm';
+  import OrderBook from "@/components/Trade/OrderBook";
+  import TradeBook from "@/components/Trade/TradeBook";
+  import Common from "@/components/Trade/Common";
 
   export default {
     auth: false,

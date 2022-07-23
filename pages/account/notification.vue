@@ -61,7 +61,7 @@
        *
        */
       getUser() {
-        this.$axios.$get(this.$api.account.getUser).then((response) => {
+        this.$axios.$post(this.$api.account.getUser).then((response) => {
           this.sample = response.sample ?? [];
         });
       },

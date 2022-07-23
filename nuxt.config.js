@@ -1,4 +1,5 @@
 import colors from 'vuetify/es5/util/colors';
+require('dotenv').config({ path: `.env.${process.env.NODE_ENV}` })
 
 export default {
 
@@ -25,7 +26,22 @@ export default {
   },
 
   axios: {
-    baseURL: process.env.BASE_API || 'http://localhost:3082/v2'
+    extend(config, { isDev }) {
+      if (isDev) {
+        config.proxy = false
+      }
+    },
+    baseURL: process.env.BASE_API
+  },
+
+  proxy: {
+    '/v2': {
+      target: process.env.BASE_API,
+      pathRewrite: {
+        '^/v2': '/v2',
+        changeOrigin: true
+      }
+    }
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
@@ -54,8 +70,8 @@ export default {
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
     // https://go.nuxtjs.dev/vuetify
+    ['@nuxtjs/dotenv', { filename: `.env.${process.env.NODE_ENV}` }],
     '@nuxtjs/vuetify',
-    '@nuxtjs/dotenv',
     '@nuxtjs/moment'
   ],
 
@@ -89,7 +105,7 @@ export default {
           login: { url: '/auth/action-signin', method: 'post' },
           refresh: { url: '/auth/get-refresh', method: 'post' },
           logout: { url: '/auth/set-logout', method: 'post', data: 'refresh'},
-          user: { url: '/account/get-user', method: 'get' }
+          user: { url: '/account/get-user', method: 'post' }
         },
         autoLogout: true
       }

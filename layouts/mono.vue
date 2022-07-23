@@ -2,7 +2,7 @@
   <v-app>
     <v-app-bar color="transparent" absolute flat app>
       <v-toolbar-title>
-        <b class="mx-2"><nuxt-link :class="(this.$vuetify.theme.dark ? 'white' : 'black') + '--text text-decoration-none'" to="/">EXCHANGE</nuxt-link></b>
+        <b class="mx-2"><nuxt-link :class="(this.$vuetify.theme.dark ? 'white' : 'black') + '--text text-decoration-none'" to="/">EXCHANGE <span class="red--text">BETA</span></nuxt-link></b>
       </v-toolbar-title>
       <v-divider class="mx-4" inset vertical />
       <v-component-menu-default />

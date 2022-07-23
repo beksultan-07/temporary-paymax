@@ -47,6 +47,8 @@
               Object.assign(window.tvWidget['_options'], { locale: name})
           );
         }
+
+        this.dialog = false;
       }
     }
   }

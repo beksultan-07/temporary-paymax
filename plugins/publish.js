@@ -9,11 +9,20 @@ import Vue from 'vue';
 export default ({ app }, inject) => {
   let event = new Vue();
 
+  /**
+   * @type {{bind(*, *): boolean, subscribe(*, *, *): void, unsubscribe(*): void, unbind(*): void, client: MqttClient, connect: boolean}}
+   */
   app.$publish = {
     client: mqtt.connect(process.env.BASE_BROKER || 'ws://localhost:15675/ws', {
       clean: true
     }),
     connect: true,
+
+    /**
+     * @param topic
+     * @param channels
+     * @param error
+     */
     subscribe(topic, channels, error) {
 
       // Connect broker client.
@@ -47,6 +56,10 @@ export default ({ app }, inject) => {
         }
       });
     },
+
+    /**
+     * @param topic
+     */
     unsubscribe(topic) {
       this.client.unsubscribe(topic, {qos: 2}, (err) => {
         if (err) {
@@ -56,11 +69,21 @@ export default ({ app }, inject) => {
       });
       console.log("Unsubscribe topic:", topic);
     },
+
+    /**
+     * @param channels
+     */
     unbind(channels) {
       channels.map((channel) => {
         event.$off(channel);
       });
     },
+
+    /**
+     * @param channel
+     * @param callback
+     * @returns {boolean}
+     */
     bind(channel, callback) {
       if (typeof callback !== "function") {
         return false
