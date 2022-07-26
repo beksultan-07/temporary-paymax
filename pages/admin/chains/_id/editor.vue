@@ -8,6 +8,7 @@
         <v-select v-model="chain.platform" :items="$platform.list" item-text="name" item-value="name" :label="$vuetify.lang.t('$vuetify.lang_113')" outlined></v-select>
         <v-select v-model="chain.status" :items="status" item-text="name" item-value="value" :label="$vuetify.lang.t('$vuetify.lang_191')" outlined></v-select>
         <v-text-field v-model="chain.rpc" color="primary" :label="$vuetify.lang.t('$vuetify.lang_219')" outlined></v-text-field>
+        <v-select v-model="chain.tag" :items="$tag.list" item-text="name" item-value="name" :label="$vuetify.lang.t('$vuetify.lang_283')" outlined />
       </v-col>
       <v-col cols="12" md="4">
         <v-text-field v-model="chain.explorer_link" color="primary" :label="$vuetify.lang.t('$vuetify.lang_224')" outlined></v-text-field>
@@ -134,6 +135,7 @@
           time_withdraw: 10,
           status: false,
           fees_withdraw: 0,
+          tag: "C_NONE",
           platform: "ETHEREUM"
         }
       }
@@ -150,9 +152,13 @@
         this.$axios.$post(this.$api.admin.exchange.getChain, {
           id: (this.$route.params.id !== "create" ? this.$route.params.id : 0)
         }).then((response) => {
+          console.log(response.chains);
           if (response.chains) {
             if (!response.chains[0].platform) {
               response.chains[0].platform = 'BITCOIN'
+            }
+            if (!response.chains[0].tag) {
+              response.chains[0].tag = 'C_NONE'
             }
             this.chain = Object.assign(this.chain, response.chains[0]);
           }

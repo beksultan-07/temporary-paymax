@@ -55,7 +55,10 @@ export default ({ app }, inject) => {
         getContracts: '/admin/exchange/get-contracts',
         getContract: '/admin/exchange/get-contract',
         setContract: '/admin/exchange/set-contract',
-        deleteContract: '/admin/exchange/delete-contract'
+        deleteContract: '/admin/exchange/delete-contract',
+        getTransactions: '/admin/exchange/get-transactions',
+        getOrders: '/admin/exchange/get-orders',
+        getAssets: '/admin/exchange/get-assets'
       },
       account: {
         getAccounts: '/admin/account/get-accounts',

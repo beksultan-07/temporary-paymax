@@ -61,7 +61,8 @@ export default {
     { src: '~/plugins/platform.js' },
     { src: '~/plugins/datafeed.js' },
     { src: '~/plugins/rule.js' },
-    { src: '~/plugins/api.js' }
+    { src: '~/plugins/api.js' },
+    { src: '~/plugins/tag.js' },
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components

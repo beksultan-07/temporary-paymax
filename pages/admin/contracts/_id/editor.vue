@@ -5,7 +5,15 @@
     <v-row>
       <v-col cols="12" md="4">
         <v-text-field v-model="contract.address" color="primary" :label="$vuetify.lang.t('$vuetify.lang_269')" outlined></v-text-field>
-        <v-select v-model="contract.protocol" :items="$protocol.list" item-text="name" item-value="name" :label="$vuetify.lang.t('$vuetify.lang_270')" outlined></v-select>
+        <v-select v-model="contract.protocol" :items="protocols" item-text="name" item-value="name" :label="$vuetify.lang.t('$vuetify.lang_270')" outlined>
+          <template v-slot:item="{ item, attrs, on }">
+            <v-list-item v-bind="attrs" v-on="on">
+              <v-list-item-title>
+                {{ item.name }} <v-badge class="ml-2" :color="item.color" />
+              </v-list-item-title>
+            </v-list-item>
+          </template>
+        </v-select>
       </v-col>
       <v-col cols="12" md="4">
         <v-select v-model="contract.symbol" :items="currencies" item-text="symbol" item-value="symbol" :label="$vuetify.lang.t('$vuetify.lang_187')" outlined>
@@ -23,7 +31,7 @@
             </v-list-item>
           </template>
         </v-select>
-        <v-select v-model="contract.chain_id" :items="chains" item-text="name" item-value="id" :label="$vuetify.lang.t('$vuetify.lang_268')" outlined></v-select>
+        <v-select v-model="contract.chain_id" :items="chains" item-text="name" item-value="id" @change="getTag" :label="$vuetify.lang.t('$vuetify.lang_268')" outlined></v-select>
       </v-col>
       <v-col cols="12" md="4">
         <v-select v-model="contract.platform" :items="$platform.getType('CRYPTO')" item-text="name" item-value="name" :label="$vuetify.lang.t('$vuetify.lang_113')" outlined></v-select>
@@ -90,6 +98,7 @@
       return {
         currencies: [],
         chains: [],
+        protocols: this.$protocol.list || [],
         contract: {
           symbol: "",
           chain_id: 0,
@@ -104,8 +113,22 @@
       this.getContract();
       this.getChains();
       this.getCurrencies();
+
+      setTimeout(() => {
+        this.getTag();
+      }, 1000);
     },
     methods: {
+
+      /**
+       *
+       */
+      getTag() {
+        this.protocols = this.$protocol.getTag(this.chains.find((item) => item.id === this.contract.chain_id).tag)
+        if (this.protocols.length) {
+          this.contract.protocol = this.protocols[0].name;
+        }
+      },
 
       /**
        *
