@@ -267,6 +267,9 @@
         }
       },
 
+      /**
+       * @returns {[{text: *, sortable: boolean, align: string, value: string},{text: *, sortable: boolean, align: string, value: string},{text: *, sortable: boolean, align: string, value: string},{text: *, sortable: boolean, align: string, value: string},{text: *, sortable: boolean, align: string, value: string},null,null]}
+       */
       headlines() {
         return [
           {
