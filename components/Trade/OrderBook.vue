@@ -48,15 +48,15 @@
       <v-virtual-scroll @mouseover="hover = true" @mouseleave="hover = false" :class="hover ? '' : 'overflow-y-hidden'" bench="0" :items="orders" height="393" item-height="30">
         <template v-slot:default="{ item }">
           <v-component-shift-item :width="Number($decimal.div($decimal.mul(item.value, 100), item.quantity).toFixed(0))" :assigning="item.assigning ? 1 : 0" :key="item.id">
-            <v-row style="cursor: pointer;" @click="addPriceToForm($decimal.truncate(item.price), decimal)" no-gutters>
+            <v-row style="cursor: pointer;" @click="addPriceToForm($decimal.truncate(item.price), base_decimal)" no-gutters>
               <v-col cols="4">
-                <span :class="(item.assigning ? 'red' : 'teal') + '--text'">{{ $decimal.truncate(item.price, decimal) }}</span>
+                <span :class="(item.assigning ? 'red' : 'teal') + '--text'">{{ $decimal.format(item.price, quote_decimal) }}</span>
               </v-col>
               <v-col :class="'text-right ' + ($vuetify.theme.dark ? 'grey--text' : '')" cols="4">
-                {{ $decimal.truncate(item.value) }}
+                {{ $decimal.format(item.value, base_decimal) }}
               </v-col>
               <v-col :class="'text-right ' + ($vuetify.theme.dark ? 'grey--text' : '')" cols="4">
-                {{ $decimal.truncate($decimal.mul(item.value, item.price), decimal) }}
+                {{ $decimal.truncate($decimal.mul(item.value, item.price), quote_decimal) }}
               </v-col>
             </v-row>
           </v-component-shift-item>
@@ -100,7 +100,7 @@
           </v-col>
           <v-col class="text-right" cols="6">
             <small class="mx-2">
-              {{ eyelet === 1 ? $decimal.truncate(volume, decimal) : $decimal.truncate($decimal.mul(volume, priceCurrent), decimal) }}<b>({{ eyelet === 1 ? query.split('-')[0].toUpperCase() : query.split('-')[1].toUpperCase() }})</b>
+              {{ eyelet === 1 ? $decimal.truncate(volume, quote_decimal) : $decimal.truncate($decimal.mul(volume, priceCurrent), quote_decimal) }}<b>({{ eyelet === 1 ? query.split('-')[0].toUpperCase() : query.split('-')[1].toUpperCase() }})</b>
             </small>
           </v-col>
         </v-row>
@@ -115,7 +115,7 @@
                       mdi-cog
                     </v-icon>
                   </template>
-                  <span v-if="scale">{{ scale }}/{{ $scale.getChild(decimal, scale) }}</span>
+                  <span v-if="scale">{{ scale }}/{{ $scale.getChild(quote_decimal, scale) }}</span>
                 </v-tooltip>
               </template>
               <template v-else>
@@ -126,7 +126,7 @@
             </v-btn>
           </template>
           <v-list>
-            <v-list-item v-for="scale in $scale.getScale(decimal)" :key="scale" @click="setScale(scale)" link>
+            <v-list-item v-for="scale in $scale.getScale(quote_decimal)" :key="scale" @click="setScale(scale)" link>
               <v-list-item-title>{{ scale > 0 ? scale : $vuetify.lang.t('$vuetify.lang_64')}}</v-list-item-title>
             </v-list-item>
           </v-list>
@@ -162,7 +162,8 @@
         hover: false,
         scale: 0,
         assigning: 2,
-        decimal: 2,
+        base_decimal: 2,
+        quote_decimal: 8,
         query: '--:--',
         overlay: true,
         eyelet: 2,
@@ -253,7 +254,7 @@
         if (this.eyelet === data.assigning || this.eyelet === 2) {
 
           // Добавляем новое значения по шкале запроса.
-          let min = this.$scale.getChild(this.decimal, this.scale);
+          let min = this.$scale.getChild(this.quote_decimal, this.scale);
 
           if ((min > 0 ? this.isBetween(data.value, min, this.scale) : true)) {
             this.orders.unshift(Object.assign({}, data));
@@ -331,7 +332,8 @@
        */
       getPair() {
         this.$axios.$post(this.$api.exchange.getPair, {base_unit: this.query.split('-')[0], quote_unit: this.query.split('-')[1]}).then((response) => {
-          this.decimal = response.pairs[0].decimal ?? 2;
+          this.base_decimal = response.pairs[0].base_decimal ?? 2;
+          this.quote_decimal = response.pairs[0].quote_decimal ?? 8;
         });
       },
 
@@ -356,7 +358,7 @@
           // Максимальное значение значения.
           max: this.scale,
           // Минимальное значения.
-          min: this.$scale.getChild(this.decimal, this.scale)
+          min: this.$scale.getChild(this.base_decimal, this.scale)
         }).then((response) => {
 
           this.volume = response.volume ?? 0;

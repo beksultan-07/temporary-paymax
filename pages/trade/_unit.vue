@@ -195,7 +195,7 @@
           if (this.status) {
 
             let params = this.$datafeed;
-            params.$decimal = response.pairs[0].decimal;
+            params.$decimal = response.pairs[0].quote_decimal;
 
             /**
              * @type {IChartingLibraryWidget}

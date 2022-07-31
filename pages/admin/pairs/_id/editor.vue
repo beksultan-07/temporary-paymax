@@ -43,7 +43,8 @@
           </template>
         </v-select>
         <v-text-field v-model="pair.price" color="primary" :loading="loading" :label="$vuetify.lang.t('$vuetify.lang_52')" outlined></v-text-field>
-        <v-select v-model="pair.decimal" :items="decimals" item-text="name" item-value="value" :label="$vuetify.lang.t('$vuetify.lang_260')" outlined></v-select>
+        <v-select v-model="pair.base_decimal" :items="decimals" item-text="name" item-value="value" :label="`Base ${$vuetify.lang.t('$vuetify.lang_260')}`" outlined></v-select>
+        <v-select v-model="pair.quote_decimal" :items="decimals" item-text="name" item-value="value" :label="`Quote ${$vuetify.lang.t('$vuetify.lang_260')}`" outlined></v-select>
         <v-select v-model="pair.status" :items="status" item-text="name" item-value="value" :label="$vuetify.lang.t('$vuetify.lang_191')" outlined></v-select>
         <template v-if="$route.params.id !== 'create'">
           <v-switch v-model="pair.graph_clear" :label="$vuetify.lang.t('$vuetify.lang_259')" />
@@ -137,7 +138,8 @@
           base_unit: "",
           quote_unit: "",
           price: 0,
-          decimal: 2,
+          base_decimal: 2,
+          quote_decimal: 8,
           status: false,
           graph_clear: false
         },
@@ -182,6 +184,7 @@
           id: (this.$route.params.id !== "create" ? this.$route.params.id : 0)
         }).then((response) => {
           if (response.pairs) {
+            console.log(response.pairs[0]);
             this.pair = Object.assign(this.pair, response.pairs[0]);
           }
         });

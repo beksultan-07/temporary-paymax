@@ -78,6 +78,10 @@
                     <v-card-subtitle>
                       {{ $vuetify.lang.t('$vuetify.lang_113') }}: <b>{{ item.platform ? item.platform : 'BITCOIN' }}</b>
                     </v-card-subtitle>
+                    <v-divider v-if="item.contract" />
+                    <v-card-subtitle v-if="item.contract">
+                      {{ $vuetify.lang.t('$vuetify.lang_269') }}: {{ item.contract.address }}
+                    </v-card-subtitle>
                     <v-divider />
                     <v-card-text :class="$vuetify.theme.dark ? 'white--text' : 'black--text'">
                       {{ $vuetify.lang.t('$vuetify.lang_87').replace(/%1/g, item['confirmation']) }}

@@ -81,10 +81,10 @@
           <v-component-shift-item :assigning="item.assigning ? 1 : 0" :width="100" :key="item.id">
             <v-row no-gutters>
               <v-col cols="4">
-                <span :class="(item.assigning ? 'red' : 'teal') + '--text'">{{ $decimal.truncate(item.price) }}</span>
+                <span :class="(item.assigning ? 'red' : 'teal') + '--text'">{{ $decimal.format(item.price, quote_decimal) }}</span>
               </v-col>
               <v-col :class="'text-right ' + ($vuetify.theme.dark ? 'grey--text' : '')" cols="4">
-                {{ $decimal.truncate(item.quantity) }}
+                {{ $decimal.format(item.quantity, base_decimal) }}
               </v-col>
               <v-col :class="'text-right ' + ($vuetify.theme.dark ? 'grey--text' : '')" cols="4">
                 {{ item.create_at }}
@@ -136,6 +136,8 @@
         hover: false,
         query: '--:--',
         overlay: true,
+        base_decimal: 2,
+        quote_decimal: 8,
         eyelet: 2,
         trades: []
       }
@@ -185,6 +187,11 @@
 
           }
 
+          // Если количество в книги торгов превышает больше 100 элементов, то начинаем удалять последний 101 елемент.
+          if (this.trades.length > 100) {
+            this.trades.splice(-1)
+          }
+
         }
 
       });
@@ -205,6 +212,8 @@
         this.overlay = true;
         this.eyelet = assigning;
 
+        this.getPair();
+
         this.$axios.$post(this.$api.exchange.getTrades, {
           // Назначение [sell:1] - [buy:0].
           assigning: assigning,
@@ -223,6 +232,16 @@
           });
 
           this.overlay = false;
+        });
+      },
+
+      /**
+       *
+       */
+      getPair() {
+        this.$axios.$post(this.$api.exchange.getPair, {base_unit: this.query.split('-')[0], quote_unit: this.query.split('-')[1]}).then((response) => {
+          this.base_decimal = response.pairs[0].base_decimal ?? 2;
+          this.quote_decimal = response.pairs[0].quote_decimal ?? 8;
         });
       }
     },

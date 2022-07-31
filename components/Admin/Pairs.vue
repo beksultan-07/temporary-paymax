@@ -51,7 +51,7 @@
           {{ item.price }} <b>{{ (item.quote_unit).toUpperCase() }}</b>
         </template>
         <template v-slot:item.decimal="{ item }">
-          <v-chip color="blue lighten-4" class="ml-0 mr-2 black--text" label small>{{ item.decimal }}</v-chip>
+          <v-chip color="blue lighten-4" class="ml-0 mr-2 black--text" label small>{{ item.base_decimal }}/{{ item.quote_decimal }}</v-chip>
         </template>
         <template v-slot:item.status="{ item }">
           <template v-if="item.status">
@@ -253,7 +253,7 @@
           }, {
             text: this.$vuetify.lang.t('$vuetify.lang_260'),
             align: 'start',
-            sortable: true,
+            sortable: false,
             value: 'decimal'
           }, {
             text: this.$vuetify.lang.t('$vuetify.lang_81'),
