@@ -38,7 +38,7 @@
           {{ item.symbol.toUpperCase() }}
         </template>
         <template v-slot:item.value="{ item }">
-          -{{ item.value }} <b>{{ item.symbol.toUpperCase() }}</b>
+          {{ item.tx_type ? '-' : '+' }}{{ item.value }} <b>{{ item.symbol.toUpperCase() }}</b>
         </template>
         <template v-slot:item.status="{ item }">
           <template v-if="item.status === 'PENDING'">
@@ -72,14 +72,36 @@
                 <v-list-item>
                   <v-item-group>
                     <v-list-item-subtitle>
-                      {{ $vuetify.lang.t('$vuetify.lang_105') }}
+                      {{ $vuetify.lang.t('$vuetify.lang_285') }}
                     </v-list-item-subtitle>
                     <v-list-item-title>
-                      -{{ item.value }} {{ item.symbol.toUpperCase() }}
+                      {{ item.chain.name }}
+                    </v-list-item-title>
+                  </v-item-group>
+                </v-list-item>
+                <v-list-item v-if="item.hash">
+                  <v-item-group>
+                    <v-list-item-subtitle>
+                      {{ $vuetify.lang.t('$vuetify.lang_284') }}
+                    </v-list-item-subtitle>
+                    <v-list-item-title v-if="item.chain.explorer_link">
+                      <a :href="`${item.chain.explorer_link}/${item.hash}`" target="_blank">
+                        <i>{{ item.hash }}</i>
+                      </a>
                     </v-list-item-title>
                   </v-item-group>
                 </v-list-item>
                 <v-list-item>
+                  <v-item-group>
+                    <v-list-item-subtitle>
+                      {{ item.tx_type ? $vuetify.lang.t('$vuetify.lang_105') : $vuetify.lang.t('$vuetify.lang_287') }}
+                    </v-list-item-subtitle>
+                    <v-list-item-title>
+                      {{ item.tx_type ? '-' : '+' }}{{ item.value }} {{ item.symbol.toUpperCase() }}
+                    </v-list-item-title>
+                  </v-item-group>
+                </v-list-item>
+                <v-list-item v-if="item.tx_type">
                   <v-item-group>
                     <v-list-item-subtitle>
                       {{ $vuetify.lang.t('$vuetify.lang_20') }}
@@ -89,7 +111,7 @@
                     </v-list-item-title>
                   </v-item-group>
                 </v-list-item>
-                <v-list-item>
+                <v-list-item v-if="item.tx_type">
                   <v-item-group>
                     <v-list-item-subtitle>
                       {{ $vuetify.lang.t('$vuetify.lang_107') }}
@@ -130,6 +152,16 @@
                     </v-list-item-subtitle>
                     <v-list-item-title>
                       {{ $moment(item.create_at).format('DD/M/YYYY hh:mm:ss') }}
+                    </v-list-item-title>
+                  </v-item-group>
+                </v-list-item>
+                <v-list-item v-if="item.chain.confirmation">
+                  <v-item-group>
+                    <v-list-item-subtitle>
+                      {{ $vuetify.lang.t('$vuetify.lang_153') }}
+                    </v-list-item-subtitle>
+                    <v-list-item-title>
+                      {{ item.chain.confirmation }}/{{ item.confirmation }}
                     </v-list-item-title>
                   </v-item-group>
                 </v-list-item>

@@ -51,6 +51,9 @@
             <v-row style="cursor: pointer;" @click="addPriceToForm($decimal.truncate(item.price), base_decimal)" no-gutters>
               <v-col cols="4">
                 <span :class="(item.assigning ? 'red' : 'teal') + '--text'">{{ $decimal.format(item.price, quote_decimal) }}</span>
+                <v-chip v-if="item.orders" class="pa-1" style="height: 15px" label outlined small>
+                  <small>{{ item.orders.length }}x</small>
+                </v-chip>
               </v-col>
               <v-col :class="'text-right ' + ($vuetify.theme.dark ? 'grey--text' : '')" cols="4">
                 {{ $decimal.format(item.value, base_decimal) }}
@@ -115,7 +118,7 @@
                       mdi-cog
                     </v-icon>
                   </template>
-                  <span v-if="scale">{{ scale }}/{{ $scale.getChild(quote_decimal, scale) }}</span>
+                  <span v-if="scale">{{ scale }}</span>
                 </v-tooltip>
               </template>
               <template v-else>
@@ -231,6 +234,30 @@
 
           // Получаем текущий объем в ордерах.
           this.getVolume(this.eyelet);
+
+        } else {
+
+          this.orders.map((o) => {
+            if (typeof o.orders !== "undefined") {
+
+              index = o.orders.map((i) => (i.id).toString()).indexOf((data.id).toString());
+              if (index !== -1) {
+
+                o.value -= data.value ? this.$decimal.sub(o.value, data.value) : 0;
+
+                o.orders[index].value = this.$decimal.sub(o.orders[index].value, data.value);
+                if (o.orders[index].value === 0) {
+                  o.orders.splice(index, 1)
+                }
+
+                if (o.orders.length === 0) {
+                  this.orders.splice(this.orders.map((i) => (i.id).toString()).indexOf((o.id).toString()), 1);
+                }
+              }
+
+            }
+          });
+
         }
 
       });
@@ -254,10 +281,24 @@
         if (this.eyelet === data.assigning || this.eyelet === 2) {
 
           // Добавляем новое значения по шкале запроса.
-          let min = this.$scale.getChild(this.quote_decimal, this.scale);
+          if ((this.scale > 0 ? this.isBetween(data.value, 0, this.scale) : true)) {
 
-          if ((min > 0 ? this.isBetween(data.value, min, this.scale) : true)) {
-            this.orders.unshift(Object.assign({}, data));
+            let item = this.orders.find((o) => o.price === data.price && o.assigning === data.assigning);
+            if (item) {
+
+              if (typeof item.orders === "undefined") {
+                item.orders = [];
+                item.orders.unshift(Object.assign({}, item));
+              }
+
+              item.id += Number(data.id);
+              item.value += data.value;
+              item.quantity += data.quantity;
+
+              item.orders.unshift(Object.assign({}, data));
+            } else {
+              this.orders.unshift(Object.assign({}, data));
+            }
           }
 
           // Если количество в книги ордеров превышает больше 100 элементов, то начинаем удалять последний 101 елемент.
@@ -289,11 +330,27 @@
         let index = this.orders.map((o) => o.id).indexOf(data.id);
         if (index !== -1) {
           this.orders.splice(index, 1);
+        } else {
+          this.orders.map((o) => {
+            if (typeof o.orders !== "undefined") {
+
+              index = o.orders.map((i) => (i.id).toString()).indexOf((data.id).toString());
+              if (index !== -1) {
+                o.orders.splice(index, 1);
+
+                o.value = this.$decimal.sub(o.value, data.value);
+                o.quantity = this.$decimal.sub(o.quantity, data.value);
+
+                if (o.orders.length === 0) {
+                  this.orders.splice(this.orders.map((i) => (i.id).toString()).indexOf((o.id).toString()), 1);
+                }
+              }
+            }
+          });
         }
 
         // Получаем текущий объем в ордерах.
         this.getVolume(this.eyelet);
-
       });
 
       this.getOrders(2);
@@ -356,9 +413,7 @@
           // Показывать записи если они со статусом в ожидании.
           status: 2,
           // Максимальное значение значения.
-          max: this.scale,
-          // Минимальное значения.
-          min: this.$scale.getChild(this.base_decimal, this.scale)
+          decimal: this.scale
         }).then((response) => {
 
           this.volume = response.volume ?? 0;
@@ -366,7 +421,35 @@
           // Записываем список ордеров в ожидании в массив.
           this.orders = response.orders ?? [];
           this.orders.map(item => {
-            item.id = Number(item.id); return item;
+
+            let items = this.orders.filter((o) => o.price === item.price && o.assigning === item.assigning);
+            if (items.length > 1) {
+
+              let assign = {id: 0, value: 0, quantity: 0, orders: []};
+
+              items.map((c) => {
+                let index = this.orders.map((o) => o.id).indexOf(c.id);
+                if (index !== -1) {
+                  assign.orders.push(this.orders[index]);
+                  this.orders.splice(index, 1);
+                }
+
+                assign.id += Number(c.id);
+                assign.value += c.value;
+                assign.quantity += c.quantity;
+              });
+
+              this.orders.push(Object.assign({
+                user_id: item.user_id,
+                base_unit: item.base_unit,
+                quote_unit: item.quote_unit,
+                assigning: item.assigning,
+                price: item.price,
+                status: "PENDING"
+              }, assign));
+            }
+
+            item.id = Number(item.id);
           });
 
           this.overlay = false;

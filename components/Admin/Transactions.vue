@@ -46,7 +46,7 @@
         </template>
         <template v-slot:item.protocol="{ item }">
           <v-chip :color="$protocol.get(item.protocol).color" class="ml-0 mr-2 black--text" label small>
-            {{ item.protocol }}
+            {{ item.protocol ? item.protocol : "MAINNET" }}
           </v-chip>
         </template>
         <template v-slot:item.platform="{ item }">
@@ -54,8 +54,18 @@
             {{ item.platform }}
           </v-chip>
         </template>
+        <template v-slot:item.to="{ item }">
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on, attrs }">
+                <span v-bind="attrs" v-on="on">
+                  {{ item.to.slice(0,20) }}...
+                </span>
+            </template>
+            <span>{{ item.to }}</span>
+          </v-tooltip>
+        </template>
         <template v-slot:item.value="{ item }">
-          -{{ item.value }} {{ item.symbol.toUpperCase() }}
+          {{ item.tx_type ? '-' : '+' }}{{ item.value }} {{ item.symbol.toUpperCase() }}
         </template>
         <template v-slot:item.status="{ item }">
           <template v-if="item.status === 'PENDING'">
@@ -100,17 +110,19 @@
                     </v-list-item-title>
                   </v-item-group>
                 </v-list-item>
-                <v-list-item v-if="item.chain.hash">
+                <v-list-item v-if="item.hash">
                   <v-item-group>
                     <v-list-item-subtitle>
                       {{ $vuetify.lang.t('$vuetify.lang_284') }}
                     </v-list-item-subtitle>
                     <v-list-item-title v-if="item.chain.explorer_link">
-                      <i>{{ item.chain.explorer_link }}/{{ item.chain.hash }}</i>
+                      <a :href="`${item.chain.explorer_link}/${item.hash}`" target="_blank">
+                        <i>{{ item.hash }}</i>
+                      </a>
                     </v-list-item-title>
                   </v-item-group>
                 </v-list-item>
-                <v-list-item>
+                <v-list-item v-if="item.tx_type">
                   <v-item-group>
                     <v-list-item-subtitle>
                       {{ $vuetify.lang.t('$vuetify.lang_20') }}
@@ -120,7 +132,7 @@
                     </v-list-item-title>
                   </v-item-group>
                 </v-list-item>
-                <v-list-item>
+                <v-list-item v-if="item.tx_type">
                   <v-item-group>
                     <v-list-item-subtitle>
                       {{ $vuetify.lang.t('$vuetify.lang_107') }}
@@ -136,11 +148,11 @@
                       {{ $vuetify.lang.t('$vuetify.lang_153') }}
                     </v-list-item-subtitle>
                     <v-list-item-title>
-                      {{ item.chain.confirmation }}
+                      {{ item.chain.confirmation }}/{{ item.confirmation }}
                     </v-list-item-title>
                   </v-item-group>
                 </v-list-item>
-                <v-list-item v-if="item.chain.time_withdraw">
+                <v-list-item v-if="item.chain.time_withdraw && item.tx_type">
                   <v-item-group>
                     <v-list-item-subtitle>
                       {{ $vuetify.lang.t('$vuetify.lang_225') }}
@@ -293,7 +305,7 @@
             sortable: true,
             value: 'to'
           }, {
-            text: this.$vuetify.lang.t('$vuetify.lang_105'),
+            text: this.$vuetify.lang.t('$vuetify.lang_53'),
             align: 'start',
             sortable: true,
             value: 'value'

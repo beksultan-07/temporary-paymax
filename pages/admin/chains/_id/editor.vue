@@ -22,6 +22,21 @@
         <v-text-field v-model="chain.network" color="primary" :label="$vuetify.lang.t('$vuetify.lang_112')" outlined></v-text-field>
         <v-text-field v-model="chain.rpc_key" color="orange" :label="$vuetify.lang.t('$vuetify.lang_214')" outlined></v-text-field>
         <v-text-field v-model="chain.rpc_password" color="orange" :label="$vuetify.lang.t('$vuetify.lang_228')" outlined></v-text-field>
+        <v-select v-if="$platform.get(chain.platform).type === 'CRYPTO'" v-model="chain.parent_symbol" :items="currencies" item-text="symbol" item-value="symbol" :label="$vuetify.lang.t('$vuetify.lang_286')" outlined>
+          <template v-slot:item="{ item, attrs, on }">
+            <v-list-item v-bind="attrs" v-on="on">
+              <v-list-item-avatar>
+                <v-avatar size="30">
+                  <v-img :src="$storages(['icon'], item.symbol)" />
+                </v-avatar>
+              </v-list-item-avatar>
+              <v-list-item-title>
+                <div>{{ (item.symbol).toUpperCase() }}</div>
+                <div><small>{{ item.name }}</small></div>
+              </v-list-item-title>
+            </v-list-item>
+          </template>
+        </v-select>
       </v-col>
     </v-row>
     <!-- End: chain info form -->
@@ -122,6 +137,7 @@
           { value: false, name: "OFF"},
           { value: true, name: "ON"},
         ],
+        currencies: [],
         chain: {
           name: "",
           rpc: "",
@@ -135,6 +151,7 @@
           time_withdraw: 10,
           status: false,
           fees_withdraw: 0,
+          parent_symbol: "",
           tag: "C_NONE",
           platform: "ETHEREUM"
         }
@@ -142,6 +159,7 @@
     },
     mounted() {
       this.getChain();
+      this.getCurrencies();
     },
     methods: {
 
@@ -152,7 +170,6 @@
         this.$axios.$post(this.$api.admin.exchange.getChain, {
           id: (this.$route.params.id !== "create" ? this.$route.params.id : 0)
         }).then((response) => {
-          console.log(response.chains);
           if (response.chains) {
             if (!response.chains[0].platform) {
               response.chains[0].platform = 'BITCOIN'
@@ -180,6 +197,15 @@
             color: 'red darken-2'
           });
         });
+      },
+
+      /**
+       *
+       */
+      getCurrencies() {
+        this.$axios.$post(this.$api.admin.exchange.getCurrencies).then((response) => {
+          this.currencies = response.currencies ?? [];
+        })
       }
     }
   }

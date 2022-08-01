@@ -283,8 +283,8 @@ export default {
   lang_283: "Chain/Network Tag",
   lang_284: "Transaction hash",
   lang_285: "Chain/Network name",
-  lang_286: "",
-  lang_287: "",
+  lang_286: "Parent symbol",
+  lang_287: "Input amount",
   lang_288: "",
   lang_289: "",
   lang_290: ""
