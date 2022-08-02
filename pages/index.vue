@@ -12,7 +12,7 @@
         </v-layout>
         <div class="text-center py-5" style="background-color: #1e1e1eba;z-index: 6;position: absolute;width: 100%;">
           <h2 class="mb-4">
-            PAYMEX
+            EXCHANGE
           </h2>
           <div class="subheading">
             {{ $vuetify.lang.t('$vuetify.lang_47') }}

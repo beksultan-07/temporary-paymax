@@ -5,8 +5,8 @@ export default {
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    titleTemplate: '%s | Paymex',
-    title: 'Paymex',
+    titleTemplate: '%s | Exchange',
+    title: 'Exchange',
     htmlAttrs: {
       lang: 'en',
       style: 'overflow:hidden;'

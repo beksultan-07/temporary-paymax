@@ -1,7 +1,7 @@
 <template>
   <v-footer v-if="$route.name !== 'trade-exchange'" color="transparent" padless>
     <v-col class="text-center" cols="12">
-      Paymex &copy; {{ new Date().getFullYear() }}
+      Exchange &copy; {{ new Date().getFullYear() }}
     </v-col>
   </v-footer>
 </template>

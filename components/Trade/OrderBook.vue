@@ -48,10 +48,10 @@
       <v-virtual-scroll @mouseover="hover = true" @mouseleave="hover = false" :class="hover ? '' : 'overflow-y-hidden'" bench="0" :items="orders" height="393" item-height="30">
         <template v-slot:default="{ item }">
           <v-component-shift-item :width="Number($decimal.div($decimal.mul(item.value, 100), item.quantity).toFixed(0))" :assigning="item.assigning ? 1 : 0" :key="item.id">
-            <v-row style="cursor: pointer;" @click="addPriceToForm($decimal.truncate(item.price), base_decimal)" no-gutters>
+            <v-row style="cursor: pointer;" @click="addPriceToForm(item.price, base_decimal)" no-gutters>
               <v-col cols="4">
                 <span :class="(item.assigning ? 'red' : 'teal') + '--text'">{{ $decimal.format(item.price, quote_decimal) }}</span>
-                <v-chip v-if="item.orders" class="pa-1" style="height: 15px" label outlined small>
+                <v-chip v-if="item.orders && item.orders.length" class="pa-1" style="height: 15px" label outlined small>
                   <small>{{ item.orders.length }}x</small>
                 </v-chip>
               </v-col>
@@ -206,11 +206,6 @@
 
         if (
 
-          // Сверяем принадлежат ли новые события к данному активу,
-          // если аргументы совпадают то привязываем полученные данные из события к данному активу.
-          data.base_unit === this.query.split('-')[0] &&
-          data.quote_unit === this.query.split('-')[1] &&
-
           // Проверяем есть ли в массиве объект по идентификатору.
           matching
 
@@ -243,23 +238,28 @@
               index = o.orders.map((i) => (i.id).toString()).indexOf((data.id).toString());
               if (index !== -1) {
 
-                o.value -= data.value ? this.$decimal.sub(o.value, data.value) : 0;
+                o.orders[index].value = data.value ?? 0;
 
-                o.orders[index].value = this.$decimal.sub(o.orders[index].value, data.value);
-                if (o.orders[index].value === 0) {
+                if (data.status === 1) {
+                  o.quantity = this.$decimal.sub(o.quantity, data.quantity);
                   o.orders.splice(index, 1)
                 }
+
+                o.value = 0;
+                o.orders.map((item) => {
+                  o.value += item.value;
+                });
 
                 if (o.orders.length === 0) {
                   this.orders.splice(this.orders.map((i) => (i.id).toString()).indexOf((o.id).toString()), 1);
                 }
               }
 
+              // Получаем текущий объем в ордерах.
+              this.getVolume(this.eyelet);
             }
           });
-
         }
-
       });
 
       /**
@@ -278,38 +278,48 @@
       this.$publish.bind('order/create', (data) => {
         data.assigning = data.assigning ?? 0;
 
-        if (this.eyelet === data.assigning || this.eyelet === 2) {
+          if (
 
-          // Добавляем новое значения по шкале запроса.
-          if ((this.scale > 0 ? this.isBetween(data.value, 0, this.scale) : true)) {
+              // Сверяем принадлежат ли новые события к данному активу,
+              // если аргументы совпадают то привязываем полученные данные из события к данному активу.
+              data.base_unit === this.query.split('-')[0] &&
+              data.quote_unit === this.query.split('-')[1]
 
-            let item = this.orders.find((o) => o.price === data.price && o.assigning === data.assigning);
-            if (item) {
+          ) {
 
-              if (typeof item.orders === "undefined") {
-                item.orders = [];
-                item.orders.unshift(Object.assign({}, item));
+            if (this.eyelet === data.assigning || this.eyelet === 2) {
+
+              // Добавляем новое значения по шкале запроса.
+              if ((this.scale > 0 ? this.isBetween(data.value, 0, this.scale) : true)) {
+
+                let item = this.orders.find((o) => o.price === data.price && (o.assigning ? "SELL" : "BUY") === (data.assigning ? "SELL" : "BUY"));
+                if (item) {
+
+                  if (typeof item.orders === "undefined") {
+                    item.orders = [];
+                    item.orders.unshift(Object.assign({}, item));
+                  }
+
+                  item.id += Number(data.id);
+                  item.value += data.value;
+                  item.quantity += data.quantity;
+
+                  item.orders.unshift(Object.assign({}, data));
+                } else {
+                  this.orders.unshift(Object.assign({}, data));
+                }
               }
 
-              item.id += Number(data.id);
-              item.value += data.value;
-              item.quantity += data.quantity;
+              // Если количество в книги ордеров превышает больше 100 элементов, то начинаем удалять последний 101 елемент.
+              if (this.orders.length > 100) {
+                this.orders.splice(-1)
+              }
 
-              item.orders.unshift(Object.assign({}, data));
-            } else {
-              this.orders.unshift(Object.assign({}, data));
+              // Получаем текущий объем в ордерах.
+              this.getVolume(this.eyelet);
             }
+
           }
-
-          // Если количество в книги ордеров превышает больше 100 элементов, то начинаем удалять последний 101 елемент.
-          if (this.orders.length > 100) {
-            this.orders.splice(-1)
-          }
-
-          // Получаем текущий объем в ордерах.
-          this.getVolume(this.eyelet);
-        }
-
       });
 
       /**
@@ -339,10 +349,11 @@
                 o.orders.splice(index, 1);
 
                 o.value = this.$decimal.sub(o.value, data.value);
-                o.quantity = this.$decimal.sub(o.quantity, data.value);
+                o.quantity = this.$decimal.sub(o.quantity, data.quantity);
 
-                if (o.orders.length === 0) {
-                  this.orders.splice(this.orders.map((i) => (i.id).toString()).indexOf((o.id).toString()), 1);
+                if (o.orders.length === 1) {
+                  o.id = o.orders[index].id;
+                  o.orders = [];
                 }
               }
             }
