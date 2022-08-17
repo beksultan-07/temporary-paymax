@@ -154,13 +154,13 @@
                       {{ $vuetify.lang.t('$vuetify.lang_102').replace(/%1/g, item.time_withdraw) }}
                     </v-card-text>
                   </v-card>
-                  <v-card elevation="0" outlined>
+                  <v-card v-if="item.fees_withdraw" elevation="0" outlined>
                     <v-card-subtitle :class="$vuetify.theme.dark ? 'white--text' : 'black--text'">
-                      <b>{{ $vuetify.lang.t('$vuetify.lang_20') }}:</b> {{ item.fees_withdraw }} {{ asset.symbol.toUpperCase() }} /≈ ${{ $decimal.truncate(price ? (item.fees_withdraw ? $decimal.mul(price, item.fees_withdraw) : 0) : (item.fees_withdraw ? item.fees_withdraw : 0)) }}
+                      <b>{{ $vuetify.lang.t('$vuetify.lang_20') }}:</b> {{ $decimal.truncate(item.fees_withdraw) }} {{ asset.symbol.toUpperCase() }} /≈ ${{ $decimal.truncate(price ? (item.fees_withdraw ? $decimal.mul(price, item.fees_withdraw) : 0) : (item.fees_withdraw ? item.fees_withdraw : 0)) }}
                     </v-card-subtitle>
                     <v-divider />
                     <v-card-text :class="$vuetify.theme.dark ? 'white--text' : 'black--text'">
-                      <b>{{ $vuetify.lang.t('$vuetify.lang_100') }}:</b> {{ $decimal.plus(asset.min_withdraw, item.fees_withdraw) }} <b>{{ asset.symbol.toUpperCase() }}</b>
+                      <b>{{ $vuetify.lang.t('$vuetify.lang_100') }}:</b> {{ item.fees_withdraw ? $decimal.add(asset.min_withdraw, item.fees_withdraw) : 0 }} <b>{{ asset.symbol.toUpperCase() }}</b>
                     </v-card-text>
                     <v-divider />
                     <v-card-text :class="$vuetify.theme.dark ? 'white--text' : 'black--text'">
@@ -179,7 +179,7 @@
               <v-layout fill-height style="height:200px;" wrap>
                 <v-flex/>
                 <v-flex align-self-center class="text-center" md4 mx5 sm6 xl3>
-                  <v-btn block color="black--text yellow darken-1 text-capitalize" elevation="0" large @click="setAsset(item.platform, (item.contract ? item.contract.protocol : 0), index)">{{ $vuetify.lang.t('$vuetify.lang_90') }}</v-btn>
+                  <v-btn block color="black--text yellow darken-1 text-capitalize" elevation="0" large @click="setAsset(item.platform, (item.contract ? item.contract.protocol : 0), index)">{{ $vuetify.lang.t('$vuetify.lang_288') }}</v-btn>
                 </v-flex>
                 <v-flex/>
               </v-layout>
@@ -340,7 +340,7 @@
        * @param symbol
        */
       getPrice(symbol) {
-        this.$axios.$get(this.$api.exchange.getPrice + '?base_unit=' + symbol + '&quote_unit=usdt').then((response) => {
+        this.$axios.$get(this.$api.exchange.getPrice + '?base_unit=' + symbol + '&quote_unit=usd').then((response) => {
           this.price = response.price ?? 0;
         });
       },
@@ -377,7 +377,7 @@
        */
       setStep(step, item) {
         if (!this.$refs.form[0].validate()) return false;
-        if (this.quantity > this.getReserveBalance(item) || this.quantity < this.$decimal.plus(this.asset.min_withdraw, item.fees_withdraw)) {
+        if (this.quantity > this.getReserveBalance(item) || this.quantity < this.$decimal.add(this.asset.min_withdraw, item.fees_withdraw)) {
           this.$snackbar.open({
             content: this.$vuetify.lang.t('$vuetify.lang_154'),
             color: 'red darken-2'

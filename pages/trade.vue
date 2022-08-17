@@ -1,51 +1,59 @@
 <template>
-  <section class="pa-0" role="main">
+  <section class="pa-0 main-role">
 
-    <v-row class="ma-1" no-gutters>
+    <template v-if="loader">
 
-      <!-- Start: order book component -->
-      <v-col cols="12" md="3" sm="6">
-        <v-component-order-book :unit="unit" />
-      </v-col>
-      <!-- End: order book component -->
+      <v-row class="ma-1" no-gutters>
 
-      <!-- Start: pair trade chart component -->
-      <v-col cols="12" md="6" sm="6">
-        <nuxt-child />
-      </v-col>
-      <!-- End: pair trade chart component -->
+        <!-- Start: order book component -->
+        <v-col cols="12" md="3" sm="6">
+          <v-component-order-book :unit="unit" />
+        </v-col>
+        <!-- End: order book component -->
 
-      <!-- Start: list of trading pairs market component -->
-      <v-col cols="12" md="3" sm="6">
-        <v-component-market :unit="unit" />
-      </v-col>
-      <!-- End: list of trading pairs market component -->
+        <!-- Start: pair trade chart component -->
+        <v-col cols="12" md="6" sm="6">
+          <nuxt-child />
+        </v-col>
+        <!-- End: pair trade chart component -->
 
-      <!-- Start: trade book component -->
-      <v-col cols="12" md="3" sm="6">
-        <v-component-trade-book :unit="unit" />
-      </v-col>
-      <!-- End: trade book component -->
+        <!-- Start: list of trading pairs market component -->
+        <v-col cols="12" md="3" sm="6">
+          <v-component-market :unit="unit" />
+        </v-col>
+        <!-- End: list of trading pairs market component -->
 
-      <!-- Start: buy order form component -->
-      <v-col cols="12" md="3" sm="6">
-        <v-component-order-form :unit="unit" assigning="buy" />
-      </v-col>
-      <!-- End: order form component -->
+        <!-- Start: trade book component -->
+        <v-col cols="12" md="3" sm="6">
+          <v-component-trade-book :unit="unit" />
+        </v-col>
+        <!-- End: trade book component -->
 
-      <!-- Start: sell order form component -->
-      <v-col cols="12" md="3" sm="6">
-        <v-component-order-form :unit="unit" assigning="sell" />
-      </v-col>
-      <!-- End: order form component -->
+        <!-- Start: buy order form component -->
+        <v-col cols="12" md="3" sm="6">
+          <v-component-order-form :unit="unit" assigning="buy" />
+        </v-col>
+        <!-- End: order form component -->
 
-      <!-- Start: common component -->
-      <v-col cols="12" md="3" sm="6">
-        <v-component-common />
-      </v-col>
-      <!-- End: common component -->
+        <!-- Start: sell order form component -->
+        <v-col cols="12" md="3" sm="6">
+          <v-component-order-form :unit="unit" assigning="sell" />
+        </v-col>
+        <!-- End: order form component -->
 
-    </v-row>
+        <!-- Start: common component -->
+        <v-col cols="12" md="3" sm="6">
+          <v-component-common />
+        </v-col>
+        <!-- End: common component -->
+
+      </v-row>
+
+    </template>
+
+    <v-overlay absolute :color="$vuetify.theme.dark ? 'grey darken-4' : 'white'" opacity="1" :value="!loader">
+      <v-progress-circular color="yellow darken-3" indeterminate size="100" />
+    </v-overlay>
 
   </section>
 </template>
@@ -69,28 +77,34 @@
     },
     data() {
       return {
+        loader: false,
         unit: undefined
       }
     },
 
     /**
-     * @param $axios
-     * @param $api
-     * @param params
-     * @param error
-     * @returns {Promise<{unit: *}>}
+     *
      */
-    async asyncData({ $axios, $api, params, error }) {
-      let unit = params.unit;
-      return $axios.$post($api.exchange.getSymbol, {base_unit: unit.split('-')[0], quote_unit: unit.split('-')[1]}).then(() => {
-        return { unit }
+    mounted() {
+      this.loader = false;
+      this.$axios.$post(this.$api.exchange.getSymbol, {base_unit: this.$route.params.unit.split('-')[0], quote_unit: this.$route.params.unit.split('-')[1]}).then(() => {
+        this.unit = this.$route.params.unit
+        setTimeout(() => {
+          this.loader = true;
+        }, 1000);
       }).catch(e => {
-        error(e)
+        this.$error.set(e)
       });
     },
 
+    /**
+     *
+     */
     beforeDestroy() {
       this.$publish.unbind(['trade/graph:0', 'order/status', 'order/create', 'order/cancel']);
+
+      // Internal event off.
+      this.$nuxt.$off('deposit/open/status');
     }
   }
 </script>

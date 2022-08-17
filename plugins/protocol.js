@@ -68,6 +68,18 @@ export default ({app}, inject) => {
     },
 
     /**
+     * @param id
+     * @returns {string|*}
+     */
+    getNameById(id) {
+      if (!id) {
+        return "UNKNOWN"
+      }
+
+      return this.list.find((item) => item.id === id).name
+    },
+
+    /**
      * @param tag
      * @returns {({color: string, name: string, id: number, tag: string}|{color: string, name: string, id: number, tag: string}|{color: string, name: string, id: number, tag: string}|{color: string, name: string, id: number, tag: string}|{color: string, name: string, id: number, tag: string})[]}
      */

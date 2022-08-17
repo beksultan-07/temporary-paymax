@@ -14,7 +14,7 @@ export default ({ app }, inject) => {
      */
     onReady(cb) {
       setTimeout(() => cb({
-        supported_resolutions: ['1', '5', '10', '15', '30', '1h', '4h', '1D', '1W']
+        supported_resolutions: ['1', '5', '15', '30', '1h', '1D']
       }), 0)
     },
 
@@ -32,9 +32,12 @@ export default ({ app }, inject) => {
         timezone: 'Etc/UTC',
         ticker: `${unit.split("-")[0] + '-' + unit.split("-")[1]}`,
         minmov: 1,
+        minmov2: 0,
+        intraday_multipliers: ["1","5","15","30","60"],
         pricescale: 1000000,
         has_intraday: true,
-        has_empty_bars: true,
+        has_weekly_and_monthly: true,
+        has_daily: true,
         volume_precision: 8,
         data_status: 'streaming'
       }
@@ -70,25 +73,13 @@ export default ({ app }, inject) => {
         return false;
       }
 
-      if (String(interval.from).length === 7) {
-        interval.from = interval.from * 1000
-      } else if(Math.sign(interval.from) === -1) {
-        interval.from = Math.abs(interval.from)
-      }
-
-      if (String(interval.to).length === 7) {
-        interval.to = interval.to * 1000
-      } else if(Math.sign(interval.to) === -1) {
-        interval.to = Math.abs(interval.to)
-      }
-
       let symbol = symbolInfo.name.split('/');
       let query = {
         base_unit: symbol[0].toLowerCase(),
         quote_unit: symbol[1].toLowerCase(),
         resolution: this.interval(resolution),
         from: interval.from,
-        to: interval.to
+        to: interval.to,
       };
 
       this.send(query).then((response) => {
@@ -100,7 +91,7 @@ export default ({ app }, inject) => {
 
         for (let i = response.graph.length - 1; i > 0; i--) {
 
-          item.open = item.close ? item.close : response.graph[i].open;
+          item.open = item.close ?? response.graph[i].open;
           item.high = response.graph[i].high;
           item.low = response.graph[i].low;
           item.close = response.graph[i].close;
@@ -194,7 +185,7 @@ export default ({ app }, inject) => {
      */
     getServerTime(callback) {
       app.$axios.$get(app.$api.timestamp).then((response) => {
-        callback(Math.floor(response / 1000));
+        callback(response);
       });
     },
 
@@ -206,13 +197,10 @@ export default ({ app }, inject) => {
       const interval = {
         '1': 60,      // 1 minutes
         '5': 300,     // 5 minutes
-        '10': 600,    // 10 minutes
         '15': 900,    // 15 minutes
         '30': 1800,   // 30 minutes
         '1h': 3600,   // 1 hour
-        '4h': 14400,  // 4 hours
-        '1D': 86400,  // 1 day
-        '1W': 604800  // 1 week
+        '1D': 86400   // 1 day
       };
 
       if (interval[resolution]) {
@@ -233,6 +221,7 @@ export default ({ app }, inject) => {
         if (!bar) continue;
 
         bar.time = bar.time * 1000;
+        bar.volume = bar.volume ?? NaN;
 
         if (time !== null && bar.time < time) continue;
 

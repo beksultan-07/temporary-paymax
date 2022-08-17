@@ -14,7 +14,7 @@
         <v-tabs-items v-model="eyelet" class="mt-3">
           <v-tab-item v-for="(item, index) in asset.chains" :key="item.id" :transition="false" class="mt-1">
 
-            <template v-if="item.address">
+            <template v-if="item.address && item.exist">
 
               <v-row>
                 <v-col cols="12" md="6">
@@ -104,7 +104,7 @@
               <v-layout fill-height style="height:200px;" wrap>
                 <v-flex/>
                 <v-flex align-self-center class="text-center" md4 mx5 sm6 xl3>
-                  <v-btn block color="black--text yellow darken-1 text-capitalize" elevation="0" large @click="setAsset(item.platform, (item.contract ? item.contract.protocol : 0), index)">{{ $vuetify.lang.t('$vuetify.lang_90') }}</v-btn>
+                  <v-btn block color="black--text yellow darken-1 text-capitalize" elevation="0" large @click="setAsset(item.platform, (item.contract ? item.contract.protocol : 0), asset.fin_type, index)">{{ $vuetify.lang.t('$vuetify.lang_288') }}</v-btn>
                 </v-flex>
                 <v-flex/>
               </v-layout>
@@ -126,9 +126,22 @@
         <!-- Start: tabs items -->
         <v-tabs-items v-model="eyelet" class="mt-3">
           <v-tab-item v-for="(item, index) in asset.chains" :key="item.id" :transition="false" class="mt-1">
-            <v-alert icon="mdi-shield-lock-outline" prominent text type="info">
-              {{ item }}, Index: {{ index }}
-            </v-alert>
+
+            <template v-if="item.exist">
+              <v-alert icon="mdi-shield-lock-outline" prominent text type="info">
+                {{ item }}, Index: {{ index }}
+              </v-alert>
+            </template>
+            <template v-else-if="!overlay">
+              <v-layout fill-height style="height:200px;" wrap>
+                <v-flex/>
+                <v-flex align-self-center class="text-center" md4 mx5 sm6 xl3>
+                  <v-btn block color="black--text yellow darken-1 text-capitalize" elevation="0" large @click="setAsset(item.platform, 0, asset.fin_type, index)">{{ $vuetify.lang.t('$vuetify.lang_288') }}</v-btn>
+                </v-flex>
+                <v-flex/>
+              </v-layout>
+            </template>
+
           </v-tab-item>
         </v-tabs-items>
 
@@ -202,11 +215,19 @@
       /**
        * @param platform
        * @param protocol
+       * @param fin_type
        * @param index
        */
-      setAsset(platform, protocol, index) {
-        this.$axios.$post(this.$api.exchange.setAsset, {symbol: this.$route.params.symbol, platform: platform, protocol: protocol}).then((response) => {
-          this.asset.chains[index].address = response.address;
+      setAsset(platform, protocol, fin_type, index) {
+        this.$axios.$post(this.$api.exchange.setAsset, {symbol: this.$route.params.symbol, platform: platform, protocol: protocol, fin_type: fin_type}).then((response) => {
+          if (fin_type) {
+            for (let i = 0; i < this.asset.chains.length; i++) {
+              this.asset.chains[i].exist = true;
+            }
+          } else {
+            this.asset.chains[index].exist = true;
+            this.asset.chains[index].address = response.address;
+          }
           this.$forceUpdate();
         }).catch((error) => {
           this.$snackbar.open({

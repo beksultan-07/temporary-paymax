@@ -97,6 +97,31 @@
     },
     mounted() {
 
+      setTimeout(() => {
+        this.getPrice(this.symbol);
+      }, 1000);
+
+      /**
+       * Отслеживаем события нового депозита.
+       * @event 'deposit/open/status'
+       * @return {callback}:
+       */
+      this.$nuxt.$on('deposit/open/status', (data) => {
+        if (
+
+            // Сверяем локальный штат пользователя
+            // это у нас пользовательский [id] с полученным из события пользовательским [user_id],
+            // если аргументы совпадают то это значит что ордер сработал частично или полностью.
+            data.user_id === Number(this.$auth.$state.user.id) &&
+
+            // Получать обновление только по заданому символу.
+            data.symbol === this.symbol
+
+        ) {
+          this.asset.balance += data.value
+        }
+      });
+
       /**
        * @event 'withdraw/cancel'
        * @object {symbol: string},
@@ -115,18 +140,13 @@
         this.asset.balance -= data.value
       });
     },
-    create() {
-      setTimeout(() => {
-        this.getPrice(this.symbol);
-      }, 1000)
-    },
     methods: {
 
       /**
        * @param symbol
        */
       getPrice(symbol) {
-        this.$axios.$get(this.$api.exchange.getPrice + '?base_unit=' + symbol + '&quote_unit=usdt').then((response) => {
+        this.$axios.$get(this.$api.exchange.getPrice + '?base_unit=' + symbol + '&quote_unit=usd').then((response) => {
           this.price = response.price ?? 0;
         });
       }

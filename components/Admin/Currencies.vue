@@ -26,7 +26,7 @@
     <template v-if="currencies.length">
 
       <!-- Start: data table -->
-      <v-data-table :class="count > limit ? 'none-radius ' : ''" :headers="headlines" :items="currencies" :page.sync="page" item-key="id" :items-per-page="limit" hide-default-footer>
+      <v-data-table :class="count > limit ? 'none-radius ' : ''" :headers="headlines" :items="currencies" :page.sync="page" item-key="id" :server-items-length="length" :items-per-page="limit" hide-default-footer>
         <template v-slot:item.symbol="{ item }">
           <v-tooltip bottom>
             <template v-slot:activator="{ on, attrs }">

@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "env ENV_FILE=development nuxt",
     "build": "env ENV_FILE=production nuxt build",
-    "generate": "env ENV_FILE=production nuxt generate"
+    "generate": "env ENV_FILE=production nuxt generate",
+    "export": "env ENV_FILE=production nuxt export"
   },
   "dependencies": {
     "@nuxtjs/auth-next": "^5.0.0-1647967358.de1bb0f",

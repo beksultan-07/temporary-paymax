@@ -96,6 +96,31 @@
       this.getAssets();
 
       /**
+       * Отслеживаем события нового депозита.
+       * @event 'deposit/open/status'
+       * @return {callback}:
+       */
+      this.$nuxt.$on('deposit/open/status', (data) => {
+        if (
+
+            // Сверяем локальный штат пользователя
+            // это у нас пользовательский [id] с полученным из события пользовательским [user_id],
+            // если аргументы совпадают то это значит что ордер сработал частично или полностью.
+            data.user_id === Number(this.$auth.$state.user.id)
+
+        ) {
+          this.assets.map(item => {
+            if(item.symbol === data.symbol) {
+              item.balance += data.value;
+            }
+          });
+
+          // Sort assets by index.
+          this.sort();
+        }
+      });
+
+      /**
        * @event 'withdraw/cancel'
        * @object {symbol: string},
        * @object {value: float64}
@@ -103,7 +128,7 @@
       this.$nuxt.$on('withdraw/cancel', (data) => {
         this.assets.map(item => {
           if(item.symbol === data[0].symbol) {
-            item.balance += data[0].value; return item;
+            item.balance += data[0].value;
           }
         });
       });
@@ -116,7 +141,7 @@
       this.$nuxt.$on('withdraw/create', (data) => {
         this.assets.map(item => {
           if(item.symbol === data.symbol) {
-            item.balance -= data.value; return item;
+            item.balance -= data.value;
           }
         });
       });
@@ -139,7 +164,7 @@
 
           this.assets = response.currencies ?? [];
           this.assets.map(item => {
-            this.$axios.$get(this.$api.exchange.getPrice + '?base_unit=' + item.symbol + '&quote_unit=usdt').then((response) => {
+            this.$axios.$get(this.$api.exchange.getPrice + '?base_unit=' + item.symbol + '&quote_unit=usd').then((response) => {
               item.price = response.price;
             });
           });

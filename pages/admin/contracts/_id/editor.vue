@@ -166,7 +166,7 @@
       getChains() {
         this.$axios.$post(this.$api.admin.exchange.getChains).then((response) => {
           this.chains = response.chains ?? [];
-          this.chains = this.chains.filter((item) => item.platform !== 'VISA' && item.platform !== 'MASTERCARD')
+          this.chains = this.chains.filter((item) => item.platform !== 'VISA' && item.platform !== 'MASTERCARD');
         })
       },
 

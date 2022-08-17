@@ -12,7 +12,7 @@
         </v-avatar>
       </v-col>
       <v-col cols="12" md="4">
-        <v-select :disabled="$route.params.id !== 'create'" v-model="pair.base_unit" :items="currencies" item-text="symbol" item-value="symbol" @change="getMarketPrice" :label="$vuetify.lang.t('$vuetify.lang_253')" outlined>
+        <v-select v-model="pair.base_unit" :items="currencies" item-text="symbol" item-value="symbol" @change="getMarketPrice" :label="$vuetify.lang.t('$vuetify.lang_253')" outlined>
           <template v-slot:item="{ item, attrs, on }">
             <v-list-item v-bind="attrs" v-on="on">
               <v-list-item-avatar>
@@ -27,7 +27,7 @@
             </v-list-item>
           </template>
         </v-select>
-        <v-select :disabled="$route.params.id !== 'create'" v-model="pair.quote_unit" :items="currencies" item-text="symbol" item-value="symbol" @change="getMarketPrice" :label="$vuetify.lang.t('$vuetify.lang_254')" outlined>
+        <v-select v-model="pair.quote_unit" :items="currencies" item-text="symbol" item-value="symbol" @change="getMarketPrice" :label="$vuetify.lang.t('$vuetify.lang_254')" outlined>
           <template v-slot:item="{ item, attrs, on }">
             <v-list-item v-bind="attrs" v-on="on">
               <v-list-item-avatar>
@@ -184,7 +184,6 @@
           id: (this.$route.params.id !== "create" ? this.$route.params.id : 0)
         }).then((response) => {
           if (response.pairs) {
-            console.log(response.pairs[0]);
             this.pair = Object.assign(this.pair, response.pairs[0]);
           }
         });

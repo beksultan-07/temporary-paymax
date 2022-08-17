@@ -21,7 +21,7 @@
     <template v-if="transactions.length">
 
       <!-- Start: data table -->
-      <v-data-table :class="count > limit ? 'none-radius ' : ''" :headers="headlines" :items="transactions" :page.sync="page" item-key="id" :items-per-page="limit" hide-default-footer show-expand single-expand>
+      <v-data-table :class="count > limit ? 'none-radius ' : ''" :headers="headlines" :items="transactions" :page.sync="page" item-key="id" :server-items-length="length" :items-per-page="limit" hide-default-footer show-expand single-expand>
         <template v-slot:item.data-table-expand="{ item, expand, isExpanded }">
           <template v-if="isExpanded">
             <v-icon @click="expand(!isExpanded)">
@@ -69,19 +69,19 @@
         </template>
         <template v-slot:item.status="{ item }">
           <template v-if="item.status === 'PENDING'">
-            <div style="width: 150px;" :class="($vuetify.theme.dark ? 'grey darken-3' : 'grey lighten-3 brown--text') + ' pa-1 rounded-xl text-center'">
+            <v-chip :class="($vuetify.theme.dark ? 'grey darken-3' : 'grey lighten-3 brown--text') + ' ml-0 mr-2'" label small>
               {{ $vuetify.lang.t('$vuetify.lang_131') }}
-            </div>
+            </v-chip>
           </template>
           <template v-if="item.status === 'FILLED'">
-            <div style="width: 150px;" :class="($vuetify.theme.dark ? 'grey darken-3' : 'grey lighten-3 brown--text') + ' pa-1 rounded-xl text-center'">
+            <v-chip :class="($vuetify.theme.dark ? 'grey darken-3' : 'grey lighten-3 brown--text') + ' ml-0 mr-2'" label small>
               {{ $vuetify.lang.t('$vuetify.lang_129') }}
-            </div>
+            </v-chip>
           </template>
           <template v-if="item.status === undefined">
-            <div style="width: 150px;" :class="($vuetify.theme.dark ? 'grey darken-3' : 'grey lighten-3 brown--text') + ' pa-1 rounded-xl text-center'">
+            <v-chip :class="($vuetify.theme.dark ? 'grey darken-3' : 'grey lighten-3 brown--text') + ' ml-0 mr-2'" label small>
               {{ $vuetify.lang.t('$vuetify.lang_130') }}
-            </div>
+            </v-chip>
           </template>
         </template>
         <template v-slot:item.create_at="{ item }">
@@ -142,23 +142,13 @@
                     </v-list-item-title>
                   </v-item-group>
                 </v-list-item>
-                <v-list-item v-if="item.chain.confirmation">
+                <v-list-item v-if="item.chain.confirmation && !item.tx_type">
                   <v-item-group>
                     <v-list-item-subtitle>
                       {{ $vuetify.lang.t('$vuetify.lang_153') }}
                     </v-list-item-subtitle>
                     <v-list-item-title>
-                      {{ item.chain.confirmation }}/{{ item.confirmation }}
-                    </v-list-item-title>
-                  </v-item-group>
-                </v-list-item>
-                <v-list-item v-if="item.chain.time_withdraw && item.tx_type">
-                  <v-item-group>
-                    <v-list-item-subtitle>
-                      {{ $vuetify.lang.t('$vuetify.lang_225') }}
-                    </v-list-item-subtitle>
-                    <v-list-item-title>
-                      {{ item.chain.time_withdraw }}
+                      {{ item.chain.confirmation }}/{{ item.confirmation ? item.confirmation : 0  }}
                     </v-list-item-title>
                   </v-item-group>
                 </v-list-item>

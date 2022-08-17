@@ -21,15 +21,3 @@ $container-max-widths: (
 
 $data-table-expanded-content-box-shadow: '';
 $parallax-padding: 0 !important;
-
-  // Section reform main.
-section[role="main"] {
-  overflow: hidden;
-}
-
-@media (min-width: 1200px){
-  section[role="main"] {
-    max-width: 1590px;
-    margin: 0 auto;
-  }
-}

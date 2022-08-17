@@ -71,7 +71,7 @@ export default (context, inject) => {
      * @param to
      * @returns {number}
      */
-    plus(number, to) {
+    add(number, to) {
       if (this.isNumber(number)) {
         return 0
       }
@@ -100,7 +100,7 @@ export default (context, inject) => {
      * @returns {*|number}
      */
     format(number, precision) {
-      if (precision === undefined) {
+      if (precision === undefined || precision === 0) {
         precision = this.precision(number);
       }
 

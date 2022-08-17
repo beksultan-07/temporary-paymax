@@ -1,5 +1,5 @@
 <template>
-  <v-card class="ma-1" height="500" elevation="0">
+  <v-card class="ma-1" height="500" elevation="0" @contextmenu="show">
 
     <!-- Start: marker market tab element -->
     <template v-if="markers.length">
@@ -94,6 +94,21 @@
     </template>
     <!-- End: pair search element -->
 
+    <!-- Start: menu markets full element -->
+    <v-menu v-model="menu" :position-x="x" :position-y="y" absolute content-class="elevation-1" max-height="304" offset-y>
+      <v-list>
+        <v-list-item-group v-model="eyelet">
+          <v-list-item :value="index" @click="getPairs(item)" v-for="(item, index) in markers" :key="item">
+            <v-list-item-avatar class="mr-2" size="30">
+              <v-img :src="$storages(['icon'], item)"/>
+            </v-list-item-avatar>
+            <v-list-item-title>{{ item.toUpperCase() }}</v-list-item-title>
+          </v-list-item>
+        </v-list-item-group>
+      </v-list>
+    </v-menu>
+    <!-- End: menu markets full element -->
+
     <v-overlay absolute :color="$vuetify.theme.dark ? 'grey darken-4' : 'white'" opacity="0.8" :value="overlay">
       <v-progress-circular color="yellow darken-3" indeterminate size="50" />
     </v-overlay>
@@ -110,6 +125,9 @@
     },
     data() {
       return {
+        x: 0,
+        y: 0,
+        menu: false,
         hover: false,
         search: null,
         overlay: true,
@@ -158,6 +176,19 @@
 
     },
     methods: {
+
+      /**
+       * @param e
+       */
+      show (e) {
+        e.preventDefault()
+        this.menu = false
+        this.x = e.clientX
+        this.y = e.clientY
+        this.$nextTick(() => {
+          this.menu = true
+        })
+      },
 
       /**
        * @param symbol

@@ -1,5 +1,5 @@
 <template>
-  <section class="pa-0" role="main">
+  <section class="pa-0 main-role">
     <!-- Start: child container -->
     <nuxt-child />
     <!-- End: child container -->

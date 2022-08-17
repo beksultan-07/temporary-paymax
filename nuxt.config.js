@@ -2,6 +2,7 @@ import colors from 'vuetify/es5/util/colors';
 require('dotenv').config({ path: `.env.${process.env.NODE_ENV}` })
 
 export default {
+  target: 'static',
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
@@ -61,6 +62,7 @@ export default {
     { src: '~/plugins/platform.js' },
     { src: '~/plugins/datafeed.js' },
     { src: '~/plugins/scale.js' },
+    { src: '~/plugins/error.js' },
     { src: '~/plugins/rule.js' },
     { src: '~/plugins/api.js' },
     { src: '~/plugins/tag.js' },

@@ -9,7 +9,7 @@ export default ({app}, inject) => {
       {id: 1, type: 'CRYPTO', name: 'ETHEREUM', symbol: 'ETH', color: 'teal lighten-4'},
       {id: 2, type: 'CRYPTO', name: 'TRON', symbol: 'TRX', color: 'green lighten-4'},
       {id: 3, type: 'FIAT', name: 'VISA', symbol: 'MULTI CURRENCY', color: 'blue lighten-4'},
-      {id: 4, type: 'FIAT', name: 'MASTERCARD', symbol: 'MULTI CURRENCY', color: 'purple lighten-4'},
+      {id: 4, type: 'FIAT', name: 'MASTERCARD', symbol: 'MULTI CURRENCY', color: 'purple lighten-4'}
     ],
 
     /**

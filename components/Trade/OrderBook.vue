@@ -51,9 +51,30 @@
             <v-row style="cursor: pointer;" @click="addPriceToForm(item.price, base_decimal)" no-gutters>
               <v-col cols="4">
                 <span :class="(item.assigning ? 'red' : 'teal') + '--text'">{{ $decimal.format(item.price, quote_decimal) }}</span>
-                <v-chip v-if="item.orders && item.orders.length" class="pa-1" style="height: 15px" label outlined small>
-                  <small>{{ item.orders.length }}x</small>
-                </v-chip>
+
+                <!-- Start: children orders list element -->
+                <v-menu v-model="item.menu" :close-on-content-click="false" :nudge-width="200" content-class="elevation-1" dense offset-x max-height="260">
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-chip v-if="item.orders && item.orders.length" class="pa-1" style="height: 15px" label outlined small v-bind="attrs" v-on="on">
+                      <small>{{ item.orders.length }}x</small>
+                    </v-chip>
+                  </template>
+                  <v-card>
+                    <v-list dense disabled>
+                      <v-list-item-group eager>
+                        <v-list-item v-for="o in item.orders" :key="o.id" style="min-height: 35px">
+                          <v-list-item-content>
+                            <v-list-item-title>
+                              <span class="orange--text">{{ $decimal.sub(100, $decimal.div($decimal.mul(o.value, 100), o.quantity)).toFixed(0) }}%</span> <span>{{ $decimal.format(o.value, base_decimal) }}</span> / <span>{{ $decimal.format(o.quantity, base_decimal) }}</span>
+                            </v-list-item-title>
+                          </v-list-item-content>
+                        </v-list-item>
+                      </v-list-item-group>
+                    </v-list>
+                  </v-card>
+                </v-menu>
+                <!-- End: children orders list element -->
+
               </v-col>
               <v-col :class="'text-right ' + ($vuetify.theme.dark ? 'grey--text' : '')" cols="4">
                 {{ $decimal.format(item.value, base_decimal) }}

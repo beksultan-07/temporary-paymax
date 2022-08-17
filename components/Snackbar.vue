@@ -2,7 +2,7 @@
   <div>
     <v-snackbar v-for="(item, index) in items" :ref="`item:${index}`" :key="index" v-model="item.show" :color="item.color" right bottom absolute timeout="-1" :style="(item.bottom ? 'bottom:' + item.bottom + 'px;' : '') + 'height: auto !important;'">
       <template v-slot:default>
-        {{ item.message }}
+        <span v-html="item.message"></span>
       </template>
       <template v-slot:action>
         <v-btn icon @click="item.show = false" right>

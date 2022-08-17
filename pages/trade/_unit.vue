@@ -1,7 +1,7 @@
 <template>
   <v-card class="ma-1" elevation="0" height="500">
 
-    <template v-if="status && count >= 30">
+    <template v-if="status && count >= 60">
 
       <!-- Start: trading view -->
       <v-app-bar class="toolbar-px-zero" color="transparent" flat height="50">
@@ -91,9 +91,9 @@
       <v-layout class="bg-image" fill-height wrap>
         <v-flex/>
         <v-flex align-self-center class="text-center grey--text" md4 mx5 sm6 xl3>
-          <template v-if="status && count <= 30">
-            {{ $decimal.format(( count / 30 ) * 100) }} %
-            <v-progress-linear :value="( count / 30 ) * 100" color="primary" />
+          <template v-if="status && count <= 60">
+            {{ $decimal.format(( count / 60 ) * 100) }} %
+            <v-progress-linear :value="( count / 60 ) * 100" color="primary" />
           </template>
           <template v-else>
             <div>
@@ -110,7 +110,7 @@
       </v-layout>
     </template>
 
-    <div v-show="status && count >= 30" id="charting-library" class="pa-2 charting" style="height: 448px"></div>
+    <div v-show="status && count >= 60" id="charting-library" class="pa-2 charting" style="height: 448px"></div>
     <v-overlay :color="$vuetify.theme.dark ? 'grey darken-4' : 'white'" :value="overlay" absolute opacity="0.8">
       <v-progress-circular color="yellow darken-3" indeterminate size="50"/>
     </v-overlay>
@@ -131,7 +131,7 @@
     },
     head() {
       return {
-        title: (this.unit ? this.unit.toUpperCase() : 'Loading') + ' | ' + (this.priceLast ? this.$decimal.format(this.priceLast) : 0)
+        title: (this.unit ? this.unit.toUpperCase() : 'Loading') + ' | ' + (this.priceLast ? this.$decimal.format(this.priceLast, 0) : 0)
       }
     },
     async asyncData({params}) {
@@ -145,17 +145,11 @@
        */
       $route(e) {
         this.getGraph(e.params.unit);
-      },
-
-      /**
-       * @param e
-       * @returns {*}
-       */
-      unit (e) {
-        return e
       }
     },
     mounted() {
+      this.unit = this.unit ?? this.$route.params.unit;
+
       this.getGraph(this.unit);
 
       /**
@@ -216,22 +210,27 @@
                 "compare_symbol",
                 "header_compare",
                 "header_saveload",
-                "timeframes_toolbar"
               ],
+              time_frames: [],
               client_id: 'tradingview.com',
               charts_storage_api_version: "1.1",
               user_id: 'public_user_id',
               fullscreen: false,
-              autosize: true,
+              autosize: true
             });
           }
 
           // Выполняем действия после того как график прогрузился.
-          window.tvWidget.onChartReady(() => {
+          if (this.status) {
+            setTimeout(() => {
+              window.tvWidget.onChartReady(() => {
+                this.overlay = false;
+                window.tvWidget.chart().createStudy('MA Cross', false, false);
+              });
+            }, 1000);
+          } else {
             this.overlay = false;
-          });
-        }).catch(e => {
-          console.log(e)
+          }
         });
       },
 
@@ -358,6 +357,10 @@
         return 'teal--text'
       }
     },
+
+    /**
+     *
+     */
     beforeDestroy() {
       window.tvWidget = undefined;
     }

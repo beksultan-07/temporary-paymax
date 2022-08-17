@@ -3,7 +3,7 @@
     <template v-if="transactions.length">
 
       <!-- Start: data table -->
-      <v-data-table :class="count > limit ? 'none-radius ' : ''" :headers="headlines.top" :items="transactions" :page.sync="page" item-key="id" :items-per-page="limit" hide-default-footer show-expand single-expand>
+      <v-data-table :class="count > limit ? 'none-radius ' : ''" :headers="headlines.top" :items="transactions" :page.sync="page" item-key="id" :server-items-length="length" :items-per-page="limit" hide-default-footer show-expand single-expand>
         <template v-slot:item.data-table-expand="{ item, expand, isExpanded }">
           <template v-if="isExpanded">
             <v-icon @click="expand(!isExpanded)">
@@ -18,43 +18,45 @@
         </template>
         <template v-slot:item.type="{ item }">
           <template v-if="item.tx_type === 'WITHDRAWS'">
-            <div style="width: 120px;" :class="($vuetify.theme.dark ? 'grey darken-3' : 'red lighten-5 red--text') + ' pa-1 rounded-xl text-center'">
+            <v-chip :class="($vuetify.theme.dark ? 'grey darken-3' : 'red lighten-5 red--text') + ' ml-0 mr-2'" label small>
               <v-icon :color="item.status === 'PENDING' ? 'light-blue' : 'green'" size="15">
                 mdi-arrow-top-left
               </v-icon>
               {{ $vuetify.lang.t('$vuetify.lang_92') }}
-            </div>
+            </v-chip>
           </template>
           <template v-else>
-            <div style="width: 120px;" :class="($vuetify.theme.dark ? 'grey darken-3' : 'blue lighten-5 blue--text') + ' pa-1 rounded-xl text-center'">
+            <v-chip :class="($vuetify.theme.dark ? 'grey darken-3' : 'blue lighten-5 blue--text') + ' ml-0 mr-2'" label small>
               <v-icon :color="item.status === 'PENDING' ? 'light-blue' : 'green'" size="15">
                 mdi-arrow-bottom-left
               </v-icon>
-              {{ $vuetify.lang.t('$vuetify.lang_91') }}
-            </div>
+              {{ $vuetify.lang.t('$vuetify.lang_120') }}
+            </v-chip>
           </template>
         </template>
-        <template v-slot:item.symbol="{ item }">
-          {{ item.symbol.toUpperCase() }}
+        <template v-slot:item.protocol="{ item }">
+          <v-chip :color="item.protoco ? $protocol.get(item.protocol).color : 'blue lighten-5'" class="ml-0 mr-2 black--text" label small>
+            {{ item.protocol ? item.protocol : "MAINNET" }}
+          </v-chip>
         </template>
         <template v-slot:item.value="{ item }">
           {{ item.tx_type ? '-' : '+' }}{{ item.value }} <b>{{ item.symbol.toUpperCase() }}</b>
         </template>
         <template v-slot:item.status="{ item }">
           <template v-if="item.status === 'PENDING'">
-            <div style="width: 150px;" :class="($vuetify.theme.dark ? 'grey darken-3' : 'grey lighten-3 brown--text') + ' pa-1 rounded-xl text-center'">
+            <v-chip :class="($vuetify.theme.dark ? 'grey darken-3' : 'grey lighten-3 brown--text') + ' ml-0 mr-2'" label small>
               {{ $vuetify.lang.t('$vuetify.lang_131') }}
-            </div>
+            </v-chip>
           </template>
           <template v-if="item.status === 'FILLED'">
-            <div style="width: 150px;" :class="($vuetify.theme.dark ? 'grey darken-3' : 'grey lighten-3 brown--text') + ' pa-1 rounded-xl text-center'">
+            <v-chip :class="($vuetify.theme.dark ? 'grey darken-3' : 'grey lighten-3 brown--text') + ' ml-0 mr-2'" label small>
               {{ $vuetify.lang.t('$vuetify.lang_129') }}
-            </div>
+            </v-chip>
           </template>
           <template v-if="item.status === undefined">
-            <div style="width: 150px;" :class="($vuetify.theme.dark ? 'grey darken-3' : 'grey lighten-3 brown--text') + ' pa-1 rounded-xl text-center'">
+            <v-chip :class="($vuetify.theme.dark ? 'grey darken-3' : 'grey lighten-3 brown--text') + ' ml-0 mr-2'" label small>
               {{ $vuetify.lang.t('$vuetify.lang_130') }}
-            </div>
+            </v-chip>
           </template>
         </template>
         <template v-slot:item.create_at="{ item }">
@@ -155,13 +157,13 @@
                     </v-list-item-title>
                   </v-item-group>
                 </v-list-item>
-                <v-list-item v-if="item.chain.confirmation">
+                <v-list-item v-if="item.chain.confirmation && !item.tx_type">
                   <v-item-group>
                     <v-list-item-subtitle>
                       {{ $vuetify.lang.t('$vuetify.lang_153') }}
                     </v-list-item-subtitle>
                     <v-list-item-title>
-                      {{ item.chain.confirmation }}/{{ item.confirmation }}
+                      {{ item.chain.confirmation }}/{{ item.confirmation ? item.confirmation : 0 }}
                     </v-list-item-title>
                   </v-item-group>
                 </v-list-item>
@@ -191,7 +193,7 @@
       <v-container v-if="length > 1" class="max-width">
         <v-row justify="center">
           <v-col cols="8">
-            <v-pagination v-model="page" @input="getMore()" :length="length"></v-pagination>
+            <v-pagination v-model="page" total-visible="5" @input="getMore()" :length="length"></v-pagination>
           </v-col>
         </v-row>
       </v-container>
@@ -241,6 +243,65 @@
       }
     },
     mounted() {
+
+      /**
+       * Отслеживаем события вывода средств.
+       * @event 'withdraw/status'
+       * @return {callback}:
+       */
+      this.$publish.bind('withdraw/status', (data) => {
+        this.transactions.map(item => {
+          if(Number(item.id) === data.id) {
+            item.status = "FILLED";
+            item.hash = data.hash;
+            item.fees = data.fees;
+          }
+        });
+      });
+
+      /**
+       * Отслеживаем события нового депозита.
+       * @event 'deposit/open'
+       * @return {callback}:
+       */
+      this.$publish.bind('deposit/open', (data) => {
+        if (
+
+            // Сверяем локальный штат пользователя
+            // это у нас пользовательский [id] с полученным из события пользовательским [user_id],
+            // если аргументы совпадают то это значит что ордер сработал частично или полностью.
+            data.user_id === Number(this.$auth.$state.user.id) &&
+
+            // Получать обновление только по заданому символу.
+            data.symbol === this.$route.params.symbol
+
+        ) {
+
+          if (data.hook) {
+
+            this.transactions.map(item => {
+              if(Number(item.id) === data.id) {
+                item.status = "FILLED";
+                item.confirmation = data.confirmation;
+              }
+            });
+
+          } else {
+
+            // New status formatting.
+            data.status = "PENDING";
+            data.protocol = data.protocol ? this.$protocol.getNameById(data.protocol) : 0;
+
+            // Unshift append transaction to list.
+            this.transactions.unshift(data);
+            this.count += 1;
+            this.length = Math.ceil(this.count/this.limit);
+
+          }
+
+        }
+      });
+
       this.getTransactions();
     },
     methods: {
@@ -283,7 +344,7 @@
 
           this.transactions.map(item => {
             if(item.id === id) {
-              item.status = undefined; return item;
+              item.status = undefined;
             }
           });
 
@@ -291,6 +352,7 @@
           this.$snackbar.open({content: `${error.response.data.code}: ${error.response.data.message}`, color: 'red darken-2'});
         });
       }
+
     },
     computed: {
 
@@ -320,10 +382,10 @@
               sortable: false,
               value: 'type'
             }, {
-              text: this.$vuetify.lang.t('$vuetify.lang_142'),
+              text: this.$vuetify.lang.t('$vuetify.lang_270'),
               align: 'start',
               sortable: false,
-              value: 'symbol'
+              value: 'protocol'
             }, {
               text: this.$vuetify.lang.t('$vuetify.lang_53'),
               align: 'start',
@@ -343,6 +405,13 @@
           ]
         }
       }
+    },
+
+    /**
+     *
+     */
+    beforeDestroy() {
+      this.$publish.unbind(['deposit/open', 'withdraw/status']);
     }
   }
 </script>

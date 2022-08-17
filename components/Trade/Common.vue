@@ -107,6 +107,25 @@
         this.getAssets();
 
         /**
+         * Отслеживаем события нового депозита.
+         * @event 'deposit/open/status'
+         * @return {callback}:
+         */
+        this.$nuxt.$on('deposit/open/status', (data) => {
+          if (
+
+              // Сверяем локальный штат пользователя
+              // это у нас пользовательский [id] с полученным из события пользовательским [user_id],
+              // если аргументы совпадают то это значит что ордер сработал частично или полностью.
+              data.user_id === Number(this.$auth.$state.user.id)
+
+          ) {
+            // Обновляем данные об активе, в нашем случае нам нужно обновить текущий баланс актива.
+            this.getAssets();
+          }
+        });
+
+        /**
          * Отслеживаем события нового ордера.
          * @return {callback}:
          * @object {base_unit: string},
@@ -218,7 +237,7 @@
        * @param item
        */
       getPrice(item) {
-        this.$axios.$get(this.$api.exchange.getPrice + '?base_unit=' + item.symbol + '&quote_unit=usdt').then((response) => {
+        this.$axios.$get(this.$api.exchange.getPrice + '?base_unit=' + item.symbol + '&quote_unit=usd').then((response) => {
           item.convert = this.$decimal.truncate(response.price ? (item.balance ? this.$decimal.mul(response.price, item.balance) : 0) : (item.balance ? item.balance : 0))
         });
       },

@@ -11,7 +11,7 @@
       <v-divider />
 
       <!-- Start: data table -->
-      <v-data-table :class="(count > limit ? 'none-radius ' : '') + 'analysis'" :headers="headlines" :items="analysis" :page.sync="page" item-key="id" :items-per-page="limit" hide-default-footer>
+      <v-data-table :class="(count > limit ? 'none-radius ' : '') + 'analysis'" :headers="headlines" :items="analysis" :page.sync="page" item-key="id" :server-items-length="length" :items-per-page="limit" hide-default-footer>
         <template v-slot:item.icons="{ item }">
           <div class="icon">
             <v-img class="base" width="30" :src="$storages(['icon'], item.base_unit)"/>
@@ -25,12 +25,12 @@
         </template>
         <template v-slot:item.buy_ratio="{ item }">
           <v-progress-circular :value="getRatio(item.buy_ratio)" :size="40" :color="getColor(item.buy_ratio)" :width="2">
-            <small>{{ item.buy_ratio ? item.buy_ratio : 0 }}</small>
+            <small style="font-size: 9px;">{{ item.buy_ratio ? item.buy_ratio : 0 }}</small>
           </v-progress-circular>
         </template>
         <template v-slot:item.sell_ratio="{ item }">
           <v-progress-circular :value="getRatio(item.sel_ratio)" :size="40" :color="getColor(item.sel_ratio)" :width="2">
-            <small>{{ item.sel_ratio ? item.sel_ratio : 0 }}</small>
+            <small style="font-size: 9px;">{{ item.sel_ratio ? item.sel_ratio : 0 }}</small>
           </v-progress-circular>
         </template>
         <template v-slot:item.chart="{ item }">

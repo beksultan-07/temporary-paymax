@@ -27,7 +27,7 @@
     data() {
       return {
         items: [
-          {icon: 'mdi-alpha-e-circle-outline', title: 'lang_31', to: '/trade/eth-usdt'}
+          {icon: 'mdi-alpha-e-circle-outline', title: 'lang_31', to: '/trade/eth-usd'}
         ],
       }
     }

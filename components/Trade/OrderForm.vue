@@ -118,7 +118,7 @@
                     <v-list-item v-bind="attrs" v-on="on">
                       <v-list-item-icon class="mr-4">
                         <v-progress-circular size="40" :width="2" :value="$decimal.sub(100, $decimal.div($decimal.mul(item.value, 100), item.quantity)).toFixed(0)" :color="item.assigning ? 'red' : 'teal'">
-                          <small>{{ $decimal.sub(100, $decimal.div($decimal.mul(item.value, 100), item.quantity)).toFixed(0) }}</small>
+                          <small style="font-size: 9px;">{{ $decimal.sub(100, $decimal.div($decimal.mul(item.value, 100), item.quantity)).toFixed(0) }}</small>
                         </v-progress-circular>
                       </v-list-item-icon>
                       <v-list-item-content>
@@ -245,6 +245,30 @@
 
         // Обновляем целевую политику в форме.
         this.setPrice();
+      });
+
+      /**
+       * Отслеживаем события нового депозита.
+       * @event 'deposit/open/status'
+       * @return {callback}:
+       */
+      this.$nuxt.$on('deposit/open/status', (data) => {
+
+        if (!this.$auth.loggedIn) {
+          return false;
+        }
+
+        if (
+
+            // Сверяем локальный штат пользователя
+            // это у нас пользовательский [id] с полученным из события пользовательским [user_id],
+            // если аргументы совпадают то это значит что ордер сработал частично или полностью.
+            data.user_id === Number(this.$auth.$state.user.id)
+
+        ) {
+          // Обновляем данные об активе, в нашем случае нам нужно обновить текущий баланс актива.
+          this.getAsset(undefined);
+        }
       });
 
       /**
