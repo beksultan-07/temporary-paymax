@@ -287,5 +287,5 @@ export default {
   lang_287: "Input amount",
   lang_288: "Generate an asset",
   lang_289: "New deposit processed successfully",
-  lang_290: ""
+  lang_290: "Revers"
 }
