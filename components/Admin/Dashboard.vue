@@ -153,11 +153,11 @@
     <v-divider class="my-5" />
 
     <v-row align="center">
-      <v-col v-for="(item, i) in statistic.reserves" :key="i" cols="12" md="3">
+      <v-col v-for="(item, i) in statistic.reserves" :key="i" cols="12" md="4">
         <v-card outlined rounded="lg">
           <v-card-text class="text-center">
             <v-row align="center">
-              <v-col cols="12" md="6">
+              <v-col cols="12" md="3">
                 <v-avatar size="50">
                   <v-img :src="$storages(['icon'], item.symbol)" />
                 </v-avatar>
@@ -173,7 +173,9 @@
                         <span v-bind="attrs" v-on="on">{{ item.value ? $decimal.truncate(item.value) : 0 }}</span>
                       </template>
                       <span>Резерв</span>
-                    </v-tooltip> / <v-tooltip top>
+                    </v-tooltip>
+                    <v-divider class="my-2" />
+                    <v-tooltip top>
                       <template v-slot:activator="{ on, attrs }">
                         <span v-bind="attrs" v-on="on">{{ item.value_charged ? $decimal.truncate(item.value_charged) : 0 }}</span>
                       </template>
@@ -181,6 +183,15 @@
                     </v-tooltip>
                   </small>
                 </div>
+              </v-col>
+              <v-divider vertical />
+              <v-col cols="12" md="3">
+                <v-tooltip top>
+                  <template v-slot:activator="{ on, attrs }">
+                    <small v-bind="attrs" v-on="on">-{{ item.value_costs ? $decimal.truncate(item.value_costs) : 0 }}</small>
+                  </template>
+                  <span>{{ $vuetify.lang.t('$vuetify.lang_292') }}</span>
+                </v-tooltip>
               </v-col>
             </v-row>
           </v-card-text>

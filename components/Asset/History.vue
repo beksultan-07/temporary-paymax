@@ -53,6 +53,11 @@
               {{ $vuetify.lang.t('$vuetify.lang_129') }}
             </v-chip>
           </template>
+          <template v-if="item.status === 'PROCESSING'">
+            <v-chip :class="($vuetify.theme.dark ? 'grey darken-3' : 'grey lighten-3 brown--text') + ' ml-0 mr-2'" label small>
+              {{ $vuetify.lang.t('$vuetify.lang_291') }}
+            </v-chip>
+          </template>
           <template v-if="item.status === undefined">
             <v-chip :class="($vuetify.theme.dark ? 'grey darken-3' : 'grey lighten-3 brown--text') + ' ml-0 mr-2'" label small>
               {{ $vuetify.lang.t('$vuetify.lang_130') }}
@@ -103,7 +108,7 @@
                     </v-list-item-title>
                   </v-item-group>
                 </v-list-item>
-                <v-list-item v-if="item.tx_type">
+                <v-list-item v-if="item.tx_type && item.status === 'FILLED'">
                   <v-item-group>
                     <v-list-item-subtitle>
                       {{ $vuetify.lang.t('$vuetify.lang_20') }}
@@ -113,7 +118,7 @@
                     </v-list-item-title>
                   </v-item-group>
                 </v-list-item>
-                <v-list-item v-if="item.tx_type">
+                <v-list-item v-if="item.tx_type && item.status === 'FILLED'">
                   <v-item-group>
                     <v-list-item-subtitle>
                       {{ $vuetify.lang.t('$vuetify.lang_107') }}
