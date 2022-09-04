@@ -172,7 +172,7 @@
                       <template v-slot:activator="{ on, attrs }">
                         <span v-bind="attrs" v-on="on">{{ item.value ? $decimal.truncate(item.value) : 0 }}</span>
                       </template>
-                      <span>Резерв</span>
+                      <span>{{ $vuetify.lang.t('$vuetify.lang_290') }}</span>
                     </v-tooltip>
                     <v-divider class="my-2" />
                     <v-tooltip top>

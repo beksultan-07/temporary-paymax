@@ -373,8 +373,18 @@
                 o.quantity = this.$decimal.sub(o.quantity, data.quantity);
 
                 if (o.orders.length === 1) {
-                  o.id = o.orders[index].id;
+                  if (o.orders[index]) {
+                    o.id = o.orders[index].id;
+                  } else {
+                    o.id = data.id;
+                  }
+
                   o.orders = [];
+                }
+              } else {
+                index = this.orders.map((i) => (i.id).toString()).indexOf((o.id).toString());
+                if (index !== -1) {
+                  this.orders.splice(index, 1);
                 }
               }
             }
