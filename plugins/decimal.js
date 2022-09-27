@@ -5,7 +5,7 @@ Decimal.set({ precision: 8, rounding: 1 })
 export default (context, inject) => {
 
   /**
-   * @type {{div(*, *): number, sub(*, *): number, truncate(*, *): number, mul(*, *): number, isNumber(*): boolean, precision(*): number, format(*, *): (*|number), plus(*, *): number}}
+   * @type {{div(*, *): number, add(*, *): number, sub(*, *): number, truncate(*, *): number, mul(*, *): number, isNumber(*): boolean, precision(*): number, format(*, *): (*|number)}}
    */
   context.$decimal = {
 
@@ -23,7 +23,7 @@ export default (context, inject) => {
         return 0
       }
 
-      if (precision === undefined) {
+      if (precision === undefined || precision === 0) {
         precision = this.precision(number);
       }
 
