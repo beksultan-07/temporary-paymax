@@ -1,23 +1,30 @@
 <template>
-  <div class="hello">
-    hello project
-    <v-side-block>
-      sad
-    </v-side-block>
+  <div class="container">
+    <v-order-book/>
+    
   </div>
 </template>
 
 <script>
-    import SideBlockVue from '../components/Finadmin/SideBlock.vue';
+import OrderBookVue from '../components/Finadmin/OrderBook/OrderBook.vue';
 
-    export default {
-      components: {
-        'v-side-block': SideBlockVue
-      }    
+
+  export default {
+    auth: false,
+    
+    components: {
+      "v-order-book": OrderBookVue
+    }    
+
     }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
+  .container{
+    max-width: 1640px;
+    width: 100%;
+    margin: 0 auto;
+  }
   .hello {
     color: red;
   }
