@@ -165,7 +165,7 @@
        * @object {time: int}
        */
       this.$publish.bind('trade/graph:0', (data) => {
-        if (data.graph !== undefined && this.unit.split('-')[0] === data.graph[0].base_unit && this.unit.split('-')[1] === data.graph[0].quote_unit) {
+        if (data.fields !== undefined && this.unit.split('-')[0] === data.fields[0].base_unit && this.unit.split('-')[1] === data.fields[0].quote_unit) {
           this.header = data.stats;
         }
       });

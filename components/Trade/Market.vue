@@ -152,18 +152,18 @@
        * @object {time: int}
        */
       this.$publish.bind('trade/graph:0', (data) => {
-        if (data.graph && data.graph.length > 1) {
+        if (data.fields && data.fields.length > 1) {
           this.pairs.filter((item) => {
             if (
 
               // Сверяем принадлежат ли новые события к данному активу,
               // если аргументы совпадают то привязываем полученные данные из события к данному активу.
-              item.base_unit === data.graph[0].base_unit &&
-              item.quote_unit === data.graph[0].quote_unit
+              item.base_unit === data.fields[0].base_unit &&
+              item.quote_unit === data.fields[0].quote_unit
 
             ) {
-              item.ratio = ((data.graph[0].close - data.graph[1].close) / data.graph[1].close) * 100;
-              item.price = data.graph[0].close;
+              item.ratio = ((data.fields[0].close - data.fields[1].close) / data.fields[1].close) * 100;
+              item.price = data.fields[0].close;
               return item;
             }
 

@@ -341,20 +341,20 @@
        * @object {time: int}
        */
       this.$publish.bind('trade/graph:0', (data) => {
-          if (data.graph) {
+          if (data.fields) {
             if (
 
               // Сверяем принадлежат ли новые события к данному активу,
               // если аргументы совпадают то привязываем полученные данные из события к данному активу.
-              data.graph.lastItem.base_unit === this.getQuery()[0] &&
-              data.graph.lastItem.quote_unit === this.getQuery()[1]
+              data.fields.lastItem.base_unit === this.getQuery()[0] &&
+              data.fields.lastItem.quote_unit === this.getQuery()[1]
 
             ) {
 
               // Эсле поле [value] или поле [quantity] не активно то обновляем данные
               // полученные из события бегущей строки об торгах.
               if (!this.value || !this.quantity) {
-                this.price = data.graph[0].close;
+                this.price = data.fields[0].close;
               }
             }
           }
