@@ -203,7 +203,7 @@
             this.eyelet = this.markers.indexOf(symbol);
           }
 
-          this.pairs = response.pairs ?? [];
+          this.pairs = response.fields ?? [];
           this.overlay = false;
 
           // Sort pairs by index.
@@ -216,7 +216,7 @@
        */
       getMarkers(symbol) {
         this.$axios.$post(this.$api.exchange.getMarkers).then((response) => {
-          this.markers = response.markers ?? [];
+          this.markers = response.fields ?? [];
 
           // Sort by symbol.
           this.markers.map((item, index) => {

@@ -175,11 +175,11 @@
             this.currencies.items = [];
           }
 
-          if (response.currencies !== undefined) {
+          if (response.fields !== undefined) {
 
             this.currencies.count = response.count;
-            for (let i = 0; i < response.currencies.length; i++) {
-              this.currencies.items.push(response.currencies[i])
+            for (let i = 0; i < response.fields.length; i++) {
+              this.currencies.items.push(response.fields[i])
             }
 
             this.currencies.more = this.currencies.count > this.currencies.items.length;
@@ -189,7 +189,7 @@
       },
       getPairs() {
         this.$axios.$post(this.$api.index.getPairs).then((response) => {
-          this.pairs = response.pairs;
+          this.pairs = response.fields;
         });
       }
     }

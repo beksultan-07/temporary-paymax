@@ -65,7 +65,7 @@
         this.overlay = true;
 
         this.$axios.$post(this.$api.exchange.getAsset, {symbol: this.$route.params.symbol}).then((response) => {
-          this.asset = response.currencies.lastItem ?? {};
+          this.asset = response.fields.lastItem ?? {};
           this.overlay = false;
         }).catch(e => {
           console.log(e)

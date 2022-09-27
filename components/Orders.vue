@@ -201,7 +201,7 @@
           assigning: assigning,
           limit: 100,
         }).then((response) => {
-          this.transfers = response.transfers ?? [];
+          this.transfers = response.fields ?? [];
           if (typeof callback === 'function') {
             callback();
           }
@@ -221,9 +221,9 @@
        */
       getFees(item) {
         if (item.assigning) {
-          return this.$decimal.truncate(this.$decimal.mul(this.$decimal.div(this.$decimal.mul(item.quantity, item.price), 100), item.fees));
+          return this.$decimal.truncate(this.$decimal.mul(this.$decimal.div(this.$decimal.mul(item.quantity, item.price), 100), item.fees), 0);
         } else {
-          return this.$decimal.truncate(this.$decimal.mul(this.$decimal.div(item.quantity, 100), item.fees));
+          return this.$decimal.truncate(this.$decimal.mul(this.$decimal.div(item.quantity, 100), item.fees), 0);
         }
       }
     },

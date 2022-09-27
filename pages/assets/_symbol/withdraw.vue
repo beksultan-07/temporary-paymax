@@ -272,7 +272,7 @@
         this.overlay = true;
 
         this.$axios.$post(this.$api.exchange.getAsset, {symbol: this.$route.params.symbol}).then((response) => {
-          this.asset = response.currencies.lastItem ?? {};
+          this.asset = response.fields.lastItem ?? {};
           this.overlay = false;
           this.getPrice(this.asset.symbol);
         }).catch(e => {
@@ -350,8 +350,8 @@
        */
       setWithdraw(item) {
         this.$axios.$post(this.$api.exchange.setWithdraw, {
+          id: item.id,
           symbol: this.$route.params.symbol,
-          chain_id: item.id,
           platform: item.platform,
           quantity: this.quantity,
           address: this.to,

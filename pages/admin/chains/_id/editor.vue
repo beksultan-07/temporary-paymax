@@ -170,14 +170,14 @@
         this.$axios.$post(this.$api.admin.exchange.getChain, {
           id: (this.$route.params.id !== "create" ? this.$route.params.id : 0)
         }).then((response) => {
-          if (response.chains) {
-            if (!response.chains[0].platform) {
-              response.chains[0].platform = 'BITCOIN'
+          if (response.fields) {
+            if (!response.fields[0].platform) {
+              response.fields[0].platform = 'BITCOIN'
             }
-            if (!response.chains[0].tag) {
-              response.chains[0].tag = 'C_NONE'
+            if (!response.fields[0].tag) {
+              response.fields[0].tag = 'C_NONE'
             }
-            this.chain = Object.assign(this.chain, response.chains[0]);
+            this.chain = Object.assign(this.chain, response.fields[0]);
           }
         });
       },
@@ -204,7 +204,7 @@
        */
       getCurrencies() {
         this.$axios.$post(this.$api.admin.exchange.getCurrencies).then((response) => {
-          this.currencies = response.currencies ?? [];
+          this.currencies = response.fields ?? [];
         })
       }
     }

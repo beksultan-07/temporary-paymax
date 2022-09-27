@@ -323,7 +323,7 @@
           limit: this.limit,
           page: this.page
         }).then((response) => {
-          this.transactions = response.transactions ?? [];
+          this.transactions = response.fields ?? [];
           this.count = response.count ?? 0;
           this.length = Math.ceil(this.count/this.limit);
           this.overlay = false;

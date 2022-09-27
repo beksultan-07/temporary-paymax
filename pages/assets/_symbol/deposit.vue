@@ -196,7 +196,7 @@
         this.empty = 0;
 
         this.$axios.$post(this.$api.exchange.getAsset, {symbol: this.$route.params.symbol}).then((response) => {
-          this.asset = response.currencies.lastItem ?? {};
+          this.asset = response.fields.lastItem ?? {};
 
           if (!this.asset.fin_type) {
             this.asset.chains.map((item) => {
