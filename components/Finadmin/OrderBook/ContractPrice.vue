@@ -41,9 +41,11 @@
 
 <style lang="scss" scoped>
     .header{
-        padding: 0 0 10px;
+        width: 100%;
+        padding: 10px 0;
         display: flex;
         align-items: center;
+        justify-content: flex-end;
 
         .icon{
             margin: 0 5px 0 0;

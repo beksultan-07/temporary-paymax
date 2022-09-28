@@ -1,14 +1,12 @@
 <template>
     <div>
-      <template v-if="view === 'blocks'">
-        <v-minus-table
-          @selectTick="selectTick" 
-          @changeView="changeView"
-          :tick="tick"
-          :ticks="ticks"
-        />
-        <v-plus-table/>
-      </template>
+      <v-double-table
+        v-if="view === 'blocks'"
+        @selectTick="selectTick" 
+        @changeView="changeView"
+        :tick="tick"
+        :ticks="ticks"
+      />
 
       <v-big-table
         v-else-if="view === 'minus'" 
@@ -30,17 +28,15 @@
 </template>
 
 <script>
-  import MinusTableVue from './MinusTable.vue'
-  import PlusTableVue from './PlusTable.vue'
   import BigTableVue from './BigTable.vue'
+  import DoubleTableVue from './DoubleTable.vue'
 
   export default {
     name: 'v-order-book',
 
     components: {
-      "v-minus-table": MinusTableVue,
-      "v-plus-table": PlusTableVue,
-      "v-big-table": BigTableVue
+      "v-big-table": BigTableVue,
+      "v-double-table": DoubleTableVue
     },
 
     data() {

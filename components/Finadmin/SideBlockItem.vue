@@ -45,7 +45,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 1.5px 0;
+    margin: 3px 0;
   }
   .table-col{
     margin: 0;
