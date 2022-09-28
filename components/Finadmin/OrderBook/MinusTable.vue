@@ -8,12 +8,6 @@
     />
 
     <ul class="table">
-      <li class="table-row-header">
-        <p class="table-col-name">Цена(USDT)</p>
-        <p class="table-col-name">Размер(ETH)</p>
-        <p class="table-col-name">Сумма(ETH)</p>
-      </li>
-
       <v-side-block-item 
         v-for="i in 13" 
         :key="Date.now() + i"
