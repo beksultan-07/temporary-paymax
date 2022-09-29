@@ -218,7 +218,7 @@
     methods: {
       getDashboard() {
         this.$axios.$get(this.$api.index.getStatistic).then((response) => {
-          this.statistic = response.statistic;
+          this.statistic = response.fields;
           this.statistic.reserves.map((item) => {
             if (item.symbol === "usdt" || item.symbol === "usd") {
               item.value_charged_convert = item.value_charged;

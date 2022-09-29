@@ -87,16 +87,16 @@ export default ({ app }, inject) => {
         let bars = [];
         let item = {};
 
-        response.graph = response.graph ?? [];
+        response.fields = response.fields ?? [];
 
-        for (let i = response.graph.length - 1; i > 0; i--) {
+        for (let i = response.fields.length - 1; i > 0; i--) {
 
-          item.open = item.close ?? response.graph[i].open;
-          item.high = response.graph[i].high;
-          item.low = response.graph[i].low;
-          item.close = response.graph[i].close;
-          item.time = Number(response.graph[i].time) * 1000;
-          item.volume = response.graph[i].volume ?? NaN;
+          item.open = item.close ?? response.fields[i].open;
+          item.high = response.fields[i].high;
+          item.low = response.fields[i].low;
+          item.close = response.fields[i].close;
+          item.time = Number(response.fields[i].time) * 1000;
+          item.volume = response.fields[i].volume ?? NaN;
 
           bars.push(Object.assign({}, item));
         }
@@ -119,8 +119,8 @@ export default ({ app }, inject) => {
          * @object {time: int}
          */
         app.$publish.bind('trade/graph:' + query.resolution, (data) => {
-          if (data.graph !== undefined && symbol[0].toLowerCase() === data.graph[0].base_unit && symbol[1].toLowerCase() === data.graph[0].quote_unit) {
-            this.record(data.graph[0]);
+          if (data.fields !== undefined && symbol[0].toLowerCase() === data.fields[0].base_unit && symbol[1].toLowerCase() === data.fields[0].quote_unit) {
+            this.record(data.fields[0]);
           }
         });
 

@@ -165,8 +165,8 @@
        * @object {time: int}
        */
       this.$publish.bind('trade/graph:0', (data) => {
-        if (data.graph !== undefined && this.unit.split('-')[0] === data.graph[0].base_unit && this.unit.split('-')[1] === data.graph[0].quote_unit) {
-          this.header = data.graph_stats;
+        if (data.fields !== undefined && this.unit.split('-')[0] === data.fields[0].base_unit && this.unit.split('-')[1] === data.fields[0].quote_unit) {
+          this.header = data.stats;
         }
       });
     },
@@ -184,18 +184,18 @@
         // Проверяем есть ли такая пара.
         this.$axios.$post(this.$api.exchange.getPair, {base_unit: unit.split('-')[0], quote_unit: unit.split('-')[1]}).then((response) => {
 
-          // Если статус пары false, то мы не иниацылизируем график.
-          this.status = response.pairs[0].status ?? false;
+          // Если статус пары false, то мы не инициализируем график.
+          this.status = response.fields[0].status ?? false;
           if (this.status) {
 
             let params = this.$datafeed;
-            params.$decimal = response.pairs[0].quote_decimal;
+            params.$decimal = response.fields[0].quote_decimal;
 
             /**
              * @type {IChartingLibraryWidget}
              */
             window.tvWidget = new window.TradingView.widget({
-              symbol: response.pairs[0].base_unit.toUpperCase() + '-' + response.pairs[0].quote_unit.toUpperCase(),
+              symbol: response.fields[0].base_unit.toUpperCase() + '-' + response.fields[0].quote_unit.toUpperCase(),
               theme: (this.$vuetify.theme.dark ? "Dark" : "Light"),
               locale: this.$vuetify.lang.current,
               container: 'charting-library',
@@ -239,7 +239,7 @@
        */
       getHeader(unit) {
         this.$axios.$get(this.$api.exchange.getGraph + '?base_unit=' + unit.split('-')[0] + '&quote_unit=' + unit.split('-')[1] + '&limit=2').then((response) => {
-          this.header = response.graph_stats;
+          this.header = response.stats;
         })
       }
     },

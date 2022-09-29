@@ -49,7 +49,7 @@
       let symbol = params.symbol;
       if (symbol) {
         return $axios.$post($api.exchange.getAsset, {symbol: symbol}).then((response) => {
-          let asset = response.currencies.lastItem
+          let asset = response.fields.lastItem
           asset.volume = asset.volume ?? 0;
           asset.balance = asset.balance ?? 0;
           return { symbol, asset }

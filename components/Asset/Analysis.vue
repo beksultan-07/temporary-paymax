@@ -105,7 +105,7 @@
           limit: this.limit,
           page: this.page
         }).then((response) => {
-          this.analysis = response.analysis ?? [];
+          this.analysis = response.fields ?? [];
           this.analysis.map((item) => {
             if(item.chart) {
               item.chart.reverse()

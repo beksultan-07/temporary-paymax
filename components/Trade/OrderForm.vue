@@ -341,20 +341,20 @@
        * @object {time: int}
        */
       this.$publish.bind('trade/graph:0', (data) => {
-          if (data.graph) {
+          if (data.fields) {
             if (
 
               // Сверяем принадлежат ли новые события к данному активу,
               // если аргументы совпадают то привязываем полученные данные из события к данному активу.
-              data.graph.lastItem.base_unit === this.getQuery()[0] &&
-              data.graph.lastItem.quote_unit === this.getQuery()[1]
+              data.fields.lastItem.base_unit === this.getQuery()[0] &&
+              data.fields.lastItem.quote_unit === this.getQuery()[1]
 
             ) {
 
               // Эсле поле [value] или поле [quantity] не активно то обновляем данные
               // полученные из события бегущей строки об торгах.
               if (!this.value || !this.quantity) {
-                this.price = data.graph[0].close;
+                this.price = data.fields[0].close;
               }
             }
           }
@@ -386,7 +386,7 @@
        */
       getGraph() {
         this.$axios.$get(this.$api.exchange.getGraph + '?base_unit=' + this.getQuery()[0] + '&quote_unit=' + this.getQuery()[1] + '&limit=1').then((response) => {
-          this.price = response.graph ? response.graph[0].close : 0;
+          this.price = response.fields ? response.fields[0].close : 0;
         })
       },
 
@@ -416,18 +416,18 @@
           this.percent = 0;
           this.type = false;
 
-          if (response.currencies !== undefined) {
-            if (response.currencies[0].balance !== undefined) {
-              this.balance = (response.currencies[0].balance).toFixed(8) > 0 ? response.currencies[0].balance : 0;
+          if (response.fields !== undefined) {
+            if (response.fields[0].balance !== undefined) {
+              this.balance = (response.fields[0].balance).toFixed(8) > 0 ? response.fields[0].balance : 0;
             }
             let query = this.getQuery();
 
             // Если в этого активе статус 1, то парного ему актива 0,
             // значит налаживаем вето на эту форму в целом.
-            this.status = response.currencies[0].status ?? 0;
+            this.status = response.fields[0].status ?? 0;
             if (this.status) {
               this.$axios.$post(this.$api.exchange.getPair, {base_unit: query[0], quote_unit: query[1]}).then((response) => {
-                this.status = response.pairs[0].status ?? 0;
+                this.status = response.fields[0].status ?? 0;
               }).catch(e => {
                 console.log(e)
               });
@@ -512,10 +512,10 @@
           price: this.price,
         }).then((response) => {
 
-          response.orders[0].assigning = response.orders[0].assigning ? 1 : 0;
+          response.fields[0].assigning = response.fields[0].assigning ? 1 : 0;
 
           // Добавляем новый ордер в массив.
-          this.orders.unshift(Object.assign({}, response.orders[0]));
+          this.orders.unshift(Object.assign({}, response.fields[0]));
 
           // Обновляем данные об активе, в нашем случае нам нужно обновить текущий баланс актива.
           this.getAsset(undefined);

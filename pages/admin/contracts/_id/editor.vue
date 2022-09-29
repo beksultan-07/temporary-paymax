@@ -137,8 +137,8 @@
         this.$axios.$post(this.$api.admin.exchange.getContract, {
           id: (this.$route.params.id !== "create" ? this.$route.params.id : 0)
         }).then((response) => {
-          if (response.contracts) {
-            this.contract = Object.assign(this.contract, response.contracts[0]);
+          if (response.fields) {
+            this.contract = Object.assign(this.contract, response.fields[0]);
           }
         });
       },
@@ -165,7 +165,7 @@
        */
       getChains() {
         this.$axios.$post(this.$api.admin.exchange.getChains).then((response) => {
-          this.chains = response.chains ?? [];
+          this.chains = response.fields ?? [];
           this.chains = this.chains.filter((item) => item.platform !== 'VISA' && item.platform !== 'MASTERCARD');
         })
       },
@@ -175,7 +175,7 @@
        */
       getCurrencies() {
         this.$axios.$post(this.$api.admin.exchange.getCurrencies).then((response) => {
-          this.currencies = response.currencies ?? [];
+          this.currencies = response.fields ?? [];
         })
       }
     }
