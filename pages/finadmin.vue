@@ -1,24 +1,19 @@
 <template>
   <div class="hello">
-    <v-side-block>
-      <v-component-buysell/>
-    </v-side-block>
+    <v-trade-table/>
   </div>
 </template>
 
 <script>
-    import SideBlockVue from '../components/Finadmin/SideBlock.vue';
-    import BuySellVue from '../components/Finadmin/BuySellBlock/BuySell.vue';
-
-    export default {
-      auth: false, // временнный флажок
-      components: {
-        'v-side-block': SideBlockVue,
-        'v-component-buysell': BuySellVue
-      }    
-    }
+import TradeTableVue from '../components/Finadmin/TradeTable/TradeTable.vue';
+export default {
+  auth: false, // временнный флажок
+  components: {
+    'v-trade-table': TradeTableVue 
+  }
+}
 </script>
 
 <style lang="scss" scoped>
-  
+
 </style>
