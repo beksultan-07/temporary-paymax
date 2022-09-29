@@ -431,8 +431,8 @@
        */
       getPair() {
         this.$axios.$post(this.$api.exchange.getPair, {base_unit: this.query.split('-')[0], quote_unit: this.query.split('-')[1]}).then((response) => {
-          this.base_decimal = response.pairs[0].base_decimal ?? 2;
-          this.quote_decimal = response.pairs[0].quote_decimal ?? 8;
+          this.base_decimal = response.fields[0].base_decimal ?? 2;
+          this.quote_decimal = response.fields[0].quote_decimal ?? 8;
         });
       },
 
@@ -461,7 +461,7 @@
           this.volume = response.volume ?? 0;
 
           // Записываем список ордеров в ожидании в массив.
-          this.orders = response.orders ?? [];
+          this.orders = response.fields ?? [];
           this.orders.map(item => {
 
             let items = this.orders.filter((o) => o.price === item.price && o.assigning === item.assigning);

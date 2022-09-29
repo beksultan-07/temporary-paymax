@@ -147,8 +147,8 @@
         this.$axios.$post(this.$api.admin.exchange.getCurrency, {
           symbol: (this.$route.params.symbol !== "create" ? this.$route.params.symbol : "")
         }).then((response) => {
-          if (response.currencies) {
-            this.currency = Object.assign(this.currency, response.currencies[0]);
+          if (response.fields) {
+            this.currency = Object.assign(this.currency, response.fields[0]);
             for (let i = 0; i < this.currency.chains_ids.length; i++) {
               this.currency.chains_ids[i] = (this.currency.chains_ids[i]).toString()
             }
@@ -183,7 +183,7 @@
        */
       getChains() {
         this.$axios.$post(this.$api.admin.exchange.getChains).then((response) => {
-          this.chains = response.chains ?? [];
+          this.chains = response.fields ?? [];
         })
       },
 

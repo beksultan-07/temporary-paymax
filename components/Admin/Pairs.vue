@@ -180,7 +180,7 @@
           limit: this.limit,
           page: this.page
         }).then((response) => {
-          this.pairs = response.pairs ?? [];
+          this.pairs = response.fields ?? [];
           this.count = response.count ?? 0;
           this.length = Math.ceil(this.count/this.limit);
           this.overlay = false;

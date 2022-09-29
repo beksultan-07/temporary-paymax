@@ -51,7 +51,7 @@
           </v-tooltip>
         </template>
         <template v-slot:item.fees_withdraw="{ item }">
-          {{ item.fees_withdraw }} <b>{{ (item.symbol).toUpperCase() }}</b>
+          {{ item.fees_withdraw }} <b>{{ (item.parent_symbol).toUpperCase() }}</b>
         </template>
         <template v-slot:item.protocol="{ item }">
           <v-chip :color="$protocol.get(item.protocol).color" class="ml-0 mr-2 black--text" label small>
@@ -172,7 +172,7 @@
           limit: this.limit,
           page: this.page
         }).then((response) => {
-          this.contracts = response.contracts ?? [];
+          this.contracts = response.fields ?? [];
           this.count = response.count ?? 0;
           this.length = Math.ceil(this.count / this.limit);
           this.overlay = false;

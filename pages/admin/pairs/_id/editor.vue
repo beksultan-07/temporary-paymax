@@ -183,8 +183,8 @@
         this.$axios.$post(this.$api.admin.exchange.getPair, {
           id: (this.$route.params.id !== "create" ? this.$route.params.id : 0)
         }).then((response) => {
-          if (response.pairs) {
-            this.pair = Object.assign(this.pair, response.pairs[0]);
+          if (response.fields) {
+            this.pair = Object.assign(this.pair, response.fields[0]);
           }
         });
       },
@@ -211,7 +211,7 @@
        */
       getCurrencies() {
         this.$axios.$post(this.$api.admin.exchange.getCurrencies).then((response) => {
-          this.currencies = response.currencies ?? [];
+          this.currencies = response.fields ?? [];
         })
       }
     }

@@ -224,7 +224,7 @@
         }).then((response) => {
 
           // Записываем список сделок в массив.
-          this.trades = response.trades ? response.trades : [];
+          this.trades = response.fields ?? [];
           this.trades.map(item => {
             item.id = Number(item.id);
             item.create_at = this.$moment(item.create_at).format('h:mm:ss');
@@ -240,8 +240,8 @@
        */
       getPair() {
         this.$axios.$post(this.$api.exchange.getPair, {base_unit: this.query.split('-')[0], quote_unit: this.query.split('-')[1]}).then((response) => {
-          this.base_decimal = response.pairs[0].base_decimal ?? 2;
-          this.quote_decimal = response.pairs[0].quote_decimal ?? 8;
+          this.base_decimal = response.fields[0].base_decimal ?? 2;
+          this.quote_decimal = response.fields[0].quote_decimal ?? 8;
         });
       }
     },

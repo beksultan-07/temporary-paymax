@@ -83,9 +83,9 @@
                               </v-text-field>
                               <v-text-field v-model="quantity" color="primary" :label="$vuetify.lang.t('$vuetify.lang_106')" outlined :hint="`≈ $${price ? $decimal.truncate((quantity ? $decimal.mul(price, quantity) : 0)) : (quantity ? quantity : 0)}`" persistent-hint :rules="rulesQuantity" required>
                                 <template v-slot:append>
-                              <span class="my-1" @click="getBalance(item)" style="cursor: pointer;">
-                                <span class="primary--text">MAX</span> <span class="grey--text">{{ $decimal.truncate(getReserveBalance(item)) }} {{ asset.symbol.toUpperCase() }}</span>
-                              </span>
+                                  <span class="my-1" @click="getBalance(item)" style="cursor: pointer;">
+                                    <span class="primary--text">MAX</span> <span class="grey--text">{{ $decimal.truncate(getReserveBalance(item)) }} {{ asset.symbol.toUpperCase() }}</span>
+                                  </span>
                                 </template>
                                 <template #message="{ message }">
                                   {{ $vuetify.lang.t(message) }}
@@ -272,7 +272,7 @@
         this.overlay = true;
 
         this.$axios.$post(this.$api.exchange.getAsset, {symbol: this.$route.params.symbol}).then((response) => {
-          this.asset = response.currencies.lastItem ?? {};
+          this.asset = response.fields.lastItem ?? {};
           this.overlay = false;
           this.getPrice(this.asset.symbol);
         }).catch(e => {
@@ -296,7 +296,7 @@
        * @param item
        */
       getBalance(item) {
-        this.quantity = this.$decimal.truncate(this.getReserveBalance(item));
+        this.quantity = this.$decimal.truncate(this.getReserveBalance(item), 0);
       },
 
       /**
@@ -350,8 +350,8 @@
        */
       setWithdraw(item) {
         this.$axios.$post(this.$api.exchange.setWithdraw, {
+          id: item.id,
           symbol: this.$route.params.symbol,
-          chain_id: item.id,
           platform: item.platform,
           quantity: this.quantity,
           address: this.to,
