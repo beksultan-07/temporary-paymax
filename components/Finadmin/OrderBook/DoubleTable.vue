@@ -8,21 +8,21 @@
         />
 
         <ul class="table">
-        <v-side-block-item 
-            v-for="i in 14" 
-            :key="Date.now() + i"
-            :isRed="true" 
-            :price="0.9160"
-            :amount="6.510"
-            :total="2771.6053"
-        />
+          <v-side-block-item 
+              v-for="i in 14" 
+              :key="Date.now() + i"
+              :isRed="true" 
+              :price="0.9160"
+              :amount="6.510"
+              :total="2771.6053"
+          />
         </ul>
 
         <v-contract-price 
-        :value="1264.40"
-        :isRed="false"
-        :markPrice="0.90"
-        class="header-indets"
+          :value="1264.40"
+          :isRed="false"
+          :markPrice="0.90"
+          class="header-indets"
         />
 
         <ul class="table">
