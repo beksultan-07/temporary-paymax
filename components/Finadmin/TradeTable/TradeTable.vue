@@ -44,7 +44,38 @@
       </div>
     </div>
     <div class="trade-table__body">
-      
+      <table>
+        <thead>
+          <tr>
+            <th>№</th>
+            <th>Дата и время</th>
+            <th>Тип</th>
+            <th>Счёт</th>
+            <th>Агент</th>
+            <th>Инструмент</th>
+            <th style="text-align: end;">Количество</th>
+            <th>Цена</th>
+            <th>Сумма</th>
+            <th>Валюта</th>
+            <th>-</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="t in 10">
+            <td>10054</td>
+            <td>04.08.2022 16:36:53</td>
+            <td>Регистрационная на покупку</td>
+            <td>3-3101-10043</td>
+            <td>ОАО "Группа К51"</td>
+            <td style="color: #4478BB;">КМОТ</td>
+            <td style="text-align: end;">1</td>
+            <td style="color: #4AD2AA;">2,512</td>
+            <td style="color: #4AD2AA;">2,512</td>
+            <td>KGS</td>
+            <td><img src="../../../assets/table-icons/galochka.svg" alt="galochka"></td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </template>
@@ -79,6 +110,7 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin: 0px 0px 25px 0px;
   }
 
   &__sections {
@@ -164,6 +196,84 @@ export default {
     transition: color 200ms ease;
     &:hover {
       color: #F48020;
+    }
+  }
+}
+
+table {
+  position: relative;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: calc(18 / 12 * 100%);
+  color: #252525;
+  table-layout: fixed;
+  width: 100%;
+  display: block;
+  max-height: 600px;
+  overflow: auto;
+  &::-webkit-scrollbar {
+    width: 0;
+  }
+
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: #F2F2F2;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #9C9C9C;
+    border-radius: 10px;
+  }
+  thead {
+    position: sticky;
+    top: 0;
+    background: #ffffff;
+    /* tr {
+      position: relative;
+      display: block;
+    } */
+  }
+  tbody {
+    width: 100%;
+    /* overflow: auto;
+    max-height: 200px;
+    &::-webkit-scrollbar {
+      width: 0;
+    }
+    &::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background-color: #F2F2F2;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: #9C9C9C;
+      border-radius: 10px;
+    } */
+  }
+  th, td {
+    padding: 10px;
+    text-align: left;
+    width: 110px;
+    &:nth-child(1) {
+      width: 70px;
+    }
+    &:nth-child(2) {
+      width: 150px;
+    }
+    &:nth-child(3) {
+      width: 120px;
+    }
+    &:nth-child(5) {
+      width: 120px;
+    }
+    &:nth-child(11) {
+      width: 50px;
     }
   }
 }
