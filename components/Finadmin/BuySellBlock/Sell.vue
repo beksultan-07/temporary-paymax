@@ -27,10 +27,6 @@
           :selected="invoiceSelect.selected" placeholder="Счёт" />
       </div>
       <div class="input">
-        <v-my-select :options="buyerSelect.options" @invoiceOnSelect="buyerOnSelect" :selected="buyerSelect.selected"
-          placeholder="Покупатель" />
-      </div>
-      <div class="input">
         <div class="input__name">Цена</div>
         <input class="field" placeholder="USD" type="number" name="price">
       </div>
@@ -122,8 +118,7 @@ export default {
     grid-column: 1 / 3;
   }
 
-  &:nth-child(1),
-  &:nth-child(2) {
+  &:nth-child(1) {
     grid-column: 1 / 3;
   }
 }

@@ -16,8 +16,7 @@
     <div class="subparts">
       <div class="subpart limit">Лимит</div>
       <div class="subpart market">Маркет</div>
-      <div class="subpart stol-loss">Стол-Лосс</div>
-      <div class="subpart take-prof">Тейк-Профи</div>
+      <div class="subpart stol-loss">Стол-Лимит</div>
     </div>
     
     <component :is="renderComponent"></component>
@@ -86,15 +85,16 @@ export default {
 
 .subparts {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   margin: 0px 0px 15px 0px;
   .subpart {
     cursor: pointer;
-   font-weight: 400;
-   font-size: 12px;
-   line-height: calc(18 / 12 * 100%);
-   color: #9C9C9C; 
-   transition: color 200ms ease;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: calc(18 / 12 * 100%);
+    color: #9C9C9C; 
+    transition: color 200ms ease;
+    justify-self: center;
     &._is-active {
       font-weight: 700;
       color: #4478BB;
@@ -102,10 +102,6 @@ export default {
     &:hover {
       font-weight: 700;
       color: #4478BB;
-    }
-    &:last-child {
-      display: flex;
-      justify-content: flex-end;
     }
   }
 }

@@ -7,25 +7,26 @@
     <div class="price">Цена: <strong class="strong">0 USD</strong></div>
 
     <form class="form">
-      <div class="input">
-        <v-my-select :options="invoiceSelect.options" @invoiceOnSelect="invoiceOnSelect"
-          :selected="invoiceSelect.selected" placeholder="Счёт" />
+      <div class="fields">
+        <div class="input">
+          <v-my-select :options="invoiceSelect.options" @invoiceOnSelect="invoiceOnSelect" :selected="invoiceSelect.selected"
+            placeholder="Счёт" />
+        </div>
+        <div class="input">
+          <div class="input__name">Цена</div>
+          <input class="field" placeholder="USD" type="number" name="price">
+        </div>
+        <div class="input">
+          <div class="input__name">Количество</div>
+          <input class="field" placeholder="USD" type="number" name="quantity">
+        </div>
+        <div class="input">
+          <div class="input__name">Всего</div>
+          <input class="field" placeholder="USD" type="number" name="total">
+        </div>
       </div>
       <div class="input">
-        <v-my-select :options="buyerSelect.options" @invoiceOnSelect="buyerOnSelect" :selected="buyerSelect.selected"
-          placeholder="Покупатель" />
-      </div>
-      <div class="input">
-        <div class="input__name">Цена</div>
-        <input class="field" placeholder="USD" type="number" name="price">
-      </div>
-      <div class="input">
-        <div class="input__name">Количество</div>
-        <input class="field" placeholder="USD" type="number" name="quantity">
-      </div>
-      <div class="input">
-        <div class="input__name">Всего</div>
-        <input class="field" placeholder="USD" type="number" name="total">
+        <v-component-range-slider v-model="rangeValue"/>
       </div>
     </form>
   </div>
@@ -33,11 +34,13 @@
 
 <script>
 import MySelectVue from '../MySelect/MySelect.vue'
+import RangeSliderVue from './RangeSlider/RangeSlider.vue';
 
 export default {
   name: 'v-component-buy',
   components: {
-    'v-my-select': MySelectVue
+    'v-my-select': MySelectVue,
+    'v-component-range-slider': RangeSliderVue
   },
   data: () => ({
     invoiceSelect: {
@@ -48,6 +51,7 @@ export default {
       options: ['buyer1', 'buyer2', 'buyer3', 'item3', 'item3', 'item3', 'item3'],
       selected: null
     },
+    rangeValue: 0
   }),
   methods: {
     invoiceOnSelect(selectedItem) {
@@ -87,10 +91,11 @@ export default {
   line-height: calc(18 / 10 * 100%);
 }
 
-.form {
+.fields {
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-gap: 10px;
+  margin: 0px 0px 35px 0px;
 }
 
 .input {
@@ -106,10 +111,13 @@ export default {
     grid-column: 1 / 3;
   }
 
-  &:nth-child(1),
-  &:nth-child(2) {
+  &:nth-child(1) {
     grid-column: 1 / 3;
   }
+}
+
+.range-slider {
+  position: relative;
 }
 
 .field {
