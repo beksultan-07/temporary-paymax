@@ -10,11 +10,7 @@
       @change="handleRange()"
     >
     <div class="range-balls">
-      <div class="range-ball" :style="rangeValue > 0 ? {background: '#F48020'} : {background: `#ddd`}"></div>
-      <div class="range-ball" :style="rangeValue > 25 ? {background: '#F48020'} : {background: `#ddd`}"></div>
-      <div class="range-ball" :style="rangeValue > 50 ? {background: '#F48020'} : {background: `#ddd`}"></div>
-      <div class="range-ball" :style="rangeValue > 75 ? {background: '#F48020'} : {background: `#ddd`}"></div>
-      <div class="range-ball" :style="rangeValue === 100 ? {background: '#F48020'} : {background: `#ddd`}"></div>
+      <div v-for="b in coloringBalls" :key="b" class="range-ball" :style="rangeValue > b ? {background: '#F48020'} : {background: `#ddd`}"></div>
     </div>
   </div>
 </template>
@@ -23,7 +19,8 @@
   export default {
     name: 'v-component-range-slider',
     data: () => ({
-      rangeValue: 0
+      rangeValue: 0,
+      coloringBalls: [0, 25, 50, 75, 99]
     }),
     methods: {
       handleRange() {
