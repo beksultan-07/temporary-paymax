@@ -1,6 +1,6 @@
 <template>
     <div class="header">
-        <svg v-if="isRed" class="icon" width="9" height="9" viewBox="0 0 9 9" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg v-if="isred" class="icon" width="9" height="9" viewBox="0 0 9 9" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M2.00033 6.06002L7.73833 0.322021L8.68099 1.26469L2.94299 7.00269L8.00033 7.00269V8.33602L0.666992 8.33602L0.666992 1.00269H2.00033L2.00033 6.05936V6.06002Z" fill="#F4293E"/>
         </svg>
 
@@ -8,7 +8,7 @@
             <path d="M6.99967 2.43998L1.26167 8.17798L0.319008 7.23531L6.05701 1.49731L0.999674 1.49731L0.999674 0.163978L8.33301 0.163978L8.33301 7.49731L6.99967 7.49731L6.99967 2.44064L6.99967 2.43998Z" fill="#4AD2AA"/>
         </svg>
 
-        <span class="value" :class="isRed ? 'red' : 'green' ">
+        <span class="value" :class="isred ? 'red' : 'green' ">
             {{value}}
         </span>
 
@@ -23,7 +23,7 @@
         name: "v-contract-price",
 
         props: {
-            isRed: {
+            isred: {
                 type: Boolean,
                 requared: true
             },

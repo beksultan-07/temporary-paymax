@@ -12,7 +12,7 @@
         v-else-if="view === 'minus'" 
         @selectTick="selectTick"
         @changeView="changeView"
-        :isRed="true"
+        :isred="true"
         :tick="tick"
         :ticks="ticks"
       />
@@ -20,7 +20,7 @@
         v-else-if="view === 'plus'" 
         @selectTick="selectTick"
         @changeView="changeView"
-        :isRed="false"
+        :isred="false"
         :tick="tick"
         :ticks="ticks"
       />
@@ -52,7 +52,6 @@
         this.tick = t
       },
       changeView(v){
-        console.log(v);
         this.view = v
       }
     },

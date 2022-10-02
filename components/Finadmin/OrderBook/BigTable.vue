@@ -9,9 +9,9 @@
   
       <ul class="table">
         <v-side-block-item 
-          v-for="i in 50" 
+          v-for="i in 50"
           :key="Date.now() + i"
-          :isRed="isRed" 
+          :isred="isred" 
           :price="0.9160"
           :amount="6.510"
           :total="2771.6053"
@@ -36,7 +36,7 @@
       },
       
       props: {
-        isRed: {
+        isred: {
             type: Boolean,
             required: true
         },

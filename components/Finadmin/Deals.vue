@@ -1,6 +1,5 @@
 <template>
     <v-side-block class="wrap">
-
         <h3 class="title">
             Сделки
         </h3>
@@ -17,14 +16,12 @@
             <v-side-block-item 
                 v-for="i in 30" 
                 :key="Date.now() + i"
-                :isRed="isRed" 
+                :isred="false" 
                 :price="0.9160"
                 :amount="6.510"
                 :total="2771.6053"
             />
         </ul>
-
-      
     </v-side-block>
 </template>
 

@@ -2,7 +2,7 @@
   <li class="table-row">
     <p 
       class="table-col" 
-      :class=" isRed ? 'red' : 'green' "
+      :class=" isred ? 'red' : 'green' "
     >
       {{price}}
     </p>
@@ -20,7 +20,7 @@
     name: 'v-side-block-item',
     
     props: {
-      isRed: {
+      isred: {
         type: Boolean,
         required: true
       },

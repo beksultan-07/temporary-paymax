@@ -11,7 +11,7 @@
           <v-side-block-item 
               v-for="i in 14" 
               :key="Date.now() + i"
-              :isRed="true" 
+              :isred="true" 
               :price="0.9160"
               :amount="6.510"
               :total="2771.6053"
@@ -20,7 +20,7 @@
 
         <v-contract-price 
           :value="1264.40"
-          :isRed="false"
+          :isred="false"
           :markPrice="0.90"
           class="header-indets"
         />
@@ -29,7 +29,7 @@
         <v-side-block-item 
             v-for="i in 14" 
             :key="Date.now() + i"
-            :isRed="false" 
+            :isred="false" 
             :price="0.9160"
             :amount="6.510"
             :total="2771.6053"

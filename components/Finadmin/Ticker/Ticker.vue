@@ -4,7 +4,7 @@
             <v-ticker-button 
                 :tickers="'ETH-USD'"
                 :value="1264.40"
-                :isRed="true"
+                :isred="true"
             />
             <v-ticker-item
                 title="Change in 24h"
