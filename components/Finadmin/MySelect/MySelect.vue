@@ -42,7 +42,7 @@ export default {
   }),
   methods: {
     chooseAndClose(selectedItem) {
-      this.$emit('invoiceOnSelect', selectedItem)
+      this.$emit('onSelect', selectedItem)
       this.selectMenuIsActive = false;
     }
   }

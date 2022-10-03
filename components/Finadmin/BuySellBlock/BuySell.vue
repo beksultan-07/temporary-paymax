@@ -14,12 +14,24 @@
       </div>
     </div>
     <div class="subparts">
-      <div class="subpart limit">Лимит</div>
-      <div class="subpart market">Маркет</div>
-      <div class="subpart stol-loss">Стол-Лимит</div>
+      <div 
+        v-for="subTab in buySellSubTabs" 
+        :key="subTab.component" 
+        class="subpart"
+        :class="{
+          '_is-active': currentSubComponent === subTab.component
+        }"
+        @click="currentSubComponent = subTab.component"
+      >
+        {{subTab.name}}
+      </div>
     </div>
     
-    <component :is="renderComponent"></component>
+    <component 
+      :is="renderComponent" 
+      v-bind:currentSubComponent="currentSubComponent"
+      v-bind:currentComponent="currentCumponent"
+    ></component>
   </div>
 </template>
 
@@ -37,9 +49,15 @@ export default {
   },
   data: () => ({
     currentCumponent: 'Buy',
+    currentSubComponent: 'Limit',
     buySellTabs: [
       {name: 'Купить', component: 'Buy'},
       {name: 'Продать', component: 'Sell'},
+    ],
+    buySellSubTabs: [
+      {name: 'Лимит', component: 'Limit'},
+      {name: 'Маркет', component: 'Market'},
+      {name: 'Стоп-Лимит', component: 'StopLimit'},
     ]
   }),
   computed: {

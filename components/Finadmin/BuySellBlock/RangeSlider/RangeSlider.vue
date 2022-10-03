@@ -10,7 +10,7 @@
       @change="handleRange()"
     >
     <div class="range-balls">
-      <div v-for="b in coloringBalls" :key="b" class="range-ball" :style="rangeValue > b ? {background: '#F48020'} : {background: `#ddd`}"></div>
+      <div v-for="b in $options.coloringBalls" :key="b" class="range-ball" :style="rangeValue > b ? {background: '#F48020'} : {background: `#ddd`}"></div>
     </div>
   </div>
 </template>
@@ -20,8 +20,11 @@
     name: 'v-component-range-slider',
     data: () => ({
       rangeValue: 0,
-      coloringBalls: [0, 25, 50, 75, 99]
     }),
+
+    // Закраска шариков у input range
+    coloringBalls: [0, 25, 50, 75, 99],
+
     methods: {
       handleRange() {
         this.$emit('input', this.rangeValue)
@@ -58,6 +61,14 @@
   background-color: #ddd;
   z-index: 2;
   &::-webkit-slider-thumb {
+    appearance: none;
+    cursor: ew-resize;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #F48020;
+  }
+  &::-moz-range-thumb {
     appearance: none;
     cursor: ew-resize;
     width: 12px;
