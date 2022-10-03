@@ -72,7 +72,7 @@
             <td style="color: #4AD2AA;">2,512</td>
             <td style="color: #4AD2AA;">2,512</td>
             <td>KGS</td>
-            <td><img src="../../../assets/table-icons/galochka.svg" alt="galochka"></td>
+            <td><img src="/asset/table-icons/galochka.svg" alt="galochka"></td>
           </tr>
         </tbody>
       </table>

@@ -2,7 +2,7 @@
   <div class="select field" tabindex="1" @blur="selectMenuIsActive = false">
     <div class="selected" @click="selectMenuIsActive = !selectMenuIsActive">
       <div class="selected__item">{{ selected ? selected : placeholder }}</div>
-      <div class="selected__icon"><img src="../../../assets/select=icons/arrow.svg" alt="arrow"></div>
+      <div class="selected__icon"><img src="/asset/select-icons/arrow.svg" alt="arrow"></div>
     </div>
     <transition name="fade">
       <ul class="select__menu" v-if="selectMenuIsActive">
