@@ -1,24 +1,24 @@
 <template>
   <div class="hello">
-    hello project
     <v-side-block>
-      sad
+      <v-component-buysell/>
     </v-side-block>
   </div>
 </template>
 
 <script>
-    import SideBlockVue from '../components/Finadmin/SideBlock.vue';
+import SideBlockVue from '../components/Finadmin/SideBlock.vue';
+import BuySellVue from '../components/Finadmin/BuySellBlock/BuySell.vue';
 
-    export default {
-      components: {
-        'v-side-block': SideBlockVue
-      }    
-    }
+export default {
+  auth: false, // временнный флажок
+  components: {
+    'v-side-block': SideBlockVue,
+    'v-component-buysell': BuySellVue 
+  }
+}
 </script>
 
 <style lang="scss" scoped>
-  .hello {
-    color: red;
-  }
+
 </style>
