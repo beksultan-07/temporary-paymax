@@ -1,20 +1,21 @@
 <template>
     <v-side-block class="big-block">
         <v-settings-header 
-        @selectTick="selectTick" 
-        @changeView="changeView"
-        :tick="tick"
-        :ticks="ticks"
+          @selectTick="selectTick" 
+          @changeView="changeView"
+          :tick="tick"
+          :ticks="ticks"
         />
 
         <ul class="table">
           <v-side-block-item 
-              v-for="i in 14" 
-              :key="Date.now() + i"
-              :isred="true" 
-              :price="0.9160"
-              :amount="6.510"
-              :total="2771.6053"
+              v-for="(el, idx) in options" 
+              v-if="el.isred"
+              :key="Date.now() + idx"
+              :isred="el.isred" 
+              :price="el.price"
+              :amount="el.amount"
+              :total="el.total"
           />
         </ul>
 
@@ -26,14 +27,15 @@
         />
 
         <ul class="table">
-        <v-side-block-item 
-            v-for="i in 14" 
-            :key="Date.now() + i"
-            :isred="false" 
-            :price="0.9160"
-            :amount="6.510"
-            :total="2771.6053"
-        />
+          <v-side-block-item 
+              v-for="(el, idx) in options" 
+              v-if="!el.isred"
+              :key="Date.now() + idx"
+              :isred="el.isred" 
+              :price="el.price"
+              :amount="el.amount"
+              :total="el.total"
+          />
         </ul>
 
   </v-side-block>
@@ -48,15 +50,16 @@ import SettingsHeaderVue from './SettingsHeader.vue';
     export default {
         name: 'v-double-table',
         components: {
-        "v-side-block": SideBlockVue,
-        "v-side-block-item": SideBlockItemVue,
-        "v-settings-header": SettingsHeaderVue,
-        "v-contract-price": ContractPriceVue,
-        },
+          "v-side-block": SideBlockVue,
+          "v-side-block-item": SideBlockItemVue,
+          "v-settings-header": SettingsHeaderVue,
+          "v-contract-price": ContractPriceVue,
+          },
         
         props: {
-        tick: Number,
-        ticks: Array
+          tick: Number,
+          ticks: Array,
+          options: Array
         },  
         
         methods: {
@@ -78,7 +81,7 @@ import SettingsHeaderVue from './SettingsHeader.vue';
     .table{
       padding: 0;
       list-style: none;
-
+      overflow: hidden;
     }
     ::-webkit-scrollbar {
       width: 5px;

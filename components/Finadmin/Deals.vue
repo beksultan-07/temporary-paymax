@@ -14,12 +14,12 @@
 
         <ul class="table scroll">
             <v-side-block-item 
-                v-for="i in 30" 
-                :key="Date.now() + i"
-                :isred="false" 
-                :price="0.9160"
-                :amount="6.510"
-                :total="2771.6053"
+                v-for="(el, idx) in orderBookData" 
+                :key="Date.now() + idx"
+                :isred="el.isred" 
+                :price="el.price"
+                :amount="el.amount"
+                :total="el.total"
             />
         </ul>
     </v-side-block>
@@ -34,6 +34,9 @@
         components: {
             "v-side-block": SideBlockVue,
             "v-side-block-item": SideBlockItemVue
+        },
+        props: {
+            orderBookData: Array
         }
     }
 </script>

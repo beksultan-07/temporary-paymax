@@ -4,6 +4,7 @@
         v-if="view === 'blocks'"
         @selectTick="selectTick" 
         @changeView="changeView"
+        :options="orderBookData"
         :tick="tick"
         :ticks="ticks"
       />
@@ -12,6 +13,7 @@
         v-else-if="view === 'minus'" 
         @selectTick="selectTick"
         @changeView="changeView"
+        :options="orderBookData"
         :isred="true"
         :tick="tick"
         :ticks="ticks"
@@ -20,6 +22,7 @@
         v-else-if="view === 'plus'" 
         @selectTick="selectTick"
         @changeView="changeView"
+        :options="orderBookData"
         :isred="false"
         :tick="tick"
         :ticks="ticks"
@@ -43,9 +46,13 @@
       return {
         view: 'blocks',
         tick: 0.1,
-        ticks: [0.1, 0.01, 0.001]
+        ticks: [0.1, 0.01, 0.001],
       }
     },
+
+    props: {
+      orderBookData: Array
+    },  
 
     methods: {
       selectTick(t) {

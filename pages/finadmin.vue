@@ -1,12 +1,12 @@
 <template>
   <div class="container">
-    <v-order-book/>
+    <v-order-book :orderBookData='orderBookData'/>
 
     <v-ticker style="margin: 10px 0;"/>
     
     <v-fin-chart/>
 
-    <v-fin-deals style="margin: 10px 0;"/>
+    <v-fin-deals :orderBookData="orderBookData" style="margin: 10px 0;" />
 
     <v-margin-ratio 
       :marginRatio="0"
@@ -21,7 +21,7 @@
 <script>
   import ChartVue from '../components/Finadmin/Chart/Chart.vue';
   import DealsVue from '../components/Finadmin/Deals.vue';
-import MarginRatioVue from '../components/Finadmin/MarginRatio.vue';
+  import MarginRatioVue from '../components/Finadmin/MarginRatio.vue';
   import OrderBookVue from '../components/Finadmin/OrderBook/OrderBook.vue';
   import TickerVue from '../components/Finadmin/Ticker/Ticker.vue';
 
@@ -35,6 +35,31 @@ import MarginRatioVue from '../components/Finadmin/MarginRatio.vue';
         "v-fin-chart": ChartVue,
         "v-fin-deals": DealsVue,
         "v-margin-ratio": MarginRatioVue
+    },
+
+    data() {
+      return {
+        orderBookData: [
+          {isred: true, price: 0.9160, amount: 6.510, total: 2771.6053},
+          {isred: false, price: 0.9160, amount: 6.510, total: 2771.6053},
+          {isred: true, price: 0.9160, amount: 6.510, total: 2771.6053},
+          {isred: false, price: 0.9160, amount: 6.510, total: 2771.6053},
+          {isred: true, price: 0.9160, amount: 6.510, total: 2771.6053},
+          {isred: false, price: 0.9160, amount: 6.510, total: 2771.6053},
+          {isred: true, price: 0.9160, amount: 6.510, total: 2771.6053},
+          {isred: false, price: 0.9160, amount: 6.510, total: 2771.6053},
+          {isred: false, price: 0.9160, amount: 6.510, total: 2771.6053},
+          {isred: false, price: 0.9160, amount: 6.510, total: 2771.6053},
+          {isred: false, price: 0.9160, amount: 6.510, total: 2771.6053},
+          {isred: true, price: 0.9160, amount: 6.510, total: 2771.6053},
+          {isred: true, price: 0.9160, amount: 6.510, total: 2771.6053},
+          {isred: true, price: 0.9160, amount: 6.510, total: 2771.6053},
+          {isred: false, price: 0.9160, amount: 6.510, total: 2771.6053},
+          {isred: false, price: 0.9160, amount: 6.510, total: 2771.6053},
+          {isred: false, price: 0.9160, amount: 6.510, total: 2771.6053},
+          {isred: true, price: 0.9160, amount: 6.510, total: 2771.6053},
+        ]
+      }
     },
 
     }

@@ -9,13 +9,14 @@
   
       <ul class="table">
         <v-side-block-item 
-          v-for="i in 50"
-          :key="Date.now() + i"
-          :isred="isred" 
-          :price="0.9160"
-          :amount="6.510"
-          :total="2771.6053"
-        />
+          v-for="(el, idx) in options" 
+          v-if="el.isred === isred"
+          :key="Date.now() + idx"
+          :isred="el.isred" 
+          :price="el.price"
+          :amount="el.amount"
+          :total="el.total"
+          />
       </ul>
   
     </v-side-block>
@@ -41,7 +42,8 @@
             required: true
         },
         tick: Number,
-        ticks: Array
+        ticks: Array,
+        options: Array
       },  
       
       methods: {

@@ -6,6 +6,7 @@
                 :value="1264.40"
                 :isred="true"
             />
+
             <v-ticker-item
                 title="Change in 24h"
                 value="-74.10 -5.54%"
@@ -25,7 +26,7 @@
             />
 
             <v-ticker-item
-                title="CVolume 24h (ETH)"
+                title="Volume 24h (ETH)"
                 value="0"
                 color="default"
             />
