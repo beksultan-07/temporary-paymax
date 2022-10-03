@@ -1,51 +1,55 @@
 <template>
-  <div class="orderform">
-    <div class="buysell__items">
-      <div 
-        v-for="t in buySellTabs" 
-        :key="t.component" 
-        class="buysell__item"
-        @click="currentCumponent = t.component"
-        :class="{
-          '_is-active': currentCumponent === t.component
-        }"
-      >
-        {{t.name}}
+  <v-side-block>
+    <div class="orderform">
+      <div class="buysell__items">
+        <div 
+          v-for="t in buySellTabs" 
+          :key="t.component" 
+          class="buysell__item"
+          @click="currentCumponent = t.component"
+          :class="{
+            '_is-active': currentCumponent === t.component
+          }"
+        >
+          {{t.name}}
+        </div>
       </div>
-    </div>
-    <div class="subparts">
-      <div 
-        v-for="subTab in buySellSubTabs" 
-        :key="subTab.component" 
-        class="subpart"
-        :class="{
-          '_is-active': currentSubComponent === subTab.component
-        }"
-        @click="currentSubComponent = subTab.component"
-      >
-        {{subTab.name}}
+      <div class="subparts">
+        <div 
+          v-for="subTab in buySellSubTabs" 
+          :key="subTab.component" 
+          class="subpart"
+          :class="{
+            '_is-active': currentSubComponent === subTab.component
+          }"
+          @click="currentSubComponent = subTab.component"
+        >
+          {{subTab.name}}
+        </div>
       </div>
+      
+      <component 
+        :is="renderComponent" 
+        v-bind:currentSubComponent="currentSubComponent"
+        v-bind:currentComponent="currentCumponent"
+      ></component>
     </div>
-    
-    <component 
-      :is="renderComponent" 
-      v-bind:currentSubComponent="currentSubComponent"
-      v-bind:currentComponent="currentCumponent"
-    ></component>
-  </div>
+  </v-side-block>
 </template>
 
 <script>
 import MySelectVue from '../MySelect/MySelect.vue';
 import BuyVue from '../BuySellBlock/Buy.vue';
 import SellVue from '../BuySellBlock/Sell.vue';
+import SideBlockVue from '../SideBlock.vue';
 
 export default {
   name: 'v-component-buysell',
   components: {
     'v-my-select': MySelectVue,
     'v-component-buy': BuyVue,
-    'v-component-sell': SellVue
+    'v-component-sell': SellVue,
+    'v-side-block': SideBlockVue
   },
   data: () => ({
     currentCumponent: 'Buy',

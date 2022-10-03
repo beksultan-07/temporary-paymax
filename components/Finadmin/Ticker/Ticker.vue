@@ -56,7 +56,6 @@
 
 <style lang="scss" scoped>
     .ticker{
-        width: 810px;
         background: #FFFFFF;
         border-radius: 4px;
         padding: 10px;

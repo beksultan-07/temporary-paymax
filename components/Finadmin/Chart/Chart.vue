@@ -1,7 +1,5 @@
 <template>
-  <div>
-    <div id="charting-library" class="pa-2 charting" style="height: 448px"></div>
-  </div>
+  <div class="chart"></div>
 </template>
 
 <script>
@@ -11,5 +9,10 @@
 </script>
 
 <style lang="scss" scoped>
-
+  .chart{
+    border-radius: 4px;
+    background: #fff;
+    height: 100%;
+    width: 100%;
+  }
 </style>

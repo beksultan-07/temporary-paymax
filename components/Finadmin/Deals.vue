@@ -46,6 +46,7 @@
     .wrap{
         display: flex;
         flex-direction: column;
+        height: 270px;
     }
 
     .title{

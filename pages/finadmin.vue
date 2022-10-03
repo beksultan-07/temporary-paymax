@@ -1,29 +1,33 @@
 <template>
   <div class="container">
-    <v-order-book :orderBookData='orderBookData'/>
+    <div class="finadmin-trade">
+      <v-order-book :orderBookData='orderBookData'/>
+  
+      <div class="right-side-blocks">
+        <v-ticker/>
+        
+        <v-fin-chart class="indets"/>
+      </div>
 
-    <v-ticker style="margin: 10px 0;"/>
+      <div class="right-side-blocks">
+        <v-buy-sell/>
     
-    <v-fin-chart/>
+        <v-fin-deals :orderBookData="orderBookData" class="indets"/>
+      </div>
+    </div> 
 
-    <v-fin-deals :orderBookData="orderBookData" style="margin: 10px 0;" />
-
-    <v-margin-ratio 
-      :marginRatio="0"
-      :isred="false"
-      :maintenanceMargin="0"
-      :marginBalance="0"
-    />
-
+    <v-trade-table class="indets"/>
   </div>
 </template>
 
 <script>
+  import BuySellVue from '../components/Finadmin/BuySellBlock/BuySell.vue';
   import ChartVue from '../components/Finadmin/Chart/Chart.vue';
   import DealsVue from '../components/Finadmin/Deals.vue';
   import MarginRatioVue from '../components/Finadmin/MarginRatio.vue';
   import OrderBookVue from '../components/Finadmin/OrderBook/OrderBook.vue';
   import TickerVue from '../components/Finadmin/Ticker/Ticker.vue';
+  import TradeTableVue from '../components/Finadmin/TradeTable/TradeTable.vue';
 
 
   export default {
@@ -34,7 +38,9 @@
         "v-ticker": TickerVue,
         "v-fin-chart": ChartVue,
         "v-fin-deals": DealsVue,
-        "v-margin-ratio": MarginRatioVue
+        "v-margin-ratio": MarginRatioVue,
+        'v-buy-sell': BuySellVue,
+        'v-trade-table': TradeTableVue
     },
 
     data() {
@@ -71,7 +77,17 @@
     width: 100%;
     margin: 0 auto;
   }
-  .hello {
-    color: red;
+  .finadmin-trade{
+    display: grid;
+    grid-template-columns: 25% 50% 25%;
+    gap: 20px;
+  }
+
+  .right-side-blocks{
+    display: flex;
+    flex-direction: column;
+  }
+  .indets{
+    margin: 20px 0 0;
   }
 </style>

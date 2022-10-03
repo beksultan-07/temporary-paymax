@@ -13,7 +13,8 @@
 
 <style scoped>
   .wrap{
-    width: 395px;
+    /* width: 395px; */
+    height: 100%;
   
     background: #fff;
     border-radius: 4px;
