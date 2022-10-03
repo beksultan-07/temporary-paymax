@@ -1,24 +1,77 @@
 <template>
-  <div class="hello">
-    <v-side-block>
-      <v-component-buysell/>
-    </v-side-block>
+  <div class="container">
+    <v-order-book :orderBookData='orderBookData'/>
+
+    <v-ticker style="margin: 10px 0;"/>
+    
+    <v-fin-chart/>
+
+    <v-fin-deals :orderBookData="orderBookData" style="margin: 10px 0;" />
+
+    <v-margin-ratio 
+      :marginRatio="0"
+      :isred="false"
+      :maintenanceMargin="0"
+      :marginBalance="0"
+    />
+
   </div>
 </template>
 
 <script>
-import SideBlockVue from '../components/Finadmin/SideBlock.vue';
-import BuySellVue from '../components/Finadmin/BuySellBlock/BuySell.vue';
+  import ChartVue from '../components/Finadmin/Chart/Chart.vue';
+  import DealsVue from '../components/Finadmin/Deals.vue';
+  import MarginRatioVue from '../components/Finadmin/MarginRatio.vue';
+  import OrderBookVue from '../components/Finadmin/OrderBook/OrderBook.vue';
+  import TickerVue from '../components/Finadmin/Ticker/Ticker.vue';
 
-export default {
-  auth: false, // временнный флажок
-  components: {
-    'v-side-block': SideBlockVue,
-    'v-component-buysell': BuySellVue 
-  }
-}
+
+  export default {
+    auth: false,
+    
+    components: {
+        "v-order-book": OrderBookVue,
+        "v-ticker": TickerVue,
+        "v-fin-chart": ChartVue,
+        "v-fin-deals": DealsVue,
+        "v-margin-ratio": MarginRatioVue
+    },
+
+    data() {
+      return {
+        orderBookData: [
+          {isred: true, price: 0.9160, amount: 6.510, total: 2771.6053},
+          {isred: false, price: 0.9160, amount: 6.510, total: 2771.6053},
+          {isred: true, price: 0.9160, amount: 6.510, total: 2771.6053},
+          {isred: false, price: 0.9160, amount: 6.510, total: 2771.6053},
+          {isred: true, price: 0.9160, amount: 6.510, total: 2771.6053},
+          {isred: false, price: 0.9160, amount: 6.510, total: 2771.6053},
+          {isred: true, price: 0.9160, amount: 6.510, total: 2771.6053},
+          {isred: false, price: 0.9160, amount: 6.510, total: 2771.6053},
+          {isred: false, price: 0.9160, amount: 6.510, total: 2771.6053},
+          {isred: false, price: 0.9160, amount: 6.510, total: 2771.6053},
+          {isred: false, price: 0.9160, amount: 6.510, total: 2771.6053},
+          {isred: true, price: 0.9160, amount: 6.510, total: 2771.6053},
+          {isred: true, price: 0.9160, amount: 6.510, total: 2771.6053},
+          {isred: true, price: 0.9160, amount: 6.510, total: 2771.6053},
+          {isred: false, price: 0.9160, amount: 6.510, total: 2771.6053},
+          {isred: false, price: 0.9160, amount: 6.510, total: 2771.6053},
+          {isred: false, price: 0.9160, amount: 6.510, total: 2771.6053},
+          {isred: true, price: 0.9160, amount: 6.510, total: 2771.6053},
+        ]
+      }
+    },
+
+    }
 </script>
 
-<style lang="scss" scoped>
-
+<style lang="scss">
+  .container{
+    max-width: 1640px;
+    width: 100%;
+    margin: 0 auto;
+  }
+  .hello {
+    color: red;
+  }
 </style>
