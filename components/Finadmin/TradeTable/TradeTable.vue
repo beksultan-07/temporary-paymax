@@ -101,7 +101,6 @@ export default {
 }
 
 .trade-table {
-  max-width: 1231px;
   background: #ffffff;
   border-radius: 4px;
   padding: 20px 10px;

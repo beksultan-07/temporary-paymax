@@ -129,7 +129,6 @@
     }
   .request-btn{
     outline: none;
-    background: #000;
     background: #F9F9F9;
     position: relative;
     border-radius: 2px;

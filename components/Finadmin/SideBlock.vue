@@ -13,7 +13,10 @@
 
 <style scoped>
   .wrap{
-    /* width: 395px; */
+    /* min-width: 395px;
+    width: 100%;
+    max-width: 100%; */
+
     height: 100%;
   
     background: #fff;
