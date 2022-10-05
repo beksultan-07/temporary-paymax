@@ -47,6 +47,7 @@
                 <li 
                     class="table-item" 
                     v-for="(el, index) in depoAssets" 
+                    v-if="el.depo === activeDepoAssets"
                     :key="index"    
                 >
                     <p class="table-item-text first-col">
@@ -193,11 +194,9 @@ import SideBlockVue from './SideBlock.vue';
         list-style: none;
         margin: 0 0 10px;
 
-        &-item{
-            /* display: flex;
-            justify-content: space-between;
-            flex: 1; */
+        overflow: hidden;
 
+        &-item{
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
 
@@ -232,7 +231,11 @@ import SideBlockVue from './SideBlock.vue';
         }
     }
 
-    .auto-height{height: auto;}
+    .auto-height{
+        height: auto;
+        max-height: 695px;
+        overflow: hidden;
+    }
 
     .button{margin: auto 0 0;}
 </style>
