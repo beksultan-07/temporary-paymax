@@ -1,24 +1,22 @@
 <template>
   <div class="container">
     <div class="finadmin-trade">
-      <v-order-book :orderBookData='orderBookData'/>
+      <v-order-book :orderBookData='orderBookData' class="mini-block"/>
   
-      <div class="side-blocks">
+      <div class="side-blocks blocks-between big-block">
         <v-ticker/>
-        
         <v-fin-chart class="indets-top"/>
       </div>
 
-      <div class="side-blocks">
+      <div class="side-blocks mini-block">
         <v-buy-sell/>
-    
         <v-fin-deals :orderBookData="orderBookData" class="indets-top"/>
       </div>
     </div> 
     <div class="finadmin-table indets-top">
-      <v-trade-table/>
+      <v-trade-table class="huge-block indets-right"/>
 
-      <v-depo-assets :depoAssets="depoAssets"/>
+      <v-depo-assets class="mini-block" :depoAssets="depoAssets"/>
     </div>
   </div>
 </template>
@@ -112,15 +110,13 @@ import DepoAssetsVue from '../components/Finadmin/DepoAssets.vue';
     margin: 0 auto;
   }
   .finadmin-trade{
-    display: grid;
-    grid-template-columns: 25% 50% 25%;
-    gap: 20px;
+    display: flex;
+    justify-content: space-between;
   }
 
   .finadmin-table{
-    display: grid;
-    grid-template-columns: 75% 25%;
-    gap: 20px;
+    display: flex;
+    justify-content: space-between;
   }
 
   .side-blocks{
@@ -128,7 +124,14 @@ import DepoAssetsVue from '../components/Finadmin/DepoAssets.vue';
     display: flex;
     flex-direction: column;
   }
-  .indets-top{
-    margin: 20px 0 0;
+
+  .blocks-between{
+    margin: 0 20px;
   }
+  .indets-top{margin: 20px 0 0;}
+  .indets-right{margin: 0 20px 0 0;}
+
+  .mini-block{flex: 1;}
+  .big-block{flex: 2;}
+  .huge-block{flex: 3.33;}
 </style>

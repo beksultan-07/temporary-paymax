@@ -1,76 +1,84 @@
 <template>
-    <v-side-block>
-        <div class="header">
-            <h3 class="title">
-                Активы
-            </h3>
-
-            <button class="btn" @click.stop="depoAssetsSwitcher = !depoAssetsSwitcher">
-                {{activeDepoAssets}}
-
-                <svg class="icon" width="8" height="5" viewBox="0 0 8 5" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M3.99866 4.75007L0.816406 1.56782L1.87766 0.507324L3.99866 2.62907L6.11966 0.507324L7.18091 1.56782L3.99866 4.75007Z" fill="#252525"/>
-                </svg>
-
-                <div class="drop-down" :class="{
-                    'active': depoAssetsSwitcher
-                }">
-                    <button 
-                        v-for="(el, idx) in depoAssetsDropDown"
-                        :key="Date.now() + idx"
-                        class="drop-down-item"
-                        :class="el === activeDepoAssets ? 'active-depo-asset' : '' " 
-                        @click="activeDepoAssets = el"
-                    > 
-                        {{el}}
-                    </button>
-                </div>
-            </button>
+    <v-side-block class="auto-height">
+        <div class="depo-wrap">
+            <div class="header">
+                <h3 class="title">
+                    Активы
+                </h3>
+    
+                <button class="btn" @click.stop="depoAssetsSwitcher = !depoAssetsSwitcher">
+                    {{activeDepoAssets}}
+    
+                    <svg class="icon" width="8" height="5" viewBox="0 0 8 5" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M3.99866 4.75007L0.816406 1.56782L1.87766 0.507324L3.99866 2.62907L6.11966 0.507324L7.18091 1.56782L3.99866 4.75007Z" fill="#252525"/>
+                    </svg>
+    
+                    <div class="drop-down" :class="{
+                        'active': depoAssetsSwitcher
+                    }">
+                        <button 
+                            v-for="(el, idx) in depoAssetsDropDown"
+                            :key="Date.now() + idx"
+                            class="drop-down-item"
+                            :class="el === activeDepoAssets ? 'active-depo-asset' : '' " 
+                            @click="clickHandler(el)"
+                        > 
+                            {{el}}
+                        </button>
+                    </div>
+                </button>
+            </div>
+    
+            <ul class="table">
+                <li class="table-item">
+                    <p class="table-item-text item-title first-col">
+                        Счет
+                    </p>
+    
+                    <p class="table-item-text item-title" style="text-align: end;">
+                        Инструмент
+                    </p>
+    
+                    <p class="table-item-text item-title" style="text-align: end;">
+                        Обьем
+                    </p>
+                </li>
+    
+                <li 
+                    class="table-item" 
+                    v-for="(el, index) in depoAssets" 
+                    :key="index"    
+                >
+                    <p class="table-item-text first-col">
+                        {{el.check}}
+                    </p>
+                    <p class="table-item-text" style="text-align: end;">
+                        {{el.tool}}
+                    </p>
+                    <p class="table-item-text" style="text-align: end;">
+                        {{el.volume}}
+                    </p>
+                </li>
+    
+            </ul>
+    
+            <v-finadmin-button class="button">
+                Добавить
+            </v-finadmin-button>
         </div>
-
-        <ul class="table">
-            <li class="table-item">
-                <p class="table-item-text item-title first-col">
-                    Счет
-                </p>
-
-                <p class="table-item-text item-title" style="text-align: end;">
-                    Инструмент
-                </p>
-
-                <p class="table-item-text item-title" style="text-align: end;">
-                    Обьем
-                </p>
-            </li>
-
-            <li 
-                class="table-item" 
-                v-for="(el, index) in depoAssets" 
-                :key="index"    
-            >
-                <p class="table-item-text first-col">
-                    {{el.check}}
-                </p>
-                <p class="table-item-text" style="text-align: end;">
-                    {{el.tool}}
-                </p>
-                <p class="table-item-text" style="text-align: end;">
-                    {{el.volume}}
-                </p>
-            </li>
-
-        </ul>
     </v-side-block>
 </template>
 
 <script>
+import ButtonVue from './Button.vue';
 import SideBlockVue from './SideBlock.vue';
 
     export default {
         name: 'v-depo-assets',
 
         components: {
-            'v-side-block': SideBlockVue
+            'v-side-block': SideBlockVue,
+            'v-finadmin-button': ButtonVue
         },
 
         data() {
@@ -89,9 +97,9 @@ import SideBlockVue from './SideBlock.vue';
         },
 
         methods: {
-            sortDepoAssets() {
-                return this.depoAssetsDropDown.filter(el => el !== this.activeDepoAssets)
-            },
+            clickHandler(depoAsset){
+                this.activeDepoAssets = depoAsset
+            }
         },
 
         mounted() {
@@ -127,7 +135,10 @@ import SideBlockVue from './SideBlock.vue';
             font-weight: 400;
             font-size: 14px;
             line-height: 18px;
-            color: #252525;
+
+            padding: 5px 33px;
+            background: #E8F2FF;
+            color: #4478BB;
 
             display: flex;
             align-items: center;
@@ -157,23 +168,30 @@ import SideBlockVue from './SideBlock.vue';
                     font-size: 14px;
                     line-height: 18px;
                     padding: 10px 0;
-                    color: #252525;
+                    color: #9C9C9C;
                     background: #F9F9F9;
                     transition: .3s;
                     
                     width: 100%;
-                    &.active-depo-asset{background: #DCDCDC;}
+                    &.active-depo-asset{color: #F48020;}
 
                     &:hover{
-                        background: #DCDCDC;
+                        color: #F48020;
                     }
                 }
                 }
         }
     }
+
+    .depo-wrap{
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+    }
     .table{
         padding: 0;
         list-style: none;
+        margin: 0 0 10px;
 
         &-item{
             /* display: flex;
@@ -213,4 +231,8 @@ import SideBlockVue from './SideBlock.vue';
             }
         }
     }
+
+    .auto-height{height: auto;}
+
+    .button{margin: auto 0 0;}
 </style>
