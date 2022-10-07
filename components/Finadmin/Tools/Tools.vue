@@ -108,6 +108,7 @@ import Table from './Table.vue';
         this.activeTab = activeTab
       },
       countryPageSwitcher(){
+        this.inputValue = null;
         this.countryPage = !this.countryPage
       },
       countrySwitcher(country){
