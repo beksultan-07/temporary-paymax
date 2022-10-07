@@ -21,3 +21,9 @@ $container-max-widths: (
 
 $data-table-expanded-content-box-shadow: '';
 $parallax-padding: 0 !important;
+.v-slide-group__prev{
+  display: none !important;
+}
+.v-slide-group__next{
+  display: none;
+}
