@@ -1,11 +1,10 @@
 <template>
-  <v-tabs
-      v-model="activeTab"
-    >
+  <v-tabs>
       <v-tab
         v-for="(el, idx) in tabs"
         :key="idx"
         :href="`#tab-${el.link}`"
+        @click="$emit('changeTab', el.link)"
       >
         {{el.name}}
       </v-tab>
@@ -26,7 +25,12 @@
                     Описание
                   </th>
                   <th class="text-right">
-                    <v-btn @click="$emit('countrySwitcher')" elevation="0" class="amber lighten-3 amber--text text--darken-4" small>
+                    <v-btn 
+                      @click="$emit('countrySwitcher')" 
+                      elevation="0" 
+                      class="amber lighten-3 amber--text text--darken-4" 
+                      small
+                    >
                       Все источники
                     </v-btn>
                   </th>
@@ -66,9 +70,10 @@
         name: 'v-tool-table',
 
         props: {
+            tabs: Array,
             renderActiveTabTable: Array,
-            tabs: Array
-        }
+            value: String
+        },        
     }
 </script>
 

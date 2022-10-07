@@ -4,10 +4,10 @@
       
       <v-card-title class="title">
         <v-btn
-          v-if="countrySwitch"
+          v-if="countryPage"
           text
           small
-          @click="countrySwitch = false"
+          @click="countryPage = false"
         >
           <svg width="9" height="14" viewBox="0 0 9 14" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M3.328 6.99999L8.278 11.95L6.864 13.364L0.5 6.99999L6.864 0.635986L8.278 2.04999L3.328 6.99999Z" fill="#252525"/>
@@ -31,16 +31,16 @@
 
     <v-container>
         <v-tool-table 
-          v-if="!countrySwitch"
+          v-if="!countryPage"
           @countrySwitcher="countryPageSwitcher"
-          v-model="activeTab" 
+          @changeTab="changeTab" 
           :renderActiveTabTable='renderActiveTabTable'
           :tabs="tabs"
         />
 
       <v-tools-countries 
         v-else 
-        :countriesData="countries"
+        :countriesData="filterCounties"
         @countrySwitcher="countrySwitcher"
       />
     </v-container>
@@ -66,7 +66,7 @@ import Table from './Table.vue';
         return {
             activeTab: null,
             country: "all",
-            countrySwitch: false,
+            countryPage: false,
             inputValue: null,
             tabs: [
                 { name: "Все", link: "all" },
@@ -104,35 +104,48 @@ import Table from './Table.vue';
         },
     },
     methods: {
+      changeTab(activeTab){
+        this.activeTab = activeTab
+      },
       countryPageSwitcher(){
-        this.countrySwitch = !this.countrySwitch
+        this.countryPage = !this.countryPage
       },
       countrySwitcher(country){
-        this.country = country
+        console.log('country is '+ country);
+        this.country = country;
+        this.inputValue = null;
+        this.countryPage = false;
       },
       filterDialofData(data, value){
         if(value){
-          console.log(value);
           return data.filter(el => el.tool.toLowerCase() === value.toLowerCase());
-        }else{
-          return data;
         }
+        if(this.country !== 'all'){
+          return data.filter(el => el.country.name === this.country);
+        }
+        return data;
       }
     },
     computed: {
         renderActiveTabTable() {
             switch (this.activeTab) {
-                case "tab-stock":
-                  return this.filterDialofData(this.dialogDataStocks, this.inputValue)
-                case "tab-bonds":
-                  return this.filterDialofData(this.dialogDataBonds, this.inputValue)
-                case "tab-futures":
-                  return this.filterDialofData(this.dialogDataFutures, this.inputValue)
-                case "tab-indices":
-                  return this.filterDialofData(this.dialogDataIndices, this.inputValue)
-                default:
-                  return this.filterDialofData(this.dialogData, this.inputValue)
+              case "stock":
+                return this.filterDialofData(this.dialogDataStocks, this.inputValue)
+              case "bonds":
+                return this.filterDialofData(this.dialogDataBonds, this.inputValue)
+              case "futures":
+                return this.filterDialofData(this.dialogDataFutures, this.inputValue)
+              case "indices":
+                return this.filterDialofData(this.dialogDataIndices, this.inputValue)
+              default:
+                return this.filterDialofData(this.dialogData, this.inputValue)
             }
+        },
+        filterCounties(){
+          if(this.inputValue){
+            return this.countries.filter(el => el.name.toLowerCase() === this.inputValue.toLowerCase());
+          }
+          return this.countries;
         }
     },
 }
