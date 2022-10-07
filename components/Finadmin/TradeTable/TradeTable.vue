@@ -4,16 +4,20 @@
       <ul class="trade-table__sections">
         <li 
           class="trade-table__section"
-          v-for="section in $options.sections[currentDropdownSection]"
-          :key="section"
+          v-for="section in sections[currentDropdownSection]"
+          :key="section.value"
+          :class="{
+            '_is-active': currentTableComponent === section.value
+          }"
+          @click="setCurrentableComponent(section.value)"
         >
-          {{section}}
+          {{section.text}}
         </li>
       </ul>
       <v-table-dropdown @setCurrentSection="setCurrentSection"/>
     </div>
     <div class="trade-table__body">
-      
+      <component :is="returnCurrentTableComponent"></component>
     </div>
   </div>
 </template>
@@ -21,6 +25,10 @@
 <script>
 import AssetsVue from './Sections/Assets.vue';
 import DealsHistoryVue from './Sections/DealsHistory.vue';
+import DecommissioningFinancesVue from './Sections/DecommissioningFinances.vue';
+import DecommissioningSecurtiesVue from './Sections/DecommissioningSecurties.vue';
+import DepositingFinancesVue from './Sections/DepositingFinances.vue';
+import DepositingSecurtiesVue from './Sections/DepositingSecurties.vue';
 import OpenOrderVue from './Sections/OpenOrder.vue';
 import OrdersHistoryVue from './Sections/OrdersHistory.vue';
 import PositionVue from './Sections/Position.vue';
@@ -36,18 +44,64 @@ export default {
     'v-component-dealshistory': DealsHistoryVue,
     'v-component-ordershistory': OrdersHistoryVue,
     'v-component-transactionshistory': TransactionsHistoryVue,
-    'v-component-assets': AssetsVue
-  },
-  sections: {
-    commerce: ['Позиции', 'Открытые ордера', 'История ордеров', 'История сделок', 'История транзакций', 'Активы'], 
-    depository: ['Депонирование ЦБ', 'Депонирование ДС', 'Списание ЦБ', 'Списание ДС']
+    'v-component-assets': AssetsVue,
+    'v-component-depositingsecurties': DepositingSecurtiesVue,
+    'v-component-depositingfinances': DepositingFinancesVue,
+    'v-component-decommissioningsecurties': DecommissioningSecurtiesVue,
+    'v-component-decommissioningfinances': DecommissioningFinancesVue,
   },
   data: () => ({
-    currentDropdownSection: null
+    currentDropdownSection: null,
+    currentTableComponent: null,
+    sections: {
+      commerce: [
+        { text: 'Позиции', value: 'position'},
+        { text: 'Открытые ордера', value: 'openorder'},
+        { text: 'История ордеров', value: 'ordershistory'},
+        { text: 'История сделок', value: 'dealshistory'},
+        { text: 'История транзакций', value: 'transactionshistory'},
+        { text: 'Активы', value: 'assets'},
+      ],
+      depository: [
+        { text: 'Депонирование ЦБ', value: 'depositingSecurties'},
+        { text: 'Депонирование ДС', value: 'depositingFinances'},
+        { text: 'Списание ЦБ', value: 'decommissioningSecurties' },
+        { text: 'Списание ДС', value: 'decommissioningFinances' },
+      ]
+    },
   }),
   methods: {
+    // Выбор раздела в dropdown 
     setCurrentSection(currentDropdownSection) {
       this.currentDropdownSection = currentDropdownSection;
+    },
+    // Выбор таблицы исходя из текущего выбранного раздела
+    setCurrentableComponent(tableComponent) {
+      this.currentTableComponent = tableComponent;
+    }
+  },
+  created() {
+    // Дефолтная первая таблица
+    this.currentTableComponent = this.sections.commerce[0].value
+  },
+  watch: {
+    currentDropdownSection() {
+      switch(this.currentDropdownSection) {
+        case 'depository': {
+          this.currentTableComponent = this.sections.depository[0].value;
+          break;
+        }
+        case 'commerce': {
+          this.currentTableComponent = this.sections.commerce[0].value;
+          break;
+        }
+      }
+    }
+  },
+  computed: {
+    // Рендер таблиц исходя из выбранного раздела
+    returnCurrentTableComponent() {
+      return 'v-component-' + this.currentTableComponent.toLowerCase();
     }
   }
 }
