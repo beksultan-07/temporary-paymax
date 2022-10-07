@@ -1,25 +1,24 @@
 <template>
-  <div class="trade-table">
+  <v-card class="trade-table">
     <div class="trade-table__header">
-      <ul class="trade-table__sections">
-        <li 
-          class="trade-table__section"
-          v-for="section in sections[currentDropdownSection]"
-          :key="section.value"
-          :class="{
-            '_is-active': currentTableComponent === section.value
-          }"
-          @click="setCurrentableComponent(section.value)"
+      <v-tabs v-model="currentTableComponent" color="#F48020">
+        <v-tab
+          class="text-caption"
+          :ripple="false" 
+          v-for="section in sections[currentDropdownSection]" 
+          :key="section.value" 
         >
           {{section.text}}
-        </li>
-      </ul>
+        </v-tab>
+      </v-tabs>
       <v-table-dropdown @setCurrentSection="setCurrentSection"/>
     </div>
     <div class="trade-table__body">
-      <component :is="returnCurrentTableComponent"></component>
+      <template v-if="currentTableComponent !== null">
+        <component :is="returnCurrentTableComponent"></component>
+      </template>
     </div>
-  </div>
+  </v-card>
 </template>
 
 <script>
@@ -53,65 +52,47 @@ export default {
   data: () => ({
     currentDropdownSection: null,
     currentTableComponent: null,
-    sections: {
-      commerce: [
-        { text: 'Позиции', value: 'position'},
-        { text: 'Открытые ордера', value: 'openorder'},
-        { text: 'История ордеров', value: 'ordershistory'},
-        { text: 'История сделок', value: 'dealshistory'},
-        { text: 'История транзакций', value: 'transactionshistory'},
-        { text: 'Активы', value: 'assets'},
-      ],
-      depository: [
-        { text: 'Депонирование ЦБ', value: 'depositingSecurties'},
-        { text: 'Депонирование ДС', value: 'depositingFinances'},
-        { text: 'Списание ЦБ', value: 'decommissioningSecurties' },
-        { text: 'Списание ДС', value: 'decommissioningFinances' },
-      ]
-    },
   }),
   methods: {
     // Выбор раздела в dropdown 
     setCurrentSection(currentDropdownSection) {
       this.currentDropdownSection = currentDropdownSection;
-    },
-    // Выбор таблицы исходя из текущего выбранного раздела
-    setCurrentableComponent(tableComponent) {
-      this.currentTableComponent = tableComponent;
-    }
-  },
-  created() {
-    // Дефолтная первая таблица
-    this.currentTableComponent = this.sections.commerce[0].value
-  },
-  watch: {
-    currentDropdownSection() {
-      switch(this.currentDropdownSection) {
-        case 'depository': {
-          this.currentTableComponent = this.sections.depository[0].value;
-          break;
-        }
-        case 'commerce': {
-          this.currentTableComponent = this.sections.commerce[0].value;
-          break;
-        }
-      }
     }
   },
   computed: {
     // Рендер таблиц исходя из выбранного раздела
     returnCurrentTableComponent() {
-      return 'v-component-' + this.currentTableComponent.toLowerCase();
+      // Берём часть названия компонентов (это 'v-component-'), получаем доступ к разделам, берём текущие разделы исходя из выбранного элемента в dropdown ("commerce" | "depository")
+      // через индекс получаем название компоненты (например: position), отображаемая конкретную таблицу, и производим конкатенацию строк  (this.sections['commerce'][0].value == 'position' -> 'v-component-position')
+      return 'v-component-' + this.sections?.[this.currentDropdownSection]?.[this.currentTableComponent]?.value.toLowerCase();
+    },
+    // Массив разделов
+    sections() {
+      return {
+        commerce: [
+          { text: 'Позиции', value: 'position' },
+          { text: 'Открытые ордера', value: 'openorder' },
+          { text: 'История ордеров', value: 'ordershistory' },
+          { text: 'История сделок', value: 'dealshistory' },
+          { text: 'История транзакций', value: 'transactionshistory' },
+          { text: 'Активы', value: 'assets' },
+        ],
+        depository: [
+          { text: 'Депонирование ЦБ', value: 'depositingSecurties' },
+          { text: 'Депонирование ДС', value: 'depositingFinances' },
+          { text: 'Списание ЦБ', value: 'decommissioningSecurties' },
+          { text: 'Списание ДС', value: 'decommissioningFinances' },
+        ]
+      }
     }
   }
 }
 </script>
 
+
 <style lang="scss" scoped>
 .trade-table {
   max-width: 1231px;
-  background: #ffffff;
-  border-radius: 4px;
   padding: 20px 10px;
 
   &__header {
@@ -120,32 +101,7 @@ export default {
     align-items: center;
     margin: 0px 0px 25px 0px;
   }
-
-  &__sections {
-    padding: 0;
-    display: flex;
-    align-items: center;
-    list-style: none;
-
-    &>*:not(:last-child) {
-      margin: 0px 20px 0px 0px;
-    }
-  }
-  &__section {
-    cursor: pointer;
-    font-weight: 400;
-    font-size: 14px;
-    line-height: calc(18 / 14 * 100%);
-    color: #9C9C9C;
-    padding: 0px 10px 2px 10px;
-    &:hover {
-      color: #F48020;
-    }
-    &._is-active {
-      color: #F48020;
-      border-bottom: 1px solid #F48020;
-    }
-  }
+  
 }
 
 </style>
