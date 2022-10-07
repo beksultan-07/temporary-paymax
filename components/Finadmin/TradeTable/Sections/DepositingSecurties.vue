@@ -22,7 +22,7 @@ export default {
         quantity: "122",
         grounds: "Договор № 87 от 22.08.2022",
         result: "Заявка на депонирование",
-        reasonForRejection: "Подтвердить",
+        reasonForRejection: "",
       },
     ]
   }),
@@ -38,7 +38,7 @@ export default {
           { text: "Количество", value: "quantity", sortable: false },
           { text: "Основание", value: "grounds", sortable: false },
           { text: "Результат", value: "result", sortable: false },
-          { text: "Причина отказа", value: "reasonForRejection", sortable: false },
+          { text: "Причина отказа", value: "reasonForRejection", sortable: false, align: 'center' },
         ]
       }
     }

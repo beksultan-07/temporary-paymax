@@ -24,6 +24,17 @@
     <template v-slot:[`item.line`]>
       <div class="green--text text--lighten-3"><img src="/asset/table-icons/galochka.svg" alt="galochka"></div>
     </template>
+    <template v-slot:[`item.reasonForRejection`]>
+      <v-btn x-small class="green darken-1 white--text text--white mb-1">Подтвердить</v-btn> <!--  Кнопка подтверждения (Депонирование ЦБ)  -->
+      <!-- <v-btn x-small class="red darken-1 white--text text--white">Отказ</v-btn> --> <!--  Кнопка отказа (Депонирование ЦБ)  -->
+    </template>
+    <template v-slot:[`item.confirmation`]>
+      <div class="d-flex aling-center">
+        <v-btn x-small color="primary" class="mr-2">Открыть</v-btn>
+        <v-btn x-small class="green darken-1 white--text text--white mb-1 mr-2">Подтвердить</v-btn>
+        <v-btn x-small class="red darken-1 white--text text--white">Отмена</v-btn>
+      </div>
+    </template>  
   </v-data-table>
 </template>
 

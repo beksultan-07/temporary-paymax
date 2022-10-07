@@ -17,7 +17,7 @@ export default {
         dateAndTime: "04.08.2022 16:36:53",
         tool: "КМОТ",
         grounds: "Договор №43 от 28.01.2022 ",
-        confirmation: "Открыть",
+        confirmation: "",
       },
     ]
   }),
