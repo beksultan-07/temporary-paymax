@@ -53,7 +53,7 @@
         font-family: 'Helvetica';
         font-style: normal;
         font-weight: 700;
-        font-size: 14px;
+        font-size: 14px !important;
         line-height: 18px;
         color: #252525;
         padding: 10px 0 0;
