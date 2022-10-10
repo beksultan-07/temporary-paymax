@@ -5,6 +5,12 @@
                 :tickers="'ETH-USD'"
                 :value="1264.40"
                 :isred="true"
+                :dialogData='dialogData'
+                :dialogDataStocks="dialogDataStocks"
+                :dialogDataBonds="dialogDataBonds"
+                :dialogDataFutures="dialogDataFutures"
+                :dialogDataIndices="dialogDataIndices"
+                :countries="countries"
             />
 
             <v-ticker-item
@@ -51,6 +57,33 @@
             "v-ticker-item": TickerItemVue,
             "v-ticker-button": TickerButton
         },
+
+        props: {
+            countries: {
+                type: Array,
+                required: true
+            },
+            dialogData: {
+                type: Array,
+                required: true
+            },
+            dialogDataStocks: {
+                type: Array,
+                required: true
+            },
+            dialogDataBonds: {
+                type: Array,
+                required: true
+            },
+            dialogDataFutures: {
+                type: Array,
+                required: true
+            },
+            dialogDataIndices: {
+                type: Array,
+                required: true
+            },
+        }
     }
 </script>
 

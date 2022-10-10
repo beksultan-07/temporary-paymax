@@ -46,7 +46,7 @@
     
                 <li 
                     class="table-item" 
-                    v-for="(el, index) in depoAssets" 
+                    v-for="(el, index) in depoAssetsData" 
                     v-if="el.depo === activeDepoAssets"
                     :key="index"    
                 >
@@ -91,7 +91,7 @@ import SideBlockVue from './SideBlock.vue';
         },
 
         props: {
-            depoAssets: {
+            depoAssetsData: {
                 type: Array,
                 required: true
             }

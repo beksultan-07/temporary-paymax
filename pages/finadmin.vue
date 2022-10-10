@@ -4,7 +4,14 @@
       <v-order-book :orderBookData='orderBookData' class="mini-block"/>
   
       <div class="side-blocks blocks-between big-block">
-        <v-ticker/>
+        <v-ticker 
+          :dialogData='dialogData'
+          :dialogDataStocks="dialogDataStocks"
+          :dialogDataBonds="dialogDataBonds"
+          :dialogDataFutures="dialogDataFutures"
+          :dialogDataIndices="dialogDataIndices"
+          :countries="countries"
+        />
         <v-fin-chart class="indets-top"/>
       </div>
 
@@ -16,7 +23,7 @@
     <div class="finadmin-table indets-top">
       <v-trade-table class="huge-block indets-right"/>
 
-      <v-depo-assets class="mini-block" :depoAssets="depoAssets"/>
+      <v-depo-assets class="mini-block" :depoAssetsData="depoAssetsData"/>
     </div>
   </div>
 </template>
@@ -25,7 +32,7 @@
   import BuySellVue from '../components/Finadmin/BuySellBlock/BuySell.vue';
   import ChartVue from '../components/Finadmin/Chart/Chart.vue';
   import DealsVue from '../components/Finadmin/Deals.vue';
-import DepoAssetsVue from '../components/Finadmin/DepoAssets.vue';
+  import DepoAssetsVue from '../components/Finadmin/DepoAssets.vue';
   import MarginRatioVue from '../components/Finadmin/MarginRatio.vue';
   import OrderBookVue from '../components/Finadmin/OrderBook/OrderBook.vue';
   import TickerVue from '../components/Finadmin/Ticker/Ticker.vue';
@@ -86,7 +93,7 @@ import DepoAssetsVue from '../components/Finadmin/DepoAssets.vue';
           {isred: false, price: 0.9160, amount: 6.510, total: 2771.6053},
           {isred: true, price: 0.9160, amount: 6.510, total: 2771.6053},
         ],
-        depoAssets: [
+        depoAssetsData: [
           {check: 'ОАО "Апар Сервис" дс', tool: 'KMOT.P', volume: 641, depo: 'Депозитарий ДС'},
           {check: 'ОАО "Апар Сервис" дс', tool: 'KMOT.P', volume: 641, depo: 'Депозитарий ДС'},
           {check: 'ОАО "Апар Сервис" цб', tool: 'KMOT.P', volume: 641, depo: 'Депозитарий ЦБ'},
@@ -115,7 +122,91 @@ import DepoAssetsVue from '../components/Finadmin/DepoAssets.vue';
           {check: 'ОАО "Апар Сервис" цб', tool: 'KMOT.P', volume: 641, depo: 'Депозитарий ЦБ'},
           {check: 'ОАО "Апар Сервис" дс', tool: 'KMOT.P', volume: 641, depo: 'Депозитарий ДС'},
           
-        ]
+        ],
+
+        countries: [
+                    {name: 'all', image: ''},
+                    {name: 'Канада', image: '/asset/usa.png'},
+                    {name: 'Кыргызстан', image: '/asset/usa.png'},
+                    {name: 'Россия', image: '/asset/usa.png'},
+                    {name: 'Казахстан', image: '/asset/usa.png'},
+                    {name: 'Казахстан', image: '/asset/usa.png'},
+                    {name: 'Франция', image: '/asset/usa.png'},
+                    {name: 'Германия', image: '/asset/usa.png'},
+                    {name: 'usa', image: '/asset/usa.png'},
+                    {name: 'usa', image: '/asset/usa.png'},
+                    {name: 'usa', image: '/asset/usa.png'},
+                    {name: 'usa', image: '/asset/usa.png'},
+                    {name: 'usa', image: '/asset/usa.png'},
+                    {name: 'usa', image: '/asset/usa.png'},
+                    {name: 'usa', image: '/asset/usa.png'},
+                    {name: 'usa', image: '/asset/usa.png'},
+                    {name: 'usa', image: '/asset/usa.png'},
+                    {name: 'usa', image: '/asset/usa.png'},
+                    {name: 'usa', image: '/asset/usa.png'},
+                    {name: 'usa', image: '/asset/usa.png'},
+                    {name: 'usa', image: '/asset/usa.png'},
+                    {name: 'usa', image: '/asset/usa.png'},
+                    {name: 'usa', image: '/asset/usa.png'},
+                    {name: 'usa', image: '/asset/usa.png'},
+                    {name: 'usa', image: '/asset/usa.png'},
+                    {name: 'usa', image: '/asset/usa.png'},
+        ],
+        dialogData: [
+            {tool: 'AAPL Канада', icon: '/asset/tool.png', desc: 'APPLE INC', country: {name: 'Канада', image: '/asset/usa.png'}, crypto: 'NASDAQ'},
+            {tool: 'BTCUSD USA', icon: '/asset/tool.png', desc: 'APPLE INC', country: {name: 'usa', image: '/asset/usa.png'}, crypto: 'NASDAQ'},
+            {tool: 'AAPL Канада', icon: '/asset/tool.png', desc: 'APPLE INC', country: {name: 'Канада', image: '/asset/usa.png'}, crypto: 'NASDAQ'},
+            {tool: 'BTCUSD Казахстан', icon: '/asset/tool.png', desc: 'APPLE INC', country: {name: 'Казахстан', image: '/asset/usa.png'}, crypto: 'NASDAQ'},
+            {tool: 'AAPL Казахстан', icon: '/asset/tool.png', desc: 'APPLE INC', country: {name: 'Казахстан', image: '/asset/usa.png'}, crypto: 'NASDAQ'},
+            {tool: 'AAPL USA', icon: '/asset/tool.png', desc: 'APPLE INC', country: {name: 'usa', image: '/asset/usa.png'}, crypto: 'NASDAQ'},
+            {tool: 'AAPL Кыргызстан', icon: '/asset/tool.png', desc: 'APPLE INC', country: {name: 'Кыргызстан', image: '/asset/usa.png'}, crypto: 'NASDAQ'},
+            {tool: 'BTCUSD Кыргызстан', icon: '/asset/tool.png', desc: 'APPLE INC', country: {name: 'Кыргызстан', image: '/asset/usa.png'}, crypto: 'NASDAQ'},
+            {tool: 'AAPL USA', icon: '/asset/tool.png', desc: 'APPLE INC', country: {name: 'usa', image: '/asset/usa.png'}, crypto: 'NASDAQ'},
+        ],
+        dialogDataStocks: [
+            {tool: 'AAPL Stock', icon: '/asset/tool.png', desc: 'APPLE INC', country: {name: 'USA', image: '/asset/usa.png'}, crypto: 'NASDAQ'},
+            {tool: 'AAPL Stock', icon: '/asset/tool.png', desc: 'APPLE INC', country: {name: 'USA', image: '/asset/usa.png'}, crypto: 'NASDAQ'},
+            {tool: 'AAPL Stock', icon: '/asset/tool.png', desc: 'APPLE INC', country: {name: 'USA', image: '/asset/usa.png'}, crypto: 'NASDAQ'},
+            {tool: 'AAPL Stock', icon: '/asset/tool.png', desc: 'APPLE INC', country: {name: 'USA', image: '/asset/usa.png'}, crypto: 'NASDAQ'},
+            {tool: 'AAPL Stock', icon: '/asset/tool.png', desc: 'APPLE INC', country: {name: 'USA', image: '/asset/usa.png'}, crypto: 'NASDAQ'},
+            {tool: 'AAPL Stock', icon: '/asset/tool.png', desc: 'APPLE INC', country: {name: 'USA', image: '/asset/usa.png'}, crypto: 'NASDAQ'},
+            {tool: 'AAPL Stock', icon: '/asset/tool.png', desc: 'APPLE INC', country: {name: 'USA', image: '/asset/usa.png'}, crypto: 'NASDAQ'},
+            {tool: 'AAPL Stock', icon: '/asset/tool.png', desc: 'APPLE INC', country: {name: 'USA', image: '/asset/usa.png'}, crypto: 'NASDAQ'},
+            {tool: 'AAPL Stock', icon: '/asset/tool.png', desc: 'APPLE INC', country: {name: 'USA', image: '/asset/usa.png'}, crypto: 'NASDAQ'},
+        ],
+        dialogDataBonds: [
+            {tool: 'AAPL Bonds', icon: '/asset/tool.png', desc: 'APPLE INC', country: {name: 'USA', image: '/asset/usa.png'}, crypto: 'NASDAQ'},
+            {tool: 'AAPL Bonds', icon: '/asset/tool.png', desc: 'APPLE INC', country: {name: 'USA', image: '/asset/usa.png'}, crypto: 'NASDAQ'},
+            {tool: 'AAPL Bonds', icon: '/asset/tool.png', desc: 'APPLE INC', country: {name: 'USA', image: '/asset/usa.png'}, crypto: 'NASDAQ'},
+            {tool: 'AAPL Bonds', icon: '/asset/tool.png', desc: 'APPLE INC', country: {name: 'Канада', image: '/asset/usa.png'}, crypto: 'NASDAQ'},
+            {tool: 'AAPL Bonds', icon: '/asset/tool.png', desc: 'APPLE INC', country: {name: 'USA', image: '/asset/usa.png'}, crypto: 'NASDAQ'},
+            {tool: 'AAPL Bonds', icon: '/asset/tool.png', desc: 'APPLE INC', country: {name: 'Канада', image: '/asset/usa.png'}, crypto: 'NASDAQ'},
+            {tool: 'AAPL Bonds', icon: '/asset/tool.png', desc: 'APPLE INC', country: {name: 'USA', image: '/asset/usa.png'}, crypto: 'NASDAQ'},
+            {tool: 'AAPL Bonds', icon: '/asset/tool.png', desc: 'APPLE INC', country: {name: 'USA', image: '/asset/usa.png'}, crypto: 'NASDAQ'},
+            {tool: 'AAPL Bonds', icon: '/asset/tool.png', desc: 'APPLE INC', country: {name: 'USA', image: '/asset/usa.png'}, crypto: 'NASDAQ'},
+        ],
+        dialogDataFutures: [
+            {tool: 'AAPL Futures', icon: '/asset/tool.png', desc: 'APPLE INC', country: {name: 'USA', image: '/asset/usa.png'}, crypto: 'NASDAQ'},
+            {tool: 'AAPL Futures', icon: '/asset/tool.png', desc: 'APPLE INC', country: {name: 'USA', image: '/asset/usa.png'}, crypto: 'NASDAQ'},
+            {tool: 'AAPL Futures', icon: '/asset/tool.png', desc: 'APPLE INC', country: {name: 'Канада', image: '/asset/usa.png'}, crypto: 'NASDAQ'},
+            {tool: 'AAPL Futures', icon: '/asset/tool.png', desc: 'APPLE INC', country: {name: 'USA', image: '/asset/usa.png'}, crypto: 'NASDAQ'},
+            {tool: 'AAPL Futures', icon: '/asset/tool.png', desc: 'APPLE INC', country: {name: 'Канада', image: '/asset/usa.png'}, crypto: 'NASDAQ'},
+            {tool: 'AAPL Futures', icon: '/asset/tool.png', desc: 'APPLE INC', country: {name: 'USA', image: '/asset/usa.png'}, crypto: 'NASDAQ'},
+            {tool: 'AAPL Futures', icon: '/asset/tool.png', desc: 'APPLE INC', country: {name: 'USA', image: '/asset/usa.png'}, crypto: 'NASDAQ'},
+            {tool: 'AAPL Futures', icon: '/asset/tool.png', desc: 'APPLE INC', country: {name: 'USA', image: '/asset/usa.png'}, crypto: 'NASDAQ'},
+            {tool: 'AAPL Futures', icon: '/asset/tool.png', desc: 'APPLE INC', country: {name: 'USA', image: '/asset/usa.png'}, crypto: 'NASDAQ'},
+        ],
+        dialogDataIndices: [
+            {tool: 'AAPL Indices', icon: '/asset/tool.png', desc: 'APPLE INC', country: {name: 'USA', image: '/asset/usa.png'}, crypto: 'NASDAQ'},
+            {tool: 'AAPL Indices', icon: '/asset/tool.png', desc: 'APPLE INC', country: {name: 'USA', image: '/asset/usa.png'}, crypto: 'NASDAQ'},
+            {tool: 'AAPL Indices', icon: '/asset/tool.png', desc: 'APPLE INC', country: {name: 'USA', image: '/asset/usa.png'}, crypto: 'NASDAQ'},
+            {tool: 'AAPL Indices', icon: '/asset/tool.png', desc: 'APPLE INC', country: {name: 'USA', image: '/asset/usa.png'}, crypto: 'NASDAQ'},
+            {tool: 'AAPL Indices', icon: '/asset/tool.png', desc: 'APPLE INC', country: {name: 'USA', image: '/asset/usa.png'}, crypto: 'NASDAQ'},
+            {tool: 'AAPL Indices', icon: '/asset/tool.png', desc: 'APPLE INC', country: {name: 'USA', image: '/asset/usa.png'}, crypto: 'NASDAQ'},
+            {tool: 'AAPL Indices', icon: '/asset/tool.png', desc: 'APPLE INC', country: {name: 'USA', image: '/asset/usa.png'}, crypto: 'NASDAQ'},
+            {tool: 'AAPL Indices', icon: '/asset/tool.png', desc: 'APPLE INC', country: {name: 'USA', image: '/asset/usa.png'}, crypto: 'NASDAQ'},
+            {tool: 'AAPL Indices', icon: '/asset/tool.png', desc: 'APPLE INC', country: {name: 'USA', image: '/asset/usa.png'}, crypto: 'NASDAQ'},
+        ],
       }
     },
 
