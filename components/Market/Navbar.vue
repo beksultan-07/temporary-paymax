@@ -4,7 +4,7 @@
       <div class="overlay" :class="{overlay_active: burger}" @click="burger = false"></div>
       <div class="header__left">
         <button @click="burger = !burger" class="burger__btn">
-          <img src="../../static/asset/market/hamburger-icon/burger.svg" alt="hamburger">
+          <img src="asset/market/hamburger-icon/burger.svg" alt="hamburger">
         </button>
         <nav class="navbar" :class="{navbar_active: burger}">
           <div class="header__right-adaptive">
