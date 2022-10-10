@@ -38,7 +38,7 @@ export default {
           { text: "Количество", value: "quantity", sortable: false },
           { text: "Основание", value: "grounds", sortable: false },
           { text: "Результат", value: "result", sortable: false },
-          { text: "Причина отказа", value: "reasonForRejection", sortable: false, align: 'center' },
+          { text: "Причина отказа", value: "reasonForRejection", sortable: false },
         ]
       }
     }

@@ -23,7 +23,7 @@ export default {
         price: "2,512",
         sum: "2,512",
         currency: "KGS",
-        line: "-",
+        status: 'cancelled' // confirmed /or/ cancelled 
       },
       {
         number: 10054,
@@ -36,7 +36,7 @@ export default {
         price: "2,512",
         sum: "2,512",
         currency: "KGS",
-        line: "-",
+        status: 'confirmed' // confirmed /or/ cancelled 
       },
     ]
   }),
@@ -54,7 +54,7 @@ export default {
           { text: "Цена", value: "price", sortable: false },
           { text: "Сумма", value: "sum", sortable: false },
           { text: "Валюта", value: "currency", sortable: false },
-          { text: "-", value: "line", sortable: false },
+          { text: "", value: 'status', sortable: false}
         ]
       }
     }

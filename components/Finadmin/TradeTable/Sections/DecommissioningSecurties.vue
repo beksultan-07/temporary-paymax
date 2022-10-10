@@ -15,9 +15,10 @@ export default {
       {
         number: 10054,
         dateAndTime: "04.08.2022 16:36:53",
+        agent: "ОАО 'Группа К51'",
         tool: "КМОТ",
         grounds: "Договор №43 от 28.01.2022 ",
-        confirmation: "",
+        sum: 123214,
       },
     ]
   }),
@@ -28,7 +29,9 @@ export default {
           { text: "№", value: "number", sortable: false },
           { text: "Дата и время", value: "dateAndTime", sortable: false },
           { text: "Инструмент", value: "tool", sortable: false },
+          { text: "Агент", value: "agent", sortable: false },
           { text: "Основание", value: "grounds", sortable: false },
+          { text: "Сумма", value: "sum", sortable: false },
           { text: "", value: "confirmation", sortable: false },
         ]
       }

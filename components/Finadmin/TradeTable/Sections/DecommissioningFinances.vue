@@ -16,8 +16,8 @@ export default {
         number: 10054,
         dateAndTime: "04.08.2022 16:36:53",
         currency: "KGS",
+        agent: "ОАО 'Апар Сервис'",
         grounds: "Договор №43 от 28.01.2022 ",
-        confirmation: "Открыть",
       },
     ]
   }),
@@ -28,8 +28,9 @@ export default {
           { text: "№", value: "number", sortable: false },
           { text: "Дата и время", value: "dateAndTime", sortable: false },
           { text: "Валюта", value: "currency", sortable: false },
+          { text: "Агент", value: "agent", sortable: false },
           { text: "Основание", value: "grounds", sortable: false },
-          { text: "", value: "confirmation", sortable: false },
+          { text: "", value: "confirmation", sortable: false }
         ]
       }
     }

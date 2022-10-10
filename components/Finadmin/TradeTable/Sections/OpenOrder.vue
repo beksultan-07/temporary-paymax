@@ -1,5 +1,5 @@
 <template>
-  <v-component-table :tableItems="tableItems" :headers="headerline"/>
+  <v-component-table :tableItems="tableItems" :headers="headerline" @cancel="cancel"/>
 </template>
 
 <script>
@@ -23,21 +23,7 @@ export default {
         price: "2,512",
         sum: "2,512",
         currency: "KGS",
-        line: "-",
-      },
-      {
-        number: 10054,
-        dateAndTime: "04.08.2022 16:36:53",
-        type: "Регистрационная на покупку",
-        account: "3-3101-10043",
-        agent: "ОАО 'Группа К51'",
-        tool: "КМОТ",
-        quantity: "122",
-        price: "2,512",
-        sum: "2,512",
-        currency: "KGS",
-        line: "-",
-      },
+      }
     ]
   }),
   computed: {
@@ -54,7 +40,7 @@ export default {
           { text: "Цена", value: "price", sortable: false },
           { text: "Сумма", value: "sum", sortable: false },
           { text: "Валюта", value: "currency", sortable: false },
-          { text: "-", value: "line", sortable: false },
+          { text: "", value: "cancel", sortable: false },
         ]
       }
     }
