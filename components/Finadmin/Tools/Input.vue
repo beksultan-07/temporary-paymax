@@ -1,5 +1,5 @@
 <template>
-    <v-form>
+    <v-form @submit.prevent="">
       <v-container>
         <v-text-field
           solo

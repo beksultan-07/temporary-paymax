@@ -119,7 +119,10 @@ import Table from './Table.vue';
       },
       filterDialofData(data, value){
         if(value){
-          return data.filter(el => el.tool.toLowerCase() === value.toLowerCase());
+          if(this.country !== 'all'){
+            return data.filter(el => el.tool.toLowerCase().includes(value.toLowerCase()) && el.country.name === this.country);
+          }
+          return data.filter(el => el.tool.toLowerCase().includes(value.toLowerCase()));
         }
         if(this.country !== 'all'){
           return data.filter(el => el.country.name === this.country);
