@@ -9,7 +9,7 @@
           class="pa-4"
           center-active
           :show-arrows="false"
-          style="align-items: flex-start"
+          style="align-items: flex-start; background:#fbfbfb;padding: 0 !important;"
       >
         <v-slide-item
             v-for="(button,index) in buttons"
@@ -26,7 +26,7 @@
                 <img src="asset/market/arrows/arrow.svg" alt="arrow" class="arrow">
               </button>
               <div class="dropdown" :class="{dropdown_active : activeButton === index}">
-                <market-select
+                <buy-sell-select
                     :placeholder="'Market'"
                     :options="options"
                     :selected="selected"
@@ -51,9 +51,9 @@
 
 <script>
 
-import MarketSelect from "@/components/Market/MarketSelect/MarketSelect";
+import BuySellSelect from "@/components/Market/MarketSelects/BuySellSelect";
 export default {
-  components: {MarketSelect},
+  components: {BuySellSelect},
   data() {
     return {
       buttons: [
@@ -92,12 +92,8 @@ export default {
 
 <style lang="scss" scoped>
 .buysell_wrap {
-  padding: 30px 0 0 20px;
-  overflow-x: scroll;
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
+  padding: 30px 0 0 110px;
+  margin-bottom: 30px;
 }
 .item {
   margin-right: 10px;
@@ -119,9 +115,6 @@ export default {
   width: 260px;
   overflow: unset;
   transition: .3s ease-in-out;
-  padding-bottom: 22px;
-  position: relative;
-  z-index: 9;
 }
 .button {
   display: flex;
@@ -130,8 +123,8 @@ export default {
   padding: 10px 10px 0 10px;
   cursor: pointer;
   transition: .3s ease-in-out;
-  margin-bottom: 15px;
   width: 100%;
+  margin-bottom: 15px;
   &__circle {
     background: #171717;
     -webkit-border-radius: 50%;
@@ -155,8 +148,6 @@ export default {
   height: 0;
   transition: .3s ease-in-out;
   padding: 0 10px;
-  position: relative;
-  z-index: 1;
   &__select{
     font-family: 'Helvetica';
     font-style: normal;
@@ -189,6 +180,7 @@ export default {
     right: 16px;
   }
   &__button{
+    outline: none;
     padding: 9px 0;
     width: 100%;
     transition: .3s ease-in-out;

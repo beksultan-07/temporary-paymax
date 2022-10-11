@@ -1,23 +1,25 @@
 <template>
+  <section class="market__wrap">
     <buy-sell-scroll/>
+    <market-main/>
+  </section>
 </template>
 
 <script>
 
 import BuySellScroll from "@/components/Market/BuySellScroll";
+import MarketMain from "@/components/Market/MarketMain/MarketMain";
 
 export default {
   components:{
+    MarketMain,
     BuySellScroll
   }
 }
 </script>
 
 <style lang="scss" scoped>
-.wrap{
+.market__wrap{
   background: #FBFBFB;
-  width: 100%;
-  height: 100%;
-  min-height: 100vh;
 }
 </style>

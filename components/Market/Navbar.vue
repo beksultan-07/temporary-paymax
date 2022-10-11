@@ -10,7 +10,7 @@
           <div class="header__right-adaptive">
             <div class="buttons">
               <button class="header__right-btn">1CP Enabled (87)</button>
-              <button class="header__right-btn">1CP Enabled (87)</button>
+              <button class="header__right-btn">Envoys.Vision</button>
             </div>
           </div>
           <div class="navbar__item">
@@ -115,6 +115,13 @@ export default {
       ],
     }
   },
+  mounted() {
+    // if(this.burger){
+    //   document.querySelector('body').style.overflow = 'hidden';
+    // } else {
+    //   document.querySelector('body').style.overflow = 'visible';
+    // }
+  }
 }
 </script>
 
@@ -132,7 +139,7 @@ export default {
 
   &__right {
     margin-left: auto;
-    @media(max-width: 1020px) {
+    @media(max-width: 1085px) {
       display: none;
     }
 
@@ -153,7 +160,7 @@ export default {
     position: absolute;
     top: 20px;
     left: 35px;
-    @media(max-width: 1020px) {
+    @media(max-width: 1085px) {
       display: block;
     }
   }
@@ -171,6 +178,8 @@ export default {
 }
 
 .content {
+  margin: 0 auto;
+  max-width: 1360px;
   padding: 20px 20px;
   display: flex;
   align-items: center;
@@ -320,7 +329,7 @@ export default {
   }
 
   &__buttons {
-    @media(max-width: 700px) {
+    @media(max-width: 780px) {
       display: none;
     }
   }

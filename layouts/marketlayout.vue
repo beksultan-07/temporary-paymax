@@ -1,8 +1,10 @@
 <template>
-  <div>
+  <v-app>
     <navbar/>
-    <nuxt/>
-  </div>
+    <v-main id="scrolling-techniques" style="height: 100px;" class="overflow-y-auto">
+      <nuxt/>
+    </v-main>
+  </v-app>
 </template>
 
 <script>
@@ -15,5 +17,4 @@ export default {
 </script>
 
 <style scoped>
-
 </style>

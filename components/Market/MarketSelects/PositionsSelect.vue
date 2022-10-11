@@ -21,7 +21,6 @@
 
 <script>
 export default {
-  name: 'v-my-select',
   props: {
     options: {
       type: Array,
@@ -61,25 +60,26 @@ export default {
     font-family: 'Helvetica';
     font-style: normal;
     font-weight: 400;
-    font-size: 12px;
-    color: #9C9C9C;
+    font-size: 14px;
+    line-height: 16px;
+    color: #868686;
   }
 }
 
 .select {
-  background: #FFFFFF;
-  border-radius: 2px;
-  padding: 10px 17px 10px 10px;
+  background: #F7F7F7;
+  border-radius: 4px;
+  padding: 12px 10px;
   width: 100%;
   margin-bottom: 10px;
   position: relative;
   &__menu {
+    padding: 0;
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
-    padding: 0;
-    background-color: #fff;
+    background-color: #f7f7f7;
     border-radius: 2px;
     z-index: 2;
     overflow: hidden;
@@ -91,8 +91,8 @@ export default {
     font-family: 'Helvetica';
     font-style: normal;
     font-weight: 400;
-    font-size: 12px;
-    color: #9C9C9C;
+    font-size: 14px;
+    color: #868686;
     transition: .2s ease-in-out;
     &:hover {
       background-color: #9C9C9C;
