@@ -6,7 +6,7 @@
           <v-card-title class="text-body-1 font-weight-bold pa-0 mb-10">Клиенты</v-card-title>
           <v-sidebar-form/>
         </v-col>
-        <v-col cols="9" class="pl-10 pt-7 pr-5 pb-10">
+        <v-col cols="9" class="pt-7 pr-5 pb-10">
           <v-database-table/>
         </v-col>
       </v-row>
