@@ -6,7 +6,7 @@
           <v-card-title class="text-body-1 font-weight-bold pa-0 mb-10">Клиенты</v-card-title>
           <v-sidebar-form/>
         </v-col>
-        <v-col cols="9">
+        <v-col cols="9" class="pl-10 pt-7 pr-5 pb-10">
           <v-database-table/>
         </v-col>
       </v-row>
@@ -16,10 +16,12 @@
 
 <script>
   import FormVue from '../../components/Database/SideBar/Clients/Form.vue'
+  import DatabaseTableVue from '../../components/Database/DatabaseTable/DatabaseTable.vue';
   export default {
     auth: false,
     components: {
-      'v-sidebar-form': FormVue
+      'v-sidebar-form': FormVue,
+      'v-database-table': DatabaseTableVue
     }
   }
 </script>
