@@ -7,7 +7,7 @@
           <v-sidebar-form/>
         </v-col>
         <v-col cols="9">
-          Main
+          <v-database-table/>
         </v-col>
       </v-row>
     </v-card>
@@ -16,7 +16,6 @@
 
 <script>
   import FormVue from '../../components/Database/SideBar/Clients/Form.vue'
-
   export default {
     auth: false,
     components: {
