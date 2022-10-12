@@ -1,19 +1,20 @@
 <template>
-  <div class="positions_wrap">
-    <div class="positions__top">
-      <h3 class="positions__title">Not Open Positions</h3>
-      <button class="positions__button">Total Equaity <span class="blue-line">—</span></button>
+  <div class="positions__container">
+    <div class="positions_wrap">
+      <div class="positions__top">
+        <h3 class="positions__title">Not Open Positions</h3>
+        <div class="positions__right">
+          <positions-select
+              :placeholder="'Group by counterparty'"
+              :options="options"
+              :selected="selected"
+              @onSelect="onSelect"
+          />
+          <div class="positions__total">Total Equaity <span class="blue-line">—</span></div>
+        </div>
+      </div>
+      <div class="positions__data-text">No data</div>
     </div>
-    <positions-select
-        :placeholder="'Group by counterparty'"
-        :options="options"
-        :selected="selected"
-        @onSelect="onSelect"
-    />
-    <div class="positions__data-text">No data</div>
-    <NuxtLink to="positions" class="positions__button bottom-btn">
-      Not Open Positions
-    </NuxtLink>
   </div>
 </template>
 
@@ -38,11 +39,9 @@ export default {
 <style lang="scss" scoped>
 .positions_wrap{
   width: 100%;
-  max-width: 500px;
-  margin: 0 auto;
   background: #fff;
   border-radius: 4px;
-  padding: 20px 10px;
+  padding: 30px 10px;
   min-height: 600px;
   position: relative;
 }
@@ -50,7 +49,12 @@ export default {
   color: #496AFF;
 }
 .positions{
-  &__button{
+  &__container {
+    max-width: 1360px;
+    padding: 0 20px;
+    margin: 0 auto;
+  }
+  &__total{
     background: #F7F7F7;
     border-radius: 4px;
     padding: 7px 10px;
@@ -59,17 +63,30 @@ export default {
     font-weight: 400;
     font-size: 14px;
     color: #868686;
-    text-decoration: none;
+    min-width: 120px;
   }
   &__top{
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin-bottom: 10px;
-    @media (max-width: 335px) {
+    @media (max-width: 615px) {
       flex-direction: column;
-      gap: 10px;
-      align-items: flex-start;
+      gap: 30px;
+    }
+  }
+  &__right{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    width: 450px;
+    @media (max-width: 700px) {
+      width: 400px;
+    }
+    @media (max-width: 465px) {
+      flex-direction: column;
+      gap: 30px;
+      width: 260px;
     }
   }
   &__title{
@@ -90,10 +107,5 @@ export default {
     font-size: 14px;
     color: #868686;
   }
-}
-.bottom-btn{
-  position: absolute;
-  bottom: 20px;
-  left: 10px;
 }
 </style>

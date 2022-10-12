@@ -54,6 +54,7 @@ export default {
   cursor: pointer;
   display: flex;
   justify-content: space-between;
+  gap: 20px;
   align-items: center;
   user-select: none;
   &__item {
@@ -71,7 +72,6 @@ export default {
   border-radius: 4px;
   padding: 12px 10px;
   width: 100%;
-  margin-bottom: 10px;
   position: relative;
   &__menu {
     padding: 0;

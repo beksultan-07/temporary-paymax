@@ -108,6 +108,9 @@ export default {
   }
   &__table{
     width: 300px;
+    @media (max-width: 360px) {
+      width: 260px;
+    }
     &-list{
       margin-top: 20px;
       padding: 0;

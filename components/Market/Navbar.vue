@@ -3,10 +3,13 @@
     <div class="content">
       <div class="overlay" :class="{overlay_active: burger}" @click="burger = false"></div>
       <div class="header__left">
-        <button @click="burger = !burger" class="burger__btn">
+        <button @click="burger = !burger" class="burger__btn" :class="{burger__none: burger}">
           <img src="asset/market/hamburger-icon/burger.svg" alt="hamburger">
         </button>
         <nav class="navbar" :class="{navbar_active: burger}">
+          <button @click="burger = !burger" class="burger__btn navbar__burger-btn">
+            <img src="asset/market/hamburger-icon/burger.svg" alt="hamburger">
+          </button>
           <div class="header__right-adaptive">
             <div class="buttons">
               <button class="header__right-btn">1CP Enabled (87)</button>
@@ -47,9 +50,9 @@
           </div>
         </nav>
         <div class="logo__block">
-          <a href="#" class="logo__link">
+          <NuxtLink to="/market" class="logo__link">
             <img src="../../static/asset/market/logo/logo.svg" alt="logo">
-          </a>
+          </NuxtLink>
         </div>
       </div>
       <div class="search">
@@ -115,13 +118,6 @@ export default {
       ],
     }
   },
-  mounted() {
-    // if(this.burger){
-    //   document.querySelector('body').style.overflow = 'hidden';
-    // } else {
-    //   document.querySelector('body').style.overflow = 'visible';
-    // }
-  }
 }
 </script>
 
@@ -159,7 +155,7 @@ export default {
     display: none;
     position: absolute;
     top: 20px;
-    left: 35px;
+    left: 55px;
     @media(max-width: 1085px) {
       display: block;
     }
@@ -209,8 +205,15 @@ export default {
 }
 
 .burger__btn {
-  z-index: 10;
   outline: none;
+}
+.burger__none{
+  display: none;
+}
+.navbar__burger-btn{
+  position: absolute;
+  top: 28px;
+  left: 20px;
 }
 
 .navbar {
@@ -235,6 +238,7 @@ export default {
   }
 
   &__item {
+
     &-title {
       font-family: 'Helvetica';
       font-style: normal;
