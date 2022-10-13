@@ -1,5 +1,5 @@
 <template>
-<positions/>
+  <positions/>
 </template>
 
 <script>

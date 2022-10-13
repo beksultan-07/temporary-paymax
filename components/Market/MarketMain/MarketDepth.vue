@@ -1,8 +1,14 @@
 <template>
   <div class="depth__wrap">
-    <h3 class="depth__title">Market Depth</h3>
+    <div class="depth__top">
+      <h3 class="depth__title">Market Depth</h3>
+      <div class="depth__buttons">
+        <button class="depth__button depth__button--green" @click="tableButton = false"></button>
+        <button class="depth__button depth__button--red" @click="tableButton = true"></button>
+      </div>
+    </div>
     <div class="depth__content">
-      <div class="depth__table">
+      <div class="depth__table left__table" :class="{left__table_none: tableButton}">
         <div class="depth__table-item">
           <span class="depth__table-top-text">Size</span>
           <span class="depth__table-top-text">Price</span>
@@ -14,7 +20,7 @@
           </li>
         </ul>
       </div>
-      <div class="depth__table right__table">
+      <div class="depth__table right__table" :class="{right__table_visible: tableButton}">
         <div class="depth__table-item">
           <span class="depth__table-top-text">Price</span>
           <span class="depth__table-top-text">Size</span>
@@ -79,6 +85,7 @@ export default {
         {num: '2,771.6053', redNum: '0.9160'},
         {num: '2,771.6053', redNum: '0.9160'},
       ],
+      tableButton: false,
     }
   }
 }
@@ -92,6 +99,9 @@ export default {
     background: #FFFFFF;
     border-radius: 4px;
     padding: 20px 10px;
+    @media (max-width: 600px) {
+      width: 100%;
+    }
   }
   &__content{
     display: flex;
@@ -104,7 +114,32 @@ export default {
     font-weight: 700;
     font-size: 16px;
     color: #171717;
+  }
+  &__top{
     margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  &__buttons{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  &__button{
+    display: none;
+    width: 24px;
+    height: 12px;
+    border-radius: 2px;
+    @media (max-width: 600px) {
+      display: block;
+    }
+    &--green{
+      background: #4AD2AA;
+    }
+    &--red{
+      background: #FF5656;
+    }
   }
   &__table{
     width: 300px;
@@ -156,6 +191,10 @@ export default {
 .right-line{
   border-right: 1px solid #f7f7f7;
   padding-right: 3px;
+  @media (max-width: 600px) {
+    border: none;
+    padding: 0;
+  }
 }
 .graphic{
   &__bg{
@@ -652,6 +691,18 @@ export default {
 .right__table{
   @media (max-width: 600px) {
     display: none;
+    width: 100%;
+  }
+  &_visible{
+    display: block;
+  }
+}
+.left__table{
+  @media (max-width: 600px) {
+    width: 100%;
+   &_none{
+     display: none;
+   }
   }
 }
 </style>

@@ -1,19 +1,21 @@
 <template>
-  <div class="positions__container">
-    <div class="positions_wrap">
-      <div class="positions__top">
-        <h3 class="positions__title">Not Open Positions</h3>
-        <div class="positions__right">
-          <positions-select
-              :placeholder="'Group by counterparty'"
-              :options="options"
-              :selected="selected"
-              @onSelect="onSelect"
-          />
-          <div class="positions__total">Total Equaity <span class="blue-line">—</span></div>
+  <div class="positions__wrap">
+    <div class="positions__container">
+      <div class="positions__content">
+        <div class="positions__top">
+          <h3 class="positions__title">Not Open Positions</h3>
+          <div class="positions__right">
+            <positions-select
+                :placeholder="'Group by counterparty'"
+                :options="options"
+                :selected="selected"
+                @onSelect="onSelect"
+            />
+            <div class="positions__total">Total Equaity <span class="blue-line">—</span></div>
+          </div>
         </div>
+        <div class="positions__data-text">No data</div>
       </div>
-      <div class="positions__data-text">No data</div>
     </div>
   </div>
 </template>
@@ -37,20 +39,24 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.positions_wrap{
-  width: 100%;
-  background: #fff;
-  border-radius: 4px;
-  padding: 30px 10px;
-  min-height: 600px;
-  position: relative;
-}
 .blue-line{
   color: #496AFF;
 }
 .positions{
+  &__wrap{
+    padding-top: 30px;
+    background: #FBFBFB;
+  }
+  &__content{
+    width: 100%;
+    background: #fff;
+    border-radius: 4px;
+    padding: 30px 10px;
+    min-height: 600px;
+    position: relative;
+  }
   &__container {
-    max-width: 1360px;
+    max-width: 1400px;
     padding: 0 20px;
     margin: 0 auto;
   }

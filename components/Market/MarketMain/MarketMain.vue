@@ -17,7 +17,7 @@ export default {
 
 <style lang="scss" scoped>
 .main__container{
-  max-width: 1360px;
+  max-width: 1400px;
   margin: 0 auto;
   padding: 0 20px 40px 20px;
   display: grid;

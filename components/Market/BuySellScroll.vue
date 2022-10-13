@@ -92,8 +92,9 @@ export default {
 
 <style lang="scss" scoped>
 .buysell_wrap {
-  padding: 30px 0 0 110px;
-  margin-bottom: 30px;
+  max-width: 1400px;
+  padding: 30px 20px 0 20px;
+  margin: 0 auto 30px auto;
 }
 .item {
   margin-right: 10px;
