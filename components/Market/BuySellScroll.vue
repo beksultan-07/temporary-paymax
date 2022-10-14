@@ -182,7 +182,7 @@ export default {
   }
   &__button{
     outline: none;
-    padding: 9px 0;
+    padding: 9px 10pxs;
     width: 100%;
     transition: .3s ease-in-out;
     &--green{

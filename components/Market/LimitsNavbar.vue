@@ -68,7 +68,7 @@ export default {
         {text: 'Assets', href: 'market-assets'},
       ],
       settlementLinks: [
-        {text: 'Requests', href: '#'},
+        {text: 'Requests', href: 'requests'},
         {text: 'Transactions', href: '#'},
       ],
       historyLinks: [
