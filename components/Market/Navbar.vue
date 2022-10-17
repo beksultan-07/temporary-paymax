@@ -93,7 +93,7 @@ export default {
       tradeLinks: [
         {text: 'Trading', href: '#'},
         {text: 'Positions', href: 'positions'},
-        {text: 'Limits', href: '#'},
+        {text: 'Limits', href: 'limits'},
         {text: 'Assets', href: 'market-assets'},
       ],
       settlementLinks: [

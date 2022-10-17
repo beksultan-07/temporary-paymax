@@ -24,8 +24,8 @@
             outlined
             placeholder="0.00000000"
         ></v-text-field>
-      <div class="form__checkbox" v-if="visibleCheckbox">
-        <label class="form__checkbox-label" for="checkbox">
+      <div class="form__checkbox">
+        <label class="form__checkbox-label" @click="freeValue = !freeValue" for="checkbox">
           Free Paid by me
         </label>
         <v-checkbox
@@ -33,25 +33,16 @@
             color="success"
             value="success"
             hide-details
+            :aria-checked="freeValue"
         ></v-checkbox>
       </div>
-      <span class="none" v-else></span>
       <v-textarea
           v-model="areaValue"
-          v-if="visibleCheckbox"
           background-color="#f7f7f7"
           outlined
           name="input-7-4"
           :label="areaLabel"
       ></v-textarea>
-      <v-text-field
-          v-else
-          type="number"
-          background-color="#f7f7f7"
-          :label="netLabel"
-          outlined
-          placeholder="0.00000000"
-      ></v-text-field>
       <button class="form__button form__button--green">{{button}}</button>
     </div>
   </form>
@@ -65,6 +56,7 @@ export default {
           counterParty: this.counterpartyValue,
           asset: this.assetValue,
           amount: this.amountValue,
+          freePaid: this.freeValue,
           area: this.areaValue,
         }
 
@@ -72,8 +64,9 @@ export default {
         this.assetValue = '';
         this.amountValue = '';
         this.areaValue = '';
+        this.freeValue = false;
 
-        this.requests.push(...request)
+        this.$emit('addRequestData',request)
       }
     },
     props: {
@@ -101,9 +94,6 @@ export default {
       areaLabel:{
         type: String
       },
-      netLabel:{
-        type: String
-      },
       button:{
         type: String
       },
@@ -119,6 +109,9 @@ export default {
       },
       areaValue: {
         type: String
+      },
+      freeValue:{
+        type: Boolean
       },
       requests: {
         type: Array
@@ -156,6 +149,8 @@ export default {
       border-color: rgb(35, 35, 35);
     }
     &-label{
+      width: 100%;
+      height: 100%;
       position: absolute;
       top: 12px;
       left: 10px;

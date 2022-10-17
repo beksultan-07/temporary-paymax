@@ -17,6 +17,7 @@
             :usdValue="assetValue"
             :amountValue="amountValue"
             :areaValue="areaValue"
+            :free-value="freeValue"
             :requests="requests"
             @addRequestData="addRequestData"
         />
@@ -41,6 +42,7 @@ export default {
       assetValue: '',
       amountValue: '',
       areaValue: '',
+      freeValue: false,
       requests: [],
     }
   },
