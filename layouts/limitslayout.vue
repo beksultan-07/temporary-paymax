@@ -12,7 +12,7 @@ import LimitsNavbar from "@/components/Market/LimitsNavbar";
 
 export default {
   components:{LimitsNavbar},
-  name: "limitslayout"
+  name: "limits-layout"
 }
 </script>
 

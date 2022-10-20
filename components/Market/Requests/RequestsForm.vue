@@ -2,28 +2,37 @@
   <form class="form" @submit.prevent="submitForm">
     <h3 class="form__title">{{ title }}</h3>
     <div class="form__fields">
-        <v-select
-            v-model="idValue"
-            background-color="#F7F7F7"
-            :items="idOptions"
-            :label="idLabel"
-            outlined
-        ></v-select>
-        <v-select
-            v-model="usdValue"
-            background-color="#F7F7F7"
-            :items="usdOptions"
-            :label="usdLabel"
-            outlined
-        ></v-select>
-        <v-text-field
-            v-model="amountValue"
-            type="number"
-            background-color="#f7f7f7"
-            :label="amountLabel"
-            outlined
-            placeholder="0.00000000"
-        ></v-text-field>
+      <v-select
+          v-model="idValue"
+          background-color="#F7F7F7"
+          :items="idOptions"
+          :label="idLabel"
+          dense
+          hide-details
+          class="mb-5"
+          outlined
+      ></v-select>
+      <v-select
+          v-model="usdValue"
+          background-color="#F7F7F7"
+          :items="usdOptions"
+          :label="usdLabel"
+          outlined
+          dense
+          hide-details
+          class="mb-5"
+      ></v-select>
+      <v-text-field
+          v-model="amountValue"
+          type="number"
+          background-color="#f7f7f7"
+          :label="amountLabel"
+          outlined
+          dense
+          hide-details
+          class="mb-5"
+          placeholder="0.00000000"
+      ></v-text-field>
       <div class="form__checkbox">
         <label class="form__checkbox-label" @click="freeValue = !freeValue" for="checkbox">
           Free Paid by me
@@ -33,6 +42,7 @@
             color="success"
             value="success"
             hide-details
+            dense
             :aria-checked="freeValue"
         ></v-checkbox>
       </div>
@@ -40,88 +50,91 @@
           v-model="areaValue"
           background-color="#f7f7f7"
           outlined
+          dense
+          hide-details
+          class="mb-5"
           name="input-7-4"
           :label="areaLabel"
       ></v-textarea>
-      <button class="form__button form__button--green">{{button}}</button>
+      <button class="form__button form__button--green">{{ button }}</button>
     </div>
   </form>
 </template>
 
 <script>
 export default {
-    methods:{
-      submitForm(){
-        const request = {
-          counterParty: this.counterpartyValue,
-          asset: this.assetValue,
-          amount: this.amountValue,
-          freePaid: this.freeValue,
-          area: this.areaValue,
-        }
-
-        this.counterpartyValue = '';
-        this.assetValue = '';
-        this.amountValue = '';
-        this.areaValue = '';
-        this.freeValue = false;
-
-        this.$emit('addRequestData',request)
+  methods: {
+    submitForm() {
+      const request = {
+        counterParty: this.idValue,
+        asset: this.usdValue,
+        amount: this.amountValue,
+        freePaid: this.freeValue,
+        area: this.areaValue,
       }
-    },
-    props: {
-      visibleCheckbox: Boolean,
-      usdOptions: {
-        type: Array,
-        required: true
-      },
-      idOptions: {
-        type: Array,
-        required: true
-      },
-      title:{
-        type: String
-      },
-      idLabel:{
-        type: String
-      },
-      usdLabel:{
-        type: String
-      },
-      amountLabel:{
-        type: String
-      },
-      areaLabel:{
-        type: String
-      },
-      button:{
-        type: String
-      },
 
-      idValue: {
-        type: String
-      },
-      usdValue: {
-        type: String
-      },
-      amountValue: {
-        type: String
-      },
-      areaValue: {
-        type: String
-      },
-      freeValue:{
-        type: Boolean
-      },
-      requests: {
-        type: Array
-      },
+      this.counterpartyValue = '';
+      this.assetValue = '';
+      this.amountValue = '';
+      this.areaValue = '';
+      this.freeValue = false;
+
+      this.$emit('addRequestData', request)
+    }
+  },
+  props: {
+    visibleCheckbox: Boolean,
+    usdOptions: {
+      type: Array,
+      required: true
     },
+    idOptions: {
+      type: Array,
+      required: true
+    },
+    title: {
+      type: String
+    },
+    idLabel: {
+      type: String
+    },
+    usdLabel: {
+      type: String
+    },
+    amountLabel: {
+      type: String
+    },
+    areaLabel: {
+      type: String
+    },
+    button: {
+      type: String
+    },
+
+    idValue: {
+      type: String
+    },
+    usdValue: {
+      type: String
+    },
+    amountValue: {
+      type: String
+    },
+    areaValue: {
+      type: String
+    },
+    freeValue: {
+      type: Boolean
+    },
+    requests: {
+      type: Array
+    },
+  },
 }
 </script>
 
 <style lang="scss" scoped>
-.form{
+.form {
   grid-row: 2 span;
   background: #FFFFFF;
   border-radius: 4px;
@@ -129,7 +142,8 @@ export default {
   @media (max-width: 900px) {
     grid-row: unset;
   }
-  &__title{
+
+  &__title {
     font-family: 'Helvetica';
     font-style: normal;
     font-weight: 700;
@@ -137,6 +151,7 @@ export default {
     color: #171717;
     margin-bottom: 30px;
   }
+
   &__checkbox {
     background: #f7f7f7;
     border-radius: 4px;
@@ -145,10 +160,12 @@ export default {
     display: flex;
     justify-content: flex-end;
     margin-bottom: 30px;
-    &:hover{
+
+    &:hover {
       border-color: rgb(35, 35, 35);
     }
-    &-label{
+
+    &-label {
       width: 100%;
       height: 100%;
       position: absolute;
@@ -161,6 +178,7 @@ export default {
       color: #868686;
     }
   }
+
   &__button {
     outline: none;
     padding: 9px 10px;
@@ -180,10 +198,12 @@ export default {
     }
   }
 }
-.none{
+
+.none {
   display: none;
 }
-.v-input--selection-controls{
+
+.v-input--selection-controls {
   margin: 0;
   padding: 12px 10px;
 }

@@ -16,18 +16,24 @@
                 {{ button.text }}
               </button>
             </div>
-            <button class="trades__download">Download .CSV</button>
+            <button class="trades__download" @click="activeModal = !activeModal">Download .CSV</button>
           </div>
         </div>
         <div class="trades__data-text">No data yet</div>
       </div>
     </div>
+    <trades-modal :active-modal="activeModal" @close-modal="closeModal"/>
   </div>
 </template>
 
 <script>
 
+import TradesModal from "@/components/Market/Trades/TradesModal";
+
 export default {
+  components:{
+    TradesModal
+  },
   data(){
     return{
       buttons:[
@@ -35,7 +41,13 @@ export default {
         {text: 'Trades'}
       ],
       active: false,
+      activeModal: false
     }
+  },
+  methods:{
+    closeModal(){
+      this.activeModal = false
+    },
   }
 }
 </script>

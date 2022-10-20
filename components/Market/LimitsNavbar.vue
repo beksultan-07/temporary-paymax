@@ -50,7 +50,7 @@
         </div>
       </div>
       <div class="header__right">
-        <button class="header__right-btn">Envoys.Vision</button>
+        <NuxtLink to="/settings" class="header__right-btn">Envoys.Vision</NuxtLink>
       </div>
     </div>
   </header>
@@ -60,9 +60,8 @@
 export default {
   data() {
     return {
-      burger: false,
       tradeLinks: [
-        {text: 'Trading', href: '#'},
+        {text: 'Trading', href: 'market'},
         {text: 'Positions', href: 'positions'},
         {text: 'Limits', href: 'limits'},
         {text: 'Assets', href: 'market-assets'},
@@ -79,6 +78,7 @@ export default {
         {text: 'Keys', href: '#'},
         {text: 'Specification', href: '#'},
       ],
+      burger: false,
     }
   },
 }
@@ -107,6 +107,7 @@ export default {
       font-weight: 400;
       font-size: 14px;
       color: #171717;
+      text-decoration: none;
     }
   }
 }

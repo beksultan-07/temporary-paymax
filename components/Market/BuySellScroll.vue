@@ -17,7 +17,7 @@
             v-slot="{ active, toggle }"
         >
           <div class="col_item">
-            <div class="item" :class="{item_active : activeButton === index}" @click="toggle">
+            <div class="item" :class="{item_active : activeButton === index}" @click.stop="toggle">
               <button class="button" @click="activeButton = activeButton === index ? null : index">
                 <div class="button__circle"></div>
                 <span class="button__text">
@@ -82,11 +82,11 @@ export default {
       this.selected = selectedItem;
     },
   },
-  // mounted() {
-  //   document.querySelector('body').addEventListener('click', () => {
-  //     this.activeButton = false
-  //   })
-  // }
+  mounted() {
+    document.querySelector('body').addEventListener('click', () => {
+      this.activeButton = false
+    })
+  }
 }
 </script>
 

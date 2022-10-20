@@ -12,7 +12,7 @@ import Navbar from "~/components/Market/Navbar";
 
 export default {
   components:{Navbar},
-  name: "marketlayout"
+  name: "market-layout"
 }
 </script>
 

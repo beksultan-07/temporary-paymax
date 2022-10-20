@@ -62,15 +62,19 @@
             <input placeholder="Search" type="search" class="search__input-field">
           </div>
           <div class="buttons search__buttons">
-            <button v-for="(button, index) in btcButtons" :key="index" class="search__btn">
+            <button
+                @click="activeButton = activeButton === index ? null : index"
+                v-for="(button, index) in btcButtons"
+                :key="index" class="search__btn"
+                :class="{search__btn_active : activeButton === index}"
+            >
               {{ button.text }}
-              <svg v-if="button.icon" class="icon" width="12" height="14" viewBox="0 0 12 14" fill="none"
+              <svg class="arrows" :class="{arrows_active: activeButton === index}" height="14" viewBox="0 0 12 14" fill="none"
                    xmlns="http://www.w3.org/2000/svg">
                 <path
                     d="M8.7 7.03333L12 10.3333L8.7 13.6333L7.75733 12.6907L9.448 10.9993L0.666667 11V9.66667H9.448L7.75733 7.976L8.7 7.03333ZM3.3 0.366669L4.24267 1.30934L2.552 3H11.3333V4.33333H2.552L4.24267 6.024L3.3 6.96667L0 3.66667L3.3 0.366669Z"
-                    fill="current"/>
+                    fill="#fff"/>
               </svg>
-              <span class="none" v-else></span>
             </button>
           </div>
         </div>
@@ -78,7 +82,7 @@
       <div class="header__right">
         <div class="buttons">
           <button class="header__right-btn">1CP Enabled (87)</button>
-          <button class="header__right-btn">Envoys.Vision</button>
+          <NuxtLink to="/settings" class="header__right-btn">Envoys.Vision</NuxtLink>
         </div>
       </div>
     </div>
@@ -91,7 +95,7 @@ export default {
     return {
       burger: false,
       tradeLinks: [
-        {text: 'Trading', href: '#'},
+        {text: 'Trading', href: 'market'},
         {text: 'Positions', href: 'positions'},
         {text: 'Limits', href: 'limits'},
         {text: 'Assets', href: 'market-assets'},
@@ -109,13 +113,14 @@ export default {
         {text: 'Specification', href: '#'},
       ],
       btcButtons: [
-        {text: 'BTC', icon: true},
-        {text: 'ETH', icon: false},
-        {text: 'USDC', icon: false},
-        {text: 'USDT', icon: false},
-        {text: 'USD', icon: false},
-        {text: 'EUR', icon: false},
+        {text: 'BTC'},
+        {text: 'ETH'},
+        {text: 'USDC'},
+        {text: 'USDT'},
+        {text: 'USD'},
+        {text: 'EUR'},
       ],
+      activeButton: false,
     }
   },
 }
@@ -148,6 +153,7 @@ export default {
       font-weight: 400;
       font-size: 14px;
       color: #171717;
+      text-decoration: none;
     }
   }
 
@@ -338,26 +344,33 @@ export default {
     padding: 12px 10px;
     background: #F7F7F7;
     border-radius: 4px;
-    transition: .3s ease-in-out;
     display: flex;
     align-items: center;
-    gap: 10px;
-
-    &:hover {
-      background: #F48020;
+    transition: .3s ease-in-out;
+    &_active{
+      gap: 10px;
       color: #FBFBFB;
+      background: #F48020;
     }
-
-    &:hover .icon {
-      path {
-        fill: #fff;
-      }
+    &:hover {
+      color: #FBFBFB;
+      background: #F48020;
     }
-
   }
 
   img {
     display: block;
+  }
+}
+.arrows{
+  width: 0;
+  opacity: 0;
+  visibility: hidden;
+  transition: .3s ease-in-out;
+  &_active{
+    width: 12px;
+    opacity: 1;
+    visibility: visible;
   }
 }
 </style>
