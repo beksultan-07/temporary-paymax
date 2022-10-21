@@ -2,25 +2,7 @@
   <div class="requests__wrap">
     <div class="requests__container">
       <div class="requests__content">
-        <requests-form
-            title="Create Request"
-            :usd-options="assetOptions"
-            :id-options="counterpartyOptions"
-            id-label="Counterparty ID"
-            usd-label="Asset USD"
-            amount-label="Amount (opt.)"
-            net-label="Net Limit"
-            area-label="Protocol, memo or Tag (opt.)"
-            button="Set Limits"
-            :visible-checkbox="true"
-            :idValue="counterpartyValue"
-            :usdValue="assetValue"
-            :amountValue="amountValue"
-            :areaValue="areaValue"
-            :free-value="freeValue"
-            :requests="requests"
-            @addRequestData="addRequestData"
-        />
+        <requests-form @addRequestData="addRequestData"/>
         <your-requests :requests="requests"/>
         <requests-to-you/>
       </div>
@@ -48,7 +30,6 @@ export default {
   },
   methods:{
     addRequestData(data){
-      console.log(data)
       this.requests.push(data)
     }
   }

@@ -32,11 +32,13 @@ import SettingsReferrals from "@/components/Market/Settings/SettingsReferrals/Se
 import SettingsLogin from "@/components/Market/Settings/SettingsLogin/SettingsLogin";
 import SettingsNotification from "@/components/Market/Settings/SettingsNotification/SettingsNotification";
 import SettingsLogoutModal from "@/components/Market/Settings/SettingsLogout/SettingsLogoutModal";
+import SettingsAccount from "@/components/Market/Settings/SettingsAccount/SettingsAccount";
 export default {
   components: {
     'v-component-referrals': SettingsReferrals,
     'v-component-login': SettingsLogin,
     'v-component-notification': SettingsNotification,
+    'v-component-account': SettingsAccount,
     SettingsLogoutModal
   },
   data(){

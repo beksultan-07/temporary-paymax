@@ -1,22 +1,22 @@
 <template>
   <form class="form" @submit.prevent="submitForm">
-    <h3 class="form__title">{{ title }}</h3>
+    <h3 class="form__title">Create Request</h3>
     <div class="form__fields">
       <v-select
-          v-model="idValue"
+          v-model="counterpartyValue"
           background-color="#F7F7F7"
-          :items="idOptions"
-          :label="idLabel"
+          :items="counterpartyOptions"
+          label="Counterparty ID"
           dense
           hide-details
           class="mb-5"
           outlined
       ></v-select>
       <v-select
-          v-model="usdValue"
+          v-model="assetValue"
           background-color="#F7F7F7"
-          :items="usdOptions"
-          :label="usdLabel"
+          :items="assetOptions"
+          label="Asset USD"
           outlined
           dense
           hide-details
@@ -26,7 +26,7 @@
           v-model="amountValue"
           type="number"
           background-color="#f7f7f7"
-          :label="amountLabel"
+          label="Amount (opt.)"
           outlined
           dense
           hide-details
@@ -54,20 +54,31 @@
           hide-details
           class="mb-5"
           name="input-7-4"
-          :label="areaLabel"
+          label="Protocol, memo or Tag (opt.)"
       ></v-textarea>
-      <button class="form__button form__button--green">{{ button }}</button>
+      <button class="form__button form__button--green">Set Limits</button>
     </div>
   </form>
 </template>
 
 <script>
 export default {
+  data(){
+    return{
+      assetOptions: ['ADA', 'AUD', 'AVAXS', 'BCH','BNB','BNB.BSC','Buzz','Buzz',],
+      counterpartyOptions: ['FM-Test-MM (87)'],
+      counterpartyValue: '',
+      assetValue: '',
+      amountValue: '',
+      areaValue: '',
+      freeValue: false,
+    }
+  },
   methods: {
     submitForm() {
       const request = {
-        counterParty: this.idValue,
-        asset: this.usdValue,
+        counterParty: this.counterpartyValue,
+        asset: this.assetValue,
         amount: this.amountValue,
         freePaid: this.freeValue,
         area: this.areaValue,
@@ -83,49 +94,6 @@ export default {
     }
   },
   props: {
-    visibleCheckbox: Boolean,
-    usdOptions: {
-      type: Array,
-      required: true
-    },
-    idOptions: {
-      type: Array,
-      required: true
-    },
-    title: {
-      type: String
-    },
-    idLabel: {
-      type: String
-    },
-    usdLabel: {
-      type: String
-    },
-    amountLabel: {
-      type: String
-    },
-    areaLabel: {
-      type: String
-    },
-    button: {
-      type: String
-    },
-
-    idValue: {
-      type: String
-    },
-    usdValue: {
-      type: String
-    },
-    amountValue: {
-      type: String
-    },
-    areaValue: {
-      type: String
-    },
-    freeValue: {
-      type: Boolean
-    },
     requests: {
       type: Array
     },

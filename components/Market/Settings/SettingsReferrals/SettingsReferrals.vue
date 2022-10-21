@@ -14,17 +14,8 @@
       <template v-slot:default>
         <thead>
           <tr>
-            <th class="text-left">
-              Email
-            </th>
-            <th class="text-left">
-              CP ID
-            </th>
-            <th class="text-left">
-              Status
-            </th>
-            <th class="text-left">
-              Date
+            <th class="text-left" v-for="(item, index) in tableHead" :key="index">
+              {{ item.name }}
             </th>
           </tr>
         </thead>
@@ -61,6 +52,12 @@ export default {
       emailValue: '',
       date: '',
       takers: [],
+      tableHead:[
+        {name: 'Email'},
+        {name: 'CP ID'},
+        {name: 'Status'},
+        {name: 'Date'},
+      ]
     }
   },
   methods:{
@@ -93,6 +90,9 @@ export default {
       align-items: center;
       justify-content: space-between;
       margin-bottom: 10px;
+    }
+    table{
+      width: 480px;
     }
     &__title{
       font-family: 'Helvetica';
