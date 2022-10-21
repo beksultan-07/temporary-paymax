@@ -5,12 +5,8 @@
         <div class="limits__form">
           <limits-form/>
         </div>
-        <div class="scroll">
-          <limits-global/>
-        </div>
-        <div class="scroll">
-          <limits-limit/>
-        </div>
+        <limits-global/>
+        <limits-limit/>
       </div>
     </div>
   </div>
@@ -41,7 +37,7 @@ export default {
   }
   &__content{
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 20px;
     @media (max-width: 900px) {
       gap: 0;
@@ -51,22 +47,6 @@ export default {
   }
   &__form{
     grid-row: 2 span;
-  }
-}
-.scroll{
-  grid-column: 2 span;
-  overflow-x: auto;
-  &::-webkit-scrollbar {
-    height: 8px;
-  }
-  &::-webkit-scrollbar-thumb{
-    background: #9C9C9C;
-    border-radius: 10px;
-    border: 2px solid #F2F2F2;
-  }
-  &::-webkit-scrollbar-track{
-    background: #F2F2F2;
-    border-radius: 10px;
   }
 }
 </style>
