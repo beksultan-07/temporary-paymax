@@ -100,7 +100,7 @@ export default {
 <style lang="scss" scoped>
 .trades_wrap {
   width: 100%;
-  max-width: 500px;
+  min-width: 300px;
   margin: 0 auto;
   background: #fff;
   border-radius: 4px;
