@@ -17,7 +17,7 @@
       <template v-slot:body.prepend>
         <div class="d-flex mt-2 mb-2">
           <v-chip label class="blue-grey lighten-5 mr-2">
-            Equilty:
+            Equity:
             <span class="indigo--text accent-3--text">
               1126.79
             </span>
