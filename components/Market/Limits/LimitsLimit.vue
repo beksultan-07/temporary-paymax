@@ -18,38 +18,39 @@
         </svg>
       </button>
     </div>
-    <div class="limit__content">
-      <div class="limit__cp limit__item">
-        <h4 class="limit__item-title">CP Limits</h4>
-        <div class="limit__between" v-for="(item, index) in cpLimits" :key="index">
-          <h5 class="limit__text">{{ item.text }}</h5>
-          <p class="limit__text limit__text_black">
-            {{ item.num }}<span class="limit__text">{{ item.zero }}</span>
-          </p>
+    <div class="scroll">
+      <div class="limit__content">
+        <div class="limit__cp limit__item">
+          <h4 class="limit__item-title">CP Limits</h4>
+          <div class="limit__between" v-for="(item, index) in cpLimits" :key="index">
+            <h5 class="limit__text">{{ item.text }}</h5>
+            <p class="limit__text limit__text_black">
+              {{ item.num }}<span class="limit__text">{{ item.zero }}</span>
+            </p>
+          </div>
+        </div>
+        <div class="limit__your limit__item">
+          <h4 class="limit__item-title">Your Limits</h4>
+          <div class="limit__between" v-for="(item, index) in yourLimits" :key="index">
+            <h5 class="limit__text">{{ item.text }}</h5>
+            <p class="limit__text limit__text_blue">
+              {{ item.num }}<span class="limit__text">{{ item.zero }}</span>
+            </p>
+          </div>
+        </div>
+        <div class="limit__applied limit__item">
+          <h4 class="limit__item-title">Applied</h4>
+          <div class="limit__between" v-for="(item, index) in appliedLimits" :key="index">
+            <h5 class="limit__text">{{ item.text }}</h5>
+            <p
+                class="limit__text"
+                :class="{limit__text_green: item.green,limit__text_blue: item.blue}"
+            >
+              {{ item.num }}
+            </p>
+          </div>
         </div>
       </div>
-      <div class="limit__your limit__item">
-        <h4 class="limit__item-title">Your Limits</h4>
-        <div class="limit__between" v-for="(item, index) in yourLimits" :key="index">
-          <h5 class="limit__text">{{ item.text }}</h5>
-          <p class="limit__text limit__text_blue">
-            {{ item.num }}<span class="limit__text">{{ item.zero }}</span>
-          </p>
-        </div>
-      </div>
-      <div class="limit__applied limit__item">
-        <h4 class="limit__item-title">Applied</h4>
-        <div class="limit__between" v-for="(item, index) in appliedLimits" :key="index">
-          <h5 class="limit__text">{{ item.text }}</h5>
-          <p
-              class="limit__text"
-              :class="{limit__text_green: item.green,limit__text_blue: item.blue}"
-          >
-            {{ item.num }}
-          </p>
-        </div>
-      </div>
-
     </div>
   </div>
 </template>
@@ -87,15 +88,12 @@ export default {
 <style lang="scss" scoped>
 .limit {
   &__wrap {
-    grid-column: 2 span;
     background: #FFFFFF;
     border-radius: 4px;
     padding: 20px 10px;
     position: relative;
-    width: 900px;
-    @media (max-width: 900px) {
-      grid-column: unset;
-    }
+    overflow: hidden;
+    grid-column: 3 span;
   }
   &__icon{
     g > rect{
@@ -140,6 +138,7 @@ export default {
     align-items: flex-start;
     justify-content: space-between;
     gap: 20px;
+    width: 990px;
   }
 
   &__item {
@@ -191,6 +190,21 @@ export default {
     &_small {
       font-size: 12px;
     }
+  }
+}
+.scroll{
+  overflow-x: auto;
+  &::-webkit-scrollbar {
+    height: 8px;
+  }
+  &::-webkit-scrollbar-thumb{
+    background: #9C9C9C;
+    border-radius: 10px;
+    border: 2px solid #F2F2F2;
+  }
+  &::-webkit-scrollbar-track{
+    background: #F2F2F2;
+    border-radius: 10px;
   }
 }
 </style>

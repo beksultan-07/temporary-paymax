@@ -11,7 +11,7 @@
                 {{ button.text }}
               </button>
             </div>
-            <button class="trades__download">Download .CSV</button>
+            <button class="trades__download" @click="activeModal = !activeModal">Download .CSV</button>
           </div>
         </div>
 
@@ -21,23 +21,35 @@
 
       </div>
     </div>
+    <trades-modal :active-modal="activeModal" @close-modal="closeModal" />
   </div>
 </template>
 
 <script>
 import Table from './Table.vue';
 
+import TradesModal from "@/components/Market/Trades/TradesModal";
+
 export default {
+  components: {
+    TradesModal,
+    Table
+  },
   data() {
     return {
       buttons: [
-        { text: "Orders" },
-        { text: "Trades" }
+        { text: 'Orders' },
+        { text: 'Trades' }
       ],
       active: false,
-    };
+      activeModal: false
+    }
   },
-  components: { Table }
+  methods: {
+    closeModal() {
+      this.activeModal = false
+    },
+  }
 }
 </script>
 

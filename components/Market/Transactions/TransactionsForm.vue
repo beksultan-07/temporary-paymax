@@ -16,7 +16,7 @@
           v-model="assetValue"
           background-color="#F7F7F7"
           :items="assetOptions"
-          label="Asset USD"
+          label="Asset"
           outlined
           dense
           hide-details
@@ -26,7 +26,7 @@
           v-model="amountValue"
           type="number"
           background-color="#f7f7f7"
-          label="Amount (opt.)"
+          label="Amount"
           outlined
           dense
           hide-details
@@ -35,7 +35,7 @@
       ></v-text-field>
       <div class="form__checkbox">
         <v-checkbox
-            label="Free Paid by me"
+            label="Free Paid by recipient"
             id="checkbox"
             color="success"
             :value="false"
@@ -52,9 +52,9 @@
           hide-details
           class="mb-5"
           name="input-7-4"
-          label="Protocol, memo or Tag (opt.)"
+          label="Bank reference or transaction hash (opt.)"
       ></v-textarea>
-      <button class="form__button form__button--green">Set Limits</button>
+      <button class="form__button form__button--green">Send Assets</button>
     </div>
   </form>
 </template>
@@ -70,6 +70,7 @@ export default {
       amountValue: '',
       areaValue: '',
       checkboxValue: false,
+      date: '',
     }
   },
   methods: {
@@ -80,6 +81,7 @@ export default {
         amount: this.amountValue,
         freePaid: this.checkboxValue,
         area: this.areaValue,
+        date: this.date,
       }
 
       this.counterpartyValue = '';
@@ -89,7 +91,13 @@ export default {
       this.checkboxValue = false;
 
       this.$emit('addRequestData', request)
-    }
+    },
+    printDate() {
+      return new Date().toLocaleDateString();
+    },
+  },
+  mounted() {
+    this.date = this.printDate();
   },
   props: {
     requests: {

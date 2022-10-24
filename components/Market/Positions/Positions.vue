@@ -7,7 +7,9 @@
           <div class="positions__right">
             <positions-select :placeholder="'Group by counterparty'" :options="options" :selected="selected"
               @onSelect="onSelect" />
-            <div class="positions__total">Total Equaity <span class="blue-line">—</span></div>
+            <button class="positions__total">Total planned Equity <span
+                class="positions__total--blue">$1080.57</span></button>
+            <button class="positions__total">Total Equity <span class="positions__total--blue">$1080.57</span></button>
           </div>
         </div>
 
@@ -167,14 +169,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.blue-line {
-  color: #496AFF;
-}
-
 .positions {
   &__wrap {
     padding-top: 30px;
     background: #FBFBFB;
+  }
+
+  &__container {
+    max-width: 1400px;
+    padding: 0 20px;
+    margin: 0 auto;
   }
 
   &__content {
@@ -186,12 +190,6 @@ export default {
     position: relative;
   }
 
-  &__container {
-    max-width: 1400px;
-    padding: 0 20px;
-    margin: 0 auto;
-  }
-
   &__total {
     background: #F7F7F7;
     border-radius: 4px;
@@ -201,7 +199,11 @@ export default {
     font-weight: 400;
     font-size: 14px;
     color: #868686;
-    min-width: 120px;
+    white-space: nowrap;
+
+    &--blue {
+      color: #496AFF;
+    }
   }
 
   &__top {
@@ -220,16 +222,10 @@ export default {
     display: flex;
     align-items: center;
     gap: 20px;
-    width: 450px;
-
-    @media (max-width: 700px) {
-      width: 400px;
-    }
 
     @media (max-width: 465px) {
       flex-direction: column;
       gap: 30px;
-      width: 260px;
     }
   }
 

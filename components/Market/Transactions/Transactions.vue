@@ -2,9 +2,9 @@
   <div class="requests__wrap">
     <div class="requests__container">
       <div class="requests__content">
-        <requests-form @addRequestData="addRequestData"/>
-        <your-requests :requests="requests"/>
-        <requests-to-you/>
+        <transactions-form @addRequestData="addRequestData"/>
+        <your-transactions :requests="requests"/>
+        <transactions-to-you/>
       </div>
     </div>
   </div>
@@ -14,8 +14,11 @@
 import RequestsForm from "@/components/Market/Requests/RequestsForm";
 import YourRequests from "@/components/Market/Requests/YourRequests";
 import RequestsToYou from "@/components/Market/Requests/RequestsToYou";
+import TransactionsForm from "@/components/Market/Transactions/TransactionsForm";
+import YourTransactions from "@/components/Market/Transactions/YourTransactions";
+import TransactionsToYou from "@/components/Market/Transactions/TransactionsToYou";
 export default {
-  components: {RequestsToYou, YourRequests, RequestsForm},
+  components: {TransactionsToYou, YourTransactions, YourRequests, TransactionsForm},
   data(){
     return{
       assetOptions: ['ADA', 'AUD', 'AVAXS', 'BCH','BNB','BNB.BSC','Buzz','Buzz',],

@@ -8,12 +8,18 @@
           label="Counterparty ID"
           outlined
           placeholder="0"
+          dense
+          hide-details
+          class="mb-5"
       ></v-text-field>
       <v-select
           background-color="#F7F7F7"
           :items="currencyOptions"
           label="Currency USD"
           outlined
+          dense
+          hide-details
+          class="mb-5"
       ></v-select>
       <v-text-field
           type="number"
@@ -21,6 +27,9 @@
           label="Gross Limit"
           outlined
           placeholder="0.00000000"
+          dense
+          hide-details
+          class="mb-5"
       ></v-text-field>
       <v-text-field
           type="number"
@@ -28,6 +37,9 @@
           label="Net Limit"
           outlined
           placeholder="0.00000000"
+          dense
+          hide-details
+          class="mb-5"
       ></v-text-field>
       <button class="form__button form__button--green">Set Limits</button>
     </div>
@@ -46,13 +58,9 @@ export default {
 
 <style lang="scss" scoped>
 .form{
-  grid-row: 2 span;
   background: #FFFFFF;
   border-radius: 4px;
   padding: 20px 10px;
-  @media (max-width: 900px) {
-    grid-row: unset;
-  }
   &__title{
     font-family: 'Helvetica';
     font-style: normal;

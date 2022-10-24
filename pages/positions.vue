@@ -7,7 +7,7 @@ import Positions from "@/components/Market/Positions/Positions";
 export default {
   components: {Positions},
   auth: false,
-  layout: 'marketlayout',
+  layout: 'limitslayout',
 }
 </script>
 

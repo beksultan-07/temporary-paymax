@@ -50,7 +50,27 @@
         </div>
       </div>
       <div class="header__right">
-        <button class="header__right-btn">Envoys.Vision</button>
+        <!-- <NuxtLink to="/settings" class="header__right-btn">Envoys.Vision</NuxtLink> -->
+        <!-- Вынести в отдельный компонент! -->
+        <v-menu offset-y :close-on-content-click="false">
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn class="text-caption black--text" elevation="0" color="white" dark v-bind="attrs" v-on="on">
+              Envoys.Vision <v-icon>mdi-chevron-down</v-icon>
+            </v-btn>
+          </template>
+          <v-list>
+            <v-list-item 
+              dense 
+              link 
+              v-for="link in $store.getters['settingsPage/getLinks']" 
+              :key="link.component" 
+              @click="$store.commit('settingsPage/setCurrentComponent', link.component)"
+            >
+              <v-list-item-title>{{link.text}}</v-list-item-title>
+            </v-list-item>
+          </v-list>
+        </v-menu>
+        <!-- Вынести в отдельный компонент! -->
       </div>
     </div>
   </header>
@@ -60,16 +80,15 @@
 export default {
   data() {
     return {
-      burger: false,
       tradeLinks: [
-        {text: 'Trading', href: '#'},
+        {text: 'Trading', href: 'market'},
         {text: 'Positions', href: 'positions'},
         {text: 'Limits', href: 'limits'},
         {text: 'Assets', href: 'market-assets'},
       ],
       settlementLinks: [
         {text: 'Requests', href: 'requests'},
-        {text: 'Transactions', href: '#'},
+        {text: 'Transactions', href: 'transactions'},
       ],
       historyLinks: [
         {text: 'Trades', href: 'trades'},
@@ -79,6 +98,9 @@ export default {
         {text: 'Keys', href: '#'},
         {text: 'Specification', href: '#'},
       ],
+      burger: false,
+
+
     }
   },
 }
@@ -98,16 +120,6 @@ export default {
 
   &__right {
     margin-left: auto;
-    &-btn {
-      background: #FFFFFF;
-      border-radius: 4px;
-      padding: 12px 14px;
-      font-family: 'Helvetica';
-      font-style: normal;
-      font-weight: 400;
-      font-size: 14px;
-      color: #171717;
-    }
   }
 }
 .content {

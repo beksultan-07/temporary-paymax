@@ -6,18 +6,17 @@
     >
       <v-slide-group
           v-model="model"
-          class="pa-4"
           center-active
           :show-arrows="false"
-          style="align-items: flex-start; background:#fbfbfb;padding: 0 !important;"
+          style="align-items: flex-start; background:#fbfbfb;"
       >
         <v-slide-item
             v-for="(button,index) in buttons"
             :key="index"
-            v-slot="{ active, toggle }"
+            v-slot="{ toggle }"
         >
           <div class="col_item">
-            <div class="item" :class="{item_active : activeButton === index}" @click="toggle">
+            <div class="item" :class="{item_active : activeButton === index}" @click.stop="toggle">
               <button class="button" @click="activeButton = activeButton === index ? null : index">
                 <div class="button__circle"></div>
                 <span class="button__text">
@@ -82,11 +81,11 @@ export default {
       this.selected = selectedItem;
     },
   },
-  // mounted() {
-  //   document.querySelector('body').addEventListener('click', () => {
-  //     this.activeButton = false
-  //   })
-  // }
+  mounted() {
+    document.querySelector('body').addEventListener('click', () => {
+      this.activeButton = false
+    })
+  }
 }
 </script>
 
