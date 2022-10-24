@@ -2,7 +2,7 @@
   <div class="trades_wrap">
     <h3 class="trades__title">Last Trades</h3>
 
-    <v-data-table :headers="headers" :items="data" hide-default-footer disable-filtering>
+    <v-data-table :headers="headers" :items="data" hide-default-footer disable-filtering :mobile-breakpoint="0">
       <template v-slot:item.side="{ item }">
         <p class="mb-0" :class="item.side === 'Sell' ? 'red--text': 'teal--text' ">
           {{ item.side }}
@@ -31,6 +31,7 @@ export default {
         {
           text: 'Instrument',
           align: 'start',
+          width: 100,
           sortable: false,
           filterable: false,
           value: 'instrument',
@@ -38,6 +39,7 @@ export default {
         {
           text: 'Side',
           align: 'start',
+          width: 100,
           sortable: false,
           filterable: false,
           value: 'side',
@@ -45,6 +47,7 @@ export default {
         {
           text: 'Price',
           align: 'start',
+          width: 100,
           sortable: false,
           filterable: false,
           value: 'price',
@@ -52,6 +55,7 @@ export default {
         {
           text: 'Size',
           align: 'start',
+          width: 100,
           sortable: false,
           filterable: false,
           value: 'size',
@@ -59,6 +63,7 @@ export default {
         {
           text: 'Volume',
           align: 'start',
+          width: 100,
           sortable: false,
           filterable: false,
           value: 'volume',
