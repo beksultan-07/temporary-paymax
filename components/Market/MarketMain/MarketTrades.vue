@@ -1,7 +1,21 @@
 <template>
   <div class="trades_wrap">
-      <h3 class="trades__title">Last Trades</h3>
-    <div class="trades__data-text">No data</div>
+    <h3 class="trades__title">Last Trades</h3>
+
+    <v-data-table :headers="headers" :items="data" hide-default-footer disable-filtering>
+      <template v-slot:item.side="{ item }">
+        <p class="mb-0" :class="item.side === 'Sell' ? 'red--text': 'teal--text' ">
+          {{ item.side }}
+        </p>
+      </template>
+      <template v-slot:item.price="{ item }">
+        <p class="mb-0" :class="item.side === 'Sell' ? 'red--text': 'teal--text' ">
+          {{ item.price }}
+        </p>
+      </template>
+    </v-data-table>
+
+
     <button class="trades__button bottom-btn">
       See History
     </button>
@@ -11,6 +25,70 @@
 <script>
 
 export default {
+  data() {
+    return {
+      headers: [
+        {
+          text: 'Instrument',
+          align: 'start',
+          sortable: false,
+          filterable: false,
+          value: 'instrument',
+        },
+        {
+          text: 'Side',
+          align: 'start',
+          sortable: false,
+          filterable: false,
+          value: 'side',
+        },
+        {
+          text: 'Price',
+          align: 'start',
+          sortable: false,
+          filterable: false,
+          value: 'price',
+        },
+        {
+          text: 'Size',
+          align: 'start',
+          sortable: false,
+          filterable: false,
+          value: 'size',
+        },
+        {
+          text: 'Volume',
+          align: 'start',
+          sortable: false,
+          filterable: false,
+          value: 'volume',
+        },
+      ],
+      data: [
+        {
+          instrument: 'LTC-BTC',
+          side: 'Sell',
+          price: 0.00264980,
+          size: 1.00000000,
+          volume: 0.00264980
+        },
+        {
+          instrument: 'LTC-BTC',
+          side: 'Buy',
+          price: 0.00264980,
+          size: 1.00000000,
+          volume: 0.00264980
+        },
+        {
+          instrument: 'LTC-BTC',
+          side: 'Sell',
+          price: 0.00264980,
+          size: 1.00000000,
+          volume: 0.00264980
+        }
+      ],
+    }
+  },
 }
 </script>
 
@@ -25,6 +103,7 @@ export default {
   min-height: 600px;
   position: relative;
 }
+
 .trades {
   &__title {
     font-family: 'Helvetica';
@@ -33,7 +112,8 @@ export default {
     font-size: 16px;
     color: #171717;
   }
-  &__button{
+
+  &__button {
     background: #F7F7F7;
     border-radius: 4px;
     padding: 7px 10px;
@@ -43,6 +123,7 @@ export default {
     font-size: 14px;
     color: #868686;
   }
+
   &__data-text {
     position: absolute;
     top: 50%;
@@ -55,6 +136,7 @@ export default {
     color: #868686;
   }
 }
+
 .bottom-btn {
   position: absolute;
   bottom: 20px;
