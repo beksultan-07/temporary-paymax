@@ -51,14 +51,14 @@
         </nav>
         <div class="logo__block">
           <NuxtLink to="/market" class="logo__link">
-            <img src="../../static/asset/market/logo/logo.svg" alt="logo">
+            <img src="asset/market/logo/logo.svg" alt="logo">
           </NuxtLink>
         </div>
       </div>
       <div class="search">
         <div class="search__cols">
           <div class="search__block">
-            <img src="../../static/asset/market/search-icon/search.svg" alt="search" class="search__icon">
+            <img src="../../../static/asset/market/search-icon/search.svg" alt="search" class="search__icon">
             <input placeholder="Search" type="search" class="search__input-field">
           </div>
           <div class="buttons search__buttons">
@@ -81,26 +81,7 @@
       <div class="header__right">
         <div class="buttons">
           <button class="header__right-btn">1CP Enabled (87)</button>
-          <!-- Вынести в отдельный компонент! -->
-          <v-menu offset-y :close-on-content-click="false">
-            <template v-slot:activator="{ on, attrs }">
-              <v-btn class="text-caption black--text" elevation="0" color="white" dark v-bind="attrs" v-on="on">
-                Envoys.Vision <v-icon>mdi-chevron-down</v-icon>
-              </v-btn>
-            </template>
-            <v-list>
-              <v-list-item 
-                @click="$store.commit('settingsPage/setCurrentComponent', link.component); $router.push('/settings')"
-                dense 
-                link 
-                v-for="link in $store.getters['settingsPage/getLinks']" 
-                :key="link.component" 
-              >
-                <v-list-item-title>{{link.text}}</v-list-item-title>
-              </v-list-item>
-            </v-list>
-          </v-menu>
-          <!-- Вынести в отдельный компонент! -->
+          <navbar-dropdown/>
         </div>
       </div>
     </div>
@@ -108,7 +89,9 @@
 </template>
 
 <script>
+import NavbarDropdown from "@/components/Market/Navbars/NavbarDropdown";
 export default {
+  components: {NavbarDropdown},
   data() {
     return {
       burger: false,

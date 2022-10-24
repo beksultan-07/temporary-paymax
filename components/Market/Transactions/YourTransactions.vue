@@ -1,7 +1,7 @@
 <template>
   <div class="your__wrap">
     <h3 class="your__title">Your Transactions</h3>
-    <span class="your__data" v-if="requests.length <= 0">No data yet</span>
+    <span class="your__data" v-if="transactions.length <= 0">No data yet</span>
     <div class="scroll" v-else>
       <div class="your__table">
 
@@ -16,32 +16,32 @@
             </thead>
             <tbody>
             <tr
-                v-for="(request, index) in requests"
+                v-for="(transaction, index) in transactions"
                 :key="index"
             >
-              <td class="text-left" v-if="request.counterParty.length > 0">
-                {{ request.counterParty }}
+              <td class="text-left" v-if="transaction.counterParty.length > 0">
+                {{ transaction.counterParty }}
               </td>
               <td class="text-left" v-else>—</td>
-              <td class="text-left" v-if="request.asset.length > 0">
-                {{ request.asset }}
+              <td class="text-left" v-if="transaction.asset.length > 0">
+                {{ transaction.asset }}
               </td>
               <td class="text-left" v-else>—</td>
-              <td class="text-left" v-if="request.amount.length > 0">
-                {{ request.amount }}
+              <td class="text-left" v-if="transaction.amount.length > 0">
+                {{ transaction.amount }}
               </td>
               <td class="text-left" v-else>—</td>
-              <td class="text-left" v-if="request.freePaid === true">
+              <td class="text-left" v-if="transaction.freePaid === true">
                 Sender
               </td>
               <td class="text-left" v-else>
                 Not the sender
               </td>
-              <td class="text-left" v-if="request.area.length > 0">
-                {{ request.area }}
+              <td class="text-left" v-if="transaction.area.length > 0">
+                {{ transaction.area }}
               </td>
               <td class="text-center" v-else>—</td>
-              <td class="text-left">{{request.date}}</td>
+              <td class="text-left">{{transaction.date}} {{transaction.time}}</td>
               <div class="remove">×</div>
             </tr>
             </tbody>
@@ -67,7 +67,7 @@ export default {
     }
   },
   props: {
-    requests: {
+    transactions: {
       type: Array
     }
   },

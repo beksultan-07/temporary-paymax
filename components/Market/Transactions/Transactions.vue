@@ -3,7 +3,7 @@
     <div class="requests__container">
       <div class="requests__content">
         <transactions-form @addRequestData="addRequestData"/>
-        <your-transactions :requests="requests"/>
+        <your-transactions :transactions="transactions"/>
         <transactions-to-you/>
       </div>
     </div>
@@ -11,14 +11,11 @@
 </template>
 
 <script>
-import RequestsForm from "@/components/Market/Requests/RequestsForm";
-import YourRequests from "@/components/Market/Requests/YourRequests";
-import RequestsToYou from "@/components/Market/Requests/RequestsToYou";
 import TransactionsForm from "@/components/Market/Transactions/TransactionsForm";
 import YourTransactions from "@/components/Market/Transactions/YourTransactions";
 import TransactionsToYou from "@/components/Market/Transactions/TransactionsToYou";
 export default {
-  components: {TransactionsToYou, YourTransactions, YourRequests, TransactionsForm},
+  components: {TransactionsToYou, YourTransactions, TransactionsForm},
   data(){
     return{
       assetOptions: ['ADA', 'AUD', 'AVAXS', 'BCH','BNB','BNB.BSC','Buzz','Buzz',],
@@ -28,12 +25,12 @@ export default {
       amountValue: '',
       areaValue: '',
       freeValue: false,
-      requests: [],
+      transactions: [],
     }
   },
   methods:{
     addRequestData(data){
-      this.requests.push(data)
+      this.transactions.push(data)
     }
   }
 }

@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import LimitsNavbar from "@/components/Market/LimitsNavbar";
+import LimitsNavbar from "@/components/Market/Navbars/LimitsNavbar";
 
 export default {
   components:{LimitsNavbar},

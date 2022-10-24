@@ -1,6 +1,6 @@
 <template>
   <form class="form" @submit.prevent="submitForm">
-    <h3 class="form__title">Create Request</h3>
+    <h3 class="form__title">Create Transaction</h3>
     <div class="form__fields">
       <v-select
           v-model="counterpartyValue"
@@ -71,17 +71,19 @@ export default {
       areaValue: '',
       checkboxValue: false,
       date: '',
+      time: '',
     }
   },
   methods: {
     submitForm() {
-      const request = {
+      const transaction = {
         counterParty: this.counterpartyValue,
         asset: this.assetValue,
         amount: this.amountValue,
         freePaid: this.checkboxValue,
         area: this.areaValue,
         date: this.date,
+        time: this.time,
       }
 
       this.counterpartyValue = '';
@@ -90,17 +92,21 @@ export default {
       this.areaValue = '';
       this.checkboxValue = false;
 
-      this.$emit('addRequestData', request)
+      this.$emit('addRequestData', transaction)
     },
     printDate() {
       return new Date().toLocaleDateString();
     },
+    printTime() {
+      return new Date().toLocaleTimeString();
+    },
   },
   mounted() {
     this.date = this.printDate();
+    this.time = this.printTime();
   },
   props: {
-    requests: {
+    transactions: {
       type: Array
     }
   },
