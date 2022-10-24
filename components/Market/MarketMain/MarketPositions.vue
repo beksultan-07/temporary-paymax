@@ -14,6 +14,24 @@
           {{ item.position }}
         </p>
       </template>
+
+      <template v-slot:body.prepend>
+        <div class="d-flex mt-2 mb-2">
+          <v-chip label class="blue-grey lighten-5 mr-2">
+            Equilty:
+            <span class="indigo--text accent-3--text">
+              1126.79
+            </span>
+          </v-chip>
+
+          <v-chip label class="blue-grey lighten-5">
+            FM-Test-MM
+            <span class="indigo--text accent-3--text">
+              (87)
+            </span>
+          </v-chip>
+        </div>
+      </template>
     </v-data-table>
 
     <NuxtLink to="positions" class="positions__button bottom-btn">
