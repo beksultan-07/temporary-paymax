@@ -13,7 +13,8 @@
           </div>
         </div>
 
-        <v-data-table :headers="headers" :items="data" hide-default-footer disable-filtering class="mt-5">
+        <v-data-table :headers="headers" :items="data" hide-default-footer disable-filtering class="mt-5"
+          :mobile-breakpoint="0">
           <template v-slot:item.position="{ item }">
             <p class="mb-0" :class="String(item.position)[0] === '-' ? 'red--text': 'teal--text' ">
               {{ item.position }}
@@ -81,6 +82,7 @@ export default {
         {
           text: 'Counterparty / Asset',
           align: 'start',
+          width: 50,
           sortable: false,
           filterable: false,
           value: 'asset',
@@ -88,6 +90,7 @@ export default {
         {
           text: 'Position	',
           align: 'end',
+          width: 100,
           sortable: false,
           filterable: false,
           value: 'position',
@@ -95,6 +98,7 @@ export default {
         {
           text: 'Price',
           align: 'end',
+          width: 100,
           sortable: false,
           filterable: false,
           value: 'price',
@@ -102,6 +106,7 @@ export default {
         {
           text: 'Position, $',
           align: 'end',
+          width: 100,
           sortable: false,
           filterable: false,
           value: 'sumPosition',
@@ -110,6 +115,7 @@ export default {
         {
           text: 'Planned Position',
           align: 'end',
+          width: 100,
           sortable: false,
           filterable: false,
           value: 'plannedPosition',
@@ -117,6 +123,7 @@ export default {
         {
           text: 'Volume',
           align: 'end',
+          width: 100,
           sortable: false,
           filterable: false,
           value: 'sumPlannedPosition',
@@ -124,6 +131,7 @@ export default {
         {
           text: 'OR, %',
           align: 'center',
+          width: 100,
           sortable: false,
           filterable: false,
           value: 'percent',
@@ -131,6 +139,7 @@ export default {
         {
           text: 'Est. overnight cost, $	',
           align: 'center',
+          width: 100,
           sortable: false,
           filterable: false,
           value: 'cost',

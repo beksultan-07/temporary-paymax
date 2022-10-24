@@ -7,7 +7,8 @@
     <positions-select :placeholder="'Group by counterparty'" :options="options" :selected="selected"
       @onSelect="onSelect" />
 
-    <v-data-table :headers="headers" :items="data" hide-default-footer disable-filtering class="mt-5">
+    <v-data-table :headers="headers" :items="data" hide-default-footer disable-filtering class="mt-5"
+      :mobile-breakpoint="0">
       <template v-slot:item.position="{ item }">
         <p class="mb-0" :class="item.position[0] === '-' ? 'red--text': 'teal--text' ">
           {{ item.position }}
@@ -51,6 +52,7 @@ export default {
         {
           text: 'Counterparty / Asset',
           align: 'start',
+          width: 50,
           sortable: false,
           filterable: false,
           value: 'asset',
@@ -58,6 +60,7 @@ export default {
         {
           text: 'Position	',
           align: 'start',
+          width: 100,
           sortable: false,
           filterable: false,
           value: 'position',
@@ -65,6 +68,7 @@ export default {
         {
           text: 'Price',
           align: 'start',
+          width: 100,
           sortable: false,
           filterable: false,
           value: 'price',
@@ -72,6 +76,7 @@ export default {
         {
           text: 'Position, $',
           align: 'start',
+          width: 100,
           sortable: false,
           filterable: false,
           value: 'sumPosition',

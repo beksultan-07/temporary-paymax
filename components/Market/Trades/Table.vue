@@ -1,5 +1,5 @@
 <template>
-    <v-data-table :headers="headers" :items="data" hide-default-footer disable-filtering>
+    <v-data-table :headers="headers" :items="data" hide-default-footer disable-filtering :mobile-breakpoint="0">
         <template v-slot:item.side="{ item }">
             <p class="mb-0" :class="item.side === 'Sell' ? 'red--text': 'teal--text' ">
                 {{ item.side }}
@@ -23,6 +23,7 @@ export default {
                     align: 'start',
                     sortable: false,
                     filterable: false,
+                    width: 100,
                     value: 'orderID',
                 },
                 {
@@ -30,6 +31,7 @@ export default {
                     align: 'start',
                     sortable: false,
                     filterable: false,
+                    width: 100,
                     value: 'CPID',
                 },
                 {
@@ -37,6 +39,7 @@ export default {
                     align: 'start',
                     sortable: false,
                     filterable: false,
+                    width: 100,
                     value: 'instrument',
                 },
                 {
@@ -44,6 +47,7 @@ export default {
                     align: 'start',
                     sortable: false,
                     filterable: false,
+                    width: 100,
                     value: 'side',
                 },
                 {
@@ -51,6 +55,7 @@ export default {
                     align: 'start',
                     sortable: false,
                     filterable: false,
+                    width: 100,
                     value: 'WAPrice',
                 },
                 {
@@ -58,6 +63,7 @@ export default {
                     align: 'start',
                     sortable: false,
                     filterable: false,
+                    width: 100,
                     value: 'totalSize',
                 },
                 {
@@ -65,6 +71,7 @@ export default {
                     align: 'start',
                     sortable: false,
                     filterable: false,
+                    width: 100,
                     value: 'totalVolume',
                 },
                 {
@@ -72,6 +79,7 @@ export default {
                     align: 'start',
                     sortable: false,
                     filterable: false,
+                    width: 100,
                     value: 'time',
                 },
                 {
@@ -79,6 +87,7 @@ export default {
                     align: 'start',
                     sortable: false,
                     filterable: false,
+                    width: 100,
                     value: 'instrument',
                 },
                 {
@@ -86,6 +95,7 @@ export default {
                     align: 'center',
                     sortable: false,
                     filterable: false,
+                    width: 100,
                     value: 'clientOrderID',
                 },
             ],
