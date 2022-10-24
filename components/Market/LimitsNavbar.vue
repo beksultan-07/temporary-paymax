@@ -68,7 +68,7 @@ export default {
       ],
       settlementLinks: [
         {text: 'Requests', href: 'requests'},
-        {text: 'Transactions', href: '#'},
+        {text: 'Transactions', href: 'transactions'},
       ],
       historyLinks: [
         {text: 'Trades', href: 'trades'},

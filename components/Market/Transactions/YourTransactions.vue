@@ -1,6 +1,6 @@
 <template>
   <div class="your__wrap">
-    <h3 class="your__title">Your Requests</h3>
+    <h3 class="your__title">Your Transactions</h3>
     <span class="your__data" v-if="requests.length <= 0">No data yet</span>
     <div class="scroll" v-else>
       <div class="your__table">
@@ -41,6 +41,7 @@
                 {{ request.area }}
               </td>
               <td class="text-center" v-else>—</td>
+              <td class="text-left">{{request.date}}</td>
               <div class="remove">×</div>
             </tr>
             </tbody>
@@ -61,6 +62,7 @@ export default {
         {name: 'Amount'},
         {name: 'Fee payer'},
         {name: 'Comment'},
+        {name: 'Time'},
       ]
     }
   },
