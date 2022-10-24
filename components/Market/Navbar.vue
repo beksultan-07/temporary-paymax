@@ -69,8 +69,7 @@
                 :class="{search__btn_active : activeButton === index}"
             >
               {{ button.text }}
-              <svg class="arrows" :class="{arrows_active: activeButton === index}" height="14" viewBox="0 0 12 14" fill="none"
-                   xmlns="http://www.w3.org/2000/svg">
+              <svg class="arrows" :class="{arrows_active: activeButton === index}" height="14" viewBox="0 0 12 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path
                     d="M8.7 7.03333L12 10.3333L8.7 13.6333L7.75733 12.6907L9.448 10.9993L0.666667 11V9.66667H9.448L7.75733 7.976L8.7 7.03333ZM3.3 0.366669L4.24267 1.30934L2.552 3H11.3333V4.33333H2.552L4.24267 6.024L3.3 6.96667L0 3.66667L3.3 0.366669Z"
                     fill="#fff"/>
@@ -82,7 +81,26 @@
       <div class="header__right">
         <div class="buttons">
           <button class="header__right-btn">1CP Enabled (87)</button>
-          <NuxtLink to="/settings" class="header__right-btn">Envoys.Vision</NuxtLink>
+          <!-- Вынести в отдельный компонент! -->
+          <v-menu offset-y :close-on-content-click="false">
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn class="text-caption black--text" elevation="0" color="white" dark v-bind="attrs" v-on="on">
+                Envoys.Vision <v-icon>mdi-chevron-down</v-icon>
+              </v-btn>
+            </template>
+            <v-list>
+              <v-list-item 
+                @click="$store.commit('settingsPage/setCurrentComponent', link.component); $router.push('/settings')"
+                dense 
+                link 
+                v-for="link in $store.getters['settingsPage/getLinks']" 
+                :key="link.component" 
+              >
+                <v-list-item-title>{{link.text}}</v-list-item-title>
+              </v-list-item>
+            </v-list>
+          </v-menu>
+          <!-- Вынести в отдельный компонент! -->
         </div>
       </div>
     </div>

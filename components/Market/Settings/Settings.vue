@@ -7,10 +7,10 @@
           <div class="settings__links">
             <div
                 class="settings__link"
-                :class="{settings__link_active: currentComponent === link.component}"
-                v-for="(link, index) in links"
+                v-for="(link, index) in $store.getters['settingsPage/getLinks']"
+                :class="{ settings__link_active: $store.getters['settingsPage/getCurrentComponent'] === link.component}"
                 :key="index"
-                @click="currentComponent = link.component"
+                @click="$store.commit('settingsPage/setCurrentComponent', link.component)"
             >
               {{link.text}}
             </div>
@@ -19,7 +19,7 @@
         </div>
         <component
             :is="renderComponent"
-            v-bind:currentComponent="currentComponent"
+            v-bind:currentComponent="$store.getters['settingsPage/getCurrentComponent']"
         ></component>
       </div>
     </div>
@@ -43,13 +43,6 @@ export default {
   },
   data(){
     return{
-      currentComponent: 'Account',
-      links: [
-        {text: 'Account data', component: 'Account'},
-        {text: 'Referrals', component: 'Referrals'},
-        {text: 'Login and Security', component: 'Login'},
-        {text: 'Notification', component: 'Notification'},
-      ],
       activeModal: false,
     }
   },
@@ -60,7 +53,7 @@ export default {
   },
   computed: {
     renderComponent() {
-      return 'v-component-' + this.currentComponent.toLowerCase();
+      return 'v-component-' + this.$store.getters['settingsPage/getCurrentComponent'].toLowerCase();
     }
   }
 }

@@ -50,7 +50,27 @@
         </div>
       </div>
       <div class="header__right">
-        <NuxtLink to="/settings" class="header__right-btn">Envoys.Vision</NuxtLink>
+        <!-- <NuxtLink to="/settings" class="header__right-btn">Envoys.Vision</NuxtLink> -->
+        <!-- Вынести в отдельный компонент! -->
+        <v-menu offset-y :close-on-content-click="false">
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn class="text-caption black--text" elevation="0" color="white" dark v-bind="attrs" v-on="on">
+              Envoys.Vision <v-icon>mdi-chevron-down</v-icon>
+            </v-btn>
+          </template>
+          <v-list>
+            <v-list-item 
+              dense 
+              link 
+              v-for="link in $store.getters['settingsPage/getLinks']" 
+              :key="link.component" 
+              @click="$store.commit('settingsPage/setCurrentComponent', link.component)"
+            >
+              <v-list-item-title>{{link.text}}</v-list-item-title>
+            </v-list-item>
+          </v-list>
+        </v-menu>
+        <!-- Вынести в отдельный компонент! -->
       </div>
     </div>
   </header>
@@ -79,6 +99,8 @@ export default {
         {text: 'Specification', href: '#'},
       ],
       burger: false,
+
+
     }
   },
 }
@@ -98,17 +120,6 @@ export default {
 
   &__right {
     margin-left: auto;
-    &-btn {
-      background: #FFFFFF;
-      border-radius: 4px;
-      padding: 12px 14px;
-      font-family: 'Helvetica';
-      font-style: normal;
-      font-weight: 400;
-      font-size: 14px;
-      color: #171717;
-      text-decoration: none;
-    }
   }
 }
 .content {
