@@ -6,37 +6,38 @@
           <h3 class="trades__title">Trades History</h3>
           <div class="trades__right">
             <div class="trades__choose">
-              <button
-                  v-for="(button, index) in buttons"
-                  :key="index"
-                  class="trades__choose_button"
-                  @click="active = active === index ? null : index"
-                  :class="{trades__choose_active: active === index}"
-              >
+              <button v-for="(button, index) in buttons" :key="index" class="trades__choose_button"
+                @click="active = active === index ? null : index" :class="{trades__choose_active: active === index}">
                 {{ button.text }}
               </button>
             </div>
             <button class="trades__download">Download .CSV</button>
           </div>
         </div>
-        <div class="trades__data-text">No data yet</div>
+
+        <div class="trades__data-text">
+          <Table></Table>
+        </div>
+
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import Table from './Table.vue';
 
 export default {
-  data(){
-    return{
-      buttons:[
-        {text: 'Orders'},
-        {text: 'Trades'}
+  data() {
+    return {
+      buttons: [
+        { text: "Orders" },
+        { text: "Trades" }
       ],
       active: false,
-    }
-  }
+    };
+  },
+  components: { Table }
 }
 </script>
 
@@ -47,10 +48,12 @@ export default {
     padding: 0 20px;
     margin: 0 auto;
   }
+
   &__wrap {
     padding-top: 30px;
     background: #fbfbfb;
   }
+
   &__content {
     width: 100%;
     background: #fff;
@@ -71,7 +74,8 @@ export default {
     line-height: 16px;
     color: #868686;
   }
-  &__choose{
+
+  &__choose {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -79,22 +83,26 @@ export default {
     background: #F7F7F7;
     border-radius: 4px;
     padding: 7px 10px;
-    &_button{
+
+    &_button {
       font-family: 'Helvetica';
       font-style: normal;
       font-weight: 400;
       font-size: 14px;
       color: #868686;
       transition: .3s ease-in-out;
-      &:first-child{
+
+      &:first-child {
         border-right: 1px solid #868686;
         padding-right: 5px;
       }
-      &:hover{
+
+      &:hover {
         color: #171717;
       }
     }
-    &_active{
+
+    &_active {
       color: #171717;
     }
   }
@@ -104,6 +112,7 @@ export default {
     align-items: center;
     justify-content: space-between;
     margin-bottom: 10px;
+
     @media (max-width: 430px) {
       flex-direction: column;
       gap: 30px;
