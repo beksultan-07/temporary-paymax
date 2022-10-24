@@ -6,15 +6,14 @@
     >
       <v-slide-group
           v-model="model"
-          class="pa-4"
           center-active
           :show-arrows="false"
-          style="align-items: flex-start; background:#fbfbfb;padding: 0 !important;"
+          style="align-items: flex-start; background:#fbfbfb;"
       >
         <v-slide-item
             v-for="(button,index) in buttons"
             :key="index"
-            v-slot="{ active, toggle }"
+            v-slot="{ toggle }"
         >
           <div class="col_item">
             <div class="item" :class="{item_active : activeButton === index}" @click.stop="toggle">
