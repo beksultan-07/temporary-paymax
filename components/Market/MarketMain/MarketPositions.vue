@@ -8,9 +8,8 @@
       @onSelect="onSelect" />
 
     <v-data-table :headers="headers" :items="data" hide-default-footer disable-filtering class="mt-5">
-
       <template v-slot:item.position="{ item }">
-        <p class="mb-0" :class="item.position[0] === '-' ? 'red--text': '' ">
+        <p class="mb-0" :class="item.position[0] === '-' ? 'red--text': 'teal--text' ">
           {{ item.position }}
         </p>
       </template>
